@@ -4,9 +4,13 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>Smart Food Costing</title>
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>
+Smart Food Costing
+</title>
 
 <style>
 
@@ -72,11 +76,11 @@ height:100%;
 
 background:rgba(0,0,0,.6);
 
-z-index:9999;
-
 justify-content:center;
 
 align-items:center;
+
+z-index:9999;
 
 }
 
@@ -112,6 +116,26 @@ margin-top:15px;
 
 }
 
+.sidebar{
+
+width:260px;
+
+background:#0f2559;
+
+padding:20px;
+
+height:100vh;
+
+}
+
+.content{
+
+padding:40px;
+
+flex:1;
+
+}
+
 </style>
 
 </head>
@@ -121,18 +145,24 @@ margin-top:15px;
 <div class="box">
 
 <h1>
+
 🍽️ SMART FOOD COSTING
+
 </h1>
 
 <br>
 
 <p>
+
 Phase 1 Development
+
 </p>
 
 <br>
 
-<button id="openBtn">
+<button
+id="openBtn"
+>
 
 Login
 
@@ -149,7 +179,9 @@ class="modal"
 <div class="card">
 
 <h2>
+
 Login
+
 </h2>
 
 <br>
@@ -164,8 +196,8 @@ placeholder="Password"
 >
 
 <button
-class="loginBtn"
 id="loginBtn"
+class="loginBtn"
 >
 
 Masuk
@@ -173,8 +205,8 @@ Masuk
 </button>
 
 <button
-class="loginBtn"
 id="closeBtn"
+class="loginBtn"
 >
 
 Tutup
@@ -185,43 +217,6 @@ Tutup
 
 </div>
 
-<script>
-
-const modal =
-document
-.getElementById(
-"modal"
-);
-
-document
-.getElementById(
-"openBtn"
-)
-
-.addEventListener(
-"click",
-()=>{
-
-modal.style.display=
-"flex";
-
-}
-);
-
-document
-.getElementById(
-"closeBtn"
-)
-
-.addEventListener(
-"click",
-()=>{
-
-modal.style.display=
-"none";
-
-}
-);
 
 <script>
 
@@ -236,39 +231,38 @@ document
 "openBtn"
 )
 
-.addEventListener(
-"click",
+.onclick
+=
 ()=>{
 
 modal.style.display=
 "flex";
 
-}
-);
+};
+
 
 document
 .getElementById(
 "closeBtn"
 )
 
-.addEventListener(
-"click",
+.onclick
+=
 ()=>{
 
 modal.style.display=
 "none";
 
-}
-);
+};
+
 
 document
 .getElementById(
 "loginBtn"
 )
 
-.addEventListener(
-"click",
-
+.onclick
+=
 ()=>{
 
 document.body.innerHTML=
@@ -277,58 +271,25 @@ document.body.innerHTML=
 
 <div
 style="
-
-height:100vh;
-
-background:#07173a;
-
-color:white;
-
-font-family:Arial;
-
-"
-
->
-
-<div
-style="
-
-padding:30px;
-
-font-size:28px;
-
-"
-
->
-
-🍽️ SMART FOOD COSTING
-
-</div>
-
-
-<div
-style="
-
 display:flex;
-
+background:#07173a;
+color:white;
+height:100vh;
+font-family:Arial;
 "
-
 >
 
 <div
-style="
-
-width:260px;
-
-background:#0f2559;
-
-height:100vh;
-
-padding:20px;
-
-"
-
+class="sidebar"
 >
+
+<h2>
+
+🍽️ SFC
+
+</h2>
+
+<br><br>
 
 🏠 Dashboard
 
@@ -356,12 +317,7 @@ padding:20px;
 
 
 <div
-style="
-
-padding:40px;
-
-"
-
+class="content"
 >
 
 <h1>
@@ -378,6 +334,22 @@ Selamat datang 🚀
 
 </p>
 
+<br>
+
+<div
+style="
+background:#0f2559;
+padding:20px;
+border-radius:20px;
+"
+>
+
+Total Raw Material
+
+<br><br>
+
+0
+
 </div>
 
 </div>
@@ -386,9 +358,7 @@ Selamat datang 🚀
 
 `;
 
-}
-
-);
+};
 
 </script>
 
