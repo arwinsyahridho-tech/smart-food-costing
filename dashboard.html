@@ -884,49 +884,48 @@ function render(){
 area.innerHTML="";
 
 let keyword=
-search.value.toLowerCase();
-
+search.value
+.toLowerCase();
 
 bahan
 
-.map(
-(item,index)=>(
-{
-item,
-index
-}
-)
-)
+.forEach(
 
-.filter(
+(item,index)=>{
 
-x=>
+if(
 
-x.item.nama
+keyword &&
 
+!item.nama
 .toLowerCase()
-
 .includes(
 keyword
 )
 
-)
+){
 
-.forEach(
+return;
 
-({item,index})=>{
+}
 
-const i =
-index;
 const harga=
 
+item.conversion
+
+?
+
 (
+
 item.harga
 /
 item.conversion
-)
 
-.toFixed(2);
+).toFixed(2)
+
+:
+
+0;
 
 
 area.innerHTML+=`
@@ -1050,7 +1049,7 @@ height:44px;
 background:#f59e0b;
 width:100%;
 "
-onclick="editData(${i})"
+onclick="editData(${index})"
 >
 
 Edit
@@ -1067,7 +1066,7 @@ height:44px;
 background:#d62828;
 width:100%;
 "
-onclick="hapusData(${i})"
+onclick="hapusData(${index})"
 >
 
 Hapus
@@ -1087,7 +1086,6 @@ Hapus
 );
 
 }
-
 
 
 function tambahData(){
