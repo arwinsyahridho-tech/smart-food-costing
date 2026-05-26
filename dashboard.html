@@ -28,21 +28,21 @@ height:100vh;
 }
 
 .sidebar{
-width:280px;
+width:290px;
 background:#102766;
 padding:30px;
 }
 
 .logo{
-font-size:36px;
+font-size:34px;
 font-weight:bold;
 margin-bottom:40px;
 }
 
 .item{
-padding:16px;
-border-radius:12px;
+padding:14px;
 margin-bottom:10px;
+border-radius:12px;
 cursor:pointer;
 }
 
@@ -60,13 +60,13 @@ overflow:auto;
 
 padding:10px 18px;
 
-border:none;
-
-border-radius:10px;
-
 background:#2563eb;
 
 color:white;
+
+border:none;
+
+border-radius:10px;
 
 cursor:pointer;
 
@@ -76,13 +76,13 @@ cursor:pointer;
 
 background:#12286b;
 
-padding:25px;
+padding:24px;
 
-border-radius:18px;
+border-radius:20px;
+
+width:280px;
 
 margin-top:20px;
-
-width:260px;
 
 }
 
@@ -90,31 +90,32 @@ table{
 
 width:100%;
 
-border-collapse:collapse;
-
 margin-top:20px;
+
+border-collapse:collapse;
 
 }
 
 th{
 
-padding:16px;
+padding:14px;
 
 background:#12286b;
 
-text-align:left;
+font-size:14px;
 
 }
 
 td{
 
-padding:14px;
+padding:12px;
 
-border-bottom:1px solid #1a3f94;
+border-bottom:1px solid #173680;
 
 }
 
-input{
+input,
+select{
 
 width:100%;
 
@@ -124,9 +125,9 @@ background:#0f2559;
 
 border:none;
 
-border-radius:8px;
-
 color:white;
+
+border-radius:8px;
 
 }
 
@@ -222,12 +223,12 @@ id="app"
 
 <script>
 
-const app =
+let raw=[];
+
+const app=
 document.getElementById(
 "app"
 );
-
-let data=[];
 
 
 
@@ -241,8 +242,6 @@ Dashboard
 
 </h1>
 
-<br>
-
 <div class="card">
 
 Total Raw Material
@@ -251,7 +250,7 @@ Total Raw Material
 
 <h1>
 
-${data.length}
+${raw.length}
 
 </h1>
 
@@ -267,35 +266,29 @@ function rawMaterial(){
 
 let rows="";
 
-data.forEach((x,i)=>{
+raw.forEach((r,i)=>{
 
 rows+=`
 
 <tr>
 
-<td>
+<td>${r.id}</td>
 
-${i+1}
+<td>${r.nama}</td>
 
-</td>
+<td>${r.supplier}</td>
 
-<td>
+<td>${r.buyQty}</td>
 
-${x.nama}
+<td>${r.buyUnit}</td>
 
-</td>
+<td>${r.convQty}</td>
 
-<td>
+<td>${r.useUnit}</td>
 
-${x.unit}
+<td>Rp ${r.price}</td>
 
-</td>
-
-<td>
-
-Rp ${x.harga}
-
-</td>
+<td>Rp ${r.cost}</td>
 
 <td>
 
@@ -304,7 +297,7 @@ class="btn"
 onclick="hapus(${i})"
 >
 
-Hapus
+X
 
 </button>
 
@@ -315,7 +308,6 @@ Hapus
 `;
 
 });
-
 
 
 app.innerHTML=`
@@ -330,15 +322,25 @@ Raw Material Master
 
 <tr>
 
-<th>No</th>
+<th>ID</th>
 
 <th>Nama</th>
 
-<th>Unit</th>
+<th>Supplier</th>
 
-<th>Harga</th>
+<th>Buy Qty</th>
 
-<th>Aksi</th>
+<th>Buy Unit</th>
+
+<th>Conv Qty</th>
+
+<th>Use Unit</th>
+
+<th>Price</th>
+
+<th>Cost/U</th>
+
+<th></th>
 
 </tr>
 
@@ -346,36 +348,69 @@ ${rows}
 
 <tr>
 
+<td>AUTO</td>
+
 <td>
 
-+
+<input id="nama">
 
 </td>
 
 <td>
 
-<input
-id="nama"
-placeholder="Nama bahan"
->
+<input id="supplier">
 
 </td>
 
 <td>
 
-<input
-id="unit"
-placeholder="Unit"
->
+<input id="buy">
 
 </td>
 
 <td>
 
-<input
-id="harga"
-placeholder="Harga"
->
+<select id="buyunit">
+
+<option>Kg</option>
+
+<option>L</option>
+
+<option>Pcs</option>
+
+</select>
+
+</td>
+
+<td>
+
+<input id="conv">
+
+</td>
+
+<td>
+
+<select id="use">
+
+<option>gr</option>
+
+<option>ml</option>
+
+<option>pcs</option>
+
+</select>
+
+</td>
+
+<td>
+
+<input id="price">
+
+</td>
+
+<td>
+
+AUTO
 
 </td>
 
@@ -386,7 +421,7 @@ class="btn"
 onclick="tambah()"
 >
 
-Tambah
++
 
 </button>
 
@@ -404,46 +439,99 @@ Tambah
 
 function tambah(){
 
-const nama =
-document
-.getElementById(
+const nama=
+document.getElementById(
 "nama"
-)
-.value;
+).value;
 
-const unit =
-document
-.getElementById(
-"unit"
-)
-.value;
+const supplier=
+document.getElementById(
+"supplier"
+).value;
 
-const harga =
-document
-.getElementById(
-"harga"
-)
-.value;
+const buy=
+Number(
+document.getElementById(
+"buy"
+).value
+);
+
+const buyunit=
+document.getElementById(
+"buyunit"
+).value;
+
+const conv=
+Number(
+document.getElementById(
+"conv"
+).value
+);
+
+const use=
+document.getElementById(
+"use"
+).value;
+
+const price=
+Number(
+document.getElementById(
+"price"
+).value
+);
 
 if(
 !nama||
-!unit||
-!harga
+!supplier||
+!buy||
+!conv||
+!price
 ){
 
 alert(
-"Isi semua dulu"
+"Lengkapi data"
 );
 
 return;
 
 }
 
-data.push({
+const cost=
+Math.round(
+price/conv
+);
+
+raw.push({
+
+id:
+"RM"+
+String(
+raw.length+1
+)
+.padStart(
+3,
+"0"
+),
 
 nama,
-unit,
-harga
+
+supplier,
+
+buyQty:
+buy,
+
+buyUnit:
+buyunit,
+
+convQty:
+conv,
+
+useUnit:
+use,
+
+price,
+
+cost
 
 });
 
@@ -455,7 +543,7 @@ rawMaterial();
 
 function hapus(i){
 
-data.splice(
+raw.splice(
 i,
 1
 );
@@ -468,8 +556,7 @@ rawMaterial();
 
 function logout(){
 
-window.location.href=
-"/";
+window.location.href="/";
 
 }
 
