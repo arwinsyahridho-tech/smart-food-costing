@@ -928,13 +928,25 @@ alert(
 
 <script>
 
-function ambilData(){
+let bahan=[];
+
+let editIndex=null;
 
 const input=
 document.querySelectorAll("input");
 
 const select=
 document.querySelectorAll("select");
+
+const search=
+document.querySelector(".search input");
+
+const card=
+document.getElementById("previewCard");
+
+
+
+function ambilData(){
 
 return{
 
@@ -964,75 +976,356 @@ waste:input[6].value
 
 
 
-function render(data){
+function isiForm(data){
 
-const hargaUnit=
+input[0].value=data.nama;
+
+input[1].value=data.merk;
+
+select[0].value=data.kategori;
+
+input[2].value=data.supplier;
+
+input[3].value=data.qty;
+
+select[1].value=data.buyUnit;
+
+input[4].value=data.harga;
+
+input[5].value=data.conversion;
+
+select[2].value=data.unit;
+
+input[6].value=data.waste;
+
+}
+
+
+
+function resetForm(){
+
+input.forEach(x=>{
+
+if(
+x.type!=="search"
+){
+
+x.value="";
+
+}
+
+});
+
+input[3].value=1;
+
+input[6].value=5;
+
+editIndex=null;
+
+}
+
+
+
+function render(){
+
+let keyword=
+
+search.value
+.toLowerCase();
+
+let tampil=
+
+bahan.filter(
+
+x=>
+
+x.nama
+.toLowerCase()
+.includes(
+keyword
+)
+
+);
+
+card.innerHTML="";
+
+
+
+tampil.forEach(
+
+(item,index)=>{
+
+let harga=
 
 (
-Number(data.harga)
+item.harga
 /
-
-Number(data.conversion)
+item.conversion
 )
 
 .toFixed(2);
 
+card.innerHTML+=`
+
+<div
+class="card"
+style="margin-bottom:18px"
+>
+
+<div
+class="headerCard"
+>
+
+<div>
+
+<div
+class="name"
+>
+
+${item.nama}
+
+</div>
+
+<div
+class="sub"
+>
+
+${item.kategori}
+•
+${item.merk}
+
+</div>
+
+</div>
+
+<div>
+
+Rp ${harga}
+/ ${item.unit}
+
+</div>
+
+</div>
 
 
-document.querySelector(".name")
-.innerText=
-data.nama;
+<div
+class="info"
+>
+
+<div class="box">
+
+<div class="small">
+
+Supplier
+
+</div>
+
+<div class="big">
+
+${item.supplier}
+
+</div>
+
+</div>
 
 
-document.querySelector(".sub")
-.innerText=
+<div class="box">
 
-data.kategori
+<div class="small">
 
-+
+Pembelian
 
-" • "
+</div>
 
-+
+<div class="big">
 
-data.merk;
+${item.qty}
+${item.buyUnit}
 
+</div>
 
-
-const big=
-document.querySelectorAll(".big");
-
-big[0].innerText=
-data.supplier;
-
-big[1].innerText=
-data.qty+
-" "+
-data.buyUnit;
-
-big[2].innerText=
-data.conversion+
-" "+
-data.unit;
-
-big[3].innerText=
-data.waste+"%";
+</div>
 
 
-document
-.querySelector(
-".headerCard > div:last-child"
-)
+<div class="box">
 
-.innerText=
+<div class="small">
 
-"Rp "
-+
-hargaUnit
-+
-" / "
-+
-data.unit;
+Konversi
+
+</div>
+
+<div class="big">
+
+${item.conversion}
+${item.unit}
+
+</div>
+
+</div>
+
+
+<div class="box">
+
+<div class="small">
+
+Waste
+
+</div>
+
+<div class="big">
+
+${item.waste}%
+
+</div>
+
+</div>
+
+
+<div class="box">
+
+<button
+class="btn"
+onclick="editData(${index})"
+style="
+margin:0;
+height:45px;
+background:#f59e0b;
+width:100%;
+"
+>
+
+Edit
+
+</button>
+
+<br><br>
+
+<button
+class="btn"
+onclick="hapusData(${index})"
+style="
+margin:0;
+height:45px;
+background:#d62828;
+width:100%;
+"
+>
+
+Hapus
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+);
+
+}
+
+
+
+function tambah(){
+
+const data=
+ambilData();
+
+if(
+!data.nama
+){
+
+alert(
+"Isi nama bahan"
+);
+
+return;
+
+}
+
+data.harga=
+Number(
+data.harga
+);
+
+data.conversion=
+Number(
+data.conversion
+);
+
+bahan.push(
+data
+);
+
+resetForm();
+
+render();
+
+}
+
+
+
+function editData(i){
+
+editIndex=i;
+
+isiForm(
+bahan[i]
+);
+
+window.scrollTo({
+
+top:0,
+
+behavior:"smooth"
+
+});
+
+}
+
+
+
+function update(){
+
+if(
+editIndex===null
+){
+
+alert(
+"Pilih Edit dulu"
+);
+
+return;
+
+}
+
+bahan[editIndex]=
+ambilData();
+
+render();
+
+alert(
+"Data berhasil diupdate"
+);
+
+}
+
+
+
+function hapusData(i){
+
+bahan.splice(
+i,
+1
+);
+
+render();
 
 }
 
@@ -1044,31 +1337,7 @@ document
 )
 
 .onclick=
-
-function(){
-
-const data=
-ambilData();
-
-if(
-!data.nama
-){
-
-alert(
-"Lengkapi data"
-);
-
-return;
-
-}
-
-render(data);
-
-alert(
-"Bahan berhasil ditambah 🚀"
-);
-
-};
+tambah;
 
 
 
@@ -1078,46 +1347,20 @@ document
 )
 
 .onclick=
+update;
 
-function(){
 
-const data=
-ambilData();
 
-if(
-!data.nama
-){
+search
+.addEventListener(
 
-alert(
-"Isi form dulu"
+"input",
+
+render
+
 );
 
-return;
-
-}
-
-render(data);
-
-alert(
-"Data berhasil diupdate ✏️"
-);
-
-};
-
-
-
-document
-.getElementById(
-"hapusBtn"
-)
-
-.onclick=
-
-function(){
-
-location.reload();
-
-};
+render();
 
 </script>
 </body>
