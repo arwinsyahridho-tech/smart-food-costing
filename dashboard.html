@@ -537,11 +537,13 @@ margin-top:25px;
 <button
 id="tambahBtn"
 class="btn"
+style="margin:0"
 >
 
 + Tambah Bahan
 
 </button>
+
 
 <button
 id="updateBtn"
@@ -584,7 +586,6 @@ placeholder="Cari bahan..."
 >
 
 </div>
-<div id="previewCard"></div>  
 
 
 
@@ -715,13 +716,17 @@ ACTIVE
 </div>
 
 </div>
-<script>
+  <script>
 
 let bahan=[];
+
 let editIndex=null;
 
-const input=document.querySelectorAll("input");
-const select=document.querySelectorAll("select");
+const input=
+document.querySelectorAll("input");
+
+const select=
+document.querySelectorAll("select");
 
 const search=
 document.querySelector(".search input");
@@ -737,13 +742,13 @@ function ambilData(){
 
 return{
 
-nama:input[0].value,
+nama:input[0].value.trim(),
 
-merk:input[1].value,
+merk:input[1].value.trim(),
 
 kategori:select[0].value,
 
-supplier:input[2].value,
+supplier:input[2].value.trim(),
 
 qty:input[3].value,
 
@@ -763,12 +768,42 @@ waste:input[6].value
 
 
 
-function resetForm(){
+function isiForm(x){
+
+input[0].value=x.nama;
+
+input[1].value=x.merk;
+
+select[0].value=x.kategori;
+
+input[2].value=x.supplier;
+
+input[3].value=x.qty;
+
+select[1].value=x.buyUnit;
+
+input[4].value=x.harga;
+
+input[5].value=x.conversion;
+
+select[2].value=x.unit;
+
+input[6].value=x.waste;
+
+}
+
+
+
+function kosongkan(){
 
 input[0].value="";
+
 input[1].value="";
+
 input[2].value="";
+
 input[4].value="";
+
 input[5].value="";
 
 }
@@ -779,47 +814,7 @@ function render(){
 
 area.innerHTML="";
 
-
-if(
-bahan.length===0
-){
-
-area.innerHTML=
-
-`
-
-<div class="card">
-
-<div class="headerCard">
-
-<div>
-
-<div class="name">
-
-Belum Ada Data
-
-</div>
-
-<div class="sub">
-
-Tambah bahan untuk mulai
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-`;
-
-return;
-
-}
-
-
-const key=
+let keyword=
 search.value.toLowerCase();
 
 
@@ -832,7 +827,7 @@ x=>
 x.nama
 .toLowerCase()
 .includes(
-key
+keyword
 )
 
 )
@@ -969,9 +964,9 @@ ${item.waste}%
 class="btn"
 style="
 margin:0;
+height:44px;
 background:#f59e0b;
 width:100%;
-height:44px;
 "
 onclick="editData(${i})"
 >
@@ -986,199 +981,9 @@ Edit
 class="btn"
 style="
 margin:0;
+height:44px;
 background:#d62828;
 width:100%;
-height:44px;
-"
-onclick="hapusData(${i})"
->
-
-Hapus
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-`;
-
-});
-
-}
-
-area.innerHTML="";
-
-const key=
-search.value.toLowerCase();
-
-
-bahan
-
-.filter(
-
-x=>
-
-x.nama
-.toLowerCase()
-.includes(
-key
-)
-
-)
-
-.forEach(
-
-(item,i)=>{
-
-const harga=
-
-(
-item.harga
-/
-item.conversion
-)
-
-.toFixed(2);
-
-
-area.innerHTML+=`
-
-<div
-class="card"
-style="margin-bottom:20px"
->
-
-<div class="headerCard">
-
-<div>
-
-<div class="name">
-
-${item.nama}
-
-</div>
-
-<div class="sub">
-
-${item.kategori}
-•
-${item.merk}
-
-</div>
-
-</div>
-
-<div>
-
-Rp ${harga}
-/ ${item.unit}
-
-</div>
-
-</div>
-
-
-<div class="info">
-
-<div class="box">
-
-<div class="small">
-
-Supplier
-
-</div>
-
-<div class="big">
-
-${item.supplier}
-
-</div>
-
-</div>
-
-
-<div class="box">
-
-<div class="small">
-
-Pembelian
-
-</div>
-
-<div class="big">
-
-${item.qty}
-${item.buyUnit}
-
-</div>
-
-</div>
-
-
-<div class="box">
-
-<div class="small">
-
-Konversi
-
-</div>
-
-<div class="big">
-
-${item.conversion}
-${item.unit}
-
-</div>
-
-</div>
-
-
-<div class="box">
-
-<div class="small">
-
-Waste
-
-</div>
-
-<div class="big">
-
-${item.waste}%
-
-</div>
-
-</div>
-
-
-<div class="box">
-
-<button
-class="btn"
-style="
-margin:0;
-background:#f59e0b;
-width:100%;
-height:44px;
-"
-onclick="editData(${i})"
->
-
-Edit
-
-</button>
-
-<br><br>
-
-<button
-class="btn"
-style="
-margin:0;
-background:#d62828;
-width:100%;
-height:44px;
 "
 onclick="hapusData(${i})"
 >
@@ -1221,9 +1026,10 @@ return;
 }
 
 bahan.push(
-data);
+data
+);
 
-resetForm();
+kosongkan();
 
 render();
 
@@ -1235,120 +1041,46 @@ function editData(i){
 
 editIndex=i;
 
-const x=
-bahan[i];
+isiForm(
+bahan[i]
+);
 
-document
-.getElementById(
-"editModal"
-)
+window.scrollTo({
 
-.style.display=
-"block";
+top:0,
 
+behavior:"smooth"
 
-document
-.getElementById(
-"mNama"
-).value=x.nama;
-
-document
-.getElementById(
-"mMerk"
-).value=x.merk;
-
-document
-.getElementById(
-"mKategori"
-).value=x.kategori;
-
-document
-.getElementById(
-"mSupplier"
-).value=x.supplier;
-
-document
-.getElementById(
-"mQty"
-).value=x.qty;
-
-document
-.getElementById(
-"mBuy"
-).value=x.buyUnit;
-
-document
-.getElementById(
-"mHarga"
-).value=x.harga;
-
-document
-.getElementById(
-"mConv"
-).value=x.conversion;
-
-document
-.getElementById(
-"mUnit"
-).value=x.unit;
-
-document
-.getElementById(
-"mWaste"
-).value=x.waste;
+});
 
 }
 
 
 
-function simpanEdit(){
+function updateData(){
 
-bahan[editIndex]={
+if(
+editIndex===null
+){
 
-nama:mNama.value,
+alert(
+"Pilih Edit dulu"
+);
 
-merk:mMerk.value,
+return;
 
-kategori:mKategori.value,
+}
 
-supplier:mSupplier.value,
-
-qty:mQty.value,
-
-buyUnit:mBuy.value,
-
-harga:Number(
-mHarga.value
-),
-
-conversion:Number(
-mConv.value
-),
-
-unit:mUnit.value,
-
-waste:mWaste.value
-
-};
-
+bahan[editIndex]=
+ambilData();
 
 render();
-
-tutupModal();
 
 }
 
 
 
 function hapusData(i){
-
-if(
-
-confirm(
-"Hapus data?"
-)
-
-){
 
 bahan.splice(
 i,
@@ -1359,22 +1091,6 @@ render();
 
 }
 
-}
-
-
-
-function tutupModal(){
-
-document
-.getElementById(
-"editModal"
-)
-
-.style.display=
-"none";
-
-}
-
 
 
 document
@@ -1382,8 +1098,23 @@ document
 "tambahBtn"
 )
 
-.onclick=
-tambahData;
+.addEventListener(
+"click",
+tambahData
+);
+
+
+
+document
+.getElementById(
+"updateBtn"
+)
+
+.addEventListener(
+"click",
+updateData
+);
+
 
 
 search
@@ -1392,88 +1123,11 @@ search
 render
 );
 
+
+
 render();
 
 </script>
+</body>
 
-
-
-<div
-id="editModal"
-style="
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.7);
-padding:40px;
-z-index:999;
-overflow:auto;
-"
->
-
-<div
-style="
-max-width:1000px;
-margin:auto;
-background:#102766;
-padding:30px;
-border-radius:20px;
-"
->
-
-<h2>
-
-Edit Raw Material
-
-</h2>
-
-<br>
-
-<div class="grid">
-
-<input id="mNama">
-
-<input id="mMerk">
-
-<input id="mKategori">
-
-<input id="mSupplier">
-
-<input id="mQty">
-
-<input id="mBuy">
-
-<input id="mHarga">
-
-<input id="mConv">
-
-<input id="mUnit">
-
-<input id="mWaste">
-
-</div>
-
-<button
-class="btn"
-onclick="simpanEdit()"
->
-
-Simpan
-
-</button>
-
-<button
-class="btn"
-style="
-background:#d62828;
-"
-onclick="tutupModal()"
->
-
-Tutup
-
-</button>
-
-</div>
-
-</div>
+</html>
