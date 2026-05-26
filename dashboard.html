@@ -4,9 +4,9 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Smart Food Costing</title>
+<title>SFC Dashboard</title>
 
 <style>
 
@@ -19,8 +19,10 @@ box-sizing:border-box;
 body{
 
 background:#07173a;
-color:white;
+
 font-family:Arial;
+
+color:white;
 
 }
 
@@ -34,7 +36,7 @@ height:100vh;
 
 .sidebar{
 
-width:300px;
+width:280px;
 
 background:#102766;
 
@@ -44,31 +46,27 @@ padding:30px;
 
 .logo{
 
-font-size:34px;
-
-font-weight:bold;
+font-size:40px;
 
 margin-bottom:50px;
 
 }
 
-.menuItem{
+.item{
 
 padding:16px;
-
-cursor:pointer;
 
 border-radius:12px;
 
 margin-bottom:10px;
 
-font-size:22px;
+cursor:pointer;
 
 }
 
-.menuItem:hover{
+.item:hover{
 
-background:#1a3f94;
+background:#1b3d91;
 
 }
 
@@ -80,43 +78,33 @@ padding:50px;
 
 }
 
-.card{
-
-background:#12286b;
-
-padding:30px;
-
-border-radius:20px;
-
-width:250px;
-
-margin-top:20px;
-
-}
-
-.top{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-}
-
 .btn{
 
-padding:12px 20px;
+padding:12px 18px;
 
 background:#2563eb;
 
 border:none;
 
-border-radius:12px;
+border-radius:10px;
 
 color:white;
 
 cursor:pointer;
+
+}
+
+.card{
+
+margin-top:20px;
+
+background:#12286b;
+
+padding:25px;
+
+border-radius:20px;
+
+width:250px;
 
 }
 
@@ -130,25 +118,17 @@ border-collapse:collapse;
 
 }
 
-th{
+th,td{
 
 padding:18px;
-
-background:#12286b;
 
 text-align:left;
 
 }
 
-td{
+th{
 
-padding:18px;
-
-}
-
-.logout{
-
-margin-top:50px;
+background:#12286b;
 
 }
 
@@ -169,8 +149,8 @@ margin-top:50px;
 </div>
 
 <div
-class="menuItem"
-id="dashboardBtn"
+class="item"
+onclick="dashboard()"
 >
 
 🏠 Dashboard
@@ -178,40 +158,39 @@ id="dashboardBtn"
 </div>
 
 <div
-class="menuItem"
-id="rawBtn"
+class="item"
+onclick="raw()"
 >
 
 📦 Raw Material
 
 </div>
 
-<div class="menuItem">
+<div class="item">
 
 🔒 Preparation
 
 </div>
 
-<div class="menuItem">
+<div class="item">
 
 🔒 Recipe
 
 </div>
 
-<div class="menuItem">
+<div class="item">
 
 🔒 Menu
 
 </div>
 
-<div class="menuItem">
+<div class="item">
 
 🔒 HPP
 
 </div>
 
-
-<div class="logout">
+<br><br>
 
 <button
 class="btn"
@@ -224,12 +203,10 @@ Logout
 
 </div>
 
-</div>
-
 
 <div
 class="main"
-id="content"
+id="app"
 >
 
 </div>
@@ -239,15 +216,11 @@ id="content"
 
 <script>
 
-const content =
+function dashboard(){
+
 document.getElementById(
-"content"
-);
-
-
-function showDashboard(){
-
-content.innerHTML=`
+"app"
+).innerHTML=`
 
 <h1>
 
@@ -265,13 +238,9 @@ Selamat datang 🚀
 
 <div class="card">
 
-<h3>
-
 Total Raw Material
 
-</h3>
-
-<br>
+<br><br>
 
 <h1>
 
@@ -286,11 +255,20 @@ Total Raw Material
 }
 
 
-function showRaw(){
 
-content.innerHTML=`
+function raw(){
 
-<div class="top">
+document.getElementById(
+"app"
+).innerHTML=`
+
+<div
+style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+"
+>
 
 <h1>
 
@@ -300,7 +278,7 @@ Raw Material
 
 <button
 class="btn"
-onclick="addData()"
+onclick="tambah()"
 >
 
 + Tambah
@@ -309,25 +287,51 @@ onclick="addData()"
 
 </div>
 
+
 <table>
 
 <tr>
 
-<th>Nama</th>
+<th>
 
-<th>Unit</th>
+Nama
 
-<th>Harga</th>
+</th>
+
+<th>
+
+Unit
+
+</th>
+
+<th>
+
+Harga
+
+</th>
 
 </tr>
 
+
 <tr>
 
-<td>Belum ada data</td>
+<td>
 
-<td>-</td>
+Belum ada data
 
-<td>-</td>
+</td>
+
+<td>
+
+-
+
+</td>
+
+<td>
+
+-
+
+</td>
 
 </tr>
 
@@ -338,7 +342,8 @@ onclick="addData()"
 }
 
 
-function addData(){
+
+function tambah(){
 
 alert(
 "Form tambah dibuat berikutnya 🚀"
@@ -354,28 +359,7 @@ window.location.href="/";
 }
 
 
-
-document
-.getElementById(
-"dashboardBtn"
-)
-.addEventListener(
-"click",
-showDashboard
-);
-
-
-document
-.getElementById(
-"rawBtn"
-)
-.addEventListener(
-"click",
-showRaw
-);
-
-
-showDashboard();
+dashboard();
 
 </script>
 
