@@ -777,20 +777,48 @@ document.getElementById(
 "previewCard"
 );
 
+function kapitalAwal(teks){
 
+return teks
+
+.toLowerCase()
+
+.replace(
+
+/\b\w/g,
+
+huruf=>
+
+huruf.toUpperCase()
+
+);
+
+}
 
 function ambilData(){
 
 return{
 
-nama:input[0].value.trim(),
+nama:
+kapitalAwal(
+input[0]
+.value
+.trim()
+),
 
-merk:input[1].value.trim(),
+merk:
+kapitalAwal(
+input[1]
+.value
+.trim()
+),
 
-kategori:select[0].value,
-
-supplier:input[2].value.trim(),
-
+supplier:
+kapitalAwal(
+input[2]
+.value
+.trim()
+),
 qty:input[3].value,
 
 buyUnit:select[1].value,
