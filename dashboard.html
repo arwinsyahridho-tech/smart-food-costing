@@ -1221,11 +1221,17 @@ document
 
 
 
+<script>
+
 function simpanEdit(){
 
 if(
 editIndex===null
 ){
+
+alert(
+"Tidak ada data dipilih"
+);
 
 return;
 
@@ -1235,41 +1241,95 @@ return;
 bahan[editIndex]={
 
 nama:
-mNama.value,
+document.getElementById("mNama").value,
 
 merk:
-mMerk.value,
+document.getElementById("mMerk").value,
 
 supplier:
-mSupplier.value,
+document.getElementById("mSupplier").value,
 
 kategori:
-mKategori.value,
+document.getElementById("mKategori").value,
 
 qty:
-mQty.value,
+document.getElementById("mQty").value,
 
 buyUnit:
-mBuy.value,
+document.getElementById("mBuy").value,
 
 harga:
 Number(
-mHarga.value
+document.getElementById("mHarga").value
 ),
 
 conversion:
 Number(
-mConv.value
+document.getElementById("mConv").value
 ),
 
 unit:
-mUnit.value,
+document.getElementById("mUnit").value,
 
 waste:
-mWaste.value
+document.getElementById("mWaste").value
 
 };
 
+
+render();
+
+tutupModal();
+
+alert(
+"Perubahan berhasil disimpan 🚀"
+);
+
+}
+
+
+
+function tutupModal(){
+
+document
+.getElementById(
+"editModal"
+)
+
+.style.display=
+"none";
+
+}
+
+
+
+document
+
+.addEventListener(
+
+"click",
+
+function(e){
+
+if(
+
+e.target.id
+
+===
+
+"editModal"
+
+){
+
+tutupModal();
+
+}
+
+}
+
+);
+
+</script>
 
 render();
 
@@ -1375,8 +1435,8 @@ Edit Raw Material
 </h2>
 
 <button
-onclick="tutupModal()"
-class="btn"
+type="button"
+onclick="tutupModal()"class="btn"
 style="
 margin:0;
 background:#d62828;
@@ -1396,12 +1456,23 @@ Tutup
 
 
 <button
+
 class="btn"
+
 style="
 margin-top:30px;
 background:#f59e0b;
 "
+
+type="button"
+
 onclick="simpanEdit()"
+
+>
+
+Simpan Perubahan
+
+</button>"
 >
 
 Simpan Perubahan
