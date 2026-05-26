@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width,initial-scale=1"
+>
+
+<title>
+SFC • Cost Dashboard
+</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+
+background:#07173a;
+
+font-family:Arial;
+
+color:white;
+
+}
+
+.wrapper{
+
+display:flex;
+
+min-height:100vh;
+
+}
+
+.sidebar{
+
+width:260px;
+
+background:#102766;
+
+padding:30px;
+
+}
+
+.logo{
+
+font-size:36px;
+
+font-weight:bold;
+
+margin-bottom:50px;
+
+}
+
+.item{
+
+padding:16px;
+
+border-radius:14px;
+
+margin-bottom:10px;
+
+cursor:pointer;
+
+}
+
+.item:hover{
+
+background:#1c45aa;
+
+}
+
+.active{
+
+background:#2563eb;
+
+}
+
+.back{
+
+margin-top:50px;
+
+}
+
+.btn{
+
+height:54px;
+
+width:100%;
+
+border:none;
+
+border-radius:14px;
+
+background:#2563eb;
+
+color:white;
+
+cursor:pointer;
+
+}
+
+.main{
+
+flex:1;
+
+padding:40px;
+
+}
+
+.title{
+
+font-size:48px;
+
+margin-bottom:10px;
+
+}
+
+.sub{
+
+opacity:.65;
+
+margin-bottom:40px;
+
+}
+
+.kpi{
+
+display:grid;
+
+grid-template-columns:
+
+repeat(
+4,
+1fr
+);
+
+gap:20px;
+
+}
+
+.card{
+
+background:#102766;
+
+padding:28px;
+
+border-radius:24px;
+
+}
+
+.label{
+
+opacity:.6;
+
+margin-bottom:14px;
+
+}
+
+.value{
+
+font-size:34px;
+
+font-weight:bold;
+
+}
+
+.good{
+
+color:#5bff93;
+
+}
+
+.warn{
+
+color:#ffc14a;
+
+}
+
+.grid{
+
+display:grid;
+
+grid-template-columns:
+
+2fr 1fr;
+
+gap:20px;
+
+margin-top:24px;
+
+}
+
+.chart{
+
+margin-top:20px;
+
+display:flex;
+
+height:18px;
+
+overflow:hidden;
+
+border-radius:999px;
+
+}
+
+.bar1{
+width:60%;
+background:#2563eb;
+}
+
+.bar2{
+width:20%;
+background:#5bff93;
+}
+
+.bar3{
+width:10%;
+background:#ffc14a;
+}
+
+.bar4{
+width:10%;
+background:#ff5f5f;
+}
+
+.insight{
+
+margin-top:24px;
+
+background:#172f74;
+
+padding:30px;
+
+border-radius:24px;
+
+line-height:1.9;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="wrapper">
+
+<div class="sidebar">
+
+<div class="logo">
+
+🍽️ BIYA
+
+</div>
+
+<div
+class="
+item
+active
+"
+>
+
+📊 Dashboard
+
+</div>
+
+<div
+class="item"
+
+onclick=
+"
+location.href=
+'rawmaterial.html'
+"
+
+>
+
+📦 Raw Material
+
+</div>
+
+<div class="item">
+🔒 Preparation
+</div>
+
+<div class="item">
+🔒 Recipe
+</div>
+
+<div class="item">
+🔒 Menu
+</div>
+
+<div class="item">
+🔒 HPP
+</div>
+
+<div class="back">
+
+<button
+class="btn"
+
+onclick=
+"
+location.href=
+'dashboard.html'
+"
+
+>
+
+← Kembali
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<div class="main">
+
+<div class="title">
+
+Cost Dashboard
+
+</div>
+
+<div class="sub">
+
+Business Overview
+
+</div>
+
+
+
+<div class="kpi">
+
+<div class="card">
+
+<div class="label">
+
+Total Produk
+
+</div>
+
+<div class="value">
+
+24
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="label">
+
+Rata-rata Margin
+
+</div>
+
+<div class="value good">
+
+34%
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="label">
+
+Profit Tertinggi
+
+</div>
+
+<div class="value">
+
+Banarilla
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="label">
+
+Margin Rendah
+
+</div>
+
+<div class="value warn">
+
+2 Produk
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<div class="grid">
+
+<div class="card">
+
+<div class="label">
+
+Total Estimasi Modal
+
+</div>
+
+<div class="value">
+
+Rp 12.500.000
+
+</div>
+
+<br>
+
+<div class="label">
+
+Rekomendasi Harga Jual
+
+</div>
+
+<div class="value good">
+
+Rp 28.900
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="label">
+
+Komposisi Cost
+
+</div>
+
+<div class="chart">
+
+<div class="bar1"></div>
+
+<div class="bar2"></div>
+
+<div class="bar3"></div>
+
+<div class="bar4"></div>
+
+</div>
+
+<br>
+
+60% Raw Material
+
+<br>
+
+20% Preparation
+
+<br>
+
+10% Packaging
+
+<br>
+
+10% Waste
+
+</div>
+
+</div>
+
+
+
+<div class="insight">
+
+🧠 Intelligent Insight
+
+<br><br>
+
+Margin Banarilla Original
+lebih rendah 12%
+dibanding rata-rata.
+
+<br><br>
+
+Saran:
+
+Naikkan harga
+Rp 2.000
+
+ATAU
+
+turunkan waste 3%.
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>
