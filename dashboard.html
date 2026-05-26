@@ -553,7 +553,10 @@ placeholder="Cari bahan..."
 
 <!-- CARD -->
 
-<div class="card">
+<div
+class="card"
+id="previewCard"
+>
 
 <div class="headerCard">
 
@@ -665,7 +668,39 @@ Status
 ACTIVE
 
 </div>
+<div
+style="
+margin-top:20px;
+display:flex;
+gap:12px;
+"
+>
 
+<button
+id="updateBtn"
+class="btn"
+style="margin:0"
+>
+
+Update
+
+</button>
+
+
+<button
+id="hapusBtn"
+class="btn"
+style="
+margin:0;
+background:#d62828;
+"
+>
+
+Hapus
+
+</button>
+
+</div>
 </div>
 
 </div>
@@ -884,6 +919,132 @@ alert(
 }
 
 );
+
+</script>
+  <script>
+
+/* UPDATE */
+
+document
+.getElementById(
+"updateBtn"
+)
+
+.onclick=
+
+function(){
+
+document
+.getElementById(
+"tambahBtn"
+)
+
+.click();
+
+alert(
+"Data berhasil diupdate 🚀"
+);
+
+};
+
+
+
+/* HAPUS */
+
+document
+.getElementById(
+"hapusBtn"
+)
+
+.onclick=
+
+function(){
+
+document
+.querySelector(
+".name"
+)
+
+.innerText=
+
+"Tepung Terigu";
+
+
+document
+.querySelector(
+".sub"
+)
+
+.innerText=
+
+"Bahan Kering • Segitiga Biru";
+
+
+
+document
+.querySelectorAll(
+".big"
+)
+
+[0]
+
+.innerText=
+
+"Sari Murni";
+
+
+document
+.querySelectorAll(
+".big"
+)
+
+[1]
+
+.innerText=
+
+"1 Pack";
+
+
+document
+.querySelectorAll(
+".big"
+)
+
+[2]
+
+.innerText=
+
+"1000 gr";
+
+
+document
+.querySelectorAll(
+".big"
+)
+
+[3]
+
+.innerText=
+
+"5%";
+
+
+
+document
+.querySelector(
+".headerCard > div:last-child"
+)
+
+.innerText=
+
+"Rp 13 / gr";
+
+
+alert(
+"Data dihapus 🗑️"
+);
+
+};
 
 </script>
 </body>
