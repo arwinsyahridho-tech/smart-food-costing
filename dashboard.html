@@ -1045,6 +1045,10 @@ isiForm(
 bahan[i]
 );
 
+alert(
+"✏️ Mode Edit Aktif"
+);
+
 window.scrollTo({
 
 top:0,
@@ -1056,15 +1060,12 @@ behavior:"smooth"
 }
 
 
-
 function updateData(){
 
-if(
-editIndex===null
-){
+if(editIndex===null){
 
 alert(
-"Pilih Edit dulu"
+"Pilih tombol Edit dulu"
 );
 
 return;
@@ -1074,23 +1075,39 @@ return;
 bahan[editIndex]=
 ambilData();
 
+alert(
+"✅ Data berhasil diupdate"
+);
+
+editIndex=null;
+
+kosongkan();
+
 render();
 
 }
-
-
-
 function hapusData(i){
+
+const ok=
+confirm(
+"Yakin hapus data ini?"
+);
+
+if(!ok)
+return;
 
 bahan.splice(
 i,
 1
 );
 
+alert(
+"🗑 Data berhasil dihapus"
+);
+
 render();
 
 }
-
 
 
 document
@@ -1114,7 +1131,30 @@ document
 "click",
 updateData
 );
+document
+.getElementById(
+"hapusBtn"
+)
 
+.addEventListener(
+"click",
+()=>{
+
+if(editIndex!==null){
+
+hapusData(
+editIndex
+);
+
+}else{
+
+alert(
+"Pilih Edit dulu"
+);
+
+}
+
+});
 
 
 search
