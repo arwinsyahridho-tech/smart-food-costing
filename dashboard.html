@@ -52,52 +52,88 @@ background:#1b3d91;
 
 .main{
 flex:1;
-padding:50px;
+padding:40px;
 overflow:auto;
 }
 
 .btn{
-padding:12px 20px;
-background:#2563eb;
-color:white;
+
+padding:10px 18px;
+
 border:none;
+
 border-radius:10px;
+
+background:#2563eb;
+
+color:white;
+
 cursor:pointer;
+
 }
 
 .card{
-margin-top:20px;
+
 background:#12286b;
+
 padding:25px;
+
 border-radius:18px;
+
+margin-top:20px;
+
 width:260px;
+
 }
 
 table{
+
 width:100%;
-margin-top:20px;
+
 border-collapse:collapse;
+
+margin-top:20px;
+
 }
 
 th{
-padding:18px;
+
+padding:16px;
+
 background:#12286b;
+
 text-align:left;
+
 }
 
 td{
-padding:18px;
-border-bottom:1px solid #203f92;
+
+padding:14px;
+
+border-bottom:1px solid #1a3f94;
+
 }
 
-.top{
-display:flex;
-justify-content:space-between;
-align-items:center;
+input{
+
+width:100%;
+
+padding:10px;
+
+background:#0f2559;
+
+border:none;
+
+border-radius:8px;
+
+color:white;
+
 }
 
 .logout{
+
 margin-top:40px;
+
 }
 
 </style>
@@ -116,13 +152,19 @@ margin-top:40px;
 
 </div>
 
-<div class="item" id="dashboardBtn">
+<div
+class="item"
+onclick="dashboard()"
+>
 
 🏠 Dashboard
 
 </div>
 
-<div class="item" id="rawBtn">
+<div
+class="item"
+onclick="rawMaterial()"
+>
 
 📦 Raw Material
 
@@ -156,7 +198,7 @@ margin-top:40px;
 
 <button
 class="btn"
-id="logoutBtn"
+onclick="logout()"
 >
 
 Logout
@@ -185,7 +227,7 @@ document.getElementById(
 "app"
 );
 
-const materials=[];
+let data=[];
 
 
 
@@ -201,122 +243,21 @@ Dashboard
 
 <br>
 
-<p>
-
-Selamat datang 🚀
-
-</p>
-
 <div class="card">
-
-<div>
 
 Total Raw Material
 
-</div>
-
-<br>
+<br><br>
 
 <h1>
 
-${materials.length}
+${data.length}
 
 </h1>
 
 </div>
 
 `;
-
-}
-
-
-
-function renderTable(){
-
-let rows="";
-
-if(materials.length===0){
-
-rows=
-`
-<tr>
-
-<td>Belum ada data</td>
-
-<td>-</td>
-
-<td>-</td>
-
-</tr>
-`;
-
-}else{
-
-materials.forEach(item=>{
-
-rows+=`
-
-<tr>
-
-<td>${item.nama}</td>
-
-<td>${item.unit}</td>
-
-<td>Rp ${item.harga}</td>
-
-</tr>
-
-`;
-
-});
-
-}
-
-app.innerHTML=`
-
-<div class="top">
-
-<h1>
-
-Raw Material
-
-</h1>
-
-<button
-class="btn"
-id="addBtn"
->
-
-+ Tambah
-
-</button>
-
-</div>
-
-<table>
-
-<tr>
-
-<th>Nama</th>
-
-<th>Unit</th>
-
-<th>Harga</th>
-
-</tr>
-
-${rows}
-
-</table>
-
-`;
-
-document
-.getElementById(
-"addBtn"
-)
-.onclick=
-tambah;
 
 }
 
@@ -324,7 +265,138 @@ tambah;
 
 function rawMaterial(){
 
-renderTable();
+let rows="";
+
+data.forEach((x,i)=>{
+
+rows+=`
+
+<tr>
+
+<td>
+
+${i+1}
+
+</td>
+
+<td>
+
+${x.nama}
+
+</td>
+
+<td>
+
+${x.unit}
+
+</td>
+
+<td>
+
+Rp ${x.harga}
+
+</td>
+
+<td>
+
+<button
+class="btn"
+onclick="hapus(${i})"
+>
+
+Hapus
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+
+
+app.innerHTML=`
+
+<h1>
+
+Raw Material Master
+
+</h1>
+
+<table>
+
+<tr>
+
+<th>No</th>
+
+<th>Nama</th>
+
+<th>Unit</th>
+
+<th>Harga</th>
+
+<th>Aksi</th>
+
+</tr>
+
+${rows}
+
+<tr>
+
+<td>
+
++
+
+</td>
+
+<td>
+
+<input
+id="nama"
+placeholder="Nama bahan"
+>
+
+</td>
+
+<td>
+
+<input
+id="unit"
+placeholder="Unit"
+>
+
+</td>
+
+<td>
+
+<input
+id="harga"
+placeholder="Harga"
+>
+
+</td>
+
+<td>
+
+<button
+class="btn"
+onclick="tambah()"
+>
+
+Tambah
+
+</button>
+
+</td>
+
+</tr>
+
+</table>
+
+`;
 
 }
 
@@ -332,34 +404,42 @@ renderTable();
 
 function tambah(){
 
-const nama=
-prompt(
-"Nama bahan"
+const nama =
+document
+.getElementById(
+"nama"
+)
+.value;
+
+const unit =
+document
+.getElementById(
+"unit"
+)
+.value;
+
+const harga =
+document
+.getElementById(
+"harga"
+)
+.value;
+
+if(
+!nama||
+!unit||
+!harga
+){
+
+alert(
+"Isi semua dulu"
 );
 
-if(!nama)
 return;
 
+}
 
-const unit=
-prompt(
-"Unit"
-);
-
-if(!unit)
-return;
-
-
-const harga=
-prompt(
-"Harga"
-);
-
-if(!harga)
-return;
-
-
-materials.push({
+data.push({
 
 nama,
 unit,
@@ -367,8 +447,20 @@ harga
 
 });
 
+rawMaterial();
 
-renderTable();
+}
+
+
+
+function hapus(i){
+
+data.splice(
+i,
+1
+);
+
+rawMaterial();
 
 }
 
@@ -380,33 +472,6 @@ window.location.href=
 "/";
 
 }
-
-
-
-document
-.getElementById(
-"dashboardBtn"
-)
-.onclick=
-dashboard;
-
-
-
-document
-.getElementById(
-"rawBtn"
-)
-onclick=
-rawMaterial;
-
-
-
-document
-.getElementById(
-"logoutBtn"
-)
-.onclick=
-logout;
 
 
 
