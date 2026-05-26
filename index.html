@@ -2,24 +2,19 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Smart Food Costing</title>
 
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<style>
 body{
+margin:0;
 height:100vh;
+background:#07173a;
 display:flex;
 justify-content:center;
 align-items:center;
-background:#07183d;
-font-family:Arial,sans-serif;
+font-family:Arial;
 color:white;
 }
 
@@ -27,39 +22,19 @@ color:white;
 text-align:center;
 }
 
-h1{
-font-size:54px;
-margin-bottom:16px;
-}
-
-p{
-font-size:20px;
-margin-bottom:30px;
-opacity:.9;
-}
-
 button{
-padding:14px 36px;
+padding:14px 28px;
 border:none;
 border-radius:12px;
 background:#2563eb;
 color:white;
-font-size:18px;
 cursor:pointer;
-transition:.2s;
 }
 
-button:hover{
-transform:scale(1.05);
-}
-
-.popup{
+.modal{
 display:none;
 position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
+inset:0;
 background:rgba(0,0,0,.5);
 justify-content:center;
 align-items:center;
@@ -67,26 +42,24 @@ align-items:center;
 
 .card{
 background:white;
-color:#111;
+color:black;
 padding:30px;
-border-radius:16px;
+border-radius:20px;
 width:320px;
-text-align:center;
 }
 
-.card h2{
-margin-bottom:10px;
+input{
+width:100%;
+padding:12px;
+margin-top:10px;
+box-sizing:border-box;
 }
 
-.card p{
-color:#666;
-font-size:14px;
-margin-bottom:20px;
-}
-
-.card button{
+.loginBtn{
+margin-top:15px;
 width:100%;
 }
+
 </style>
 </head>
 
@@ -101,34 +74,89 @@ Login
 </button>
 </div>
 
-<div class="popup" id="loginPopup">
+<div class="modal" id="modal">
+
 <div class="card">
 
 <h2>Login</h2>
 
-<p>
-Login Supabase akan dibuat di Phase 2 🚀
-</p>
+<input id="email" placeholder="Email">
 
-<button onclick="closeLogin()">
+<input
+id="password"
+type="password"
+placeholder="Password"
+>
+
+<button
+class="loginBtn"
+onclick="login()"
+>
+Masuk
+</button>
+
+<br><br>
+
+<button
+class="loginBtn"
+onclick="closeLogin()"
+>
 Tutup
 </button>
 
 </div>
+
 </div>
 
 <script>
 
+/*
+GANTI DUA BARIS INI
+*/
+
+const SUPABASE_URL =
+https://pkjmkjyylgzjvhcreucc.supabase.co/rest/v1/;
+
+const SUPABASE_KEY =
+sb_publishable_Tq4d0o3PIAd_zh11uJa2uQ_M_zPIYFX;
+
+const supabase=
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
 function openLogin(){
-document
-.getElementById("loginPopup")
-.style.display="flex";
+document.getElementById("modal").style.display="flex";
 }
 
 function closeLogin(){
-document
-.getElementById("loginPopup")
-.style.display="none";
+document.getElementById("modal").style.display="none";
+}
+
+async function login(){
+
+const email=
+document.getElementById("email").value;
+
+const password=
+document.getElementById("password").value;
+
+const {error}=await supabase.auth.signInWithPassword({
+email,
+password
+});
+
+if(error){
+
+alert(error.message);
+
+}else{
+
+alert("Login berhasil 🚀");
+
+}
+
 }
 
 </script>
