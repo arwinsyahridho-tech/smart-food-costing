@@ -1,57 +1,118 @@
 <script>
 
+document.addEventListener(
+"DOMContentLoaded",
+
+function(){
+
+const tombolTambah =
+Array
+.from(
+document.querySelectorAll(
+".btn"
+)
+)
+
+.find(
+btn=>
+
+btn.textContent
+.includes(
+"Tambah"
+)
+
+);
+
+if(
+tombolTambah
+){
+
+tombolTambah
+.addEventListener(
+"click",
+tambahBahan
+);
+
+}
+
+}
+
+);
+
+
+
 function tambahBahan(){
 
-const input=
-document.querySelectorAll(
+
+const input =
+document
+.querySelectorAll(
 "input"
 );
 
-const select=
-document.querySelectorAll(
+const select =
+document
+.querySelectorAll(
 "select"
 );
 
 
-/* AMBIL DATA */
+/* AMBIL VALUE */
 
-const nama=
-input[0].value;
+const nama =
+input[0]?.value
+.trim();
 
-const merk=
-input[1].value;
+const merk =
+input[1]?.value
+.trim();
 
-const kategori=
-select[0].value;
+const kategori =
+select[0]?.value;
 
-const supplier=
-input[2].value;
+const supplier =
+input[2]?.value
+.trim();
 
-const qty=
-input[3].value;
+const qty =
+input[3]?.value
+.trim();
 
-const buyUnit=
-select[1].value;
+const buyUnit =
+select[1]?.value;
 
-const harga=
-input[4].value;
+const harga =
+Number(
+input[4]?.value
+);
 
-const conversion=
-input[5].value;
+const conversion =
+Number(
+input[5]?.value
+);
 
-const unit=
-select[2].value;
+const unit =
+select[2]?.value;
 
-const waste=
-input[6].value;
+const waste =
+input[6]?.value;
+
 
 
 /* VALIDASI */
 
 if(
-!nama||
-!harga||
+
+!nama
+
+||
+
+!harga
+
+||
+
 !conversion
+
 ){
 
 alert(
@@ -63,149 +124,202 @@ return;
 }
 
 
+
 /* HITUNG */
 
-const hargaUnit=
+const hargaUnit =
 
 (
-Number(harga)
+harga
 /
-Number(conversion)
-)
-
-.toFixed(2);
-
-
-/* UPDATE CARD */
-
-document
-.querySelector(
-".name"
-)
-.innerHTML=
-nama;
-
-
-document
-.querySelector(
-".sub"
-)
-.innerHTML=
-
-kategori
-
-+
-
-" • "
-
-+
-
-merk;
-
-
-
-document
-.querySelectorAll(
-".big"
-)
-
-[0]
-
-.innerHTML=
-
-supplier;
-
-
-
-document
-.querySelectorAll(
-".big"
-)
-
-[1]
-
-.innerHTML=
-
-qty
-
-+
-
-" "
-
-+
-
-buyUnit;
-
-
-
-document
-.querySelectorAll(
-".big"
-)
-
-[2]
-
-.innerHTML=
-
 conversion
-
-+
-
-" "
-
-+
-
-unit;
-
-
-
-document
-.querySelectorAll(
-".big"
 )
 
-[3]
-
-.innerHTML=
-
-waste
-
-+
-
-"%";
+.toFixed(
+2
+);
 
 
+
+/* CARI CARD */
+
+const card =
 
 document
 .querySelector(
-".headerCard div:last-child"
-)
+".card"
+);
 
-.innerHTML=
+if(
+!card
+){
 
-"Rp "
+alert(
+"Card tidak ditemukan"
+);
 
-+
+return;
 
-hargaUnit
+}
 
-+
 
-" / "
 
-+
+/* UPDATE */
 
-unit;
+card.innerHTML=
+
+`
+
+<div class="headerCard">
+
+<div>
+
+<div class="name">
+
+${nama}
+
+</div>
+
+<div class="sub">
+
+${kategori}
+•
+${merk||"-"}
+
+</div>
+
+</div>
+
+<div>
+
+Rp
+${hargaUnit}
+/${unit}
+
+</div>
+
+</div>
+
+
+
+<div class="info">
+
+<div class="box">
+
+<div class="small">
+
+Supplier
+
+</div>
+
+<div class="big">
+
+${supplier||"-"}
+
+</div>
+
+</div>
+
+
+
+<div class="box">
+
+<div class="small">
+
+Pembelian
+
+</div>
+
+<div class="big">
+
+${qty}
+${buyUnit}
+
+</div>
+
+</div>
+
+
+
+<div class="box">
+
+<div class="small">
+
+Konversi
+
+</div>
+
+<div class="big">
+
+${conversion}
+${unit}
+
+</div>
+
+</div>
+
+
+
+<div class="box">
+
+<div class="small">
+
+Waste
+
+</div>
+
+<div class="big">
+
+${waste}%
+
+</div>
+
+</div>
+
+
+
+<div class="box">
+
+<div class="small">
+
+Status
+
+</div>
+
+<div class="big">
+
+ACTIVE
+
+</div>
+
+</div>
+
+</div>
+
+`;
 
 
 
 /* RESET */
 
-input[0].value="";
-input[1].value="";
-input[2].value="";
-input[4].value="";
-input[5].value="";
+input.forEach(
+
+(el,index)=>{
+
+if(
+index!==3
+&&
+index!==6
+){
+
+el.value="";
+
+}
+
+}
+
+);
+
 
 
 alert(
@@ -213,47 +327,5 @@ alert(
 );
 
 }
-
-
-
-/* HUBUNGKAN TOMBOL */
-
-window.onload=
-
-function(){
-
-const tombol=
-
-document
-.querySelectorAll(
-".btn"
-);
-
-tombol.forEach(
-
-btn=>{
-
-if(
-
-btn.innerText
-
-.includes(
-
-"Tambah"
-
-)
-
-){
-
-btn.onclick=
-tambahBahan;
-
-}
-
-}
-
-);
-
-};
 
 </script>
