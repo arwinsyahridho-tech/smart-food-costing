@@ -19,9 +19,7 @@ box-sizing:border-box;
 body{
 
 background:#07173a;
-
 font-family:Arial;
-
 color:white;
 
 }
@@ -46,7 +44,9 @@ padding:30px;
 
 .logo{
 
-font-size:40px;
+font-size:38px;
+
+font-weight:bold;
 
 margin-bottom:50px;
 
@@ -56,9 +56,9 @@ margin-bottom:50px;
 
 padding:16px;
 
-border-radius:12px;
-
 margin-bottom:10px;
+
+border-radius:12px;
 
 cursor:pointer;
 
@@ -80,7 +80,7 @@ padding:50px;
 
 .btn{
 
-padding:12px 18px;
+padding:12px 20px;
 
 background:#2563eb;
 
@@ -118,7 +118,9 @@ border-collapse:collapse;
 
 }
 
-th,td{
+th{
+
+background:#12286b;
 
 padding:18px;
 
@@ -126,9 +128,25 @@ text-align:left;
 
 }
 
-th{
+td{
 
-background:#12286b;
+padding:18px;
+
+}
+
+.top{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+}
+
+.logout{
+
+margin-top:50px;
 
 }
 
@@ -148,23 +166,26 @@ background:#12286b;
 
 </div>
 
+
 <div
 class="item"
-onclick="dashboard()"
+onclick="showDashboard()"
 >
 
 🏠 Dashboard
 
 </div>
 
+
 <div
 class="item"
-onclick="raw()"
+onclick="showRaw()"
 >
 
 📦 Raw Material
 
 </div>
+
 
 <div class="item">
 
@@ -172,11 +193,13 @@ onclick="raw()"
 
 </div>
 
+
 <div class="item">
 
 🔒 Recipe
 
 </div>
+
 
 <div class="item">
 
@@ -184,13 +207,15 @@ onclick="raw()"
 
 </div>
 
+
 <div class="item">
 
 🔒 HPP
 
 </div>
 
-<br><br>
+
+<div class="logout">
 
 <button
 class="btn"
@@ -203,6 +228,9 @@ Logout
 
 </div>
 
+</div>
+
+
 
 <div
 class="main"
@@ -211,16 +239,22 @@ id="app"
 
 </div>
 
+
 </div>
 
 
 <script>
 
-function dashboard(){
-
+const app =
 document.getElementById(
 "app"
-).innerHTML=`
+);
+
+
+
+function showDashboard(){
+
+app.innerHTML=`
 
 <h1>
 
@@ -238,9 +272,13 @@ Selamat datang 🚀
 
 <div class="card">
 
+<div>
+
 Total Raw Material
 
-<br><br>
+</div>
+
+<br>
 
 <h1>
 
@@ -256,18 +294,12 @@ Total Raw Material
 
 
 
-function raw(){
+function showRaw(){
 
-document.getElementById(
-"app"
-).innerHTML=`
+app.innerHTML=`
 
 <div
-style="
-display:flex;
-justify-content:space-between;
-align-items:center;
-"
+class="top"
 >
 
 <h1>
@@ -352,6 +384,7 @@ alert(
 }
 
 
+
 function logout(){
 
 window.location.href="/";
@@ -359,7 +392,8 @@ window.location.href="/";
 }
 
 
-dashboard();
+
+showDashboard();
 
 </script>
 
