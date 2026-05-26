@@ -29,7 +29,7 @@ height:100vh;
 
 .sidebar{
 
-width:270px;
+width:250px;
 
 background:#102766;
 
@@ -43,7 +43,7 @@ font-size:34px;
 
 font-weight:bold;
 
-margin-bottom:40px;
+margin-bottom:45px;
 
 }
 
@@ -61,7 +61,13 @@ cursor:pointer;
 
 .item:hover{
 
-background:#1b3d91;
+background:#1a3d95;
+
+}
+
+.logout{
+
+margin-top:40px;
 
 }
 
@@ -69,29 +75,39 @@ background:#1b3d91;
 
 flex:1;
 
-padding:35px;
+padding:40px;
 
 overflow:auto;
 
 }
 
-.pageTitle{
+.title{
 
-font-size:32px;
+font-size:44px;
 
 margin-bottom:25px;
 
 }
 
-.panel{
+.section{
 
 background:#102766;
 
 padding:28px;
 
-border-radius:20px;
+border-radius:22px;
 
-margin-bottom:25px;
+margin-bottom:24px;
+
+}
+
+.sectionTitle{
+
+font-size:20px;
+
+margin-bottom:20px;
+
+opacity:.9;
 
 }
 
@@ -100,43 +116,77 @@ margin-bottom:25px;
 display:grid;
 
 grid-template-columns:
-repeat(
-2,
-1fr
-);
 
-gap:15px;
+1fr 1fr;
+
+gap:18px;
+
+}
+
+.grid3{
+
+display:grid;
+
+grid-template-columns:
+
+1fr 1fr 1fr;
+
+gap:18px;
+
+}
+
+.field{
+
+display:flex;
+
+flex-direction:column;
+
+gap:10px;
+
+}
+
+label{
+
+font-size:14px;
+
+opacity:.7;
 
 }
 
 input,
 select{
 
-width:100%;
+height:56px;
 
-padding:14px;
+padding:0 18px;
 
-background:#0b1f53;
+background:#0d2158;
 
 border:none;
 
-border-radius:12px;
+border-radius:14px;
 
 color:white;
+
+font-size:16px;
 
 }
 
 .btn{
 
-padding:14px;
+margin-top:25px;
+
+height:54px;
+
+padding:0 24px;
 
 border:none;
+
+border-radius:14px;
 
 background:#2563eb;
 
 color:white;
-
-border-radius:12px;
 
 cursor:pointer;
 
@@ -144,9 +194,13 @@ cursor:pointer;
 
 .search{
 
-margin-top:20px;
+margin:30px 0;
 
-margin-bottom:20px;
+}
+
+.search input{
+
+width:100%;
 
 }
 
@@ -154,59 +208,89 @@ margin-bottom:20px;
 
 background:#102766;
 
-padding:20px;
+padding:25px;
 
-border-radius:18px;
-
-margin-bottom:15px;
+border-radius:22px;
 
 }
 
-.row{
+.headerCard{
 
 display:flex;
 
 justify-content:space-between;
 
-margin-top:10px;
+}
+
+.name{
+
+font-size:26px;
+
+font-weight:bold;
+
+}
+
+.sub{
+
+opacity:.6;
+
+margin-top:8px;
+
+}
+
+.info{
+
+display:grid;
+
+grid-template-columns:
+
+repeat(5,1fr);
+
+gap:16px;
+
+margin-top:25px;
+
+}
+
+.box{
+
+background:#0d2158;
+
+padding:18px;
+
+border-radius:14px;
 
 }
 
 .small{
 
-opacity:.7;
+font-size:12px;
 
-font-size:14px;
+opacity:.6;
 
 }
 
-.price{
-
-font-size:22px;
+.big{
 
 margin-top:10px;
 
-}
-
-.action{
-
-display:flex;
-
-gap:10px;
-
-margin-top:15px;
+font-size:18px;
 
 }
 
-.danger{
+@media(max-width:900px){
 
-background:#d62828;
-
+.sidebar{
+display:none;
 }
 
-.logout{
+.grid,
+.grid3,
+.info{
 
-margin-top:40px;
+grid-template-columns:1fr;
+
+}
 
 }
 
@@ -226,54 +310,33 @@ margin-top:40px;
 
 </div>
 
-<div
-class="item"
-onclick="dashboard()"
->
-
+<div class="item">
 🏠 Dashboard
-
 </div>
 
-<div
-class="item"
-onclick="rawMaterial()"
->
-
+<div class="item">
 📦 Raw Material
-
 </div>
 
 <div class="item">
-
 🔒 Preparation
-
 </div>
 
 <div class="item">
-
 🔒 Recipe
-
 </div>
 
 <div class="item">
-
 🔒 Menu
-
 </div>
 
 <div class="item">
-
 🔒 HPP
-
 </div>
 
 <div class="logout">
 
-<button
-class="btn"
-onclick="logout()"
->
+<button class="btn">
 
 Logout
 
@@ -284,235 +347,164 @@ Logout
 </div>
 
 
-<div
-class="main"
-id="app"
->
 
-</div>
+<div class="main">
 
-</div>
-
-
-<script>
-
-let raw=[];
-
-const app=
-document.getElementById(
-"app"
-);
-
-
-
-function dashboard(){
-
-app.innerHTML=`
-
-<div class="pageTitle">
-
-Dashboard
-
-</div>
-
-<div class="panel">
-
-Total Raw Material
-
-<br><br>
-
-<h1>
-
-${raw.length}
-
-</h1>
-
-</div>
-
-`;
-
-}
-
-
-
-function rawMaterial(){
-
-render();
-
-}
-
-
-
-function render(){
-
-let cards="";
-
-raw.forEach((r,i)=>{
-
-cards+=`
-
-<div class="card">
-
-<h2>
-
-${r.nama}
-
-</h2>
-
-<div class="small">
-
-${r.category}
-
-</div>
-
-<div class="row">
-
-<div>
-
-Supplier
-
-<br>
-
-<b>
-
-${r.supplier}
-
-</b>
-
-</div>
-
-<div>
-
-${r.buyQty}
-${r.buyUnit}
-
-</div>
-
-</div>
-
-<div class="row">
-
-<div>
-
-Conversion
-
-<br>
-
-${r.convQty}
-${r.useUnit}
-
-</div>
-
-<div>
-
-Waste
-
-<br>
-
-${r.waste}%
-
-</div>
-
-</div>
-
-<div class="price">
-
-Rp
-${r.cost}
-
-/
-${r.useUnit}
-
-</div>
-
-<div class="action">
-
-<button
-class="btn"
-onclick="hapus(${i})"
->
-
-Hapus
-
-</button>
-
-</div>
-
-</div>
-
-`;
-
-});
-
-
-app.innerHTML=`
-
-<div class="pageTitle">
+<div class="title">
 
 Raw Material Master
 
 </div>
 
 
-<div class="panel">
+
+<!-- IDENTITAS -->
+
+<div class="section">
+
+<div class="sectionTitle">
+
+IDENTITAS BAHAN
+
+</div>
 
 <div class="grid">
 
-<input
-id="nama"
-placeholder="Nama Bahan"
->
+<div class="field">
+
+<label>Nama Bahan</label>
 
 <input
-id="merk"
-placeholder="Merk"
+placeholder="Tepung Terigu"
 >
 
-<select id="category">
+</div>
 
-<option>Bahan Basah</option>
+<div class="field">
+
+<label>Merk</label>
+
+<input
+placeholder="Segitiga Biru"
+>
+
+</div>
+
+<div class="field">
+
+<label>Category</label>
+
+<select>
 
 <option>Bahan Kering</option>
+
+<option>Bahan Basah</option>
 
 <option>Buah</option>
 
 <option>Packaging</option>
 
-<option>Topping</option>
-
 </select>
 
-<input
-id="supplier"
-placeholder="Supplier"
->
+</div>
+
+<div class="field">
+
+<label>Supplier</label>
 
 <input
-id="buy"
-placeholder="Qty Beli"
+placeholder="Sari Murni"
 >
 
-<select id="buyunit">
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- PEMBELIAN -->
+
+<div class="section">
+
+<div class="sectionTitle">
+
+PEMBELIAN
+
+</div>
+
+<div class="grid3">
+
+<div class="field">
+
+<label>Qty Beli</label>
+
+<input value="1">
+
+</div>
+
+<div class="field">
+
+<label>Buy Unit</label>
+
+<select>
 
 <option>Kg</option>
 
+<option>Pack</option>
+
 <option>Liter</option>
 
-<option>Pack</option>
+<option>Pcs</option>
 
 </select>
 
-<input
-id="price"
-placeholder="Harga Beli"
->
+</div>
+
+<div class="field">
+
+<label>Harga Beli</label>
 
 <input
-id="conv"
-placeholder="Conversion Qty"
+placeholder="12500"
 >
 
-<select id="use">
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- KONVERSI -->
+
+<div class="section">
+
+<div class="sectionTitle">
+
+KONVERSI
+
+</div>
+
+<div class="grid3">
+
+<div class="field">
+
+<label>Conversion Qty</label>
+
+<input
+placeholder="1000"
+>
+
+</div>
+
+<div class="field">
+
+<label>Unit Dasar</label>
+
+<select>
 
 <option>gr</option>
 
@@ -522,183 +514,164 @@ placeholder="Conversion Qty"
 
 </select>
 
-<input
-id="waste"
-value="5"
->
+</div>
+
+<div class="field">
+
+<label>Default Waste %</label>
+
+<input value="5">
 
 </div>
 
-<br>
+</div>
 
-<button
-class="btn"
-onclick="tambah()"
->
+<button class="btn">
 
-Tambah Bahan
++ Tambah Bahan
 
 </button>
 
 </div>
 
 
+
+<!-- SEARCH -->
+
+<div class="search">
+
 <input
-class="search"
 placeholder="Cari bahan..."
-oninput="cari(this.value)"
 >
-
-<div
-id="list"
->
-
-${cards}
 
 </div>
 
-`;
-
-}
 
 
+<!-- CARD -->
 
-function tambah(){
+<div class="card">
 
-const nama=
-document.getElementById(
-"nama"
-).value;
+<div class="headerCard">
 
-if(!nama)
-return;
+<div>
 
-const price=
-Number(
-document.getElementById(
-"price"
-).value
-);
+<div class="name">
 
-const conv=
-Number(
-document.getElementById(
-"conv"
-).value
-);
+Tepung Terigu
 
-raw.unshift({
+</div>
 
-nama,
+<div class="sub">
 
-merk:
-document.getElementById(
-"merk"
-).value,
+Bahan Kering • Segitiga Biru
 
-category:
-document.getElementById(
-"category"
-).value,
+</div>
 
-supplier:
-document.getElementById(
-"supplier"
-).value,
+</div>
 
-buyQty:
-document.getElementById(
-"buy"
-).value,
+<div>
 
-buyUnit:
-document.getElementById(
-"buyunit"
-).value,
+Rp 13 / gr
 
-price,
+</div>
 
-convQty:
-conv,
-
-useUnit:
-document.getElementById(
-"use"
-).value,
-
-waste:
-document.getElementById(
-"waste"
-).value,
-
-cost:
-Math.round(
-price/conv
-)
-
-});
-
-render();
-
-}
+</div>
 
 
+<div class="info">
 
-function hapus(i){
+<div class="box">
 
-raw.splice(
-i,
-1
-);
+<div class="small">
 
-render();
+Supplier
 
-}
+</div>
 
+<div class="big">
 
+Sari Murni
 
-function cari(text){
+</div>
 
-document
-.querySelectorAll(
-".card"
-)
-
-.forEach(c=>{
-
-c.style.display=
-
-c.innerText
-.toLowerCase()
-.includes(
-text.toLowerCase()
-)
-
-?
-
-"block"
-
-:
-
-"none";
-
-});
-
-}
+</div>
 
 
+<div class="box">
 
-function logout(){
+<div class="small">
 
-window.location.href="/";
+Pembelian
 
-}
+</div>
+
+<div class="big">
+
+1 Pack
+
+</div>
+
+</div>
 
 
+<div class="box">
 
-dashboard();
+<div class="small">
 
-</script>
+Konversi
+
+</div>
+
+<div class="big">
+
+1000 gr
+
+</div>
+
+</div>
+
+
+<div class="box">
+
+<div class="small">
+
+Waste
+
+</div>
+
+<div class="big">
+
+5%
+
+</div>
+
+</div>
+
+
+<div class="box">
+
+<div class="small">
+
+Status
+
+</div>
+
+<div class="big">
+
+ACTIVE
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
 
 </body>
 
