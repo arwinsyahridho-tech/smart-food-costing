@@ -1,69 +1,335 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>SFC Dashboard</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:#07173a;
+font-family:Arial;
+color:white;
+}
+
+.wrapper{
+display:flex;
+height:100vh;
+}
+
+.sidebar{
+
+width:260px;
+
+background:#102766;
+
+padding:30px;
+
+}
+
+.logo{
+
+font-size:32px;
+
+font-weight:bold;
+
+margin-bottom:40px;
+
+}
+
+.item{
+
+padding:16px;
+
+border-radius:12px;
+
+margin-bottom:10px;
+
+cursor:pointer;
+
+}
+
+.item:hover{
+
+background:#1b3d91;
+
+}
+
+.main{
+
+flex:1;
+
+padding:40px;
+
+}
+
+.card{
+
+background:#102766;
+
+padding:30px;
+
+border-radius:20px;
+
+max-width:700px;
+
+}
+
+.field{
+
+margin-bottom:18px;
+
+}
+
+label{
+
+display:block;
+
+margin-bottom:8px;
+
+opacity:.7;
+
+}
+
+input,
+select{
+
+width:100%;
+
+height:52px;
+
+padding:0 14px;
+
+background:#0d2158;
+
+border:none;
+
+border-radius:12px;
+
+color:white;
+
+}
+
+.btn{
+
+padding:14px 22px;
+
+border:none;
+
+border-radius:12px;
+
+background:#2563eb;
+
+color:white;
+
+cursor:pointer;
+
+}
+
+.result{
+
+margin-top:25px;
+
+}
+
+.rawCard{
+
+background:#0d2158;
+
+padding:18px;
+
+border-radius:14px;
+
+margin-top:12px;
+
+}
+
+.logout{
+
+margin-top:40px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="wrapper">
+
+<div class="sidebar">
+
+<div class="logo">
+
+🍽️ SFC
+
+</div>
+
+<div class="item">
+
+📦 Raw Material
+
+</div>
+
+<div class="logout">
+
+<button
+class="btn"
+onclick="logout()"
+>
+
+Logout
+
+</button>
+
+</div>
+
+</div>
+
+
+<div class="main">
+
+<h1>
+
+Raw Material Master
+
+</h1>
+
+<br>
+
+<div class="card">
+
+<div class="field">
+
+<label>Nama Bahan</label>
+
+<input
+id="nama"
+placeholder="Tepung Terigu"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>Supplier</label>
+
+<input
+id="supplier"
+placeholder="Supplier"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>Buy Unit</label>
+
+<select
+id="unit"
+>
+
+<option>Kg</option>
+
+<option>Pack</option>
+
+<option>Liter</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>Harga Beli</label>
+
+<input
+id="harga"
+placeholder="12000"
+>
+
+</div>
+
+
+<button
+class="btn"
+onclick="tambah()"
+>
+
++ Tambah Bahan
+
+</button>
+
+</div>
+
+
+<div
+class="result"
+id="hasil"
+>
+
+</div>
+
+</div>
+
+</div>
+
+
 <script>
 
-const data=[];
-
-function tambahBahan(){
+function tambah(){
 
 const nama=
-document.querySelector(
-'input[placeholder="Tepung Terigu"]'
-).value;
-
-const merk=
-document.querySelector(
-'input[placeholder="Segitiga Biru"]'
-).value;
-
-const kategori=
-document.querySelectorAll(
-"select"
-)[0].value;
+document
+.getElementById(
+"nama"
+)
+.value;
 
 const supplier=
-document.querySelector(
-'input[placeholder="Sari Murni"]'
-).value;
-
-const qty=
-document.querySelector(
-'input[value="1"]'
-).value;
-
-const buyUnit=
-document.querySelectorAll(
-"select"
-)[1].value;
-
-const harga=
-document.querySelector(
-'input[placeholder="12500"]'
-).value;
-
-const conversion=
-document.querySelector(
-'input[placeholder="1000"]'
-).value;
+document
+.getElementById(
+"supplier"
+)
+.value;
 
 const unit=
-document.querySelectorAll(
-"select"
-)[2].value;
+document
+.getElementById(
+"unit"
+)
+.value;
 
-const waste=
-document.querySelector(
-'input[value="5"]'
-).value;
-
+const harga=
+document
+.getElementById(
+"harga"
+)
+.value;
 
 
 if(
 !nama||
-!harga||
-!conversion
+!supplier||
+!harga
 ){
 
 alert(
-"Lengkapi data dulu"
+"Lengkapi dulu"
 );
 
 return;
@@ -71,221 +337,79 @@ return;
 }
 
 
-
-const hargaUnit=
-
-(
-Number(harga)
-/
-Number(conversion)
+document
+.getElementById(
+"hasil"
 )
 
-.toFixed(2);
+.innerHTML
 
++=
 
+`
 
-data.unshift({
+<div
+class="rawCard"
+>
 
-nama,
-merk,
-kategori,
-supplier,
-qty,
-buyUnit,
-harga,
-conversion,
-unit,
-waste,
-hargaUnit
+<b>
 
-});
+${nama}
 
-renderData();
+</b>
 
-resetForm();
+<br><br>
 
-}
+Supplier:
+${supplier}
 
+<br>
 
+Unit:
+${unit}
 
-function renderData(){
+<br>
 
-let html="";
-
-data.forEach(item=>{
-
-html+=`
-
-<div class="card">
-
-<div class="headerCard">
-
-<div>
-
-<div class="name">
-
-${item.nama}
-
-</div>
-
-<div class="sub">
-
-${item.kategori}
-•
-${item.merk}
-
-</div>
-
-</div>
-
-<div>
-
-Rp ${item.hargaUnit}
-/ ${item.unit}
-
-</div>
-
-</div>
-
-
-<div class="info">
-
-<div class="box">
-
-<div class="small">
-
-Supplier
-
-</div>
-
-<div class="big">
-
-${item.supplier}
-
-</div>
-
-</div>
-
-
-<div class="box">
-
-<div class="small">
-
-Pembelian
-
-</div>
-
-<div class="big">
-
-${item.qty}
-${item.buyUnit}
-
-</div>
-
-</div>
-
-
-<div class="box">
-
-<div class="small">
-
-Konversi
-
-</div>
-
-<div class="big">
-
-${item.conversion}
-${item.unit}
-
-</div>
-
-</div>
-
-
-<div class="box">
-
-<div class="small">
-
-Waste
-
-</div>
-
-<div class="big">
-
-${item.waste}%
-
-</div>
-
-</div>
-
-
-<div class="box">
-
-<div class="small">
-
-Status
-
-</div>
-
-<div class="big">
-
-ACTIVE
-
-</div>
-
-</div>
-
-</div>
+Harga:
+Rp ${harga}
 
 </div>
 
 `;
 
-});
+
 
 document
 .getElementById(
-"dataArea"
+"nama"
 )
-.innerHTML=
-html;
-
-}
-
-
-
-function resetForm(){
-
-document.querySelector(
-'input[placeholder="Tepung Terigu"]'
-).value="";
-
-document.querySelector(
-'input[placeholder="Segitiga Biru"]'
-).value="";
-
-document.querySelector(
-'input[placeholder="Sari Murni"]'
-).value="";
-
-document.querySelector(
-'input[placeholder="12500"]'
-).value="";
-
-document.querySelector(
-'input[placeholder="1000"]'
-).value="";
-
-}
-
-
+.value="";
 
 document
-.querySelector(
-".btn"
+.getElementById(
+"supplier"
 )
-.onclick=
-tambahBahan;
+.value="";
+
+document
+.getElementById(
+"harga"
+)
+.value="";
+
+}
+
+
+
+function logout(){
+
+window.location.href=
+"/";
+
+}
 
 </script>
+
+</body>
+
+</html>
