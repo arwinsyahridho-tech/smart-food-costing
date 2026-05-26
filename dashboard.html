@@ -526,7 +526,10 @@ placeholder="1000"
 
 </div>
 
-<button class="btn">
+<button
+id="tambahBtn"
+class="btn"
+>
 
 + Tambah Bahan
 
@@ -672,7 +675,217 @@ ACTIVE
 </div>
 
 </div>
+<script>
 
+document
+.getElementById(
+"tambahBtn"
+)
+
+.addEventListener(
+
+"click",
+
+function(){
+
+const input =
+document.querySelectorAll(
+"input"
+);
+
+const select =
+document.querySelectorAll(
+"select"
+);
+
+
+/* AMBIL DATA */
+
+const nama =
+input[0].value;
+
+const merk =
+input[1].value;
+
+const kategori =
+select[0].value;
+
+const supplier =
+input[2].value;
+
+const qty =
+input[3].value;
+
+const buyUnit =
+select[1].value;
+
+const harga =
+input[4].value;
+
+const conversion =
+input[5].value;
+
+const unit =
+select[2].value;
+
+const waste =
+input[6].value;
+
+
+/* VALIDASI */
+
+if(
+!nama||
+!harga||
+!conversion
+){
+
+alert(
+"Lengkapi data dulu"
+);
+
+return;
+
+}
+
+
+/* HITUNG */
+
+const hargaUnit =
+
+(
+Number(harga)
+/
+Number(conversion)
+)
+
+.toFixed(2);
+
+
+/* UPDATE CARD */
+
+document
+.querySelector(
+".name"
+)
+
+.innerText =
+
+nama;
+
+
+document
+.querySelector(
+".sub"
+)
+
+.innerText =
+
+kategori
++
+" • "
++
+merk;
+
+
+
+document
+.querySelectorAll(
+".big"
+)
+
+[0]
+
+.innerText =
+
+supplier;
+
+
+
+document
+.querySelectorAll(
+".big"
+)
+
+[1]
+
+.innerText =
+
+qty
++
+" "
++
+buyUnit;
+
+
+
+document
+.querySelectorAll(
+".big"
+)
+
+[2]
+
+.innerText =
+
+conversion
++
+" "
++
+unit;
+
+
+
+document
+.querySelectorAll(
+".big"
+)
+
+[3]
+
+.innerText =
+
+waste
++
+"%";
+
+
+
+document
+.querySelector(
+".headerCard > div:last-child"
+)
+
+.innerText =
+
+"Rp "
++
+hargaUnit
++
+" / "
++
+unit;
+
+
+
+/* RESET */
+
+input[0].value="";
+input[1].value="";
+input[2].value="";
+input[4].value="";
+input[5].value="";
+
+
+alert(
+"Bahan berhasil ditambah 🚀"
+);
+
+}
+
+);
+
+</script>
 </body>
 
 </html>
