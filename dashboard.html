@@ -4,9 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>Smart Food Costing</title>
 
@@ -20,11 +18,9 @@ box-sizing:border-box;
 
 body{
 
-font-family:Arial;
-
 background:#07173a;
-
 color:white;
+font-family:Arial;
 
 }
 
@@ -38,7 +34,7 @@ height:100vh;
 
 .sidebar{
 
-width:280px;
+width:300px;
 
 background:#102766;
 
@@ -56,39 +52,23 @@ margin-bottom:50px;
 
 }
 
-.menu{
+.menuItem{
 
-display:flex;
-
-flex-direction:column;
-
-gap:18px;
-
-}
-
-.menu button{
-
-background:none;
-
-border:none;
-
-color:white;
-
-font-size:22px;
-
-text-align:left;
+padding:16px;
 
 cursor:pointer;
 
-padding:12px;
-
 border-radius:12px;
+
+margin-bottom:10px;
+
+font-size:22px;
 
 }
 
-.menu button:hover{
+.menuItem:hover{
 
-background:#18367d;
+background:#1a3f94;
 
 }
 
@@ -104,17 +84,17 @@ padding:50px;
 
 background:#12286b;
 
-padding:25px;
+padding:30px;
 
 border-radius:20px;
 
-width:260px;
+width:250px;
 
 margin-top:20px;
 
 }
 
-.topbar{
+.top{
 
 display:flex;
 
@@ -124,7 +104,7 @@ align-items:center;
 
 }
 
-.actionBtn{
+.btn{
 
 padding:12px 20px;
 
@@ -132,9 +112,9 @@ background:#2563eb;
 
 border:none;
 
-color:white;
-
 border-radius:12px;
+
+color:white;
 
 cursor:pointer;
 
@@ -152,9 +132,9 @@ border-collapse:collapse;
 
 th{
 
-background:#12286b;
-
 padding:18px;
+
+background:#12286b;
 
 text-align:left;
 
@@ -168,7 +148,7 @@ padding:18px;
 
 .logout{
 
-margin-top:60px;
+margin-top:50px;
 
 }
 
@@ -188,50 +168,53 @@ margin-top:60px;
 
 </div>
 
-<div class="menu">
-
-<button id="dashboardMenu">
+<div
+class="menuItem"
+id="dashboardBtn"
+>
 
 🏠 Dashboard
 
-</button>
+</div>
 
-<button id="rawMenu">
+<div
+class="menuItem"
+id="rawBtn"
+>
 
 📦 Raw Material
 
-</button>
+</div>
 
-<button>
+<div class="menuItem">
 
 🔒 Preparation
 
-</button>
+</div>
 
-<button>
+<div class="menuItem">
 
 🔒 Recipe
 
-</button>
+</div>
 
-<button>
+<div class="menuItem">
 
 🔒 Menu
 
-</button>
+</div>
 
-<button>
+<div class="menuItem">
 
 🔒 HPP
 
-</button>
-
 </div>
+
 
 <div class="logout">
 
 <button
-class="actionBtn"
+class="btn"
 onclick="logout()"
 >
 
@@ -243,6 +226,7 @@ Logout
 
 </div>
 
+
 <div
 class="main"
 id="content"
@@ -252,6 +236,7 @@ id="content"
 
 </div>
 
+
 <script>
 
 const content =
@@ -260,7 +245,7 @@ document.getElementById(
 );
 
 
-function loadDashboard(){
+function showDashboard(){
 
 content.innerHTML=`
 
@@ -280,19 +265,19 @@ Selamat datang 🚀
 
 <div class="card">
 
-<div>
+<h3>
 
 Total Raw Material
 
-</div>
+</h3>
 
 <br>
 
-<h2>
+<h1>
 
 0
 
-</h2>
+</h1>
 
 </div>
 
@@ -301,13 +286,11 @@ Total Raw Material
 }
 
 
-function loadRawMaterial(){
+function showRaw(){
 
 content.innerHTML=`
 
-<div
-class="topbar"
->
+<div class="top">
 
 <h1>
 
@@ -316,8 +299,8 @@ Raw Material
 </h1>
 
 <button
-class="actionBtn"
-onclick="openAdd()"
+class="btn"
+onclick="addData()"
 >
 
 + Tambah
@@ -330,45 +313,21 @@ onclick="openAdd()"
 
 <tr>
 
-<th>
+<th>Nama</th>
 
-Nama
+<th>Unit</th>
 
-</th>
-
-<th>
-
-Unit
-
-</th>
-
-<th>
-
-Harga
-
-</th>
+<th>Harga</th>
 
 </tr>
 
 <tr>
 
-<td>
+<td>Belum ada data</td>
 
-Belum ada data
+<td>-</td>
 
-</td>
-
-<td>
-
--
-
-</td>
-
-<td>
-
--
-
-</td>
+<td>-</td>
 
 </tr>
 
@@ -379,10 +338,10 @@ Belum ada data
 }
 
 
-function openAdd(){
+function addData(){
 
 alert(
-"Form tambah Raw Material dibuat berikutnya 🚀"
+"Form tambah dibuat berikutnya 🚀"
 );
 
 }
@@ -395,23 +354,28 @@ window.location.href="/";
 }
 
 
-document
-.getElementById(
-"dashboardMenu"
-)
-.onclick=
-loadDashboard;
-
 
 document
 .getElementById(
-"rawMenu"
+"dashboardBtn"
 )
-.onclick=
-loadRawMaterial;
+.addEventListener(
+"click",
+showDashboard
+);
 
 
-loadDashboard();
+document
+.getElementById(
+"rawBtn"
+)
+.addEventListener(
+"click",
+showRaw
+);
+
+
+showDashboard();
 
 </script>
 
