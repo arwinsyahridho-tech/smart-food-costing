@@ -29,7 +29,7 @@ height:100vh;
 
 .sidebar{
 
-width:260px;
+width:250px;
 
 background:#102766;
 
@@ -39,11 +39,11 @@ padding:30px;
 
 .logo{
 
-font-size:32px;
+font-size:34px;
 
 font-weight:bold;
 
-margin-bottom:40px;
+margin-bottom:45px;
 
 }
 
@@ -51,9 +51,9 @@ margin-bottom:40px;
 
 padding:16px;
 
-border-radius:12px;
-
 margin-bottom:10px;
+
+border-radius:12px;
 
 cursor:pointer;
 
@@ -61,7 +61,13 @@ cursor:pointer;
 
 .item:hover{
 
-background:#1b3d91;
+background:#1a3d95;
+
+}
+
+.logout{
+
+margin-top:40px;
 
 }
 
@@ -71,31 +77,77 @@ flex:1;
 
 padding:40px;
 
+overflow:auto;
+
 }
 
-.card{
+.title{
+
+font-size:44px;
+
+margin-bottom:25px;
+
+}
+
+.section{
 
 background:#102766;
 
-padding:30px;
+padding:28px;
 
-border-radius:20px;
+border-radius:22px;
 
-max-width:700px;
+margin-bottom:24px;
+
+}
+
+.sectionTitle{
+
+font-size:20px;
+
+margin-bottom:20px;
+
+opacity:.9;
+
+}
+
+.grid{
+
+display:grid;
+
+grid-template-columns:
+
+1fr 1fr;
+
+gap:18px;
+
+}
+
+.grid3{
+
+display:grid;
+
+grid-template-columns:
+
+1fr 1fr 1fr;
+
+gap:18px;
 
 }
 
 .field{
 
-margin-bottom:18px;
+display:flex;
+
+flex-direction:column;
+
+gap:10px;
 
 }
 
 label{
 
-display:block;
-
-margin-bottom:8px;
+font-size:14px;
 
 opacity:.7;
 
@@ -104,29 +156,33 @@ opacity:.7;
 input,
 select{
 
-width:100%;
+height:56px;
 
-height:52px;
-
-padding:0 14px;
+padding:0 18px;
 
 background:#0d2158;
 
 border:none;
 
-border-radius:12px;
+border-radius:14px;
 
 color:white;
+
+font-size:16px;
 
 }
 
 .btn{
 
-padding:14px 22px;
+margin-top:25px;
+
+height:54px;
+
+padding:0 24px;
 
 border:none;
 
-border-radius:12px;
+border-radius:14px;
 
 background:#2563eb;
 
@@ -136,13 +192,67 @@ cursor:pointer;
 
 }
 
-.result{
+.search{
+
+margin:30px 0;
+
+}
+
+.search input{
+
+width:100%;
+
+}
+
+.card{
+
+background:#102766;
+
+padding:25px;
+
+border-radius:22px;
+
+}
+
+.headerCard{
+
+display:flex;
+
+justify-content:space-between;
+
+}
+
+.name{
+
+font-size:26px;
+
+font-weight:bold;
+
+}
+
+.sub{
+
+opacity:.6;
+
+margin-top:8px;
+
+}
+
+.info{
+
+display:grid;
+
+grid-template-columns:
+
+repeat(5,1fr);
+
+gap:16px;
 
 margin-top:25px;
 
 }
 
-.rawCard{
+.box{
 
 background:#0d2158;
 
@@ -150,13 +260,37 @@ padding:18px;
 
 border-radius:14px;
 
-margin-top:12px;
+}
+
+.small{
+
+font-size:12px;
+
+opacity:.6;
 
 }
 
-.logout{
+.big{
 
-margin-top:40px;
+margin-top:10px;
+
+font-size:18px;
+
+}
+
+@media(max-width:900px){
+
+.sidebar{
+display:none;
+}
+
+.grid,
+.grid3,
+.info{
+
+grid-template-columns:1fr;
+
+}
 
 }
 
@@ -177,17 +311,32 @@ margin-top:40px;
 </div>
 
 <div class="item">
+🏠 Dashboard
+</div>
 
+<div class="item">
 📦 Raw Material
+</div>
 
+<div class="item">
+🔒 Preparation
+</div>
+
+<div class="item">
+🔒 Recipe
+</div>
+
+<div class="item">
+🔒 Menu
+</div>
+
+<div class="item">
+🔒 HPP
 </div>
 
 <div class="logout">
 
-<button
-class="btn"
-onclick="logout()"
->
+<button class="btn">
 
 Logout
 
@@ -198,49 +347,108 @@ Logout
 </div>
 
 
+
 <div class="main">
 
-<h1>
+<div class="title">
 
 Raw Material Master
 
-</h1>
+</div>
 
-<br>
 
-<div class="card">
+
+<!-- IDENTITAS -->
+
+<div class="section">
+
+<div class="sectionTitle">
+
+IDENTITAS BAHAN
+
+</div>
+
+<div class="grid">
 
 <div class="field">
 
 <label>Nama Bahan</label>
 
 <input
-id="nama"
 placeholder="Tepung Terigu"
 >
 
 </div>
 
+<div class="field">
+
+<label>Merk</label>
+
+<input
+placeholder="Segitiga Biru"
+>
+
+</div>
+
+<div class="field">
+
+<label>Category</label>
+
+<select>
+
+<option>Bahan Kering</option>
+
+<option>Bahan Basah</option>
+
+<option>Buah</option>
+
+<option>Packaging</option>
+
+</select>
+
+</div>
 
 <div class="field">
 
 <label>Supplier</label>
 
 <input
-id="supplier"
-placeholder="Supplier"
+placeholder="Sari Murni"
 >
 
 </div>
 
+</div>
+
+</div>
+
+
+
+<!-- PEMBELIAN -->
+
+<div class="section">
+
+<div class="sectionTitle">
+
+PEMBELIAN
+
+</div>
+
+<div class="grid3">
+
+<div class="field">
+
+<label>Qty Beli</label>
+
+<input value="1">
+
+</div>
 
 <div class="field">
 
 <label>Buy Unit</label>
 
-<select
-id="unit"
->
+<select>
 
 <option>Kg</option>
 
@@ -248,27 +456,77 @@ id="unit"
 
 <option>Liter</option>
 
+<option>Pcs</option>
+
 </select>
 
 </div>
-
 
 <div class="field">
 
 <label>Harga Beli</label>
 
 <input
-id="harga"
-placeholder="12000"
+placeholder="12500"
 >
 
 </div>
 
+</div>
 
-<button
-class="btn"
-onclick="tambah()"
+</div>
+
+
+
+<!-- KONVERSI -->
+
+<div class="section">
+
+<div class="sectionTitle">
+
+KONVERSI
+
+</div>
+
+<div class="grid3">
+
+<div class="field">
+
+<label>Conversion Qty</label>
+
+<input
+placeholder="1000"
 >
+
+</div>
+
+<div class="field">
+
+<label>Unit Dasar</label>
+
+<select>
+
+<option>gr</option>
+
+<option>ml</option>
+
+<option>pcs</option>
+
+</select>
+
+</div>
+
+<div class="field">
+
+<label>Default Waste %</label>
+
+<input value="5">
+
+</div>
+
+</div>
+
+<button class="btn">
 
 + Tambah Bahan
 
@@ -277,138 +535,143 @@ onclick="tambah()"
 </div>
 
 
-<div
-class="result"
-id="hasil"
+
+<!-- SEARCH -->
+
+<div class="search">
+
+<input
+placeholder="Cari bahan..."
 >
 
 </div>
 
+
+
+<!-- CARD -->
+
+<div class="card">
+
+<div class="headerCard">
+
+<div>
+
+<div class="name">
+
+Tepung Terigu
+
+</div>
+
+<div class="sub">
+
+Bahan Kering • Segitiga Biru
+
+</div>
+
+</div>
+
+<div>
+
+Rp 13 / gr
+
 </div>
 
 </div>
 
 
-<script>
+<div class="info">
 
-function tambah(){
+<div class="box">
 
-const nama=
-document
-.getElementById(
-"nama"
-)
-.value;
+<div class="small">
 
-const supplier=
-document
-.getElementById(
-"supplier"
-)
-.value;
-
-const unit=
-document
-.getElementById(
-"unit"
-)
-.value;
-
-const harga=
-document
-.getElementById(
-"harga"
-)
-.value;
-
-
-if(
-!nama||
-!supplier||
-!harga
-){
-
-alert(
-"Lengkapi dulu"
-);
-
-return;
-
-}
-
-
-document
-.getElementById(
-"hasil"
-)
-
-.innerHTML
-
-+=
-
-`
-
-<div
-class="rawCard"
->
-
-<b>
-
-${nama}
-
-</b>
-
-<br><br>
-
-Supplier:
-${supplier}
-
-<br>
-
-Unit:
-${unit}
-
-<br>
-
-Harga:
-Rp ${harga}
+Supplier
 
 </div>
 
-`;
+<div class="big">
+
+Sari Murni
+
+</div>
+
+</div>
 
 
+<div class="box">
 
-document
-.getElementById(
-"nama"
-)
-.value="";
+<div class="small">
 
-document
-.getElementById(
-"supplier"
-)
-.value="";
+Pembelian
 
-document
-.getElementById(
-"harga"
-)
-.value="";
+</div>
 
-}
+<div class="big">
+
+1 Pack
+
+</div>
+
+</div>
 
 
+<div class="box">
 
-function logout(){
+<div class="small">
 
-window.location.href=
-"/";
+Konversi
 
-}
+</div>
 
-</script>
+<div class="big">
+
+1000 gr
+
+</div>
+
+</div>
+
+
+<div class="box">
+
+<div class="small">
+
+Waste
+
+</div>
+
+<div class="big">
+
+5%
+
+</div>
+
+</div>
+
+
+<div class="box">
+
+<div class="small">
+
+Status
+
+</div>
+
+<div class="big">
+
+ACTIVE
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
 
 </body>
 
