@@ -44,7 +44,6 @@ padding:16px;
 border-radius:12px;
 margin-bottom:10px;
 cursor:pointer;
-transition:.2s;
 }
 
 .item:hover{
@@ -54,6 +53,7 @@ background:#1b3d91;
 .main{
 flex:1;
 padding:50px;
+overflow:auto;
 }
 
 .btn{
@@ -87,6 +87,7 @@ text-align:left;
 
 td{
 padding:18px;
+border-bottom:1px solid #203f92;
 }
 
 .top{
@@ -115,19 +116,13 @@ margin-top:40px;
 
 </div>
 
-<div
-class="item"
-id="dashboardBtn"
->
+<div class="item" id="dashboardBtn">
 
 🏠 Dashboard
 
 </div>
 
-<div
-class="item"
-id="rawBtn"
->
+<div class="item" id="rawBtn">
 
 📦 Raw Material
 
@@ -190,6 +185,8 @@ document.getElementById(
 "app"
 );
 
+const materials=[];
+
 
 
 function dashboard(){
@@ -222,7 +219,7 @@ Total Raw Material
 
 <h1>
 
-0
+${materials.length}
 
 </h1>
 
@@ -234,7 +231,46 @@ Total Raw Material
 
 
 
-function rawMaterial(){
+function renderTable(){
+
+let rows="";
+
+if(materials.length===0){
+
+rows=
+`
+<tr>
+
+<td>Belum ada data</td>
+
+<td>-</td>
+
+<td>-</td>
+
+</tr>
+`;
+
+}else{
+
+materials.forEach(item=>{
+
+rows+=`
+
+<tr>
+
+<td>${item.nama}</td>
+
+<td>${item.unit}</td>
+
+<td>Rp ${item.harga}</td>
+
+</tr>
+
+`;
+
+});
+
+}
 
 app.innerHTML=`
 
@@ -269,40 +305,79 @@ id="addBtn"
 
 </tr>
 
-<tr>
-
-<td>Belum ada data</td>
-
-<td>-</td>
-
-<td>-</td>
-
-</tr>
+${rows}
 
 </table>
 
 `;
 
-setTimeout(()=>{
-
-const btn=
-document.getElementById(
+document
+.getElementById(
 "addBtn"
-);
-
-if(btn){
-
-btn.onclick=function(){
-
-alert(
-"Form tambah dibuat berikutnya 🚀"
-);
+)
+.onclick=
+tambah;
 
 }
 
+
+
+function rawMaterial(){
+
+renderTable();
+
 }
 
-},10);
+
+
+function tambah(){
+
+const nama=
+prompt(
+"Nama bahan"
+);
+
+if(!nama)
+return;
+
+
+const unit=
+prompt(
+"Unit"
+);
+
+if(!unit)
+return;
+
+
+const harga=
+prompt(
+"Harga"
+);
+
+if(!harga)
+return;
+
+
+materials.push({
+
+nama,
+unit,
+harga
+
+});
+
+
+renderTable();
+
+}
+
+
+
+function logout(){
+
+window.location.href=
+"/";
 
 }
 
@@ -312,10 +387,8 @@ document
 .getElementById(
 "dashboardBtn"
 )
-.addEventListener(
-"click",
-dashboard
-);
+.onclick=
+dashboard;
 
 
 
@@ -323,10 +396,8 @@ document
 .getElementById(
 "rawBtn"
 )
-.addEventListener(
-"click",
-rawMaterial
-);
+onclick=
+rawMaterial;
 
 
 
@@ -334,15 +405,8 @@ document
 .getElementById(
 "logoutBtn"
 )
-.addEventListener(
-"click",
-function(){
-
-window.location.href=
-"/";
-
-}
-);
+.onclick=
+logout;
 
 
 
