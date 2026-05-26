@@ -716,217 +716,7 @@ ACTIVE
 </div>
 
 </div>
-<script>
-
-document
-.getElementById(
-"tambahBtn"
-)
-
-.addEventListener(
-
-"click",
-
-function(){
-
-const input =
-document.querySelectorAll(
-"input"
-);
-
-const select =
-document.querySelectorAll(
-"select"
-);
-
-
-/* AMBIL DATA */
-
-const nama =
-input[0].value;
-
-const merk =
-input[1].value;
-
-const kategori =
-select[0].value;
-
-const supplier =
-input[2].value;
-
-const qty =
-input[3].value;
-
-const buyUnit =
-select[1].value;
-
-const harga =
-input[4].value;
-
-const conversion =
-input[5].value;
-
-const unit =
-select[2].value;
-
-const waste =
-input[6].value;
-
-
-/* VALIDASI */
-
-if(
-!nama||
-!harga||
-!conversion
-){
-
-alert(
-"Lengkapi data dulu"
-);
-
-return;
-
-}
-
-
-/* HITUNG */
-
-const hargaUnit =
-
-(
-Number(harga)
-/
-Number(conversion)
-)
-
-.toFixed(2);
-
-
-/* UPDATE CARD */
-
-document
-.querySelector(
-".name"
-)
-
-.innerText =
-
-nama;
-
-
-document
-.querySelector(
-".sub"
-)
-
-.innerText =
-
-kategori
-+
-" • "
-+
-merk;
-
-
-
-document
-.querySelectorAll(
-".big"
-)
-
-[0]
-
-.innerText =
-
-supplier;
-
-
-
-document
-.querySelectorAll(
-".big"
-)
-
-[1]
-
-.innerText =
-
-qty
-+
-" "
-+
-buyUnit;
-
-
-
-document
-.querySelectorAll(
-".big"
-)
-
-[2]
-
-.innerText =
-
-conversion
-+
-" "
-+
-unit;
-
-
-
-document
-.querySelectorAll(
-".big"
-)
-
-[3]
-
-.innerText =
-
-waste
-+
-"%";
-
-
-
-document
-.querySelector(
-".headerCard > div:last-child"
-)
-
-.innerText =
-
-"Rp "
-+
-hargaUnit
-+
-" / "
-+
-unit;
-
-
-
-/* RESET */
-
-input[0].value="";
-input[1].value="";
-input[2].value="";
-input[4].value="";
-input[5].value="";
-
-
-alert(
-"Bahan berhasil ditambah 🚀"
-);
-
-}
-
-);
-
-<script>
+  <script>
 
 let bahan=[];
 
@@ -941,8 +731,10 @@ document.querySelectorAll("select");
 const search=
 document.querySelector(".search input");
 
-const card=
-document.getElementById("previewCard");
+const area=
+document.getElementById(
+"previewCard"
+);
 
 
 
@@ -950,21 +742,21 @@ function ambilData(){
 
 return{
 
-nama:input[0].value,
+nama:input[0].value.trim(),
 
-merk:input[1].value,
+merk:input[1].value.trim(),
 
 kategori:select[0].value,
 
-supplier:input[2].value,
+supplier:input[2].value.trim(),
 
 qty:input[3].value,
 
 buyUnit:select[1].value,
 
-harga:input[4].value,
+harga:Number(input[4].value),
 
-conversion:input[5].value,
+conversion:Number(input[5].value),
 
 unit:select[2].value,
 
@@ -976,51 +768,43 @@ waste:input[6].value
 
 
 
-function isiForm(data){
+function isiForm(x){
 
-input[0].value=data.nama;
+input[0].value=x.nama;
 
-input[1].value=data.merk;
+input[1].value=x.merk;
 
-select[0].value=data.kategori;
+select[0].value=x.kategori;
 
-input[2].value=data.supplier;
+input[2].value=x.supplier;
 
-input[3].value=data.qty;
+input[3].value=x.qty;
 
-select[1].value=data.buyUnit;
+select[1].value=x.buyUnit;
 
-input[4].value=data.harga;
+input[4].value=x.harga;
 
-input[5].value=data.conversion;
+input[5].value=x.conversion;
 
-select[2].value=data.unit;
+select[2].value=x.unit;
 
-input[6].value=data.waste;
-
-}
-
-
-
-function resetForm(){
-
-input.forEach(x=>{
-
-if(
-x.type!=="search"
-){
-
-x.value="";
+input[6].value=x.waste;
 
 }
 
-});
 
-input[3].value=1;
 
-input[6].value=5;
+function kosongkan(){
 
-editIndex=null;
+input[0].value="";
+
+input[1].value="";
+
+input[2].value="";
+
+input[4].value="";
+
+input[5].value="";
 
 }
 
@@ -1028,14 +812,15 @@ editIndex=null;
 
 function render(){
 
+area.innerHTML="";
+
 let keyword=
+search.value.toLowerCase();
 
-search.value
-.toLowerCase();
 
-let tampil=
+bahan
 
-bahan.filter(
+.filter(
 
 x=>
 
@@ -1045,17 +830,13 @@ x.nama
 keyword
 )
 
-);
+)
 
-card.innerHTML="";
+.forEach(
 
+(item,i)=>{
 
-
-tampil.forEach(
-
-(item,index)=>{
-
-let harga=
+const harga=
 
 (
 item.harga
@@ -1065,30 +846,27 @@ item.conversion
 
 .toFixed(2);
 
-card.innerHTML+=`
+
+area.innerHTML+=`
 
 <div
 class="card"
-style="margin-bottom:18px"
+style="
+margin-bottom:20px;
+"
 >
 
-<div
-class="headerCard"
->
+<div class="headerCard">
 
 <div>
 
-<div
-class="name"
->
+<div class="name">
 
 ${item.nama}
 
 </div>
 
-<div
-class="sub"
->
+<div class="sub">
 
 ${item.kategori}
 •
@@ -1108,9 +886,7 @@ Rp ${harga}
 </div>
 
 
-<div
-class="info"
->
+<div class="info">
 
 <div class="box">
 
@@ -1186,13 +962,13 @@ ${item.waste}%
 
 <button
 class="btn"
-onclick="editData(${index})"
 style="
 margin:0;
-height:45px;
+height:44px;
 background:#f59e0b;
 width:100%;
 "
+onclick="editData(${i})"
 >
 
 Edit
@@ -1203,13 +979,13 @@ Edit
 
 <button
 class="btn"
-onclick="hapusData(${index})"
 style="
 margin:0;
-height:45px;
+height:44px;
 background:#d62828;
 width:100%;
 "
+onclick="hapusData(${i})"
 >
 
 Hapus
@@ -1232,7 +1008,7 @@ Hapus
 
 
 
-function tambah(){
+function tambahData(){
 
 const data=
 ambilData();
@@ -1242,28 +1018,18 @@ if(
 ){
 
 alert(
-"Isi nama bahan"
+"Isi Nama Bahan"
 );
 
 return;
 
 }
 
-data.harga=
-Number(
-data.harga
-);
-
-data.conversion=
-Number(
-data.conversion
-);
-
 bahan.push(
 data
 );
 
-resetForm();
+kosongkan();
 
 render();
 
@@ -1291,7 +1057,7 @@ behavior:"smooth"
 
 
 
-function update(){
+function updateData(){
 
 if(
 editIndex===null
@@ -1309,10 +1075,6 @@ bahan[editIndex]=
 ambilData();
 
 render();
-
-alert(
-"Data berhasil diupdate"
-);
 
 }
 
@@ -1336,8 +1098,10 @@ document
 "tambahBtn"
 )
 
-.onclick=
-tambah;
+.addEventListener(
+"click",
+tambahData
+);
 
 
 
@@ -1346,19 +1110,20 @@ document
 "updateBtn"
 )
 
-.onclick=
-update;
+.addEventListener(
+"click",
+updateData
+);
 
 
 
 search
 .addEventListener(
-
 "input",
-
 render
-
 );
+
+
 
 render();
 
