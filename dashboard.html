@@ -1,23 +1,19 @@
 <script>
 
-const tombol=
-document.querySelector(".btn");
-
-if(tombol){
-
-tombol.onclick=
-tambahBahan;
-
-}
-
 function tambahBahan(){
 
 const input=
-document.querySelectorAll("input");
+document.querySelectorAll(
+"input"
+);
 
 const select=
-document.querySelectorAll("select");
+document.querySelectorAll(
+"select"
+);
 
+
+/* AMBIL DATA */
 
 const nama=
 input[0].value;
@@ -50,6 +46,7 @@ const waste=
 input[6].value;
 
 
+/* VALIDASI */
 
 if(
 !nama||
@@ -66,6 +63,7 @@ return;
 }
 
 
+/* HITUNG */
 
 const hargaUnit=
 
@@ -78,147 +76,130 @@ Number(conversion)
 .toFixed(2);
 
 
+/* UPDATE CARD */
 
 document
 .querySelector(
-".card"
+".name"
+)
+.innerHTML=
+nama;
+
+
+document
+.querySelector(
+".sub"
+)
+.innerHTML=
+
+kategori
+
++
+
+" • "
+
++
+
+merk;
+
+
+
+document
+.querySelectorAll(
+".big"
 )
 
-.innerHTML
+[0]
 
-=
+.innerHTML=
 
-`
+supplier;
 
-<div class="headerCard">
 
-<div>
 
-<div class="name">
+document
+.querySelectorAll(
+".big"
+)
 
-${nama}
+[1]
 
-</div>
+.innerHTML=
 
-<div class="sub">
+qty
 
-${kategori}
-•
-${merk}
++
 
-</div>
+" "
 
-</div>
++
 
-<div>
+buyUnit;
 
-Rp ${hargaUnit}
-/ ${unit}
 
-</div>
 
-</div>
+document
+.querySelectorAll(
+".big"
+)
 
+[2]
 
-<div class="info">
+.innerHTML=
 
-<div class="box">
+conversion
 
-<div class="small">
++
 
-Supplier
+" "
 
-</div>
++
 
-<div class="big">
+unit;
 
-${supplier}
 
-</div>
 
-</div>
+document
+.querySelectorAll(
+".big"
+)
 
+[3]
 
-<div class="box">
+.innerHTML=
 
-<div class="small">
+waste
 
-Pembelian
++
 
-</div>
+"%";
 
-<div class="big">
 
-${qty}
-${buyUnit}
 
-</div>
+document
+.querySelector(
+".headerCard div:last-child"
+)
 
-</div>
+.innerHTML=
 
+"Rp "
 
-<div class="box">
++
 
-<div class="small">
+hargaUnit
 
-Konversi
++
 
-</div>
+" / "
 
-<div class="big">
++
 
-${conversion}
-${unit}
+unit;
 
-</div>
 
-</div>
 
-
-<div class="box">
-
-<div class="small">
-
-Waste
-
-</div>
-
-<div class="big">
-
-${waste}%
-
-</div>
-
-</div>
-
-
-<div class="box">
-
-<div class="small">
-
-Status
-
-</div>
-
-<div class="big">
-
-ACTIVE
-
-</div>
-
-</div>
-
-</div>
-
-`;
-
-
-
-alert(
-"Bahan berhasil ditambah 🚀"
-);
-
-
+/* RESET */
 
 input[0].value="";
 input[1].value="";
@@ -226,6 +207,53 @@ input[2].value="";
 input[4].value="";
 input[5].value="";
 
+
+alert(
+"Bahan berhasil ditambah 🚀"
+);
+
 }
+
+
+
+/* HUBUNGKAN TOMBOL */
+
+window.onload=
+
+function(){
+
+const tombol=
+
+document
+.querySelectorAll(
+".btn"
+);
+
+tombol.forEach(
+
+btn=>{
+
+if(
+
+btn.innerText
+
+.includes(
+
+"Tambah"
+
+)
+
+){
+
+btn.onclick=
+tambahBahan;
+
+}
+
+}
+
+);
+
+};
 
 </script>
