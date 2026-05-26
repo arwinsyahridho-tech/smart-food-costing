@@ -4,7 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>SFC Dashboard</title>
 
@@ -28,80 +28,186 @@ height:100vh;
 }
 
 .sidebar{
-width:290px;
+
+width:270px;
+
 background:#102766;
+
 padding:30px;
+
 }
 
 .logo{
+
 font-size:34px;
+
 font-weight:bold;
+
 margin-bottom:40px;
+
 }
 
 .item{
-padding:14px;
+
+padding:16px;
+
 margin-bottom:10px;
+
 border-radius:12px;
+
 cursor:pointer;
+
 }
 
 .item:hover{
+
 background:#1b3d91;
+
 }
 
 .main{
+
 flex:1;
-padding:40px;
+
+padding:35px;
+
 overflow:auto;
+
 }
 
-.btn{
-padding:10px 18px;
-background:#2563eb;
-color:white;
-border:none;
-border-radius:10px;
-cursor:pointer;
+.pageTitle{
+
+font-size:32px;
+
+margin-bottom:25px;
+
 }
 
-.card{
-background:#12286b;
-padding:24px;
+.panel{
+
+background:#102766;
+
+padding:28px;
+
 border-radius:20px;
-width:280px;
-margin-top:20px;
+
+margin-bottom:25px;
+
 }
 
-table{
-width:100%;
-margin-top:20px;
-border-collapse:collapse;
-}
+.grid{
 
-th{
-padding:14px;
-background:#12286b;
-font-size:14px;
-}
+display:grid;
 
-td{
-padding:12px;
-border-bottom:1px solid #173680;
+grid-template-columns:
+repeat(
+2,
+1fr
+);
+
+gap:15px;
+
 }
 
 input,
 select{
+
 width:100%;
-padding:10px;
-background:#0f2559;
+
+padding:14px;
+
+background:#0b1f53;
+
 border:none;
+
+border-radius:12px;
+
 color:white;
-border-radius:8px;
+
+}
+
+.btn{
+
+padding:14px;
+
+border:none;
+
+background:#2563eb;
+
+color:white;
+
+border-radius:12px;
+
+cursor:pointer;
+
+}
+
+.search{
+
+margin-top:20px;
+
+margin-bottom:20px;
+
+}
+
+.card{
+
+background:#102766;
+
+padding:20px;
+
+border-radius:18px;
+
+margin-bottom:15px;
+
+}
+
+.row{
+
+display:flex;
+
+justify-content:space-between;
+
+margin-top:10px;
+
+}
+
+.small{
+
+opacity:.7;
+
+font-size:14px;
+
+}
+
+.price{
+
+font-size:22px;
+
+margin-top:10px;
+
+}
+
+.action{
+
+display:flex;
+
+gap:10px;
+
+margin-top:15px;
+
+}
+
+.danger{
+
+background:#d62828;
+
 }
 
 .logout{
+
 margin-top:40px;
+
 }
 
 </style>
@@ -139,19 +245,27 @@ onclick="rawMaterial()"
 </div>
 
 <div class="item">
+
 🔒 Preparation
+
 </div>
 
 <div class="item">
+
 🔒 Recipe
+
 </div>
 
 <div class="item">
+
 🔒 Menu
+
 </div>
 
 <div class="item">
+
 🔒 HPP
+
 </div>
 
 <div class="logout">
@@ -168,7 +282,6 @@ Logout
 </div>
 
 </div>
-
 
 
 <div
@@ -196,13 +309,13 @@ function dashboard(){
 
 app.innerHTML=`
 
-<h1>
+<div class="pageTitle">
 
 Dashboard
 
-</h1>
+</div>
 
-<div class="card">
+<div class="panel">
 
 Total Raw Material
 
@@ -224,46 +337,108 @@ ${raw.length}
 
 function rawMaterial(){
 
-let rows="";
+render();
+
+}
+
+
+
+function render(){
+
+let cards="";
 
 raw.forEach((r,i)=>{
 
-rows+=`
+cards+=`
 
-<tr>
+<div class="card">
 
-<td>${r.id}</td>
+<h2>
 
-<td>${r.nama}</td>
+${r.nama}
 
-<td>${r.supplier}</td>
+</h2>
 
-<td>${r.buyQty}</td>
+<div class="small">
 
-<td>${r.buyUnit}</td>
+${r.category}
 
-<td>${r.convQty}</td>
+</div>
 
-<td>${r.useUnit}</td>
+<div class="row">
 
-<td>Rp ${r.price}</td>
+<div>
 
-<td>Rp ${r.cost}</td>
+Supplier
 
-<td>
+<br>
+
+<b>
+
+${r.supplier}
+
+</b>
+
+</div>
+
+<div>
+
+${r.buyQty}
+${r.buyUnit}
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div>
+
+Conversion
+
+<br>
+
+${r.convQty}
+${r.useUnit}
+
+</div>
+
+<div>
+
+Waste
+
+<br>
+
+${r.waste}%
+
+</div>
+
+</div>
+
+<div class="price">
+
+Rp
+${r.cost}
+
+/
+${r.useUnit}
+
+</div>
+
+<div class="action">
 
 <button
 class="btn"
 onclick="hapus(${i})"
 >
 
-X
+Hapus
 
 </button>
 
-</td>
+</div>
 
-</tr>
+</div>
 
 `;
 
@@ -272,63 +447,50 @@ X
 
 app.innerHTML=`
 
-<h1>
+<div class="pageTitle">
 
 Raw Material Master
 
-</h1>
+</div>
 
-<table>
 
-<tr>
+<div class="panel">
 
-<th>ID</th>
+<div class="grid">
 
-<th>Nama</th>
+<input
+id="nama"
+placeholder="Nama Bahan"
+>
 
-<th>Supplier</th>
+<input
+id="merk"
+placeholder="Merk"
+>
 
-<th>Buy Qty</th>
+<select id="category">
 
-<th>Buy Unit</th>
+<option>Bahan Basah</option>
 
-<th>Conv Qty</th>
+<option>Bahan Kering</option>
 
-<th>Usage Unit</th>
+<option>Buah</option>
 
-<th>Price</th>
+<option>Packaging</option>
 
-<th>Cost/U</th>
+<option>Topping</option>
 
-<th></th>
+</select>
 
-</tr>
+<input
+id="supplier"
+placeholder="Supplier"
+>
 
-${rows}
-
-<tr>
-
-<td>AUTO</td>
-
-<td>
-
-<input id="nama">
-
-</td>
-
-<td>
-
-<input id="supplier">
-
-</td>
-
-<td>
-
-<input id="buy">
-
-</td>
-
-<td>
+<input
+id="buy"
+placeholder="Qty Beli"
+>
 
 <select id="buyunit">
 
@@ -340,15 +502,15 @@ ${rows}
 
 </select>
 
-</td>
+<input
+id="price"
+placeholder="Harga Beli"
+>
 
-<td>
-
-<input id="conv">
-
-</td>
-
-<td>
+<input
+id="conv"
+placeholder="Conversion Qty"
+>
 
 <select id="use">
 
@@ -360,36 +522,40 @@ ${rows}
 
 </select>
 
-</td>
+<input
+id="waste"
+value="5"
+>
 
-<td>
+</div>
 
-<input id="price">
-
-</td>
-
-<td>
-
-AUTO
-
-</td>
-
-<td>
+<br>
 
 <button
 class="btn"
 onclick="tambah()"
 >
 
-+
+Tambah Bahan
 
 </button>
 
-</td>
+</div>
 
-</tr>
 
-</table>
+<input
+class="search"
+placeholder="Cari bahan..."
+oninput="cari(this.value)"
+>
+
+<div
+id="list"
+>
+
+${cards}
+
+</div>
 
 `;
 
@@ -404,34 +570,8 @@ document.getElementById(
 "nama"
 ).value;
 
-const supplier=
-document.getElementById(
-"supplier"
-).value;
-
-const buy=
-Number(
-document.getElementById(
-"buy"
-).value
-);
-
-const buyunit=
-document.getElementById(
-"buyunit"
-).value;
-
-const conv=
-Number(
-document.getElementById(
-"conv"
-).value
-);
-
-const use=
-document.getElementById(
-"use"
-).value;
+if(!nama)
+return;
 
 const price=
 Number(
@@ -440,62 +580,65 @@ document.getElementById(
 ).value
 );
 
-if(
-!nama||
-!supplier||
-!buy||
-!conv||
-!price
-){
-
-alert(
-"Lengkapi data"
+const conv=
+Number(
+document.getElementById(
+"conv"
+).value
 );
 
-return;
-
-}
-
-const cost=
-Math.round(
-price/conv
-);
-
-raw.push({
-
-id:
-"RM"+
-String(
-raw.length+1
-)
-.padStart(
-3,
-"0"
-),
+raw.unshift({
 
 nama,
 
-supplier,
+merk:
+document.getElementById(
+"merk"
+).value,
+
+category:
+document.getElementById(
+"category"
+).value,
+
+supplier:
+document.getElementById(
+"supplier"
+).value,
 
 buyQty:
-buy,
+document.getElementById(
+"buy"
+).value,
 
 buyUnit:
-buyunit,
+document.getElementById(
+"buyunit"
+).value,
+
+price,
 
 convQty:
 conv,
 
 useUnit:
-use,
+document.getElementById(
+"use"
+).value,
 
-price,
+waste:
+document.getElementById(
+"waste"
+).value,
 
-cost
+cost:
+Math.round(
+price/conv
+)
 
 });
 
-rawMaterial();
+render();
 
 }
 
@@ -508,7 +651,38 @@ i,
 1
 );
 
-rawMaterial();
+render();
+
+}
+
+
+
+function cari(text){
+
+document
+.querySelectorAll(
+".card"
+)
+
+.forEach(c=>{
+
+c.style.display=
+
+c.innerText
+.toLowerCase()
+.includes(
+text.toLowerCase()
+)
+
+?
+
+"block"
+
+:
+
+"none";
+
+});
 
 }
 
