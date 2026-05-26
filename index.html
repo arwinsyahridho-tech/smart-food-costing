@@ -4,19 +4,21 @@
 <head>
 
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
+<title>Smart Food Costing</title>
 
-<title>
-Smart Food Costing
-</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 
-body{
-
+*{
 margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
 
 height:100vh;
 
@@ -40,6 +42,20 @@ text-align:center;
 
 }
 
+h1{
+
+margin-bottom:10px;
+
+}
+
+p{
+
+margin-bottom:25px;
+
+opacity:.8;
+
+}
+
 button{
 
 padding:14px 28px;
@@ -53,6 +69,8 @@ background:#2563eb;
 color:white;
 
 cursor:pointer;
+
+font-size:16px;
 
 }
 
@@ -76,13 +94,13 @@ align-items:center;
 
 background:white;
 
+color:black;
+
 padding:30px;
 
 border-radius:20px;
 
-width:320px;
-
-color:black;
+width:340px;
 
 }
 
@@ -92,9 +110,19 @@ width:100%;
 
 padding:12px;
 
-margin-top:10px;
+margin-top:12px;
 
-box-sizing:border-box;
+border:1px solid #ddd;
+
+border-radius:10px;
+
+}
+
+.loginBtn{
+
+margin-top:15px;
+
+width:100%;
 
 }
 
@@ -107,62 +135,54 @@ box-sizing:border-box;
 <div class="box">
 
 <h1>
-
 🍽️ SMART FOOD COSTING
-
 </h1>
 
 <p>
-
-Phase 1
-
+Phase 1 Development
 </p>
 
-<button
-onclick="openLogin()"
->
-
+<button onclick="openLogin()">
 Login
-
 </button>
 
 </div>
 
 <div
-id="modal"
 class="modal"
+id="modal"
 >
 
 <div class="card">
 
 <h2>
-
 Login
-
 </h2>
 
+<br>
+
 <input
+id="email"
 placeholder="Email"
 >
 
 <input
+id="password"
 type="password"
 placeholder="Password"
 >
 
-<br><br>
-
 <button
-onclick="fakeLogin()"
+class="loginBtn"
+onclick="login()"
 >
 
 Masuk
 
 </button>
 
-<br><br>
-
 <button
+class="loginBtn"
 onclick="closeLogin()"
 >
 
@@ -176,6 +196,20 @@ Tutup
 
 <script>
 
+/* GANTI KEY SAJA */
+
+const SUPABASE_URL =
+"https://pkjmkjyylgzjvhcreucc.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_Tq4d0o3PIAd_zh11uJa2uQ_M_zPIYFX";
+
+const supabase =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
 function openLogin(){
 
 document
@@ -183,8 +217,7 @@ document
 "modal"
 )
 .style
-.display
-=
+.display =
 "flex";
 
 }
@@ -196,19 +229,84 @@ document
 "modal"
 )
 .style
-.display
-=
+.display =
 "none";
 
 }
 
-function fakeLogin(){
+async function login(){
+
+try{
+
+const email =
+document
+.getElementById(
+"email"
+)
+.value
+.trim();
+
+const password =
+document
+.getElementById(
+"password"
+)
+.value;
+
+if(
+!email||
+!password
+){
+
+alert(
+"Isi email & password dulu"
+);
+
+return;
+
+}
+
+const {
+error
+}
+=
+await
+supabase
+.auth
+.signInWithPassword({
+
+email,
+password
+
+});
+
+if(error){
+
+alert(
+"Gagal Login ❌\n\n"
++
+error.message
+);
+
+}else{
 
 alert(
 "Login berhasil 🚀"
 );
 
 closeLogin();
+
+}
+
+}catch(err){
+
+alert(
+"Error:\n"
++
+err.message
+);
+
+}
 
 }
 
