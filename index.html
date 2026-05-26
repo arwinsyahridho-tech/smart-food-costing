@@ -4,7 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>Smart Food Costing</title>
 
@@ -19,41 +19,26 @@ box-sizing:border-box;
 }
 
 body{
-
 height:100vh;
-
 display:flex;
-
 justify-content:center;
-
 align-items:center;
-
 background:#07173a;
-
 font-family:Arial;
-
 color:white;
-
 }
 
 .box{
-
 text-align:center;
-
 }
 
 h1{
-
 margin-bottom:10px;
-
 }
 
 p{
-
-margin-bottom:25px;
-
+margin-bottom:24px;
 opacity:.8;
-
 }
 
 button{
@@ -72,6 +57,14 @@ cursor:pointer;
 
 font-size:16px;
 
+transition:.2s;
+
+}
+
+button:hover{
+
+transform:translateY(-2px);
+
 }
 
 .modal{
@@ -80,7 +73,13 @@ display:none;
 
 position:fixed;
 
-inset:0;
+top:0;
+
+left:0;
+
+width:100%;
+
+height:100%;
 
 background:rgba(0,0,0,.5);
 
@@ -112,17 +111,25 @@ padding:12px;
 
 margin-top:12px;
 
-border:1px solid #ddd;
-
 border-radius:10px;
+
+border:1px solid #ddd;
 
 }
 
 .loginBtn{
 
-margin-top:15px;
-
 width:100%;
+
+margin-top:14px;
+
+}
+
+.loading{
+
+opacity:.7;
+
+pointer-events:none;
 
 }
 
@@ -148,6 +155,7 @@ Login
 
 </div>
 
+
 <div
 class="modal"
 id="modal"
@@ -155,14 +163,11 @@ id="modal"
 
 <div class="card">
 
-<h2>
-Login
-</h2>
-
-<br>
+<h2>Login</h2>
 
 <input
 id="email"
+type="email"
 placeholder="Email"
 >
 
@@ -173,6 +178,7 @@ placeholder="Password"
 >
 
 <button
+id="loginBtn"
 class="loginBtn"
 onclick="login()"
 >
@@ -196,7 +202,7 @@ Tutup
 
 <script>
 
-/* GANTI KEY SAJA */
+/* SUPABASE */
 
 const SUPABASE_URL =
 "https://pkjmkjyylgzjvhcreucc.supabase.co";
@@ -210,6 +216,38 @@ SUPABASE_URL,
 SUPABASE_KEY
 );
 
+
+/* AUTO LOGIN */
+
+(async()=>{
+
+const {
+
+data
+
+}
+
+=
+
+await
+
+supabase
+.auth
+.getSession();
+
+if(
+data.session
+){
+
+window.location.replace(
+"./dashboard.html"
+);
+
+}
+
+})();
+
+
 function openLogin(){
 
 document
@@ -217,10 +255,12 @@ document
 "modal"
 )
 .style
-.display =
+.display
+=
 "flex";
 
 }
+
 
 function closeLogin(){
 
@@ -229,12 +269,19 @@ document
 "modal"
 )
 .style
-.display =
+.display
+=
 "none";
 
 }
 
+
 async function login(){
+
+const btn =
+document.getElementById(
+"loginBtn"
+);
 
 try{
 
@@ -259,52 +306,74 @@ if(
 ){
 
 alert(
-"Isi email & password dulu"
+"Isi email & password"
 );
 
 return;
 
 }
 
+btn.innerText=
+"Loading...";
+
+btn.classList.add(
+"loading"
+);
+
 const {
+
 error
+
 }
+
 =
+
 await
+
 supabase
 .auth
 .signInWithPassword({
 
 email,
+
 password
 
 });
 
+
 if(error){
 
 alert(
-"Gagal Login ❌\n\n"
-+
 error.message
 );
 
-}else{
+btn.innerText=
+"Masuk";
 
-closeLogin();
+btn.classList.remove(
+"loading"
+);
 
-/* pindah halaman */
-
-window.location.href =
-"/dashboard.html";
+return;
 
 }
 
-}catch(err){
+
+window.location.replace(
+"./dashboard.html"
+);
+
+}catch(e){
 
 alert(
-"Error:\n"
-+
-err.message
+e.message
+);
+
+btn.innerText=
+"Masuk";
+
+btn.classList.remove(
+"loading"
 );
 
 }
