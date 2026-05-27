@@ -757,7 +757,7 @@
           </div>
         </div>
 
-        <div class="section">
+        <div class="section" id="prepListSection">
           <div class="section-head">
             <div>
               <div class="section-title">Preparation List</div>
@@ -798,12 +798,14 @@
 
     const tableBody = document.getElementById("tableBody");
     const prepList = document.getElementById("prepList");
+    const prepListSection = document.getElementById("prepListSection");
     const prepSearch = document.getElementById("prepSearch");
     const saveBtn = document.getElementById("saveBtn");
     const formTitle = document.getElementById("formTitle");
 
     let preparations = [];
     let editingId = null;
+    let expandedPrepId = null;
 
     function formatMoney(value) {
       const n = Number(value) || 0;
@@ -849,6 +851,14 @@
         prepSearch.focus();
         renderPreparationList();
       }
+    }
+
+    function hidePreparationListSection() {
+      if (prepListSection) prepListSection.style.display = "none";
+    }
+
+    function showPreparationListSection() {
+      if (prepListSection) prepListSection.style.display = "";
     }
 
     function getMaterialOptions(selectedName = "") {
@@ -955,6 +965,7 @@
       editingId = null;
       formTitle.textContent = "Buat Preparation";
       saveBtn.textContent = "+ Simpan Preparation";
+      showPreparationListSection();
 
       document.getElementById("prepName").value = "";
       document.getElementById("prepCategory").selectedIndex = 0;
@@ -968,6 +979,8 @@
     }
 
     function savePreparation() {
+      const isEditing = editingId !== null;
+
       const prepName = document.getElementById("prepName").value.trim();
       const prepCategory = document.getElementById("prepCategory").value;
       const prepStatus = document.getElementById("prepStatus").value;
@@ -1015,13 +1028,15 @@
       }
 
       renderPreparationList();
+      showPreparationListSection();
       resetForm();
       addRow();
 
-      alert(editingId ? "Preparation berhasil diperbarui" : "Preparation berhasil disimpan");
+      alert(isEditing ? "Preparation berhasil diperbarui" : "Preparation berhasil disimpan");
     }
 
-    function renderPreparationList() {
+    
+function renderPreparationList() {
       const filtered = getFilteredPreparations();
 
       if (preparations.length === 0) {
@@ -1033,6 +1048,21 @@
       if (filtered.length === 0) {
         prepList.className = "prep-list-empty";
         prepList.innerHTML = "Tidak ada preparation yang cocok dengan pencarian";
+        return;
+      }
+
+      // Jika sedang membuka satu preparation, tampilkan hanya item itu
+      if (expandedPrepId !== null) {
+        const activePrep = filtered.find(prep => prep.id === expandedPrepId);
+
+        if (!activePrep) {
+          expandedPrepId = null;
+          renderPreparationList();
+          return;
+        }
+
+        prepList.className = "prep-groups";
+        prepList.innerHTML = renderPrepCard(activePrep);
         return;
       }
 
@@ -1069,7 +1099,8 @@
       prepList.innerHTML = blocks.join("");
     }
 
-    function renderPrepCard(prep) {
+    
+function renderPrepCard(prep) {
       const ingredientRows = prep.ingredients.map(item => `
         <tr>
           <td>${escapeHtml(item.material)}</td>
@@ -1080,8 +1111,10 @@
         </tr>
       `).join("");
 
+      const isOpen = expandedPrepId === prep.id;
+
       return `
-        <div class="prep-item">
+        <div class="prep-item" data-prep-id="${prep.id}">
           <div class="prep-header" onclick="toggleDetail(${prep.id})">
             <div class="prep-left">
               <div class="prep-name">${escapeHtml(prep.name)}</div>
@@ -1099,7 +1132,7 @@
             </div>
           </div>
 
-          <div class="prep-detail" id="detail-${prep.id}">
+          <div class="prep-detail${isOpen ? ' active' : ''}" id="detail-${prep.id}">
             <div class="detail-grid">
               <div class="mini-box">
                 <div class="mini-title">Yield</div>
@@ -1157,9 +1190,10 @@
       `;
     }
 
-    function toggleDetail(id) {
-      const detail = document.getElementById(`detail-${id}`);
-      if (detail) detail.classList.toggle("active");
+    
+function toggleDetail(id) {
+      expandedPrepId = expandedPrepId === id ? null : id;
+      renderPreparationList();
     }
 
     function deletePreparation(id) {
@@ -1168,7 +1202,9 @@
       if (!confirmDelete) return;
 
       preparations = preparations.filter(item => item.id !== id);
+      if (expandedPrepId === id) expandedPrepId = null;
       renderPreparationList();
+      if (editingId !== null) hidePreparationListSection();
     }
 
     function editPreparation(id) {
@@ -1178,6 +1214,7 @@
       editingId = id;
       formTitle.textContent = "Edit Preparation";
       saveBtn.textContent = "Update Preparation";
+      hidePreparationListSection();
 
       document.getElementById("prepName").value = prep.name;
       document.getElementById("prepCategory").value = prep.category;
