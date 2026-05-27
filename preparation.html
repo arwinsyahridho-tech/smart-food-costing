@@ -232,6 +232,98 @@ font-size:24px;
 font-weight:bold;
 }
 
+/* PREPARATION LIST */
+
+.prep-item{
+background:#0d2158;
+border-radius:18px;
+padding:22px;
+margin-bottom:18px;
+}
+
+.prep-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+cursor:pointer;
+}
+
+.prep-left{
+display:flex;
+flex-direction:column;
+gap:8px;
+}
+
+.prep-name{
+font-size:20px;
+font-weight:bold;
+}
+
+.prep-category{
+display:inline-block;
+padding:6px 12px;
+background:#2563eb;
+border-radius:999px;
+font-size:12px;
+width:fit-content;
+}
+
+.prep-cost{
+font-size:22px;
+font-weight:bold;
+}
+
+.prep-detail{
+margin-top:20px;
+padding-top:20px;
+border-top:1px solid rgba(255,255,255,.08);
+display:none;
+}
+
+.prep-detail.active{
+display:block;
+}
+
+.prep-table{
+width:100%;
+border-collapse:collapse;
+margin-top:12px;
+}
+
+.prep-table th{
+background:#1b3d96;
+padding:12px;
+font-size:13px;
+}
+
+.prep-table td{
+padding:12px;
+background:#07173a;
+}
+
+.prep-actions{
+display:flex;
+gap:10px;
+margin-top:18px;
+}
+
+.action-btn{
+height:42px;
+padding:0 18px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+color:white;
+font-weight:bold;
+}
+
+.edit-btn{
+background:#f59e0b;
+}
+
+.delete-prep-btn{
+background:#ef4444;
+}
 </style>
 
 </head>
@@ -730,14 +822,227 @@ rows.length;
 
 /* SAVE */
 
+let preparations = [];
+
 function savePreparation(){
 
-alert(
-"Preparation berhasil disimpan"
-);
+const prepName =
+document.getElementById("prepName").value;
+
+const prepCategory =
+document.getElementById("prepCategory").value;
+
+const grandTotal =
+document.getElementById("grandTotal").value;
+
+if(prepName === ""){
+
+alert("Nama preparation wajib diisi");
+return;
 
 }
 
+const rows =
+document.querySelectorAll("#tableBody tr");
+
+let ingredients = [];
+
+rows.forEach(row=>{
+
+ingredients.push({
+
+material:
+row.querySelector(".material-select").value,
+
+qty:
+row.querySelector(".qty-input").value,
+
+unit:
+row.querySelector(".unit-input").value,
+
+price:
+row.querySelector(".price-input").value,
+
+total:
+row.querySelector(".total-input").value
+
+});
+
+});
+
+const prepData = {
+
+id: Date.now(),
+
+name: prepName,
+
+category: prepCategory,
+
+total: grandTotal,
+
+ingredients: ingredients
+
+};
+
+preparations.push(prepData);
+
+renderPreparationList();
+
+alert("Preparation berhasil disimpan");
+
+}
+
+/* RENDER LIST */
+
+function renderPreparationList(){
+
+const prepList =
+document.getElementById("prepList");
+
+if(preparations.length === 0){
+
+prepList.innerHTML = `
+<div
+style="
+opacity:.6;
+padding:20px;
+text-align:center;
+"
+>
+Belum ada data preparation
+</div>
+`;
+
+return;
+
+}
+
+prepList.innerHTML = "";
+
+preparations.forEach(prep=>{
+
+let ingredientRows = "";
+
+prep.ingredients.forEach(item=>{
+
+ingredientRows += `
+
+<tr>
+<td>${item.material}</td>
+<td>${item.qty}</td>
+<td>${item.unit}</td>
+<td>Rp ${Number(item.price).toLocaleString()}</td>
+<td>Rp ${Number(item.total).toLocaleString()}</td>
+</tr>
+
+`;
+
+});
+
+prepList.innerHTML += `
+
+<div class="prep-item">
+
+<div
+class="prep-top"
+onclick="toggleDetail(${prep.id})"
+>
+
+<div class="prep-left">
+
+<div class="prep-name">
+${prep.name}
+</div>
+
+<div class="prep-category">
+${prep.category}
+</div>
+
+</div>
+
+<div class="prep-cost">
+Rp ${Number(prep.total).toLocaleString()}
+</div>
+
+</div>
+
+<div
+class="prep-detail"
+id="detail-${prep.id}"
+>
+
+<table class="prep-table">
+
+<thead>
+
+<tr>
+<th>Bahan</th>
+<th>Qty</th>
+<th>Unit</th>
+<th>Harga</th>
+<th>Total</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+${ingredientRows}
+
+</tbody>
+
+</table>
+
+<div class="prep-actions">
+
+<button
+class="action-btn edit-btn"
+>
+Edit
+</button>
+
+<button
+class="action-btn delete-prep-btn"
+onclick="deletePreparation(${prep.id})"
+>
+Hapus
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+/* TOGGLE DETAIL */
+
+function toggleDetail(id){
+
+const detail =
+document.getElementById(`detail-${id}`);
+
+detail.classList.toggle("active");
+
+}
+
+/* DELETE PREPARATION */
+
+function deletePreparation(id){
+
+preparations =
+preparations.filter(
+prep => prep.id !== id
+);
+
+renderPreparationList();
+
+}
 /* DEFAULT ROW */
 
 addRow();
