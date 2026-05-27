@@ -1246,4 +1246,2500 @@ function toggleDetail(id) {
     });
   </script>
 </body>
+</html><!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SFC • Preparation</title>
+  <style>
+    :root{
+      --bg:#07173a;
+      --panel:#102766;
+      --panel-2:#0d2158;
+      --panel-3:#1b3d96;
+      --primary:#2f6df6;
+      --primary-2:#2563eb;
+      --text:#ffffff;
+      --muted:rgba(255,255,255,.68);
+      --muted-2:rgba(255,255,255,.52);
+      --danger:#ef4444;
+      --warning:#f59e0b;
+      --radius:18px;
+      --shadow:0 10px 30px rgba(37,99,235,.16);
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      background:var(--bg);
+      font-family:Arial, Helvetica, sans-serif;
+      color:var(--text);
+    }
+
+    .wrapper{
+      display:flex;
+      min-height:100vh;
+    }
+
+    .sidebar{
+      position:fixed;
+      left:0;
+      top:0;
+      width:260px;
+      height:100vh;
+      background:#102766;
+      padding:30px;
+      overflow-y:auto;
+    }
+
+    .logo{
+      font-size:34px;
+      font-weight:700;
+      margin-bottom:45px;
+      letter-spacing:.2px;
+    }
+
+    .item{
+      height:56px;
+      padding:0 18px;
+      display:flex;
+      align-items:center;
+      border-radius:16px;
+      margin-bottom:12px;
+      cursor:pointer;
+      font-size:16px;
+      transition:.22s;
+      color:white;
+      user-select:none;
+    }
+
+    .item:hover{
+      transform:translateX(6px);
+      background:rgba(255,255,255,.06);
+    }
+
+    .item.active{
+      background:var(--primary-2);
+      transform:translateX(10px);
+      box-shadow:var(--shadow);
+    }
+
+    .btn{
+      margin-top:18px;
+      height:54px;
+      width:100%;
+      border:none;
+      border-radius:14px;
+      background:var(--primary-2);
+      color:white;
+      cursor:pointer;
+      font-weight:700;
+      transition:.2s;
+    }
+
+    .btn:hover{
+      filter:brightness(1.05);
+    }
+
+    .btn.secondary{
+      background:rgba(255,255,255,.08);
+      margin-top:12px;
+    }
+
+    .main{
+      margin-left:260px;
+      width:calc(100% - 260px);
+      padding:40px;
+    }
+
+    .page-shell{
+      width:100%;
+      max-width:1440px;
+      margin:0 auto;
+    }
+
+    .title{
+      font-size:44px;
+      margin-bottom:10px;
+      line-height:1.05;
+    }
+
+    .sub{
+      opacity:.74;
+      margin-bottom:30px;
+      font-size:16px;
+    }
+
+    .section{
+      background:var(--panel);
+      padding:28px;
+      border-radius:22px;
+      margin-bottom:24px;
+      box-shadow:var(--shadow);
+    }
+
+    .section-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:18px;
+      margin-bottom:22px;
+      flex-wrap:wrap;
+    }
+
+    .section-title{
+      font-size:28px;
+      font-weight:700;
+      line-height:1.15;
+    }
+
+    .section-sub{
+      margin-top:6px;
+      opacity:.65;
+      line-height:1.3;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    label{
+      display:block;
+      opacity:.72;
+      font-size:15px;
+    }
+
+    input,
+    select{
+      width:100%;
+      height:56px;
+      padding:0 18px;
+      background:var(--panel-2);
+      border:none;
+      border-radius:14px;
+      color:white;
+      outline:none;
+      font-size:15px;
+    }
+
+    input:focus,
+    select:focus{
+      box-shadow:0 0 0 2px rgba(47,109,246,.28) inset;
+    }
+
+    input:disabled{
+      opacity:1;
+      cursor:not-allowed;
+    }
+
+    .yield-wrap{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+
+    .yield-wrap .yield-qty{
+      flex:2;
+    }
+
+    .yield-wrap .yield-unit{
+      flex:1;
+    }
+
+    .table-wrapper{
+      margin-top:24px;
+      overflow:auto;
+      border-radius:16px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:0;
+      min-width:860px;
+    }
+
+    th{
+      background:var(--panel-3);
+      padding:16px;
+      font-size:14px;
+      text-align:left;
+      white-space:nowrap;
+    }
+
+    td{
+      padding:14px;
+      background:var(--panel-2);
+      border-bottom:1px solid rgba(255,255,255,.05);
+      vertical-align:middle;
+    }
+
+    .table-input,
+    .table-select{
+      width:100%;
+      height:46px;
+      background:#07173a;
+      border:none;
+      border-radius:10px;
+      padding:0 12px;
+      color:white;
+      font-size:14px;
+    }
+
+    .add-row-btn{
+      margin-top:18px;
+      height:50px;
+      padding:0 24px;
+      border:none;
+      border-radius:12px;
+      background:var(--primary);
+      color:white;
+      cursor:pointer;
+      font-weight:700;
+      transition:.2s;
+    }
+
+    .add-row-btn:hover{
+      filter:brightness(1.06);
+    }
+
+    .delete-btn{
+      width:40px;
+      height:40px;
+      border:none;
+      border-radius:10px;
+      background:var(--danger);
+      color:white;
+      cursor:pointer;
+      font-size:18px;
+      font-weight:700;
+    }
+
+    .summary{
+      margin-top:22px;
+      display:grid;
+      grid-template-columns:repeat(2,minmax(220px,1fr));
+      gap:20px;
+    }
+
+    .summary-box{
+      background:var(--panel-2);
+      padding:20px;
+      border-radius:16px;
+      min-height:88px;
+    }
+
+    .summary-title{
+      opacity:.62;
+      margin-bottom:10px;
+      font-size:15px;
+    }
+
+    .summary-value{
+      font-size:26px;
+      font-weight:700;
+      line-height:1.1;
+    }
+
+    .save-row{
+      margin-top:22px;
+    }
+
+    .save-btn{
+      width:100%;
+      height:56px;
+      border:none;
+      border-radius:14px;
+      background:var(--primary);
+      color:white;
+      font-size:16px;
+      font-weight:700;
+      cursor:pointer;
+      transition:.2s;
+    }
+
+    .save-btn:hover{
+      filter:brightness(1.05);
+    }
+
+    .prep-groups{
+      display:flex;
+      flex-direction:column;
+      gap:24px;
+    }
+
+    .category-block{
+      background:rgba(255,255,255,.02);
+      border:1px solid rgba(255,255,255,.04);
+      border-radius:18px;
+      padding:16px;
+    }
+
+    .category-title{
+      font-size:18px;
+      font-weight:700;
+      margin-bottom:14px;
+      opacity:.95;
+    }
+
+    .category-title span{
+      color:rgba(255,255,255,.66);
+      font-weight:400;
+      margin-left:8px;
+      font-size:13px;
+    }
+
+    .prep-list-empty{
+      opacity:.65;
+      padding:20px;
+      text-align:center;
+    }
+
+    .prep-item{
+      background:#0d2158;
+      border-radius:18px;
+      padding:22px;
+      margin-bottom:16px;
+      border:1px solid rgba(255,255,255,.04);
+    }
+
+    .prep-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:20px;
+      cursor:pointer;
+      width:100%;
+    }
+
+    .prep-left{
+      min-width:0;
+      flex:1;
+    }
+
+    .prep-name{
+      font-size:20px;
+      font-weight:700;
+      line-height:1.2;
+      word-break:break-word;
+    }
+
+    .badge-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+
+    .prep-category{
+      display:inline-flex;
+      align-items:center;
+      padding:6px 12px;
+      background:var(--primary);
+      border-radius:999px;
+      font-size:12px;
+      width:fit-content;
+      white-space:nowrap;
+    }
+
+    .prep-right{
+      min-width:190px;
+      text-align:right;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      align-items:flex-end;
+    }
+
+    .prep-cost{
+      font-size:22px;
+      font-weight:700;
+      line-height:1.1;
+    }
+
+    .prep-per{
+      font-size:14px;
+      opacity:.72;
+    }
+
+    .prep-detail{
+      display:none;
+      margin-top:20px;
+      padding-top:20px;
+      border-top:1px solid rgba(255,255,255,.08);
+    }
+
+    .prep-detail.active{
+      display:block;
+    }
+
+    .detail-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:14px;
+      margin-bottom:18px;
+    }
+
+    .mini-box{
+      background:#07173a;
+      border-radius:16px;
+      padding:16px;
+      min-height:82px;
+    }
+
+    .mini-title{
+      opacity:.62;
+      font-size:13px;
+      margin-bottom:8px;
+    }
+
+    .mini-value{
+      font-size:18px;
+      font-weight:700;
+      line-height:1.2;
+      word-break:break-word;
+    }
+
+    .detail-title{
+      font-size:18px;
+      font-weight:700;
+      margin:12px 0 14px;
+    }
+
+    .prep-table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:760px;
+      margin-top:0;
+      overflow:hidden;
+      border-radius:14px;
+    }
+
+    .prep-table th{
+      background:var(--panel-3);
+      padding:12px;
+      font-size:13px;
+      text-align:left;
+    }
+
+    .prep-table td{
+      padding:12px;
+      background:#07173a;
+    }
+
+    .detail-footer{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:18px;
+      flex-wrap:wrap;
+      margin-top:20px;
+      padding-top:20px;
+      border-top:1px solid rgba(255,255,255,.08);
+    }
+
+    .footer-label{
+      font-size:12px;
+      opacity:.62;
+      margin-bottom:6px;
+      letter-spacing:.5px;
+    }
+
+    .footer-value{
+      font-size:24px;
+      font-weight:700;
+      line-height:1.1;
+    }
+
+    .prep-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .action-btn{
+      height:42px;
+      padding:0 18px;
+      border:none;
+      border-radius:10px;
+      cursor:pointer;
+      color:white;
+      font-weight:700;
+      transition:.2s;
+    }
+
+    .action-btn:hover{
+      filter:brightness(1.04);
+    }
+
+    .edit-btn{
+      background:var(--warning);
+    }
+
+    .delete-prep-btn{
+      background:var(--danger);
+    }
+
+
+    .list-tools{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      width:100%;
+    }
+
+    .search-box{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:320px;
+      max-width:560px;
+      flex:1;
+      height:50px;
+      padding:0 16px;
+      border-radius:14px;
+      background:var(--panel-2);
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .search-box span{
+      opacity:.75;
+      font-size:16px;
+      line-height:1;
+    }
+
+    .search-box input{
+      flex:1;
+      height:100%;
+      padding:0;
+      background:transparent;
+      border:none;
+      outline:none;
+      color:var(--text);
+    }
+
+    .search-box input::placeholder{
+      color:rgba(255,255,255,.45);
+    }
+
+    .clear-search-btn{
+      height:50px;
+      padding:0 16px;
+      border:none;
+      border-radius:14px;
+      background:rgba(255,255,255,.08);
+      color:var(--text);
+      cursor:pointer;
+      font-weight:700;
+      transition:.2s;
+    }
+
+    .clear-search-btn:hover{
+      background:rgba(255,255,255,.12);
+    }
+
+    @media (max-width: 1180px){
+      .detail-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+    }
+
+    @media (max-width: 980px){
+      .sidebar{
+        position:static;
+        width:100%;
+        height:auto;
+      }
+
+      .main{
+        margin-left:0;
+        width:100%;
+      }
+
+      .grid,
+      .summary{
+        grid-template-columns:1fr;
+      }
+
+      .prep-header{
+        flex-direction:column;
+      }
+
+      .prep-right{
+        min-width:0;
+        width:100%;
+        align-items:flex-start;
+        text-align:left;
+      }
+
+      .detail-grid{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="sidebar">
+      <div class="logo">🍽️ SFC</div>
+
+      <div class="item" onclick="location.href='costdashboard.html'">📊 Dashboard</div>
+      <div class="item" onclick="location.href='rawmaterial.html'">📦 Raw Material</div>
+      <div class="item active">🥣 Preparation</div>
+      <div class="item">🔒 Recipe</div>
+      <div class="item">🔒 Menu</div>
+      <div class="item">🔒 HPP</div>
+
+      <button class="btn" onclick="location.href='dashboard.html'">← Kembali</button>
+    </div>
+
+    <div class="main">
+      <div class="page-shell">
+        <div class="title">Preparation</div>
+        <div class="sub">Produk setengah jadi sebelum masuk Recipe</div>
+
+        <div class="section">
+          <div class="section-head">
+            <div>
+              <div class="section-title" id="formTitle">Buat Preparation</div>
+              <div class="section-sub">Input resep dasar lalu simpan ke daftar preparation</div>
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="field">
+              <label>Nama Preparation</label>
+              <input id="prepName" placeholder="Saus Coklat" />
+            </div>
+
+            <div class="field">
+              <label>Kategori</label>
+              <select id="prepCategory">
+                <option>Sambal</option>
+                <option>Sauce</option>
+                <option>Adonan</option>
+                <option>Topping</option>
+                <option>Bumbu Dasar</option>
+                <option>Marinasi</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Status</label>
+              <select id="prepStatus">
+                <option>ACTIVE</option>
+                <option>INACTIVE</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Yield</label>
+              <div class="yield-wrap">
+                <input id="yieldQty" class="yield-qty" type="number" placeholder="1000" />
+                <select id="yieldUnit" class="yield-unit">
+                  <option>gr</option>
+                  <option>ml</option>
+                  <option>pcs</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Waste %</label>
+              <input id="waste" type="number" value="5" />
+            </div>
+
+            <div class="field">
+              <label>Total Cost</label>
+              <input id="grandTotal" placeholder="0" disabled />
+            </div>
+          </div>
+
+          <div class="table-wrapper">
+            <table id="ingredientTable">
+              <thead>
+                <tr>
+                  <th>Nama Bahan</th>
+                  <th>Qty</th>
+                  <th>Unit</th>
+                  <th>Harga / Unit</th>
+                  <th>Total</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+
+          <button class="add-row-btn" onclick="addRow()">+ Tambah Bahan</button>
+
+          <div class="summary">
+            <div class="summary-box">
+              <div class="summary-title">Total Bahan</div>
+              <div class="summary-value" id="totalItems">0</div>
+            </div>
+
+            <div class="summary-box">
+              <div class="summary-title">Total Cost</div>
+              <div class="summary-value" id="summaryCost">Rp 0</div>
+            </div>
+          </div>
+
+          <div class="save-row">
+            <button class="save-btn" id="saveBtn" onclick="savePreparation()">+ Simpan Preparation</button>
+          </div>
+        </div>
+
+        <div class="section" id="prepListSection">
+          <div class="section-head">
+            <div>
+              <div class="section-title">Preparation List</div>
+              <div class="section-sub">Daftar resep preparation yang sudah dibuat</div>
+            </div>
+
+            <div class="list-tools">
+              <div class="search-box">
+                <span>🔎</span>
+                <input id="prepSearch" type="search" placeholder="Cari nama atau kategori..." autocomplete="off" />
+              </div>
+              <button type="button" class="clear-search-btn" onclick="clearPrepSearch()">Reset</button>
+            </div>
+          </div>
+
+          <div id="prepList" class="prep-list-empty">Belum ada data preparation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const rawMaterials = [
+      { name: "Cabai", unit: "gr", price: 50 },
+      { name: "Bawang Putih", unit: "gr", price: 40 },
+      { name: "Minyak", unit: "ml", price: 20 },
+      { name: "Gula", unit: "gr", price: 15 }
+    ];
+
+    const categoryOrder = [
+      "Sambal",
+      "Sauce",
+      "Adonan",
+      "Topping",
+      "Bumbu Dasar",
+      "Marinasi"
+    ];
+
+    const tableBody = document.getElementById("tableBody");
+    const prepList = document.getElementById("prepList");
+    const prepListSection = document.getElementById("prepListSection");
+    const prepSearch = document.getElementById("prepSearch");
+    const saveBtn = document.getElementById("saveBtn");
+    const formTitle = document.getElementById("formTitle");
+
+    let preparations = [];
+    let editingId = null;
+    let expandedPrepId = null;
+
+    function formatMoney(value) {
+      const n = Number(value) || 0;
+      return new Intl.NumberFormat("en-US").format(Math.round(n));
+    }
+
+    function formatMoney2(value) {
+      const n = Number(value) || 0;
+      return new Intl.NumberFormat("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(n);
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+
+    function normalizeText(text) {
+      return String(text || "").toLowerCase().trim();
+    }
+
+    function getFilteredPreparations() {
+      const query = normalizeText(prepSearch?.value);
+      if (!query) return preparations.slice();
+      return preparations.filter(prep => {
+        return (
+          normalizeText(prep.name).includes(query) ||
+          normalizeText(prep.category).includes(query)
+        );
+      });
+    }
+
+    function clearPrepSearch() {
+      if (prepSearch) {
+        prepSearch.value = "";
+        prepSearch.focus();
+        renderPreparationList();
+      }
+    }
+
+    function hidePreparationListSection() {
+      if (prepListSection) prepListSection.style.display = "none";
+    }
+
+    function showPreparationListSection() {
+      if (prepListSection) prepListSection.style.display = "";
+    }
+
+    function getMaterialOptions(selectedName = "") {
+      return rawMaterials.map(item => {
+        const selected = item.name === selectedName ? "selected" : "";
+        return `<option value="${escapeHtml(item.name)}" ${selected}>${escapeHtml(item.name)}</option>`;
+      }).join("");
+    }
+
+    function addRow(selectedName = rawMaterials[0]?.name || "", qty = 1) {
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td>
+          <select class="table-select material-select" onchange="updateRow(this)">
+            ${getMaterialOptions(selectedName)}
+          </select>
+        </td>
+        <td>
+          <input type="number" class="table-input qty-input" value="${qty}" oninput="calculateRow(this)">
+        </td>
+        <td>
+          <input class="table-input unit-input" disabled>
+        </td>
+        <td>
+          <input class="table-input price-input" disabled>
+        </td>
+        <td>
+          <input class="table-input total-input" disabled>
+        </td>
+        <td>
+          <button class="delete-btn" onclick="deleteRow(this)">✕</button>
+        </td>
+      `;
+
+      tableBody.appendChild(row);
+      updateRow(row.querySelector(".material-select"));
+      updateSummary();
+    }
+
+    function clearRows() {
+      tableBody.innerHTML = "";
+      updateSummary();
+    }
+
+    function updateRow(select) {
+      const row = select.closest("tr");
+      const material = rawMaterials.find(item => item.name === select.value) || rawMaterials[0];
+
+      row.querySelector(".unit-input").value = material ? material.unit : "";
+      row.querySelector(".price-input").value = material ? material.price : "";
+      calculateRow(row.querySelector(".qty-input"));
+    }
+
+    function calculateRow(input) {
+      const row = input.closest("tr");
+
+      const qty = parseFloat(row.querySelector(".qty-input").value) || 0;
+      const price = parseFloat(row.querySelector(".price-input").value) || 0;
+      const total = qty * price;
+
+      row.querySelector(".total-input").value = total;
+      updateSummary();
+    }
+
+    function deleteRow(button) {
+      const row = button.closest("tr");
+      row.remove();
+      updateSummary();
+    }
+
+    function updateSummary() {
+      const rows = document.querySelectorAll("#tableBody tr");
+      let grandTotal = 0;
+
+      rows.forEach(row => {
+        const total = parseFloat(row.querySelector(".total-input").value) || 0;
+        grandTotal += total;
+      });
+
+      document.getElementById("grandTotal").value = grandTotal;
+      document.getElementById("summaryCost").innerText = "Rp " + formatMoney(grandTotal);
+      document.getElementById("totalItems").innerText = rows.length;
+    }
+
+    function getCurrentIngredients() {
+      const rows = document.querySelectorAll("#tableBody tr");
+      const ingredients = [];
+
+      rows.forEach(row => {
+        ingredients.push({
+          material: row.querySelector(".material-select").value,
+          qty: row.querySelector(".qty-input").value,
+          unit: row.querySelector(".unit-input").value,
+          price: row.querySelector(".price-input").value,
+          total: row.querySelector(".total-input").value
+        });
+      });
+
+      return ingredients;
+    }
+
+    function resetForm() {
+      editingId = null;
+      formTitle.textContent = "Buat Preparation";
+      saveBtn.textContent = "+ Simpan Preparation";
+      showPreparationListSection();
+
+      document.getElementById("prepName").value = "";
+      document.getElementById("prepCategory").selectedIndex = 0;
+      document.getElementById("prepStatus").value = "ACTIVE";
+      document.getElementById("yieldQty").value = "";
+      document.getElementById("yieldUnit").value = "gr";
+      document.getElementById("waste").value = 5;
+      document.getElementById("grandTotal").value = 0;
+
+      clearRows();
+    }
+
+    function savePreparation() {
+      const isEditing = editingId !== null;
+
+      const prepName = document.getElementById("prepName").value.trim();
+      const prepCategory = document.getElementById("prepCategory").value;
+      const prepStatus = document.getElementById("prepStatus").value;
+      const yieldQty = parseFloat(document.getElementById("yieldQty").value) || 0;
+      const yieldUnit = document.getElementById("yieldUnit").value;
+      const waste = parseFloat(document.getElementById("waste").value) || 0;
+      const total = parseFloat(document.getElementById("grandTotal").value) || 0;
+      const ingredients = getCurrentIngredients();
+
+      if (!prepName) {
+        alert("Nama preparation wajib diisi");
+        return;
+      }
+
+      if (yieldQty <= 0) {
+        alert("Yield qty wajib diisi");
+        return;
+      }
+
+      if (ingredients.length === 0) {
+        alert("Tambahkan minimal 1 bahan");
+        return;
+      }
+
+      const costPerYield = yieldQty > 0 ? total / yieldQty : 0;
+
+      const prepData = {
+        id: editingId || Date.now(),
+        name: prepName,
+        category: prepCategory,
+        status: prepStatus,
+        yieldQty,
+        yieldUnit,
+        waste,
+        total,
+        ingredients,
+        costPerYield
+      };
+
+      if (editingId) {
+        const index = preparations.findIndex(item => item.id === editingId);
+        if (index !== -1) preparations[index] = prepData;
+      } else {
+        preparations.unshift(prepData);
+      }
+
+      renderPreparationList();
+      showPreparationListSection();
+      resetForm();
+      addRow();
+
+      alert(isEditing ? "Preparation berhasil diperbarui" : "Preparation berhasil disimpan");
+    }
+
+    
+function renderPreparationList() {
+      const filtered = getFilteredPreparations();
+
+      if (preparations.length === 0) {
+        prepList.className = "prep-list-empty";
+        prepList.innerHTML = "Belum ada data preparation";
+        return;
+      }
+
+      if (filtered.length === 0) {
+        prepList.className = "prep-list-empty";
+        prepList.innerHTML = "Tidak ada preparation yang cocok dengan pencarian";
+        return;
+      }
+
+      // Jika sedang membuka satu preparation, tampilkan hanya item itu
+      if (expandedPrepId !== null) {
+        const activePrep = filtered.find(prep => prep.id === expandedPrepId);
+
+        if (!activePrep) {
+          expandedPrepId = null;
+          renderPreparationList();
+          return;
+        }
+
+        prepList.className = "prep-groups";
+        prepList.innerHTML = renderPrepCard(activePrep);
+        return;
+      }
+
+      prepList.className = "prep-groups";
+
+      const grouped = {};
+      const order = [];
+
+      categoryOrder.forEach(cat => {
+        grouped[cat] = [];
+        order.push(cat);
+      });
+
+      filtered.forEach(prep => {
+        if (!grouped[prep.category]) {
+          grouped[prep.category] = [];
+          order.push(prep.category);
+        }
+        grouped[prep.category].push(prep);
+      });
+
+      const blocks = order
+        .filter(cat => grouped[cat] && grouped[cat].length > 0)
+        .map(cat => {
+          const items = grouped[cat].map(prep => renderPrepCard(prep)).join("");
+          return `
+            <div class="category-block">
+              <div class="category-title">${escapeHtml(cat)}<span>${grouped[cat].length} item</span></div>
+              ${items}
+            </div>
+          `;
+        });
+
+      prepList.innerHTML = blocks.join("");
+    }
+
+    
+function renderPrepCard(prep) {
+      const ingredientRows = prep.ingredients.map(item => `
+        <tr>
+          <td>${escapeHtml(item.material)}</td>
+          <td>${escapeHtml(item.qty)}</td>
+          <td>${escapeHtml(item.unit)}</td>
+          <td>Rp ${formatMoney(item.price)}</td>
+          <td>Rp ${formatMoney(item.total)}</td>
+        </tr>
+      `).join("");
+
+      const isOpen = expandedPrepId === prep.id;
+
+      return `
+        <div class="prep-item" data-prep-id="${prep.id}">
+          <div class="prep-header" onclick="toggleDetail(${prep.id})">
+            <div class="prep-left">
+              <div class="prep-name">${escapeHtml(prep.name)}</div>
+              <div class="badge-row">
+                <div class="prep-category">${escapeHtml(prep.category)}</div>
+                <div class="prep-category">${formatMoney(prep.yieldQty)} ${escapeHtml(prep.yieldUnit)}</div>
+                <div class="prep-category">Waste ${formatMoney2(prep.waste)}%</div>
+                <div class="prep-category">${escapeHtml(prep.status)}</div>
+              </div>
+            </div>
+
+            <div class="prep-right">
+              <div class="prep-cost">Rp ${formatMoney(prep.total)} / Recipe</div>
+              <div class="prep-per">Rp ${formatMoney2(prep.costPerYield)} / ${escapeHtml(prep.yieldUnit)}</div>
+            </div>
+          </div>
+
+          <div class="prep-detail${isOpen ? ' active' : ''}" id="detail-${prep.id}">
+            <div class="detail-grid">
+              <div class="mini-box">
+                <div class="mini-title">Yield</div>
+                <div class="mini-value">${formatMoney(prep.yieldQty)} ${escapeHtml(prep.yieldUnit)}</div>
+              </div>
+
+              <div class="mini-box">
+                <div class="mini-title">Waste</div>
+                <div class="mini-value">${formatMoney2(prep.waste)}%</div>
+              </div>
+
+              <div class="mini-box">
+                <div class="mini-title">Ingredients</div>
+                <div class="mini-value">${prep.ingredients.length} bahan</div>
+              </div>
+
+              <div class="mini-box">
+                <div class="mini-title">Cost / Yield</div>
+                <div class="mini-value">Rp ${formatMoney2(prep.costPerYield)}</div>
+              </div>
+            </div>
+
+            <div class="detail-title">Recipe Detail</div>
+
+            <div class="table-wrapper">
+              <table class="prep-table">
+                <thead>
+                  <tr>
+                    <th>Bahan</th>
+                    <th>Qty</th>
+                    <th>Unit</th>
+                    <th>Harga</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${ingredientRows}
+                </tbody>
+              </table>
+            </div>
+
+            <div class="detail-footer">
+              <div>
+                <div class="footer-label">TOTAL RECIPE COST</div>
+                <div class="footer-value">Rp ${formatMoney(prep.total)}</div>
+              </div>
+
+              <div class="prep-actions">
+                <button class="action-btn edit-btn" onclick="event.stopPropagation(); editPreparation(${prep.id})">Edit</button>
+                <button class="action-btn delete-prep-btn" onclick="event.stopPropagation(); deletePreparation(${prep.id})">Hapus</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    
+function toggleDetail(id) {
+      expandedPrepId = expandedPrepId === id ? null : id;
+      renderPreparationList();
+    }
+
+    function deletePreparation(id) {
+      const prep = preparations.find(item => item.id === id);
+      const confirmDelete = confirm(`Hapus preparation "${prep ? prep.name : ''}"?`);
+      if (!confirmDelete) return;
+
+      preparations = preparations.filter(item => item.id !== id);
+      if (expandedPrepId === id) expandedPrepId = null;
+      renderPreparationList();
+      if (editingId !== null) hidePreparationListSection();
+    }
+
+    function editPreparation(id) {
+      const prep = preparations.find(item => item.id === id);
+      if (!prep) return;
+
+      editingId = id;
+      formTitle.textContent = "Edit Preparation";
+      saveBtn.textContent = "Update Preparation";
+      hidePreparationListSection();
+
+      document.getElementById("prepName").value = prep.name;
+      document.getElementById("prepCategory").value = prep.category;
+      document.getElementById("prepStatus").value = prep.status;
+      document.getElementById("yieldQty").value = prep.yieldQty;
+      document.getElementById("yieldUnit").value = prep.yieldUnit;
+      document.getElementById("waste").value = prep.waste;
+
+      tableBody.innerHTML = "";
+      if (Array.isArray(prep.ingredients) && prep.ingredients.length > 0) {
+        prep.ingredients.forEach(item => {
+          addRow(item.material, item.qty);
+        });
+      } else {
+        addRow();
+      }
+
+      updateSummary();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      addRow();
+      renderPreparationList();
+
+      if (prepSearch) {
+        prepSearch.addEventListener("input", renderPreparationList);
+      }
+    });
+  </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SFC • Preparation</title>
+  <style>
+    :root{
+      --bg:#07173a;
+      --panel:#102766;
+      --panel-2:#0d2158;
+      --panel-3:#1b3d96;
+      --primary:#2f6df6;
+      --primary-2:#2563eb;
+      --text:#ffffff;
+      --muted:rgba(255,255,255,.68);
+      --muted-2:rgba(255,255,255,.52);
+      --danger:#ef4444;
+      --warning:#f59e0b;
+      --radius:18px;
+      --shadow:0 10px 30px rgba(37,99,235,.16);
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      background:var(--bg);
+      font-family:Arial, Helvetica, sans-serif;
+      color:var(--text);
+    }
+
+    .wrapper{
+      display:flex;
+      min-height:100vh;
+    }
+
+    .sidebar{
+      position:fixed;
+      left:0;
+      top:0;
+      width:260px;
+      height:100vh;
+      background:#102766;
+      padding:30px;
+      overflow-y:auto;
+    }
+
+    .logo{
+      font-size:34px;
+      font-weight:700;
+      margin-bottom:45px;
+      letter-spacing:.2px;
+    }
+
+    .item{
+      height:56px;
+      padding:0 18px;
+      display:flex;
+      align-items:center;
+      border-radius:16px;
+      margin-bottom:12px;
+      cursor:pointer;
+      font-size:16px;
+      transition:.22s;
+      color:white;
+      user-select:none;
+    }
+
+    .item:hover{
+      transform:translateX(6px);
+      background:rgba(255,255,255,.06);
+    }
+
+    .item.active{
+      background:var(--primary-2);
+      transform:translateX(10px);
+      box-shadow:var(--shadow);
+    }
+
+    .btn{
+      margin-top:18px;
+      height:54px;
+      width:100%;
+      border:none;
+      border-radius:14px;
+      background:var(--primary-2);
+      color:white;
+      cursor:pointer;
+      font-weight:700;
+      transition:.2s;
+    }
+
+    .btn:hover{
+      filter:brightness(1.05);
+    }
+
+    .btn.secondary{
+      background:rgba(255,255,255,.08);
+      margin-top:12px;
+    }
+
+    .main{
+      margin-left:260px;
+      width:calc(100% - 260px);
+      padding:40px;
+    }
+
+    .page-shell{
+      width:100%;
+      max-width:1440px;
+      margin:0 auto;
+    }
+
+    .title{
+      font-size:44px;
+      margin-bottom:10px;
+      line-height:1.05;
+    }
+
+    .sub{
+      opacity:.74;
+      margin-bottom:30px;
+      font-size:16px;
+    }
+
+    .section{
+      background:var(--panel);
+      padding:28px;
+      border-radius:22px;
+      margin-bottom:24px;
+      box-shadow:var(--shadow);
+    }
+
+    .section-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:18px;
+      margin-bottom:22px;
+      flex-wrap:wrap;
+    }
+
+    .section-title{
+      font-size:28px;
+      font-weight:700;
+      line-height:1.15;
+    }
+
+    .section-sub{
+      margin-top:6px;
+      opacity:.65;
+      line-height:1.3;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    label{
+      display:block;
+      opacity:.72;
+      font-size:15px;
+    }
+
+    input,
+    select{
+      width:100%;
+      height:56px;
+      padding:0 18px;
+      background:var(--panel-2);
+      border:none;
+      border-radius:14px;
+      color:white;
+      outline:none;
+      font-size:15px;
+    }
+
+    input:focus,
+    select:focus{
+      box-shadow:0 0 0 2px rgba(47,109,246,.28) inset;
+    }
+
+    input:disabled{
+      opacity:1;
+      cursor:not-allowed;
+    }
+
+    .yield-wrap{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+
+    .yield-wrap .yield-qty{
+      flex:2;
+    }
+
+    .yield-wrap .yield-unit{
+      flex:1;
+    }
+
+    .table-wrapper{
+      margin-top:24px;
+      overflow:auto;
+      border-radius:16px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:0;
+      min-width:860px;
+    }
+
+    th{
+      background:var(--panel-3);
+      padding:16px;
+      font-size:14px;
+      text-align:left;
+      white-space:nowrap;
+    }
+
+    td{
+      padding:14px;
+      background:var(--panel-2);
+      border-bottom:1px solid rgba(255,255,255,.05);
+      vertical-align:middle;
+    }
+
+    .table-input,
+    .table-select{
+      width:100%;
+      height:46px;
+      background:#07173a;
+      border:none;
+      border-radius:10px;
+      padding:0 12px;
+      color:white;
+      font-size:14px;
+    }
+
+    .add-row-btn{
+      margin-top:18px;
+      height:50px;
+      padding:0 24px;
+      border:none;
+      border-radius:12px;
+      background:var(--primary);
+      color:white;
+      cursor:pointer;
+      font-weight:700;
+      transition:.2s;
+    }
+
+    .add-row-btn:hover{
+      filter:brightness(1.06);
+    }
+
+    .delete-btn{
+      width:40px;
+      height:40px;
+      border:none;
+      border-radius:10px;
+      background:var(--danger);
+      color:white;
+      cursor:pointer;
+      font-size:18px;
+      font-weight:700;
+    }
+
+    .summary{
+      margin-top:22px;
+      display:grid;
+      grid-template-columns:repeat(2,minmax(220px,1fr));
+      gap:20px;
+    }
+
+    .summary-box{
+      background:var(--panel-2);
+      padding:20px;
+      border-radius:16px;
+      min-height:88px;
+    }
+
+    .summary-title{
+      opacity:.62;
+      margin-bottom:10px;
+      font-size:15px;
+    }
+
+    .summary-value{
+      font-size:26px;
+      font-weight:700;
+      line-height:1.1;
+    }
+
+    .save-row{
+      margin-top:22px;
+    }
+
+    .save-btn{
+      width:100%;
+      height:56px;
+      border:none;
+      border-radius:14px;
+      background:var(--primary);
+      color:white;
+      font-size:16px;
+      font-weight:700;
+      cursor:pointer;
+      transition:.2s;
+    }
+
+    .save-btn:hover{
+      filter:brightness(1.05);
+    }
+
+    .prep-groups{
+      display:flex;
+      flex-direction:column;
+      gap:24px;
+    }
+
+    .category-block{
+      background:rgba(255,255,255,.02);
+      border:1px solid rgba(255,255,255,.04);
+      border-radius:18px;
+      padding:16px;
+    }
+
+    .category-title{
+      font-size:18px;
+      font-weight:700;
+      margin-bottom:14px;
+      opacity:.95;
+    }
+
+    .category-title span{
+      color:rgba(255,255,255,.66);
+      font-weight:400;
+      margin-left:8px;
+      font-size:13px;
+    }
+
+    .prep-list-empty{
+      opacity:.65;
+      padding:20px;
+      text-align:center;
+    }
+
+    .prep-item{
+      background:#0d2158;
+      border-radius:18px;
+      padding:22px;
+      margin-bottom:16px;
+      border:1px solid rgba(255,255,255,.04);
+    }
+
+    .prep-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:20px;
+      cursor:pointer;
+      width:100%;
+    }
+
+    .prep-left{
+      min-width:0;
+      flex:1;
+    }
+
+    .prep-name{
+      font-size:20px;
+      font-weight:700;
+      line-height:1.2;
+      word-break:break-word;
+    }
+
+    .badge-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+
+    .prep-category{
+      display:inline-flex;
+      align-items:center;
+      padding:6px 12px;
+      background:var(--primary);
+      border-radius:999px;
+      font-size:12px;
+      width:fit-content;
+      white-space:nowrap;
+    }
+
+    .prep-right{
+      min-width:190px;
+      text-align:right;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      align-items:flex-end;
+    }
+
+    .prep-cost{
+      font-size:22px;
+      font-weight:700;
+      line-height:1.1;
+    }
+
+    .prep-per{
+      font-size:14px;
+      opacity:.72;
+    }
+
+    .prep-detail{
+      display:none;
+      margin-top:20px;
+      padding-top:20px;
+      border-top:1px solid rgba(255,255,255,.08);
+    }
+
+    .prep-detail.active{
+      display:block;
+    }
+
+    .detail-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:14px;
+      margin-bottom:18px;
+    }
+
+    .mini-box{
+      background:#07173a;
+      border-radius:16px;
+      padding:16px;
+      min-height:82px;
+    }
+
+    .mini-title{
+      opacity:.62;
+      font-size:13px;
+      margin-bottom:8px;
+    }
+
+    .mini-value{
+      font-size:18px;
+      font-weight:700;
+      line-height:1.2;
+      word-break:break-word;
+    }
+
+    .detail-title{
+      font-size:18px;
+      font-weight:700;
+      margin:12px 0 14px;
+    }
+
+    .prep-table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:760px;
+      margin-top:0;
+      overflow:hidden;
+      border-radius:14px;
+    }
+
+    .prep-table th{
+      background:var(--panel-3);
+      padding:12px;
+      font-size:13px;
+      text-align:left;
+    }
+
+    .prep-table td{
+      padding:12px;
+      background:#07173a;
+    }
+
+    .detail-footer{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:18px;
+      flex-wrap:wrap;
+      margin-top:20px;
+      padding-top:20px;
+      border-top:1px solid rgba(255,255,255,.08);
+    }
+
+    .footer-label{
+      font-size:12px;
+      opacity:.62;
+      margin-bottom:6px;
+      letter-spacing:.5px;
+    }
+
+    .footer-value{
+      font-size:24px;
+      font-weight:700;
+      line-height:1.1;
+    }
+
+    .prep-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .action-btn{
+      height:42px;
+      padding:0 18px;
+      border:none;
+      border-radius:10px;
+      cursor:pointer;
+      color:white;
+      font-weight:700;
+      transition:.2s;
+    }
+
+    .action-btn:hover{
+      filter:brightness(1.04);
+    }
+
+    .edit-btn{
+      background:var(--warning);
+    }
+
+    .delete-prep-btn{
+      background:var(--danger);
+    }
+
+
+    .list-tools{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      width:100%;
+    }
+
+    .search-box{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:320px;
+      max-width:560px;
+      flex:1;
+      height:50px;
+      padding:0 16px;
+      border-radius:14px;
+      background:var(--panel-2);
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .search-box span{
+      opacity:.75;
+      font-size:16px;
+      line-height:1;
+    }
+
+    .search-box input{
+      flex:1;
+      height:100%;
+      padding:0;
+      background:transparent;
+      border:none;
+      outline:none;
+      color:var(--text);
+    }
+
+    .search-box input::placeholder{
+      color:rgba(255,255,255,.45);
+    }
+
+    .clear-search-btn{
+      height:50px;
+      padding:0 16px;
+      border:none;
+      border-radius:14px;
+      background:rgba(255,255,255,.08);
+      color:var(--text);
+      cursor:pointer;
+      font-weight:700;
+      transition:.2s;
+    }
+
+    .clear-search-btn:hover{
+      background:rgba(255,255,255,.12);
+    }
+
+    @media (max-width: 1180px){
+      .detail-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+    }
+
+    @media (max-width: 980px){
+      .sidebar{
+        position:static;
+        width:100%;
+        height:auto;
+      }
+
+      .main{
+        margin-left:0;
+        width:100%;
+      }
+
+      .grid,
+      .summary{
+        grid-template-columns:1fr;
+      }
+
+      .prep-header{
+        flex-direction:column;
+      }
+
+      .prep-right{
+        min-width:0;
+        width:100%;
+        align-items:flex-start;
+        text-align:left;
+      }
+
+      .detail-grid{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="sidebar">
+      <div class="logo">🍽️ SFC</div>
+
+      <div class="item" onclick="location.href='costdashboard.html'">📊 Dashboard</div>
+      <div class="item" onclick="location.href='rawmaterial.html'">📦 Raw Material</div>
+      <div class="item active">🥣 Preparation</div>
+      <div class="item">🔒 Recipe</div>
+      <div class="item">🔒 Menu</div>
+      <div class="item">🔒 HPP</div>
+
+      <button class="btn" onclick="location.href='dashboard.html'">← Kembali</button>
+    </div>
+
+    <div class="main">
+      <div class="page-shell">
+        <div class="title">Preparation</div>
+        <div class="sub">Produk setengah jadi sebelum masuk Recipe</div>
+
+        <div class="section">
+          <div class="section-head">
+            <div>
+              <div class="section-title" id="formTitle">Buat Preparation</div>
+              <div class="section-sub">Input resep dasar lalu simpan ke daftar preparation</div>
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="field">
+              <label>Nama Preparation</label>
+              <input id="prepName" placeholder="Saus Coklat" />
+            </div>
+
+            <div class="field">
+              <label>Kategori</label>
+              <select id="prepCategory">
+                <option>Sambal</option>
+                <option>Sauce</option>
+                <option>Adonan</option>
+                <option>Topping</option>
+                <option>Bumbu Dasar</option>
+                <option>Marinasi</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Status</label>
+              <select id="prepStatus">
+                <option>ACTIVE</option>
+                <option>INACTIVE</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Yield</label>
+              <div class="yield-wrap">
+                <input id="yieldQty" class="yield-qty" type="number" placeholder="1000" />
+                <select id="yieldUnit" class="yield-unit">
+                  <option>gr</option>
+                  <option>ml</option>
+                  <option>pcs</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Waste %</label>
+              <input id="waste" type="number" value="5" />
+            </div>
+
+            <div class="field">
+              <label>Total Cost</label>
+              <input id="grandTotal" placeholder="0" disabled />
+            </div>
+          </div>
+
+          <div class="table-wrapper">
+            <table id="ingredientTable">
+              <thead>
+                <tr>
+                  <th>Nama Bahan</th>
+                  <th>Qty</th>
+                  <th>Unit</th>
+                  <th>Harga / Unit</th>
+                  <th>Total</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+
+          <button class="add-row-btn" onclick="addRow()">+ Tambah Bahan</button>
+
+          <div class="summary">
+            <div class="summary-box">
+              <div class="summary-title">Total Bahan</div>
+              <div class="summary-value" id="totalItems">0</div>
+            </div>
+
+            <div class="summary-box">
+              <div class="summary-title">Total Cost</div>
+              <div class="summary-value" id="summaryCost">Rp 0</div>
+            </div>
+          </div>
+
+          <div class="save-row">
+            <button class="save-btn" id="saveBtn" onclick="savePreparation()">+ Simpan Preparation</button>
+          </div>
+        </div>
+
+        <div class="section" id="prepListSection">
+          <div class="section-head">
+            <div>
+              <div class="section-title">Preparation List</div>
+              <div class="section-sub">Daftar resep preparation yang sudah dibuat</div>
+            </div>
+
+            <div class="list-tools">
+              <div class="search-box">
+                <span>🔎</span>
+                <input id="prepSearch" type="search" placeholder="Cari nama atau kategori..." autocomplete="off" />
+              </div>
+              <button type="button" class="clear-search-btn" onclick="clearPrepSearch()">Reset</button>
+            </div>
+          </div>
+
+          <div id="prepList" class="prep-list-empty">Belum ada data preparation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const rawMaterials = [
+      { name: "Cabai", unit: "gr", price: 50 },
+      { name: "Bawang Putih", unit: "gr", price: 40 },
+      { name: "Minyak", unit: "ml", price: 20 },
+      { name: "Gula", unit: "gr", price: 15 }
+    ];
+
+    const categoryOrder = [
+      "Sambal",
+      "Sauce",
+      "Adonan",
+      "Topping",
+      "Bumbu Dasar",
+      "Marinasi"
+    ];
+
+    const tableBody = document.getElementById("tableBody");
+    const prepList = document.getElementById("prepList");
+    const prepListSection = document.getElementById("prepListSection");
+    const prepSearch = document.getElementById("prepSearch");
+    const saveBtn = document.getElementById("saveBtn");
+    const formTitle = document.getElementById("formTitle");
+
+    let preparations = [];
+    let editingId = null;
+    let expandedPrepId = null;
+
+    function formatMoney(value) {
+      const n = Number(value) || 0;
+      return new Intl.NumberFormat("en-US").format(Math.round(n));
+    }
+
+    function formatMoney2(value) {
+      const n = Number(value) || 0;
+      return new Intl.NumberFormat("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(n);
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+
+    function normalizeText(text) {
+      return String(text || "").toLowerCase().trim();
+    }
+
+    function getFilteredPreparations() {
+      const query = normalizeText(prepSearch?.value);
+      if (!query) return preparations.slice();
+      return preparations.filter(prep => {
+        return (
+          normalizeText(prep.name).includes(query) ||
+          normalizeText(prep.category).includes(query)
+        );
+      });
+    }
+
+    function clearPrepSearch() {
+      if (prepSearch) {
+        prepSearch.value = "";
+        prepSearch.focus();
+        renderPreparationList();
+      }
+    }
+
+    function hidePreparationListSection() {
+      if (prepListSection) prepListSection.style.display = "none";
+    }
+
+    function showPreparationListSection() {
+      if (prepListSection) prepListSection.style.display = "";
+    }
+
+    function getMaterialOptions(selectedName = "") {
+      return rawMaterials.map(item => {
+        const selected = item.name === selectedName ? "selected" : "";
+        return `<option value="${escapeHtml(item.name)}" ${selected}>${escapeHtml(item.name)}</option>`;
+      }).join("");
+    }
+
+    function addRow(selectedName = rawMaterials[0]?.name || "", qty = 1) {
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td>
+          <select class="table-select material-select" onchange="updateRow(this)">
+            ${getMaterialOptions(selectedName)}
+          </select>
+        </td>
+        <td>
+          <input type="number" class="table-input qty-input" value="${qty}" oninput="calculateRow(this)">
+        </td>
+        <td>
+          <input class="table-input unit-input" disabled>
+        </td>
+        <td>
+          <input class="table-input price-input" disabled>
+        </td>
+        <td>
+          <input class="table-input total-input" disabled>
+        </td>
+        <td>
+          <button class="delete-btn" onclick="deleteRow(this)">✕</button>
+        </td>
+      `;
+
+      tableBody.appendChild(row);
+      updateRow(row.querySelector(".material-select"));
+      updateSummary();
+    }
+
+    function clearRows() {
+      tableBody.innerHTML = "";
+      updateSummary();
+    }
+
+    function updateRow(select) {
+      const row = select.closest("tr");
+      const material = rawMaterials.find(item => item.name === select.value) || rawMaterials[0];
+
+      row.querySelector(".unit-input").value = material ? material.unit : "";
+      row.querySelector(".price-input").value = material ? material.price : "";
+      calculateRow(row.querySelector(".qty-input"));
+    }
+
+    function calculateRow(input) {
+      const row = input.closest("tr");
+
+      const qty = parseFloat(row.querySelector(".qty-input").value) || 0;
+      const price = parseFloat(row.querySelector(".price-input").value) || 0;
+      const total = qty * price;
+
+      row.querySelector(".total-input").value = total;
+      updateSummary();
+    }
+
+    function deleteRow(button) {
+      const row = button.closest("tr");
+      row.remove();
+      updateSummary();
+    }
+
+    function updateSummary() {
+      const rows = document.querySelectorAll("#tableBody tr");
+      let grandTotal = 0;
+
+      rows.forEach(row => {
+        const total = parseFloat(row.querySelector(".total-input").value) || 0;
+        grandTotal += total;
+      });
+
+      document.getElementById("grandTotal").value = grandTotal;
+      document.getElementById("summaryCost").innerText = "Rp " + formatMoney(grandTotal);
+      document.getElementById("totalItems").innerText = rows.length;
+    }
+
+    function getCurrentIngredients() {
+      const rows = document.querySelectorAll("#tableBody tr");
+      const ingredients = [];
+
+      rows.forEach(row => {
+        ingredients.push({
+          material: row.querySelector(".material-select").value,
+          qty: row.querySelector(".qty-input").value,
+          unit: row.querySelector(".unit-input").value,
+          price: row.querySelector(".price-input").value,
+          total: row.querySelector(".total-input").value
+        });
+      });
+
+      return ingredients;
+    }
+
+    function resetForm() {
+      editingId = null;
+      formTitle.textContent = "Buat Preparation";
+      saveBtn.textContent = "+ Simpan Preparation";
+      showPreparationListSection();
+
+      document.getElementById("prepName").value = "";
+      document.getElementById("prepCategory").selectedIndex = 0;
+      document.getElementById("prepStatus").value = "ACTIVE";
+      document.getElementById("yieldQty").value = "";
+      document.getElementById("yieldUnit").value = "gr";
+      document.getElementById("waste").value = 5;
+      document.getElementById("grandTotal").value = 0;
+
+      clearRows();
+    }
+
+    function savePreparation() {
+      const isEditing = editingId !== null;
+
+      const prepName = document.getElementById("prepName").value.trim();
+      const prepCategory = document.getElementById("prepCategory").value;
+      const prepStatus = document.getElementById("prepStatus").value;
+      const yieldQty = parseFloat(document.getElementById("yieldQty").value) || 0;
+      const yieldUnit = document.getElementById("yieldUnit").value;
+      const waste = parseFloat(document.getElementById("waste").value) || 0;
+      const total = parseFloat(document.getElementById("grandTotal").value) || 0;
+      const ingredients = getCurrentIngredients();
+
+      if (!prepName) {
+        alert("Nama preparation wajib diisi");
+        return;
+      }
+
+      if (yieldQty <= 0) {
+        alert("Yield qty wajib diisi");
+        return;
+      }
+
+      if (ingredients.length === 0) {
+        alert("Tambahkan minimal 1 bahan");
+        return;
+      }
+
+      const costPerYield = yieldQty > 0 ? total / yieldQty : 0;
+
+      const prepData = {
+        id: editingId || Date.now(),
+        name: prepName,
+        category: prepCategory,
+        status: prepStatus,
+        yieldQty,
+        yieldUnit,
+        waste,
+        total,
+        ingredients,
+        costPerYield
+      };
+
+      if (editingId) {
+        const index = preparations.findIndex(item => item.id === editingId);
+        if (index !== -1) preparations[index] = prepData;
+      } else {
+        preparations.unshift(prepData);
+      }
+
+      renderPreparationList();
+      showPreparationListSection();
+      resetForm();
+      addRow();
+
+      alert(isEditing ? "Preparation berhasil diperbarui" : "Preparation berhasil disimpan");
+    }
+
+    
+function renderPreparationList() {
+      const filtered = getFilteredPreparations();
+
+      if (preparations.length === 0) {
+        prepList.className = "prep-list-empty";
+        prepList.innerHTML = "Belum ada data preparation";
+        return;
+      }
+
+      if (filtered.length === 0) {
+        prepList.className = "prep-list-empty";
+        prepList.innerHTML = "Tidak ada preparation yang cocok dengan pencarian";
+        return;
+      }
+
+      // Jika sedang membuka satu preparation, tampilkan hanya item itu
+      if (expandedPrepId !== null) {
+        const activePrep = filtered.find(prep => prep.id === expandedPrepId);
+
+        if (!activePrep) {
+          expandedPrepId = null;
+          renderPreparationList();
+          return;
+        }
+
+        prepList.className = "prep-groups";
+        prepList.innerHTML = renderPrepCard(activePrep);
+        return;
+      }
+
+      prepList.className = "prep-groups";
+
+      const grouped = {};
+      const order = [];
+
+      categoryOrder.forEach(cat => {
+        grouped[cat] = [];
+        order.push(cat);
+      });
+
+      filtered.forEach(prep => {
+        if (!grouped[prep.category]) {
+          grouped[prep.category] = [];
+          order.push(prep.category);
+        }
+        grouped[prep.category].push(prep);
+      });
+
+      const blocks = order
+        .filter(cat => grouped[cat] && grouped[cat].length > 0)
+        .map(cat => {
+          const items = grouped[cat].map(prep => renderPrepCard(prep)).join("");
+          return `
+            <div class="category-block">
+              <div class="category-title">${escapeHtml(cat)}<span>${grouped[cat].length} item</span></div>
+              ${items}
+            </div>
+          `;
+        });
+
+      prepList.innerHTML = blocks.join("");
+    }
+
+    
+function renderPrepCard(prep) {
+      const ingredientRows = prep.ingredients.map(item => `
+        <tr>
+          <td>${escapeHtml(item.material)}</td>
+          <td>${escapeHtml(item.qty)}</td>
+          <td>${escapeHtml(item.unit)}</td>
+          <td>Rp ${formatMoney(item.price)}</td>
+          <td>Rp ${formatMoney(item.total)}</td>
+        </tr>
+      `).join("");
+
+      const isOpen = expandedPrepId === prep.id;
+
+      return `
+        <div class="prep-item" data-prep-id="${prep.id}">
+          <div class="prep-header" onclick="toggleDetail(${prep.id})">
+            <div class="prep-left">
+              <div class="prep-name">${escapeHtml(prep.name)}</div>
+              <div class="badge-row">
+                <div class="prep-category">${escapeHtml(prep.category)}</div>
+                <div class="prep-category">${formatMoney(prep.yieldQty)} ${escapeHtml(prep.yieldUnit)}</div>
+                <div class="prep-category">Waste ${formatMoney2(prep.waste)}%</div>
+                <div class="prep-category">${escapeHtml(prep.status)}</div>
+              </div>
+            </div>
+
+            <div class="prep-right">
+              <div class="prep-cost">Rp ${formatMoney(prep.total)} / Recipe</div>
+              <div class="prep-per">Rp ${formatMoney2(prep.costPerYield)} / ${escapeHtml(prep.yieldUnit)}</div>
+            </div>
+          </div>
+
+          <div class="prep-detail${isOpen ? ' active' : ''}" id="detail-${prep.id}">
+            <div class="detail-grid">
+              <div class="mini-box">
+                <div class="mini-title">Yield</div>
+                <div class="mini-value">${formatMoney(prep.yieldQty)} ${escapeHtml(prep.yieldUnit)}</div>
+              </div>
+
+              <div class="mini-box">
+                <div class="mini-title">Waste</div>
+                <div class="mini-value">${formatMoney2(prep.waste)}%</div>
+              </div>
+
+              <div class="mini-box">
+                <div class="mini-title">Ingredients</div>
+                <div class="mini-value">${prep.ingredients.length} bahan</div>
+              </div>
+
+              <div class="mini-box">
+                <div class="mini-title">Cost / Yield</div>
+                <div class="mini-value">Rp ${formatMoney2(prep.costPerYield)}</div>
+              </div>
+            </div>
+
+            <div class="detail-title">Recipe Detail</div>
+
+            <div class="table-wrapper">
+              <table class="prep-table">
+                <thead>
+                  <tr>
+                    <th>Bahan</th>
+                    <th>Qty</th>
+                    <th>Unit</th>
+                    <th>Harga</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${ingredientRows}
+                </tbody>
+              </table>
+            </div>
+
+            <div class="detail-footer">
+              <div>
+                <div class="footer-label">TOTAL RECIPE COST</div>
+                <div class="footer-value">Rp ${formatMoney(prep.total)}</div>
+              </div>
+
+              <div class="prep-actions">
+                <button class="action-btn edit-btn" onclick="event.stopPropagation(); editPreparation(${prep.id})">Edit</button>
+                <button class="action-btn delete-prep-btn" onclick="event.stopPropagation(); deletePreparation(${prep.id})">Hapus</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    
+function toggleDetail(id) {
+      expandedPrepId = expandedPrepId === id ? null : id;
+      renderPreparationList();
+    }
+
+    function deletePreparation(id) {
+      const prep = preparations.find(item => item.id === id);
+      const confirmDelete = confirm(`Hapus preparation "${prep ? prep.name : ''}"?`);
+      if (!confirmDelete) return;
+
+      preparations = preparations.filter(item => item.id !== id);
+      if (expandedPrepId === id) expandedPrepId = null;
+      renderPreparationList();
+      if (editingId !== null) hidePreparationListSection();
+    }
+
+    function editPreparation(id) {
+      const prep = preparations.find(item => item.id === id);
+      if (!prep) return;
+
+      editingId = id;
+      formTitle.textContent = "Edit Preparation";
+      saveBtn.textContent = "Update Preparation";
+      hidePreparationListSection();
+
+      document.getElementById("prepName").value = prep.name;
+      document.getElementById("prepCategory").value = prep.category;
+      document.getElementById("prepStatus").value = prep.status;
+      document.getElementById("yieldQty").value = prep.yieldQty;
+      document.getElementById("yieldUnit").value = prep.yieldUnit;
+      document.getElementById("waste").value = prep.waste;
+
+      tableBody.innerHTML = "";
+      if (Array.isArray(prep.ingredients) && prep.ingredients.length > 0) {
+        prep.ingredients.forEach(item => {
+          addRow(item.material, item.qty);
+        });
+      } else {
+        addRow();
+      }
+
+      updateSummary();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      addRow();
+      renderPreparationList();
+
+      if (prepSearch) {
+        prepSearch.addEventListener("input", renderPreparationList);
+      }
+    });
+  </script>
+</body>
 </html>
