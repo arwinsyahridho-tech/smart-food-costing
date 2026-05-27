@@ -914,6 +914,10 @@ total: grandTotal,
 
 ingredients: ingredients
 
+costPerYield:
+Number(grandTotal) /
+Number(document.getElementById("yieldQty").value),
+
 };
 
 preparations.push(prepData);
@@ -1013,9 +1017,29 @@ ${prep.status}
 
 </div>
 
-</div>
+<div
+style="
+text-align:right;
+display:flex;
+flex-direction:column;
+gap:8px;
+"
+>
+
 <div class="prep-cost">
-Rp ${Number(prep.total).toLocaleString()}
+Rp ${Number(prep.total).toLocaleString()} / Recipe
+</div>
+
+<div
+style="
+font-size:14px;
+opacity:.7;
+"
+>
+Rp ${Number(prep.costPerYield).toFixed(2)}
+/ ${prep.yieldUnit}
+</div>
+
 </div>
 
 </div>
