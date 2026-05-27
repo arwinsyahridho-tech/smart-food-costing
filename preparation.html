@@ -898,6 +898,18 @@ name: prepName,
 
 category: prepCategory,
 
+status:
+document.getElementById("prepStatus").value,
+
+yieldQty:
+document.getElementById("yieldQty").value,
+
+yieldUnit:
+document.getElementById("yieldUnit").value,
+
+waste:
+document.getElementById("waste").value,
+
 total: grandTotal,
 
 ingredients: ingredients
@@ -974,12 +986,34 @@ onclick="toggleDetail(${prep.id})"
 ${prep.name}
 </div>
 
+<div
+style="
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-top:6px;
+"
+>
+
 <div class="prep-category">
 ${prep.category}
 </div>
 
+<div class="prep-category">
+${prep.yieldQty} ${prep.yieldUnit}
 </div>
 
+<div class="prep-category">
+Waste ${prep.waste}%
+</div>
+
+<div class="prep-category">
+${prep.status}
+</div>
+
+</div>
+
+</div>
 <div class="prep-cost">
 Rp ${Number(prep.total).toLocaleString()}
 </div>
