@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SFC • Menu</title>
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+body{
+  background:#07173a;
+  font-family:Arial, sans-serif;
+  color:#fff;
+}
+.wrapper{
+  display:flex;
+}
+.sidebar{
+  position:fixed;
+  left:0;
+  top:0;
+  width:260px;
+  height:100vh;
+  background:#102766;
+  padding:30px;
+  overflow:auto;
+}
+.logo{
+  font-size:34px;
+  font-weight:bold;
+  margin-bottom:45px;
+}
+.item{
+  height:56px;
+  padding:0 18px;
+  display:flex;
+  align-items:center;
+  border-radius:16px;
+  margin-bottom:12px;
+  cursor:pointer;
+  font-size:16px;
+  transition:.22s;
+  color:white;
+}
+.item:hover{
+  transform:translateX(6px);
+  background:rgba(255,255,255,.06);
+}
+.item.active{
+  background:#2563eb;
+  transform:translateX(10px);
+  box-shadow:0 10px 30px rgba(37,99,235,.35);
+}
+.btn{
+  margin-top:18px;
+  height:54px;
+  width:100%;
+  border:none;
+  border-radius:14px;
+  background:#2563eb;
+  color:white;
+  cursor:pointer;
+  font-weight:bold;
+}
+.btn.secondary{
+  background:#334155;
+}
+.main{
+  margin-left:260px;
+  width:calc(100% - 260px);
+  padding:40px;
+}
+.title{
+  font-size:44px;
+  margin-bottom:10px;
+}
+.sub{
+  opacity:.7;
+  margin-bottom:35px;
+}
+.section{
+  background:#102766;
+  padding:28px;
+  border-radius:22px;
+  margin-bottom:24px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+label{
+  display:block;
+  margin-bottom:10px;
+  opacity:.7;
+}
+input, select, textarea{
+  width:100%;
+  height:56px;
+  padding:0 18px;
+  background:#0d2158;
+  border:none;
+  border-radius:14px;
+  color:white;
+  outline:none;
+}
+textarea{
+  min-height:120px;
+  padding:16px 18px;
+  resize:vertical;
+}
+.form-actions{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:24px;
+}
+.table-wrapper{
+  margin-top:30px;
+  overflow:auto;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:15px;
+}
+th{
+  background:#1b3d96;
+  padding:16px;
+  font-size:14px;
+  text-align:left;
+  white-space:nowrap;
+}
+td{
+  padding:14px;
+  background:#0d2158;
+  border-bottom:1px solid rgba(255,255,255,.05);
+  vertical-align:top;
+}
+.table-input,.table-select{
+  width:100%;
+  height:46px;
+  background:#07173a;
+  border:none;
+  border-radius:10px;
+  padding:0 12px;
+  color:white;
+}
+.add-row-btn{
+  margin-top:18px;
+  height:50px;
+  padding:0 24px;
+  border:none;
+  border-radius:12px;
+  background:#2563eb;
+  color:white;
+  cursor:pointer;
+  font-weight:bold;
+}
+.delete-btn{
+  width:40px;
+  height:40px;
+  border:none;
+  border-radius:10px;
+  background:#ef4444;
+  color:white;
+  cursor:pointer;
+  font-size:18px;
+}
+.summary{
+  margin-top:25px;
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+}
+.summary-box{
+  flex:1;
+  min-width:200px;
+  background:#0d2158;
+  padding:20px;
+  border-radius:16px;
+}
+.summary-title{
+  opacity:.6;
+  margin-bottom:10px;
+}
+.summary-value{
+  font-size:24px;
+  font-weight:bold;
+}
+
+/* LIST */
+.list-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  flex-wrap:wrap;
+  margin-bottom:22px;
+}
+.search-box{
+  width:320px;
+  max-width:100%;
+}
+.search-box input{
+  height:52px;
+}
+.menu-item{
+  background:#0d2158;
+  border-radius:18px;
+  padding:22px;
+  margin-bottom:18px;
+}
+.menu-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:20px;
+  cursor:pointer;
+  flex-wrap:wrap;
+}
+.menu-left{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.menu-name{
+  font-size:20px;
+  font-weight:bold;
+}
+.menu-badges{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:8px;
+}
+.menu-badge{
+  display:inline-block;
+  padding:6px 12px;
+  background:#2563eb;
+  border-radius:999px;
+  font-size:12px;
+  width:fit-content;
+}
+.menu-cost{
+  font-size:22px;
+  font-weight:bold;
+  text-align:right;
+  min-width:180px;
+}
+.menu-detail{
+  margin-top:20px;
+  padding-top:20px;
+  border-top:1px solid rgba(255,255,255,.08);
+  display:none;
+}
+.menu-detail.active{
+  display:block;
+}
+.menu-table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:14px;
+}
+.menu-table th{
+  background:#1b3d96;
+  padding:12px;
+  font-size:13px;
+}
+.menu-table td{
+  padding:12px;
+  background:#07173a;
+}
+.menu-actions{
+  display:flex;
+  gap:10px;
+  margin-top:18px;
+  justify-content:flex-end;
+  flex-wrap:wrap;
+}
+.action-btn{
+  height:42px;
+  padding:0 18px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  color:white;
+  font-weight:bold;
+}
+.edit-btn{
+  background:#f59e0b;
+}
+.delete-btn-2{
+  background:#ef4444;
+}
+.hidden{
+  display:none !important;
+}
+.notice{
+  opacity:.65;
+  text-align:center;
+  padding:20px;
+}
+.small-note{
+  opacity:.65;
+  font-size:13px;
+}
+@media (max-width: 980px){
+  .sidebar{
+    position:relative;
+    width:100%;
+    height:auto;
+  }
+  .main{
+    margin-left:0;
+    width:100%;
+  }
+  .grid{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="sidebar">
+    <div class="logo">🍽️ SFC</div>
+
+    <div class="item" onclick="location.href='costdashboard.html'">📊 Dashboard</div>
+    <div class="item" onclick="location.href='rawmaterial.html'">📦 Raw Material</div>
+    <div class="item" onclick="location.href='preparation.html'">🥣 Preparation</div>
+    <div class="item active">🍔 Menu</div>
+    <div class="item">🔒 Product HPP</div>
+
+    <button class="btn" onclick="location.href='dashboard.html'">← Kembali</button>
+  </div>
+
+  <div class="main">
+    <div class="title">Menu</div>
+    <div class="sub">Produk jual akhir yang menyusun bahan dari raw material, preparation, dan packaging.</div>
+
+    <div class="section" id="menuFormSection">
+      <div class="grid">
+        <div>
+          <label>Nama Menu</label>
+          <input id="menuName" placeholder="Nasi Ayam Crispy" />
+        </div>
+
+        <div>
+          <label>Kategori</label>
+          <input id="menuCategory" placeholder="Rice Bowl" />
+        </div>
+
+        <div>
+          <label>Sub Category</label>
+          <input id="menuSubCategory" placeholder="Chicken" />
+        </div>
+
+        <div>
+          <label>Selling Price</label>
+          <input id="menuSellingPrice" type="number" placeholder="25000" />
+        </div>
+
+        <div>
+          <label>Status</label>
+          <select id="menuStatus">
+            <option>ACTIVE</option>
+            <option>INACTIVE</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Photo URL</label>
+          <input id="menuPhotoUrl" placeholder="https://..." />
+        </div>
+
+        <div style="grid-column:1 / -1;">
+          <label>Description</label>
+          <textarea id="menuDescription" placeholder="Deskripsi menu"></textarea>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <div style="font-size:22px;font-weight:bold;margin-bottom:8px;">Menu Recipe</div>
+        <div class="small-note">Pilih ingredient type, lalu pilih ingredient. Unit dan harga akan otomatis terisi jika data tersedia.</div>
+
+        <table id="recipeTable">
+          <thead>
+            <tr>
+              <th>Ingredient Type</th>
+              <th>Ingredient</th>
+              <th>Qty</th>
+              <th>Unit</th>
+              <th>Harga / Unit</th>
+              <th>Waste %</th>
+              <th>Total</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="recipeBody"></tbody>
+        </table>
+
+        <button class="add-row-btn" onclick="addRecipeRow()">+ Tambah Bahan</button>
+      </div>
+
+      <div class="summary">
+        <div class="summary-box">
+          <div class="summary-title">Total Bahan</div>
+          <div class="summary-value" id="totalIngredients">0</div>
+        </div>
+        <div class="summary-box">
+          <div class="summary-title">Total Recipe Cost</div>
+          <div class="summary-value" id="totalRecipeCost">Rp 0</div>
+        </div>
+        <div class="summary-box">
+          <div class="summary-title">Estimated Food Cost</div>
+          <div class="summary-value" id="estimatedFoodCost">Rp 0</div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn" id="saveMenuBtn" onclick="saveMenu()">+ Simpan Menu</button>
+        <button class="btn secondary hidden" id="cancelEditBtn" onclick="cancelEditMode()">Batal Edit</button>
+      </div>
+    </div>
+
+    <div class="section" id="menuListSection">
+      <div class="list-header">
+        <div>
+          <div style="font-size:28px;font-weight:bold;margin-bottom:6px;">Menu List</div>
+          <div style="opacity:.6;">Daftar menu yang sudah disimpan</div>
+        </div>
+
+        <div class="search-box">
+          <input id="searchMenu" type="text" placeholder="Cari menu atau kategori..." oninput="renderMenuList()" />
+        </div>
+      </div>
+
+      <div id="menuList">
+        <div class="notice">Belum ada data menu</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const rawMaterials = [
+  { name:"Cabai", unit:"gr", price:50, type:"Raw Material" },
+  { name:"Bawang Putih", unit:"gr", price:40, type:"Raw Material" },
+  { name:"Minyak", unit:"ml", price:20, type:"Raw Material" },
+  { name:"Gula", unit:"gr", price:15, type:"Raw Material" }
+];
+
+const preparations = [
+  { name:"Sambal Bawang", unit:"gr", price:250, type:"Preparation" },
+  { name:"Saus Coklat", unit:"gr", price:180, type:"Preparation" },
+  { name:"Adonan Crispy", unit:"gr", price:90, type:"Preparation" }
+];
+
+const packagings = [
+  { name:"Box Rice Bowl", unit:"pcs", price:1500, type:"Packaging" },
+  { name:"Sticker Label", unit:"pcs", price:300, type:"Packaging" },
+  { name:"Sendok Plastik", unit:"pcs", price:250, type:"Packaging" }
+];
+
+let menus = [];
+let editMode = false;
+let editMenuId = null;
+
+const recipeBody = document.getElementById("recipeBody");
+
+function titleCase(text){
+  return String(text || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\b\w/g, c => c.toUpperCase());
+}
+
+function getSourceOptions(type){
+  if(type === "Raw Material") return rawMaterials;
+  if(type === "Preparation") return preparations;
+  if(type === "Packaging") return packagings;
+  return [];
+}
+
+function addRecipeRow(data = {}){
+  const row = document.createElement("tr");
+  const typeOptions = ["Raw Material","Preparation","Packaging"]
+    .map(type => `<option value="${type}" ${data.ingredientType === type ? "selected" : ""}>${type}</option>`)
+    .join("");
+
+  row.innerHTML = `
+    <td>
+      <select class="table-select ingredient-type-select" onchange="updateRecipeRow(this)">
+        <option value="">Pilih</option>
+        ${typeOptions}
+      </select>
+    </td>
+    <td>
+      <select class="table-select ingredient-select" onchange="updateRecipeName(this)">
+        <option value="">Pilih ingredient type dulu</option>
+      </select>
+    </td>
+    <td>
+      <input type="number" class="table-input qty-input" value="${data.qty || 1}" oninput="calculateRecipeRow(this)" />
+    </td>
+    <td>
+      <input class="table-input unit-input" disabled />
+    </td>
+    <td>
+      <input class="table-input price-input" disabled />
+    </td>
+    <td>
+      <input type="number" class="table-input waste-input" value="${data.waste ?? 0}" oninput="calculateRecipeRow(this)" />
+    </td>
+    <td>
+      <input class="table-input total-input" disabled />
+    </td>
+    <td>
+      <button class="delete-btn" onclick="deleteRecipeRow(this)">✕</button>
+    </td>
+  `;
+  recipeBody.appendChild(row);
+
+  if(data.ingredientType){
+    const typeSelect = row.querySelector(".ingredient-type-select");
+    typeSelect.value = data.ingredientType;
+    updateRecipeRow(typeSelect, data);
+  }
+
+  if(data.ingredient){
+    const ingredientSelect = row.querySelector(".ingredient-select");
+    ingredientSelect.value = data.ingredient;
+    updateRecipeName(ingredientSelect, data);
+  }
+
+  if(data.qty !== undefined){
+    row.querySelector(".qty-input").value = data.qty;
+  }
+  if(data.waste !== undefined){
+    row.querySelector(".waste-input").value = data.waste;
+  }
+  calculateRecipeRow(row.querySelector(".qty-input"));
+}
+
+function updateRecipeRow(select, preset = null){
+  const row = select.closest("tr");
+  const ingredientSelect = row.querySelector(".ingredient-select");
+  const type = select.value;
+  const source = getSourceOptions(type);
+
+  ingredientSelect.innerHTML = `<option value="">Pilih</option>` +
+    source.map(item => `<option value="${item.name}">${item.name}</option>`).join("");
+
+  if(preset && preset.ingredient){
+    ingredientSelect.value = preset.ingredient;
+  }
+
+  updateRecipeName(ingredientSelect, preset);
+}
+
+function updateRecipeName(select, preset = null){
+  const row = select.closest("tr");
+  const type = row.querySelector(".ingredient-type-select").value;
+  const source = getSourceOptions(type);
+  const item = source.find(x => x.name === select.value);
+
+  if(item){
+    row.querySelector(".unit-input").value = item.unit;
+    row.querySelector(".price-input").value = item.price;
+  }else{
+    row.querySelector(".unit-input").value = "";
+    row.querySelector(".price-input").value = "";
+  }
+
+  if(preset){
+    if(preset.unit) row.querySelector(".unit-input").value = preset.unit;
+    if(preset.pricePerUnit !== undefined) row.querySelector(".price-input").value = preset.pricePerUnit;
+  }
+
+  calculateRecipeRow(row.querySelector(".qty-input"));
+}
+
+function calculateRecipeRow(input){
+  const row = input.closest("tr");
+  const qty = parseFloat(row.querySelector(".qty-input").value) || 0;
+  const price = parseFloat(row.querySelector(".price-input").value) || 0;
+  const waste = parseFloat(row.querySelector(".waste-input").value) || 0;
+
+  const actualQty = qty * (1 + waste / 100);
+  const total = actualQty * price;
+
+  row.querySelector(".total-input").value = total.toFixed(2);
+  updateSummary();
+}
+
+function deleteRecipeRow(button){
+  button.closest("tr").remove();
+  updateSummary();
+}
+
+function updateSummary(){
+  const rows = document.querySelectorAll("#recipeBody tr");
+  let totalRecipeCost = 0;
+
+  rows.forEach(row => {
+    const total = parseFloat(row.querySelector(".total-input").value) || 0;
+    totalRecipeCost += total;
+  });
+
+  document.getElementById("totalIngredients").innerText = rows.length;
+  document.getElementById("totalRecipeCost").innerText = "Rp " + Math.round(totalRecipeCost).toLocaleString();
+
+  const sellingPrice = parseFloat(document.getElementById("menuSellingPrice").value) || 0;
+  const estFoodCost = sellingPrice > 0 ? totalRecipeCost / sellingPrice * 100 : 0;
+  document.getElementById("estimatedFoodCost").innerText = estFoodCost ? estFoodCost.toFixed(2) + "%" : "Rp 0";
+}
+
+function clearRecipe(){
+  recipeBody.innerHTML = "";
+  addRecipeRow();
+  updateSummary();
+}
+
+function collectRecipe(){
+  const rows = document.querySelectorAll("#recipeBody tr");
+  const ingredients = [];
+  rows.forEach(row => {
+    const ingredientType = row.querySelector(".ingredient-type-select").value;
+    const ingredient = row.querySelector(".ingredient-select").value;
+    const qty = parseFloat(row.querySelector(".qty-input").value) || 0;
+    const unit = row.querySelector(".unit-input").value || "";
+    const pricePerUnit = parseFloat(row.querySelector(".price-input").value) || 0;
+    const waste = parseFloat(row.querySelector(".waste-input").value) || 0;
+    const actualQty = qty * (1 + waste / 100);
+    const totalCost = actualQty * pricePerUnit;
+
+    if(ingredientType && ingredient){
+      ingredients.push({
+        ingredientType,
+        ingredient,
+        qty,
+        unit,
+        pricePerUnit,
+        waste,
+        totalCost
+      });
+    }
+  });
+  return ingredients;
+}
+
+function capitalizeMenuFields(){
+  document.getElementById("menuName").value = titleCase(document.getElementById("menuName").value);
+  document.getElementById("menuCategory").value = titleCase(document.getElementById("menuCategory").value);
+  document.getElementById("menuSubCategory").value = titleCase(document.getElementById("menuSubCategory").value);
+  document.getElementById("menuDescription").value = titleCase(document.getElementById("menuDescription").value);
+}
+
+function saveMenu(){
+  const name = document.getElementById("menuName").value.trim();
+  const category = document.getElementById("menuCategory").value.trim();
+  const subCategory = document.getElementById("menuSubCategory").value.trim();
+  const sellingPrice = parseFloat(document.getElementById("menuSellingPrice").value) || 0;
+  const status = document.getElementById("menuStatus").value;
+  const description = document.getElementById("menuDescription").value.trim();
+  const photoUrl = document.getElementById("menuPhotoUrl").value.trim();
+  const ingredients = collectRecipe();
+  const totalRecipeCost = ingredients.reduce((sum, item) => sum + item.totalCost, 0);
+
+  if(!name){
+    alert("Nama menu wajib diisi");
+    return;
+  }
+  if(!category){
+    alert("Kategori wajib diisi");
+    return;
+  }
+  if(ingredients.length === 0){
+    alert("Recipe minimal 1 bahan");
+    return;
+  }
+
+  const normalizedName = titleCase(name);
+  const normalizedCategory = titleCase(category);
+  const normalizedSubCategory = titleCase(subCategory);
+  const normalizedDescription = titleCase(description);
+
+  const menuData = {
+    id: editMode && editMenuId ? editMenuId : Date.now(),
+    name: normalizedName,
+    category: normalizedCategory,
+    subCategory: normalizedSubCategory,
+    sellingPrice,
+    status,
+    description: normalizedDescription,
+    photoUrl,
+    updateDate: new Date().toISOString().slice(0,10),
+    totalRecipeCost,
+    ingredients
+  };
+
+  if(editMode){
+    const idx = menus.findIndex(m => m.id === editMenuId);
+    if(idx !== -1) menus[idx] = menuData;
+  }else{
+    menus.push(menuData);
+  }
+
+  renderMenuList();
+  resetMenuForm();
+  showMenuListSection();
+
+  alert(editMode ? "Menu berhasil diupdate" : "Menu berhasil disimpan");
+}
+
+function resetMenuForm(){
+  document.getElementById("menuName").value = "";
+  document.getElementById("menuCategory").value = "";
+  document.getElementById("menuSubCategory").value = "";
+  document.getElementById("menuSellingPrice").value = "";
+  document.getElementById("menuStatus").value = "ACTIVE";
+  document.getElementById("menuDescription").value = "";
+  document.getElementById("menuPhotoUrl").value = "";
+  editMode = false;
+  editMenuId = null;
+  document.getElementById("saveMenuBtn").innerText = "+ Simpan Menu";
+  document.getElementById("cancelEditBtn").classList.add("hidden");
+  clearRecipe();
+}
+
+function showMenuListSection(){
+  document.getElementById("menuListSection").classList.remove("hidden");
+}
+
+function hideMenuListSection(){
+  document.getElementById("menuListSection").classList.add("hidden");
+}
+
+function openEditMenu(id){
+  const menu = menus.find(m => m.id === id);
+  if(!menu) return;
+
+  document.getElementById("menuName").value = menu.name;
+  document.getElementById("menuCategory").value = menu.category;
+  document.getElementById("menuSubCategory").value = menu.subCategory;
+  document.getElementById("menuSellingPrice").value = menu.sellingPrice;
+  document.getElementById("menuStatus").value = menu.status;
+  document.getElementById("menuDescription").value = menu.description;
+  document.getElementById("menuPhotoUrl").value = menu.photoUrl || "";
+
+  editMode = true;
+  editMenuId = id;
+  document.getElementById("saveMenuBtn").innerText = "Update Menu";
+  document.getElementById("cancelEditBtn").classList.remove("hidden");
+
+  recipeBody.innerHTML = "";
+  menu.ingredients.forEach(item => addRecipeRow({
+    ingredientType: item.ingredientType,
+    ingredient: item.ingredient,
+    qty: item.qty,
+    unit: item.unit,
+    pricePerUnit: item.pricePerUnit,
+    waste: item.waste
+  }));
+
+  hideMenuListSection();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function cancelEditMode(){
+  resetMenuForm();
+  showMenuListSection();
+}
+
+function deleteMenu(id){
+  if(!confirm("Hapus menu ini?")) return;
+  menus = menus.filter(m => m.id !== id);
+  renderMenuList();
+  if(editMode && editMenuId === id){
+    cancelEditMode();
+  }
+}
+
+function toggleMenuDetail(id){
+  const detail = document.getElementById(`detail-${id}`);
+  detail.classList.toggle("active");
+}
+
+function renderMenuList(){
+  const container = document.getElementById("menuList");
+  const query = document.getElementById("searchMenu").value.trim().toLowerCase();
+
+  const filtered = menus.filter(menu => {
+    const byName = menu.name.toLowerCase().includes(query);
+    const byCategory = menu.category.toLowerCase().includes(query);
+    return byName || byCategory;
+  });
+
+  if(filtered.length === 0){
+    container.innerHTML = `<div class="notice">Belum ada data menu</div>`;
+    return;
+  }
+
+  container.innerHTML = "";
+  filtered.forEach(menu => {
+    const ingredientRows = menu.ingredients.map(item => `
+      <tr>
+        <td>${item.ingredientType}</td>
+        <td>${item.ingredient}</td>
+        <td>${item.qty}</td>
+        <td>${item.unit}</td>
+        <td>Rp ${Number(item.pricePerUnit).toLocaleString()}</td>
+        <td>${item.waste}%</td>
+        <td>Rp ${Number(item.totalCost).toLocaleString()}</td>
+      </tr>
+    `).join("");
+
+    container.innerHTML += `
+      <div class="menu-item">
+        <div class="menu-top" onclick="toggleMenuDetail(${menu.id})">
+          <div class="menu-left">
+            <div class="menu-name">${menu.name}</div>
+            <div class="menu-badges">
+              <div class="menu-badge">${menu.category}</div>
+              <div class="menu-badge">${menu.subCategory || "-"}</div>
+              <div class="menu-badge">${menu.status}</div>
+            </div>
+            <div style="opacity:.7;margin-top:6px;">${menu.description || ""}</div>
+          </div>
+          <div class="menu-cost">
+            Rp ${Number(menu.totalRecipeCost).toLocaleString()}
+            <div style="font-size:13px;opacity:.7;margin-top:6px;">Recipe Cost</div>
+          </div>
+        </div>
+
+        <div class="menu-detail" id="detail-${menu.id}">
+          <div style="font-size:18px;font-weight:bold;margin-bottom:16px;">Recipe Detail</div>
+
+          <table class="menu-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Ingredient</th>
+                <th>Qty</th>
+                <th>Unit</th>
+                <th>Harga/Unit</th>
+                <th>Waste %</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${ingredientRows}
+            </tbody>
+          </table>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);flex-wrap:wrap;gap:20px;">
+            <div>
+              <div style="font-size:13px;opacity:.6;margin-bottom:6px;">TOTAL RECIPE COST</div>
+              <div style="font-size:24px;font-weight:bold;">Rp ${Number(menu.totalRecipeCost).toLocaleString()}</div>
+            </div>
+            <div style="opacity:.8;font-size:14px;">
+              Selling Price: Rp ${Number(menu.sellingPrice).toLocaleString()}
+            </div>
+          </div>
+
+          <div class="menu-actions">
+            <button class="action-btn edit-btn" onclick="openEditMenu(${menu.id})">Edit</button>
+            <button class="action-btn delete-btn-2" onclick="deleteMenu(${menu.id})">Hapus</button>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+}
+
+document.getElementById("menuSellingPrice").addEventListener("input", updateSummary);
+
+document.addEventListener("DOMContentLoaded", () => {
+  addRecipeRow();
+  updateSummary();
+  renderMenuList();
+});
+</script>
+</body>
+</html>
