@@ -978,10 +978,18 @@
       clearRows();
     }
 
+function formatPreparationName(value) {
+      return String(value || "")
+        .trim()
+        .replace(/\s+/g, " ")
+        .toLowerCase()
+        .replace(/(^|\s)\S/g, letter => letter.toUpperCase());
+    }
+
     function savePreparation() {
       const isEditing = editingId !== null;
 
-      const prepName = document.getElementById("prepName").value.trim();
+      const prepName = formatPreparationName(document.getElementById("prepName").value);
       const prepCategory = document.getElementById("prepCategory").value;
       const prepStatus = document.getElementById("prepStatus").value;
       const yieldQty = parseFloat(document.getElementById("yieldQty").value) || 0;
