@@ -511,6 +511,45 @@ disabled
 
 </table>
 
+<div
+style="
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(180px,1fr));
+gap:16px;
+margin-top:22px;
+"
+>
+
+<div class="summary-box">
+<div class="summary-title">
+Yield
+</div>
+<div class="summary-value">
+${prep.yieldQty} ${prep.yieldUnit}
+</div>
+</div>
+
+<div class="summary-box">
+<div class="summary-title">
+Waste
+</div>
+<div class="summary-value">
+${prep.waste}%
+</div>
+</div>
+
+<div class="summary-box">
+<div class="summary-title">
+Cost / Yield
+</div>
+<div class="summary-value">
+Rp ${Number(prep.costPerYield).toFixed(2)}
+</div>
+</div>
+
+</div>
+
 <button
 class="add-row-btn"
 onclick="addRow()"
@@ -1075,6 +1114,16 @@ class="prep-detail"
 id="detail-${prep.id}"
 >
 
+<div
+style="
+font-size:18px;
+font-weight:bold;
+margin-bottom:18px;
+"
+>
+Recipe Detail
+</div>
+
 <table
 class="prep-table"
 style="
@@ -1104,16 +1153,37 @@ ${ingredientRows}
 <div
 style="
 display:flex;
-justify-content:flex-end;
-margin-top:18px;
-font-size:18px;
+justify-content:space-between;
+align-items:center;
+margin-top:24px;
+padding-top:20px;
+border-top:1px solid rgba(255,255,255,.08);
+flex-wrap:wrap;
+gap:20px;
+"
+>
+<div>
+
+<div
+style="
+font-size:13px;
+opacity:.6;
+margin-bottom:6px;
+"
+>
+TOTAL RECIPE COST
+</div>
+
+<div
+style="
+font-size:24px;
 font-weight:bold;
 "
 >
-
-Total Recipe :
 Rp ${Number(prep.total).toLocaleString()}
+</div>
 
+</div>
 </div>
 
 <div
