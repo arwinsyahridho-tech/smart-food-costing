@@ -984,7 +984,20 @@ class="prep-top"
 onclick="toggleDetail(${prep.id})"
 >
 
-<div class="prep-left">
+<div
+style="
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+gap:20px;
+flex-wrap:wrap;
+width:100%;
+"
+>
+
+<!-- LEFT -->
+
+<div>
 
 <div class="prep-name">
 ${prep.name}
@@ -995,7 +1008,7 @@ style="
 display:flex;
 gap:10px;
 flex-wrap:wrap;
-margin-top:6px;
+margin-top:12px;
 "
 >
 
@@ -1017,23 +1030,36 @@ ${prep.status}
 
 </div>
 
+</div>
+
+<!-- RIGHT -->
+
 <div
 style="
 text-align:right;
-display:flex;
-flex-direction:column;
-gap:8px;
+min-width:180px;
 "
 >
 
 <div class="prep-cost">
-Rp ${Number(prep.total).toLocaleString()} / Recipe
+Rp ${Number(prep.total).toLocaleString()}
 </div>
 
 <div
 style="
 font-size:14px;
 opacity:.7;
+margin-top:6px;
+"
+>
+per Recipe
+</div>
+
+<div
+style="
+margin-top:12px;
+font-size:14px;
+opacity:.8;
 "
 >
 Rp ${Number(prep.costPerYield).toFixed(2)}
@@ -1049,8 +1075,12 @@ class="prep-detail"
 id="detail-${prep.id}"
 >
 
-<table class="prep-table">
-
+<table
+class="prep-table"
+style="
+margin-top:24px;
+"
+>
 <thead>
 
 <tr>
@@ -1086,7 +1116,12 @@ Rp ${Number(prep.total).toLocaleString()}
 
 </div>
 
-<div class="prep-actions">
+<div
+class="prep-actions"
+style="
+justify-content:flex-end;
+"
+>
 
 <button
 class="action-btn edit-btn"
