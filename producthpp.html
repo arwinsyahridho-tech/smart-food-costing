@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SFC • Product HPP</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{background:#07173a;font-family:Arial,sans-serif;color:#fff}
+    .wrapper{display:flex}
+    .sidebar{
+      position:fixed;left:0;top:0;width:260px;height:100vh;background:#102766;
+      padding:30px;overflow:auto
+    }
+    .logo{font-size:34px;font-weight:bold;margin-bottom:45px}
+    .item{
+      height:56px;padding:0 18px;display:flex;align-items:center;border-radius:16px;
+      margin-bottom:12px;cursor:pointer;font-size:16px;transition:.22s;color:white
+    }
+    .item:hover{transform:translateX(6px);background:rgba(255,255,255,.06)}
+    .item.active{
+      background:#2563eb;transform:translateX(10px);
+      box-shadow:0 10px 30px rgba(37,99,235,.35)
+    }
+    .btn{
+      margin-top:18px;height:54px;width:100%;border:none;border-radius:14px;
+      background:#2563eb;color:white;cursor:pointer;font-weight:bold
+    }
+    .main{margin-left:260px;width:calc(100% - 260px);padding:40px}
+    .title{font-size:44px;margin-bottom:10px}
+    .sub{opacity:.7;margin-bottom:35px}
+
+    .summary-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:16px;
+      margin-bottom:24px
+    }
+    .summary-box{
+      background:#0d2158;padding:20px;border-radius:16px;min-height:110px
+    }
+    .summary-title{opacity:.6;margin-bottom:10px}
+    .summary-value{font-size:24px;font-weight:bold;white-space:pre-line}
+
+    .section{
+      background:#102766;padding:28px;border-radius:22px;margin-bottom:24px
+    }
+    .list-header{
+      display:flex;justify-content:space-between;align-items:flex-start;gap:20px;
+      flex-wrap:wrap;margin-bottom:22px
+    }
+    .search-wrap{
+      display:flex;gap:12px;flex-wrap:wrap;align-items:center;width:100%
+    }
+    .search-box,.filter-box{width:280px;max-width:100%}
+    .search-box input,.filter-box select{height:52px;width:100%}
+    input,select,textarea{
+      width:100%;height:56px;padding:0 18px;background:#0d2158;border:none;
+      border-radius:14px;color:white;outline:none
+    }
+    textarea{
+      min-height:120px;padding:16px 18px;resize:vertical;height:auto
+    }
+    label{display:block;margin-bottom:10px;opacity:.7}
+
+    .notice{opacity:.65;text-align:center;padding:20px}
+    .small-note{opacity:.65;font-size:13px;margin-top:6px}
+    .pill-note{
+      display:inline-block;margin-top:8px;padding:6px 10px;border-radius:999px;
+      background:rgba(37,99,235,.18);color:#cfe0ff;font-size:12px
+    }
+
+    .menu-item{
+      background:#0d2158;border-radius:18px;padding:22px;margin-bottom:18px
+    }
+    .menu-top{
+      display:flex;justify-content:space-between;align-items:flex-start;gap:20px;
+      cursor:pointer;flex-wrap:wrap
+    }
+    .menu-left{display:flex;flex-direction:column;gap:8px;min-width:0;flex:1}
+    .menu-header{
+      display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap
+    }
+    .thumb{
+      width:64px;height:64px;border-radius:14px;overflow:hidden;
+      background:#07173a;border:1px solid rgba(255,255,255,.08);
+      flex:0 0 auto
+    }
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .thumb span{
+      width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+      color:#9bb3ee;font-size:11px;text-align:center;padding:8px
+    }
+    .menu-name{font-size:20px;font-weight:bold}
+    .menu-badges{
+      display:flex;gap:10px;flex-wrap:wrap;margin-top:8px
+    }
+    .menu-badge{
+      display:inline-block;padding:6px 12px;background:#2563eb;border-radius:999px;
+      font-size:12px;width:fit-content
+    }
+    .menu-badge.gray{background:#334155}
+    .menu-cost{
+      text-align:right;min-width:220px
+    }
+    .cost-main{
+      font-size:22px;font-weight:bold
+    }
+    .cost-label{
+      display:block;font-size:13px;opacity:.7;font-weight:normal;margin-top:6px
+    }
+    .profit-pill{
+      display:inline-block;margin-top:12px;padding:6px 10px;border-radius:999px;
+      font-size:12px;font-weight:bold
+    }
+    .profit-green{background:rgba(22,163,74,.18);color:#86efac}
+    .profit-yellow{background:rgba(234,179,8,.18);color:#fde68a}
+    .profit-red{background:rgba(239,68,68,.18);color:#fca5a5}
+
+    .menu-detail{
+      margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);
+      display:none
+    }
+    .menu-detail.active{display:block}
+    .detail-grid{
+      display:grid;
+      grid-template-columns:240px 1fr;
+      gap:20px;
+      align-items:start;
+      margin-bottom:20px;
+    }
+    .detail-photo{
+      width:100%;
+      aspect-ratio:1/1;
+      border-radius:16px;
+      overflow:hidden;
+      background:#07173a;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#9bb3ee;
+      font-size:13px;
+      text-align:center;
+      border:1px solid rgba(255,255,255,.08)
+    }
+    .detail-photo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .detail-card{
+      background:#07173a;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:16px;
+      padding:18px;
+      margin-bottom:18px;
+    }
+    .detail-desc{
+      opacity:.9;
+      line-height:1.65;
+      white-space:pre-wrap;
+    }
+
+    .menu-table{width:100%;border-collapse:collapse;margin-top:14px}
+    .menu-table th{
+      background:#1b3d96;padding:12px;font-size:13px;white-space:nowrap;text-align:left
+    }
+    .menu-table td{padding:12px;background:#07173a}
+    .menu-actions{
+      display:flex;gap:10px;margin-top:18px;justify-content:flex-end;flex-wrap:wrap
+    }
+    .action-btn{
+      height:42px;padding:0 18px;border:none;border-radius:10px;cursor:pointer;
+      color:white;font-weight:bold
+    }
+    .edit-btn{background:#f59e0b}
+    .delete-btn-2{background:#ef4444}
+
+    .table-wrapper{margin-top:30px;overflow:auto}
+    table{width:100%;border-collapse:collapse;margin-top:15px}
+    th{
+      background:#1b3d96;padding:16px;font-size:14px;text-align:left;white-space:nowrap
+    }
+    td{
+      padding:14px;background:#0d2158;border-bottom:1px solid rgba(255,255,255,.05);
+      vertical-align:top
+    }
+    .table-input,.table-select{
+      width:100%;height:46px;background:#07173a;border:none;border-radius:10px;
+      padding:0 12px;color:white
+    }
+    .add-row-btn{
+      margin-top:18px;height:50px;padding:0 24px;border:none;border-radius:12px;
+      background:#2563eb;color:white;cursor:pointer;font-weight:bold
+    }
+    .delete-btn{
+      width:40px;height:40px;border:none;border-radius:10px;background:#ef4444;
+      color:white;cursor:pointer;font-size:18px
+    }
+    .inline-note{
+      opacity:.65;font-size:12px;margin-top:6px
+    }
+    .hidden{display:none !important}
+
+    .summary-line{
+      display:flex;justify-content:space-between;align-items:center;
+      gap:20px;flex-wrap:wrap;margin-top:24px;padding-top:20px;
+      border-top:1px solid rgba(255,255,255,.08)
+    }
+    .summary-callout{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:16px;
+      margin-top:22px
+    }
+    .summary-callout .summary-box{
+      min-height:92px
+    }
+
+    @media (max-width: 980px){
+      .sidebar{position:relative;width:100%;height:auto}
+      .main{margin-left:0;width:100%}
+      .detail-grid{grid-template-columns:1fr}
+      .search-box,.filter-box{width:100%}
+      .menu-cost{text-align:left;min-width:0}
+      .menu-header{width:100%}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="sidebar">
+      <div class="logo">🍽️ SFC</div>
+      <div class="item" onclick="location.href='costdashboard.html'">📊 Dashboard</div>
+      <div class="item" onclick="location.href='rawmaterial.html'">📦 Raw Material</div>
+      <div class="item" onclick="location.href='preparation.html'">🥣 Preparation</div>
+      <div class="item" onclick="location.href='menu.html'">🍔 Menu</div>
+      <div class="item active">📈 Product HPP</div>
+      <button class="btn" onclick="location.href='dashboard.html'">← Kembali</button>
+    </div>
+
+    <div class="main">
+      <div class="title">Product HPP</div>
+      <div class="sub">Analisis biaya akhir dari setiap menu untuk melihat HPP, margin, profit, dan harga rekomendasi.</div>
+
+      <div class="summary-grid">
+        <div class="summary-box">
+          <div class="summary-title">Total Product</div>
+          <div class="summary-value" id="sumTotalProduct">0</div>
+        </div>
+        <div class="summary-box">
+          <div class="summary-title">Average Food Cost</div>
+          <div class="summary-value" id="sumAverageFoodCost">0%</div>
+        </div>
+        <div class="summary-box">
+          <div class="summary-title">Average Profit</div>
+          <div class="summary-value" id="sumAverageProfit">0%</div>
+        </div>
+        <div class="summary-box">
+          <div class="summary-title">Best Product</div>
+          <div class="summary-value" id="sumBestProduct">-</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="list-header">
+          <div>
+            <div style="font-size:28px;font-weight:bold;margin-bottom:6px;">Product HPP List</div>
+            <div style="opacity:.6;">Data diambil dari menu, lalu dihitung HPP dan profit otomatis.</div>
+          </div>
+          <div class="search-wrap">
+            <div class="search-box">
+              <input id="searchProduct" type="text" placeholder="Cari nama / category / sub category..." oninput="renderProductHPP()" />
+            </div>
+            <div class="filter-box">
+              <select id="filterCategory" onchange="renderProductHPP()">
+                <option value="">All Category</option>
+              </select>
+            </div>
+            <div class="filter-box">
+              <select id="filterSubCategory" onchange="renderProductHPP()">
+                <option value="">All Sub Category</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div id="productList">
+          <div class="notice">Belum ada data product hpp</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+function titleCase(text){
+  return String(text || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\b\w/g, c => c.toUpperCase());
+}
+
+function formatRupiah(value){
+  const n = Math.round(Number(value) || 0);
+  return "Rp " + n.toLocaleString("id-ID");
+}
+
+function parseNumberFromRupiah(value){
+  const raw = String(value || "").replace(/[^\d]/g, "");
+  return raw ? parseInt(raw, 10) : 0;
+}
+
+function formatOverheadInput(input){
+  const n = parseNumberFromRupiah(input.value);
+  input.value = n ? formatRupiah(n) : "";
+}
+
+function unformatOverheadInput(input){
+  const n = parseNumberFromRupiah(input.value);
+  input.value = n ? String(n) : "";
+}
+
+function profitBadgeClass(profitPct){
+  if(profitPct >= 60) return "profit-green";
+  if(profitPct >= 40) return "profit-yellow";
+  return "profit-red";
+}
+
+function statusLabel(profitPct){
+  if(profitPct >= 60) return "Excellent";
+  if(profitPct >= 40) return "Good";
+  return "Low Margin";
+}
+
+/* SAMPLE DATA - nanti bisa diganti dari data MENU */
+const products = [
+  {
+    id: 1,
+    name: titleCase("Nasi Ayam Crispy"),
+    category: titleCase("Food"),
+    subCategory: titleCase("Main Course"),
+    sellingPrice: 28000,
+    description: titleCase("Nasi ayam crispy dengan sambal bawang dan salad ringan."),
+    photoUrl: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=80",
+    ingredients: [
+      { ingredientType:"Raw Material", ingredient:"Tepung", qty:100, unit:"gr", pricePerUnit:50, waste:5, totalCost:5250 },
+      { ingredientType:"Preparation", ingredient:"Sambal Bawang", qty:30, unit:"gr", pricePerUnit:250, waste:0, totalCost:7500 },
+      { ingredientType:"Packaging", ingredient:"Box Rice Bowl", qty:1, unit:"pcs", pricePerUnit:1500, waste:0, totalCost:1500 }
+    ],
+    overhead: 2000
+  },
+  {
+    id: 2,
+    name: titleCase("Es Kopi Susu"),
+    category: titleCase("Beverage"),
+    subCategory: titleCase("Coffee"),
+    sellingPrice: 22000,
+    description: titleCase("Minuman kopi susu creamy dengan es batu dan aroma kopi yang ringan."),
+    photoUrl: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=900&q=80",
+    ingredients: [
+      { ingredientType:"Raw Material", ingredient:"Kopi", qty:20, unit:"gr", pricePerUnit:180, waste:0, totalCost:3600 },
+      { ingredientType:"Raw Material", ingredient:"Susu", qty:120, unit:"ml", pricePerUnit:25, waste:0, totalCost:3000 },
+      { ingredientType:"Packaging", ingredient:"Cup Plastic", qty:1, unit:"pcs", pricePerUnit:900, waste:0, totalCost:900 }
+    ],
+    overhead: 1500
+  },
+  {
+    id: 3,
+    name: titleCase("French Fries"),
+    category: titleCase("Food"),
+    subCategory: titleCase("Snack"),
+    sellingPrice: 18000,
+    description: titleCase("Kentang goreng crispy dengan seasoning ringan."),
+    photoUrl: "",
+    ingredients: [
+      { ingredientType:"Raw Material", ingredient:"Kentang", qty:200, unit:"gr", pricePerUnit:40, waste:10, totalCost:8800 },
+      { ingredientType:"Packaging", ingredient:"Paper Box", qty:1, unit:"pcs", pricePerUnit:700, waste:0, totalCost:700 }
+    ],
+    overhead: 1200
+  }
+];
+
+function calcTotalRecipeCost(product){
+  return (product.ingredients || []).reduce((sum, item) => sum + Number(item.totalCost || 0), 0);
+}
+
+function calcHPP(product){
+  return calcTotalRecipeCost(product) + Number(product.overhead || 0);
+}
+
+function calcProfitRp(product){
+  return Number(product.sellingPrice || 0) - calcHPP(product);
+}
+
+function calcProfitPct(product){
+  const selling = Number(product.sellingPrice || 0);
+  if(!selling) return 0;
+  return (calcProfitRp(product) / selling) * 100;
+}
+
+function calcFoodCostPct(product){
+  const selling = Number(product.sellingPrice || 0);
+  if(!selling) return 0;
+  return (calcTotalRecipeCost(product) / selling) * 100;
+}
+
+function calcRecommendedPrice(product, targetFoodCostPct = 35){
+  const hpp = calcHPP(product);
+  if(!targetFoodCostPct) return 0;
+  return hpp / (targetFoodCostPct / 100);
+}
+
+function getUniqueCategories(){
+  return [...new Set(products.map(p => titleCase(p.category)).filter(Boolean))];
+}
+
+function getUniqueSubCategories(){
+  return [...new Set(products.map(p => titleCase(p.subCategory)).filter(Boolean))];
+}
+
+function populateFilters(){
+  const cat = document.getElementById("filterCategory");
+  const sub = document.getElementById("filterSubCategory");
+
+  getUniqueCategories().forEach(v => {
+    const opt = document.createElement("option");
+    opt.value = v;
+    opt.textContent = v;
+    cat.appendChild(opt);
+  });
+
+  getUniqueSubCategories().forEach(v => {
+    const opt = document.createElement("option");
+    opt.value = v;
+    opt.textContent = v;
+    sub.appendChild(opt);
+  });
+}
+
+function toggleDetail(id){
+  const detail = document.getElementById(`detail-${id}`);
+  detail.classList.toggle("active");
+}
+
+function saveOverhead(id){
+  const input = document.getElementById(`overhead-${id}`);
+  const val = parseNumberFromRupiah(input.value);
+  const item = products.find(p => p.id === id);
+  if(item){
+    item.overhead = val;
+    formatOverheadInput(input);
+    renderProductHPP();
+  }
+}
+
+function editProduct(id){
+  const detail = document.getElementById(`detail-${id}`);
+  if(detail) detail.classList.add("active");
+  const input = document.getElementById(`overhead-${id}`);
+  if(input){
+    unformatOverheadInput(input);
+    input.focus();
+  }
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function removeProduct(id){
+  if(!confirm("Hapus product ini dari list HPP?")) return;
+  const idx = products.findIndex(p => p.id === id);
+  if(idx !== -1) products.splice(idx, 1);
+  renderProductHPP();
+}
+
+function updateSummaryCards(list){
+  const data = list.length ? list : products;
+  const total = data.length;
+  const avgFood = total ? data.reduce((sum, p) => sum + calcFoodCostPct(p), 0) / total : 0;
+  const avgProfit = total ? data.reduce((sum, p) => sum + calcProfitPct(p), 0) / total : 0;
+  const highest = [...data].sort((a,b) => calcProfitRp(b) - calcProfitRp(a))[0];
+
+  document.getElementById("sumTotalProduct").innerText = total;
+  document.getElementById("sumAverageFoodCost").innerText = total ? avgFood.toFixed(2) + "%" : "0%";
+  document.getElementById("sumAverageProfit").innerText = total ? avgProfit.toFixed(2) + "%" : "0%";
+  document.getElementById("sumBestProduct").innerText = highest
+    ? `${titleCase(highest.name)}\n${formatRupiah(calcProfitRp(highest))}`
+    : "-";
+}
+
+function renderProductHPP(){
+  const container = document.getElementById("productList");
+  const query = document.getElementById("searchProduct").value.trim().toLowerCase();
+  const catFilter = document.getElementById("filterCategory").value;
+  const subFilter = document.getElementById("filterSubCategory").value;
+
+  const filtered = products.filter(product => {
+    const name = titleCase(product.name).toLowerCase();
+    const category = titleCase(product.category).toLowerCase();
+    const subCategory = titleCase(product.subCategory).toLowerCase();
+    const description = titleCase(product.description).toLowerCase();
+
+    const matchQuery =
+      name.includes(query) ||
+      category.includes(query) ||
+      subCategory.includes(query) ||
+      description.includes(query);
+
+    const matchCategory = !catFilter || titleCase(product.category) === catFilter;
+    const matchSubCategory = !subFilter || titleCase(product.subCategory) === subFilter;
+
+    return matchQuery && matchCategory && matchSubCategory;
+  });
+
+  if(filtered.length === 0){
+    container.innerHTML = `<div class="notice">Belum ada data product hpp</div>`;
+    updateSummaryCards([]);
+    return;
+  }
+
+  container.innerHTML = "";
+
+  filtered.forEach(product => {
+    const totalRecipeCost = calcTotalRecipeCost(product);
+    const hpp = calcHPP(product);
+    const profitRp = calcProfitRp(product);
+    const profitPct = calcProfitPct(product);
+    const foodCostPct = calcFoodCostPct(product);
+    const recommendedPrice = calcRecommendedPrice(product, 35);
+    const badgeClass = profitBadgeClass(profitPct);
+    const badgeText = statusLabel(profitPct);
+
+    const ingredientRows = (product.ingredients || []).map(item => `
+      <tr>
+        <td>${item.ingredientType}</td>
+        <td>${item.ingredient}</td>
+        <td>${item.qty}</td>
+        <td>${item.unit}</td>
+        <td>${formatRupiah(item.pricePerUnit)}</td>
+        <td>${Number(item.waste || 0)}%</td>
+        <td>${formatRupiah(item.totalCost)}</td>
+      </tr>
+    `).join("");
+
+    container.innerHTML += `
+      <div class="menu-item">
+        <div class="menu-top" onclick="toggleDetail(${product.id})">
+          <div class="menu-left">
+            <div class="menu-header">
+              <div class="thumb">
+                ${
+                  product.photoUrl
+                    ? `<img src="${product.photoUrl}" alt="${titleCase(product.name)}" />`
+                    : `<span>No Photo</span>`
+                }
+              </div>
+
+              <div style="min-width:0;flex:1;">
+                <div class="menu-name">${titleCase(product.name)}</div>
+                <div class="menu-badges">
+                  <div class="menu-badge">${titleCase(product.category)}</div>
+                  <div class="menu-badge gray">${titleCase(product.subCategory || "-")}</div>
+                  <div class="menu-badge ${badgeClass}">${badgeText}</div>
+                </div>
+                <div style="opacity:.7;margin-top:6px;">${product.description || ""}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-cost">
+            ${formatRupiah(product.sellingPrice)}
+            <span class="cost-label">Selling Price</span>
+
+            <div style="margin-top:12px;font-size:18px;">
+              ${formatRupiah(hpp)}
+            </div>
+            <span class="cost-label">HPP Total</span>
+
+            <div style="margin-top:12px;font-size:16px;opacity:.85;">
+              ${formatRupiah(profitRp)}
+            </div>
+            <span class="cost-label">Profit</span>
+          </div>
+        </div>
+
+        <div class="menu-detail" id="detail-${product.id}">
+          <div class="detail-grid">
+            <div class="detail-photo">
+              ${
+                product.photoUrl
+                  ? `<img src="${product.photoUrl}" alt="${titleCase(product.name)}" />`
+                  : `<div>Tidak ada foto</div>`
+              }
+            </div>
+
+            <div>
+              <div class="detail-card">
+                <div style="font-size:18px;font-weight:bold;margin-bottom:12px;">Description</div>
+                <div class="detail-desc">${product.description || "-"}</div>
+              </div>
+
+              <div class="summary-callout">
+                <div class="summary-box">
+                  <div class="summary-title">Food Cost</div>
+                  <div class="summary-value">${formatRupiah(totalRecipeCost)}</div>
+                </div>
+
+                <div class="summary-box">
+                  <div class="summary-title">Overhead</div>
+                  <div class="summary-value" style="font-size:18px;font-weight:normal;">
+                    <input
+                      id="overhead-${product.id}"
+                      type="text"
+                      inputmode="numeric"
+                      value="${formatRupiah(product.overhead)}"
+                      style="height:46px;border-radius:12px;background:#07173a;color:#fff;border:none;padding:0 12px;width:100%;"
+                      onfocus="unformatOverheadInput(this)"
+                      onblur="saveOverhead(${product.id})"
+                      oninput="this.value=this.value.replace(/[^\\d]/g,'')"
+                    />
+                    <div class="inline-note">Input angka biasa, tampil otomatis rupiah</div>
+                  </div>
+                </div>
+
+                <div class="summary-box">
+                  <div class="summary-title">Profit</div>
+                  <div class="summary-value">${formatRupiah(profitRp)}</div>
+                  <div class="inline-note">${profitPct.toFixed(2)}%</div>
+                </div>
+
+                <div class="summary-box">
+                  <div class="summary-title">Recommended Price</div>
+                  <div class="summary-value">${formatRupiah(recommendedPrice)}</div>
+                  <div class="inline-note">Target food cost 35%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <table class="menu-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Ingredient</th>
+                <th>Qty</th>
+                <th>Unit</th>
+                <th>Harga/Unit</th>
+                <th>Waste %</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${ingredientRows}
+            </tbody>
+          </table>
+
+          <div class="summary-line">
+            <div>
+              <div style="font-size:13px;opacity:.6;margin-bottom:6px;">HPP / ANALYSIS</div>
+              <div style="font-size:24px;font-weight:bold;">${formatRupiah(hpp)}</div>
+              <div style="opacity:.75;margin-top:8px;font-size:14px;">
+                Profit: ${profitPct.toFixed(2)}% • Food Cost: ${foodCostPct.toFixed(2)}%
+              </div>
+            </div>
+
+            <div style="opacity:.8;font-size:14px;text-align:right;">
+              <div>Category: ${titleCase(product.category)}</div>
+              <div>Sub Category: ${titleCase(product.subCategory || "-")}</div>
+            </div>
+          </div>
+
+          <div class="menu-actions">
+            <button class="action-btn edit-btn" onclick="editProduct(${product.id})">Edit Overhead</button>
+            <button class="action-btn delete-btn-2" onclick="removeProduct(${product.id})">Hapus</button>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+
+  updateSummaryCards(filtered);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  populateFilters();
+  renderProductHPP();
+});
+</script>
+</body>
+</html>
