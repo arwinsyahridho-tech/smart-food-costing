@@ -1,1448 +1,690 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="id">
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>BIYA Raw Material</title>
-
-<style>
-.modal{
-
-display:none;
-
-position:fixed;
-
-top:0;
-
-left:0;
-
-right:0;
-
-bottom:0;
-
-background:rgba(0,0,0,.65);
-
-z-index:999;
-
-justify-content:center;
-
-align-items:center;
-
-}
-
-.modalBox{
-
-width:900px;
-
-max-width:95%;
-
-background:#102766;
-
-padding:30px;
-
-border-radius:22px;
-
-max-height:90vh;
-
-overflow:auto;
-
-}
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-body{
-background:#07173a;
-font-family:Arial;
-color:white;
-}
-
-.wrapper{
-display:flex;
-height:100vh;
-}
-
-.sidebar{
-
-position:fixed;
-
-left:0;
-
-top:0;
-
-width:260px;
-
-height:100vh;
-
-background:#102766;
-
-padding:30px;
-
-overflow:auto;
-
-}
-
-.logo{
-
-font-size:34px;
-
-font-weight:bold;
-
-margin-bottom:45px;
-
-}
-.item{
-
-height:56px;
-
-padding:0 18px;
-
-display:flex;
-
-align-items:center;
-
-border-radius:16px;
-
-margin-bottom:12px;
-
-cursor:pointer;
-
-font-size:16px;
-
-transition:.22s;
-
-color:white;
-
-}
-
-
-.item:hover:not(.active){
-
-transform:
-translateX(6px);
-
-background:
-rgba(
-255,
-255,
-255,
-.06
-);
-
-}
-
-
-.item.active{
-
-background:#2563eb;
-
-transform:
-translateX(10px);
-
-box-shadow:
-
-0 10px 18px
-
-rgba(
-37,
-99,
-235,
-.22
-);
-
-}
-.item:hover{
-
-background:#1a3d95;
-
-}
-
-.logout{
-
-margin-top:40px;
-
-}
-
-.main{
-
-margin-left:260px;
-
-width:
-
-calc(
-100% - 260px
-);
-
-padding:40px;
-
-}
-
-.title{
-
-font-size:44px;
-
-margin-bottom:25px;
-
-}
-
-.section{
-
-background:#102766;
-
-padding:28px;
-
-border-radius:22px;
-
-margin-bottom:24px;
-
-}
-
-.sectionTitle{
-
-font-size:20px;
-
-margin-bottom:20px;
-
-opacity:.9;
-
-}
-
-.grid{
-
-display:grid;
-
-grid-template-columns:
-
-1fr 1fr;
-
-gap:18px;
-
-}
-
-.grid3{
-
-display:grid;
-
-grid-template-columns:
-
-1fr 1fr 1fr;
-
-gap:18px;
-
-}
-
-.field{
-
-display:flex;
-
-flex-direction:column;
-
-gap:10px;
-
-}
-
-label{
-
-font-size:14px;
-
-opacity:.7;
-
-}
-
-input,
-select{
-
-height:56px;
-
-padding:0 18px;
-
-background:#0d2158;
-
-border:none;
-
-border-radius:14px;
-
-color:white;
-
-font-size:16px;
-
-}
-
-.btn{
-
-margin-top:25px;
-
-height:54px;
-
-padding:0 24px;
-
-width:100%;
-
-border:none;
-
-border-radius:14px;
-
-background:#2563eb;
-
-color:white;
-
-font-size:16px;
-
-cursor:pointer;
-
-}
-
-.search{
-
-margin:30px 0;
-
-}
-
-.search input{
-
-width:100%;
-
-}
-
-.card{
-
-background:#102766;
-
-padding:25px;
-
-border-radius:22px;
-
-}
-
-.headerCard{
-
-display:flex;
-
-justify-content:space-between;
-
-}
-
-.name{
-
-font-size:26px;
-
-font-weight:bold;
-
-}
-
-.sub{
-
-opacity:.6;
-
-margin-top:8px;
-
-}
-
-.info{
-
-display:grid;
-
-grid-template-columns:
-
-repeat(5,1fr);
-
-gap:16px;
-
-margin-top:25px;
-
-}
-
-.box{
-
-background:#0d2158;
-
-padding:18px;
-
-border-radius:14px;
-
-}
-
-.small{
-
-font-size:12px;
-
-opacity:.6;
-
-}
-
-.big{
-
-margin-top:10px;
-
-font-size:18px;
-
-}
-
-@media(max-width:900px){
-
-.sidebar{
-display:none;
-}
-
-.grid,
-.grid3,
-.info{
-
-grid-template-columns:1fr;
-
-}
-
-}
-
-</style>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SFC • Raw Material</title>
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+    body{
+      background:#07173a;
+      font-family:Arial,sans-serif;
+      color:white;
+    }
+    .wrapper{
+      display:flex;
+      min-height:100vh;
+    }
+    .sidebar{
+      position:fixed;
+      left:0;
+      top:0;
+      width:260px;
+      height:100vh;
+      background:#102766;
+      padding:30px;
+      overflow:auto;
+    }
+    .logo{
+      font-size:34px;
+      font-weight:bold;
+      margin-bottom:45px;
+    }
+    .item{
+      height:56px;
+      padding:0 18px;
+      display:flex;
+      align-items:center;
+      border-radius:16px;
+      margin-bottom:12px;
+      cursor:pointer;
+      font-size:16px;
+      transition:.22s;
+      color:white;
+      user-select:none;
+    }
+    .item:hover{
+      transform:translateX(6px);
+      background:rgba(255,255,255,.06);
+    }
+    .item.active{
+      background:#2563eb;
+      transform:translateX(10px);
+      box-shadow:0 10px 30px rgba(37,99,235,.35);
+    }
+    .btn{
+      height:54px;
+      width:100%;
+      border:none;
+      border-radius:14px;
+      background:#2563eb;
+      color:white;
+      cursor:pointer;
+      font-weight:bold;
+      font-size:15px;
+    }
+    .btn.secondary{
+      background:#334155;
+    }
+    .sidebar-footer{
+      margin-top:40px;
+    }
+    .main{
+      margin-left:260px;
+      width:calc(100% - 260px);
+      padding:40px;
+    }
+    .title{
+      font-size:44px;
+      margin-bottom:10px;
+    }
+    .sub{
+      opacity:.7;
+      margin-bottom:35px;
+    }
+    .section{
+      background:#102766;
+      padding:28px;
+      border-radius:22px;
+      margin-bottom:24px;
+    }
+    .sectionTitle{
+      font-size:20px;
+      margin-bottom:20px;
+      opacity:.9;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+    }
+    .grid3{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:18px;
+    }
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    label{
+      font-size:14px;
+      opacity:.7;
+    }
+    input,
+    select{
+      height:56px;
+      padding:0 18px;
+      background:#0d2158;
+      border:none;
+      border-radius:14px;
+      color:white;
+      font-size:16px;
+      outline:none;
+    }
+    .btn-action{
+      height:54px;
+      padding:0 24px;
+      width:100%;
+      border:none;
+      border-radius:14px;
+      background:#2563eb;
+      color:white;
+      font-size:16px;
+      cursor:pointer;
+      font-weight:bold;
+    }
+    .btn-action.red{
+      background:#d62828;
+    }
+    .search{
+      margin:30px 0;
+    }
+    .search input{
+      width:100%;
+    }
+    .card{
+      background:#102766;
+      padding:25px;
+      border-radius:22px;
+      margin-bottom:20px;
+    }
+    .headerCard{
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      align-items:flex-start;
+    }
+    .name{
+      font-size:26px;
+      font-weight:bold;
+    }
+    .subCard{
+      opacity:.6;
+      margin-top:8px;
+      line-height:1.5;
+    }
+    .info{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:16px;
+      margin-top:25px;
+    }
+    .box{
+      background:#0d2158;
+      padding:18px;
+      border-radius:14px;
+      min-height:86px;
+    }
+    .small{
+      font-size:12px;
+      opacity:.6;
+      margin-bottom:10px;
+    }
+    .big{
+      margin-top:10px;
+      font-size:18px;
+      word-break:break-word;
+    }
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+    .mini-btn{
+      height:44px;
+      padding:0 16px;
+      border:none;
+      border-radius:12px;
+      cursor:pointer;
+      color:white;
+      font-weight:bold;
+      font-size:14px;
+    }
+    .mini-btn.edit{
+      background:#f59e0b;
+    }
+    .mini-btn.delete{
+      background:#ef4444;
+    }
+
+    .modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.65);
+      z-index:999;
+      justify-content:center;
+      align-items:center;
+      padding:20px;
+    }
+    .modalBox{
+      width:900px;
+      max-width:95%;
+      background:#102766;
+      padding:30px;
+      border-radius:22px;
+      max-height:90vh;
+      overflow:auto;
+    }
+    .modalTitle{
+      font-size:26px;
+      font-weight:bold;
+      margin-bottom:20px;
+    }
+    .modalActions{
+      display:flex;
+      gap:10px;
+      margin-top:20px;
+      flex-wrap:wrap;
+    }
+    .preview-top{
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      align-items:flex-start;
+    }
+    .preview-right{
+      text-align:right;
+      white-space:nowrap;
+      font-weight:bold;
+      font-size:18px;
+    }
+
+    @media(max-width:900px){
+      .sidebar{
+        position:relative;
+        width:100%;
+        height:auto;
+      }
+      .main{
+        margin-left:0;
+        width:100%;
+      }
+      .grid,
+      .grid3,
+      .info{
+        grid-template-columns:1fr;
+      }
+      .headerCard,
+      .preview-top{
+        flex-direction:column;
+      }
+      .preview-right{
+        text-align:left;
+        white-space:normal;
+      }
+    }
+  </style>
 </head>
-
 <body>
-
-<div class="wrapper">
-
-<div class="sidebar">
-
-<div class="logo">
-
-🍽️ BIYA
-
-</div>
-
-
-<div
-class="item"
-
-onclick="
-location.href=
-'costdashboard.html'
-"
->
-
-🏠 Dashboard
-
-</div>
-
-
-<div
-class="item active"
->
-
-📦 Raw Material
-
-</div>
-
-
-<div
-class="item"
-
-onclick="
-location.href=
-'preparation.html'
-"
->
-
-🥣 Preparation
-
-</div>
-
-
-<div 
-class="item"
-
-onclick="
-location.href=
-'menu.html'
-"
->
-
-🍔 Menu
-
-</div>
-
-<div class="item" onclick="location.href='producthpp.html'">📈 Product HPP</div>
-
-
-<div class="logout">
-
-<button
-class="btn"
-
-onclick="
-location.href=
-'dashboard.html'
-"
-
->
-
-← Kembali
-
-</button>
-
-</div>
-
-</div>
-
-
-
-<div class="main">
-
-<div class="title">
-
-Raw Material Master
-
-</div>
-
-
-
-<!-- IDENTITAS -->
-
-<div class="section">
-
-<div class="sectionTitle">
-
-IDENTITAS BAHAN
-
-</div>
-
-<div class="grid">
-
-<div class="field">
-
-<label>Nama Bahan</label>
-
-<input
-placeholder="Tepung Terigu Pro Sedang"
->
-
-</div>
-
-<div class="field">
-
-<label>Merk</label>
-
-<input
-placeholder="Segitiga Biru"
->
-
-</div>
-
-<div class="field">
-
-<label>Category</label>
-
-<select>
-
-<option>Bahan Kering</option>
-
-<option>Bahan Basah</option>
-
-<option>Buah</option>
-
-<option>Packaging</option>
-
-</select>
-
-</div>
-
-<div class="field">
-
-<label>Supplier</label>
-
-<input
-placeholder="Toko A"
->
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<!-- PEMBELIAN -->
-
-<div class="section">
-
-<div class="sectionTitle">
-
-PEMBELIAN
-
-</div>
-
-<div class="grid3">
-
-<div class="field">
-
-<label>Qty Beli</label>
-
-<input value="1">
-
-</div>
-
-<div class="field">
-
-<label>Buy Unit</label>
-
-<select>
-
-<option>Kg</option>
-
-<option>Pack</option>
-
-<option>Liter</option>
-
-<option>Pcs</option>
-
-</select>
-
-</div>
-
-<div class="field">
-
-<label>Harga Beli</label>
-
-<input
-id="hargaInput"
-placeholder="Rp 0"
-inputmode="numeric"
->
-</div>
-
-</div>
-
-</div>
-
-
-
-<!-- KONVERSI -->
-
-<div class="section">
-
-<div class="sectionTitle">
-
-KONVERSI
-
-</div>
-
-<div class="grid3">
-
-<div class="field">
-
-<label>Conversion Qty</label>
-
-<input
-placeholder="1000"
->
-
-</div>
-
-<div class="field">
-
-<label>Unit Dasar</label>
-
-<select>
-
-<option>gr</option>
-
-<option>ml</option>
-
-<option>pcs</option>
-
-</select>
-
-</div>
-
-<div class="field">
-
-<label>Default Waste %</label>
-
-<input value="5">
-
-</div>
-
-</div>
-
-<div
-style="
-display:flex;
-gap:12px;
-margin-top:25px;
-"
->
-
-<button
-id="tambahBtn"
-class="btn"
-style="margin:0"
->
-
-+ Tambah Bahan
-
-</button>
-
-
-
-</button>
-
-</div>
-</div>
-
-
-
-<!-- SEARCH -->
-
-<div class="search">
-
-<input
-placeholder="Cari bahan..."
->
-
-</div>
-
-
-
-<!-- CARD -->
-
-<div
-class="card"
-id="previewCard"
->
-
-<div class="headerCard">
-
-<div>
-
-<div class="name">
-
-Tepung Terigu
-
-</div>
-
-<div class="sub">
-
-Bahan Kering • Segitiga Biru
-
-</div>
-
-</div>
-
-<div>
-
-Rp 13 / gr
-
-</div>
-
-</div>
-
-
-<div class="info">
-
-<div class="box">
-
-<div class="small">
-
-Supplier
-
-</div>
-
-<div class="big">
-
-Sari Murni
-
-</div>
-
-</div>
-
-
-<div class="box">
-
-<div class="small">
-
-Pembelian
-
-</div>
-
-<div class="big">
-
-1 Pack
-
-</div>
-
-</div>
-
-
-<div class="box">
-
-<div class="small">
-
-Konversi
-
-</div>
-
-<div class="big">
-
-1000 gr
-
-</div>
-
-</div>
-
-
-<div class="box">
-
-<div class="small">
-
-Waste
-
-</div>
-
-<div class="big">
-
-5%
-
-</div>
-
-</div>
-
-
-<div class="box">
-
-<div class="small">
-
-Status
-
-</div>
-
-<div class="big">
-
-ACTIVE
-
-
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-  <script>
-
-let bahan=[];
-
-let editIndex=null;
-
-const input=
-document.querySelectorAll("input");
-
-const select=
-document.querySelectorAll("select");
-
-const search=
-document.querySelector(".search input");
-
-const area=
-document.getElementById(
-"previewCard"
-);
-
-function kapitalAwal(teks){
-
-return teks
-
-.toLowerCase()
-
-.replace(
-
-/\b\w/g,
-
-huruf=>
-
-huruf.toUpperCase()
-
-);
-
-}
-
-function ambilData(){
-
-return{
-
-nama:
-kapitalAwal(
-input[0]
-.value
-.trim()
-),
-
-merk:
-kapitalAwal(
-input[1]
-.value
-.trim()
-),
-
-supplier:
-kapitalAwal(
-input[2]
-.value
-.trim()
-),
-qty:input[3].value,
-
-buyUnit:select[1].value,
-
-harga:Number(input[4].value),
-
-conversion:Number(input[5].value),
-
-unit:select[2].value,
-
-waste:input[6].value
-
+  <div class="wrapper">
+    <aside class="sidebar">
+      <div class="logo">🍽️ SFC</div>
+
+      <div class="item" onclick="location.href='costdashboard.html'">🏠 Dashboard</div>
+      <div class="item active">📦 Raw Material</div>
+      <div class="item" onclick="location.href='preparation.html'">🥣 Preparation</div>
+      <div class="item" onclick="location.href='menu.html'">🍔 Menu</div>
+      <div class="item" onclick="location.href='product_hpp_ready.html'">📈 Product HPP</div>
+
+      <div class="sidebar-footer">
+        <button class="btn" onclick="location.href='dashboard.html'">← Kembali</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="title">Raw Material Master</div>
+      <div class="sub">Data bahan baku untuk kebutuhan costing, preparation, dan menu.</div>
+
+      <section class="section">
+        <div class="sectionTitle">IDENTITAS BAHAN</div>
+        <div class="grid">
+          <div class="field">
+            <label>Nama Bahan</label>
+            <input id="namaInput" placeholder="Tepung Terigu Pro Sedang" />
+          </div>
+          <div class="field">
+            <label>Merk</label>
+            <input id="merkInput" placeholder="Segitiga Biru" />
+          </div>
+          <div class="field">
+            <label>Category</label>
+            <select id="kategoriInput">
+              <option>Bahan Kering</option>
+              <option>Bahan Basah</option>
+              <option>Buah</option>
+              <option>Packaging</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Supplier</label>
+            <input id="supplierInput" placeholder="Toko A" />
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="sectionTitle">PEMBELIAN</div>
+        <div class="grid3">
+          <div class="field">
+            <label>Qty Beli</label>
+            <input id="qtyInput" type="number" value="1" />
+          </div>
+          <div class="field">
+            <label>Buy Unit</label>
+            <select id="buyUnitInput">
+              <option>Kg</option>
+              <option>Pack</option>
+              <option>Liter</option>
+              <option>Pcs</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Harga Beli</label>
+            <input id="hargaInput" placeholder="Rp 0" inputmode="numeric" />
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="sectionTitle">KONVERSI</div>
+        <div class="grid3">
+          <div class="field">
+            <label>Conversion Qty</label>
+            <input id="conversionInput" type="number" placeholder="1000" />
+          </div>
+          <div class="field">
+            <label>Unit Dasar</label>
+            <select id="unitDasarInput">
+              <option>gr</option>
+              <option>ml</option>
+              <option>pcs</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Default Waste %</label>
+            <input id="wasteInput" type="number" value="5" />
+          </div>
+        </div>
+
+        <div style="display:flex;gap:12px;margin-top:25px;flex-wrap:wrap;">
+          <button id="tambahBtn" class="btn-action">+ Tambah Bahan</button>
+        </div>
+      </section>
+
+      <div class="search">
+        <input id="searchInput" placeholder="Cari bahan..." />
+      </div>
+
+      <div id="listContainer"></div>
+    </main>
+  </div>
+
+  <div id="editModal" class="modal">
+    <div class="modalBox">
+      <div class="modalTitle">Edit Bahan</div>
+
+      <div class="grid">
+        <div class="field">
+          <label>Nama</label>
+          <input id="eNama" />
+        </div>
+        <div class="field">
+          <label>Merk</label>
+          <input id="eMerk" />
+        </div>
+        <div class="field">
+          <label>Kategori</label>
+          <select id="eKategori">
+            <option>Bahan Kering</option>
+            <option>Bahan Basah</option>
+            <option>Buah</option>
+            <option>Packaging</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Supplier</label>
+          <input id="eSupplier" />
+        </div>
+        <div class="field">
+          <label>Qty</label>
+          <input id="eQty" type="number" />
+        </div>
+        <div class="field">
+          <label>Buy Unit</label>
+          <select id="eBuyUnit">
+            <option>Kg</option>
+            <option>Pack</option>
+            <option>Liter</option>
+            <option>Pcs</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Harga</label>
+          <input id="eHarga" inputmode="numeric" />
+        </div>
+        <div class="field">
+          <label>Konversi</label>
+          <input id="eConversion" type="number" />
+        </div>
+        <div class="field">
+          <label>Unit</label>
+          <select id="eUnit">
+            <option>gr</option>
+            <option>ml</option>
+            <option>pcs</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Waste</label>
+          <input id="eWaste" type="number" />
+        </div>
+      </div>
+
+      <div class="modalActions">
+        <button class="btn-action" onclick="saveEdit()">Simpan</button>
+        <button class="btn-action red" onclick="closeModal()">Batal</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+const rawMaterials = [];
+
+let editIndex = null;
+
+const el = {
+  nama: document.getElementById("namaInput"),
+  merk: document.getElementById("merkInput"),
+  kategori: document.getElementById("kategoriInput"),
+  supplier: document.getElementById("supplierInput"),
+  qty: document.getElementById("qtyInput"),
+  buyUnit: document.getElementById("buyUnitInput"),
+  harga: document.getElementById("hargaInput"),
+  conversion: document.getElementById("conversionInput"),
+  unit: document.getElementById("unitDasarInput"),
+  waste: document.getElementById("wasteInput"),
+  search: document.getElementById("searchInput"),
+  list: document.getElementById("listContainer"),
+  modal: document.getElementById("editModal"),
+  eNama: document.getElementById("eNama"),
+  eMerk: document.getElementById("eMerk"),
+  eKategori: document.getElementById("eKategori"),
+  eSupplier: document.getElementById("eSupplier"),
+  eQty: document.getElementById("eQty"),
+  eBuyUnit: document.getElementById("eBuyUnit"),
+  eHarga: document.getElementById("eHarga"),
+  eConversion: document.getElementById("eConversion"),
+  eUnit: document.getElementById("eUnit"),
+  eWaste: document.getElementById("eWaste")
 };
 
+function titleCase(text){
+  return String(text || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\b\w/g, c => c.toUpperCase());
 }
 
-
-
-function isiForm(x){
-
-input[0].value=x.nama;
-
-input[1].value=x.merk;
-
-select[0].value=x.kategori;
-
-input[2].value=x.supplier;
-
-input[3].value=x.qty;
-
-select[1].value=x.buyUnit;
-
-input[4].value=x.harga;
-
-input[5].value=x.conversion;
-
-select[2].value=x.unit;
-
-input[6].value=x.waste;
-
+function rupiah(value){
+  const n = Math.round(Number(value) || 0);
+  return "Rp " + n.toLocaleString("id-ID");
 }
 
-
-
-function kosongkan(){
-
-input[0].value="";
-
-input[1].value="";
-
-input[2].value="";
-
-input[4].value="";
-
-input[5].value="";
-
+function numberOnly(v){
+  return String(v || "").replace(/[^\d]/g, "");
 }
 
+function calcHargaPerUnit(item){
+  const conv = Number(item.conversion) || 0;
+  const harga = Number(item.harga) || 0;
+  return conv ? harga / conv : 0;
+}
 
+function readForm(){
+  return {
+    nama: titleCase(el.nama.value),
+    merk: titleCase(el.merk.value),
+    kategori: el.kategori.value,
+    supplier: titleCase(el.supplier.value),
+    qty: Number(el.qty.value) || 0,
+    buyUnit: el.buyUnit.value,
+    harga: Number(numberOnly(el.harga.value)) || 0,
+    conversion: Number(el.conversion.value) || 0,
+    unit: el.unit.value,
+    waste: Number(el.waste.value) || 0
+  };
+}
+
+function clearForm(){
+  el.nama.value = "";
+  el.merk.value = "";
+  el.supplier.value = "";
+  el.qty.value = 1;
+  el.buyUnit.value = "Kg";
+  el.harga.value = "";
+  el.conversion.value = "";
+  el.unit.value = "gr";
+  el.waste.value = 5;
+}
 
 function render(){
+  const keyword = el.search.value.trim().toLowerCase();
 
-area.innerHTML="";
+  const filtered = rawMaterials.filter(item => {
+    const haystack = [
+      item.nama,
+      item.merk,
+      item.kategori,
+      item.supplier,
+      item.buyUnit,
+      item.unit
+    ].join(" ").toLowerCase();
+    return haystack.includes(keyword);
+  });
 
-let keyword=
-search.value
-.toLowerCase();
+  if(!filtered.length){
+    el.list.innerHTML = `<div class="section" style="text-align:center;opacity:.7;">Belum ada data bahan</div>`;
+    return;
+  }
 
-bahan
+  el.list.innerHTML = filtered.map((item, index) => {
+    const originalIndex = rawMaterials.indexOf(item);
+    return `
+      <div class="card">
+        <div class="preview-top">
+          <div>
+            <div class="name">${item.nama}</div>
+            <div class="subCard">${item.kategori} • ${item.merk}</div>
+          </div>
+          <div style="font-weight:bold;">${rupiah(calcHargaPerUnit(item))} / ${item.unit}</div>
+        </div>
 
-.forEach(
+        <div class="info">
+          <div class="box">
+            <div class="small">Supplier</div>
+            <div class="big">${item.supplier}</div>
+          </div>
 
-(item,index)=>{
+          <div class="box">
+            <div class="small">Pembelian</div>
+            <div class="big">${item.qty} ${item.buyUnit}</div>
+          </div>
 
-if(
+          <div class="box">
+            <div class="small">Konversi</div>
+            <div class="big">${item.conversion} ${item.unit}</div>
+          </div>
 
-keyword &&
+          <div class="box">
+            <div class="small">Waste</div>
+            <div class="big">${item.waste}%</div>
+          </div>
 
-!item.nama
-.toLowerCase()
-.includes(
-keyword
-)
+          <div class="box">
+            <div class="small">Status</div>
+            <div class="big">ACTIVE</div>
+          </div>
+        </div>
 
-){
-
-return;
-
+        <div class="actions">
+          <button class="mini-btn edit" onclick="openEdit(${originalIndex})">Edit</button>
+          <button class="mini-btn delete" onclick="deleteItem(${originalIndex})">Hapus</button>
+        </div>
+      </div>
+    `;
+  }).join("");
 }
 
-const harga=
-
-item.conversion
-
-?
-
-(
-
-item.harga
-/
-item.conversion
-
-).toFixed(2)
-
-:
-
-0;
-
-
-area.innerHTML+=`
-
-<div
-class="card"
-style="
-margin-bottom:20px;
-"
->
-
-<div class="headerCard">
-
-<div>
-
-<div class="name">
-
-${item.nama}
-
-</div>
-
-<div class="sub">
-
-${item.kategori}
-•
-${item.merk}
-
-</div>
-
-</div>
-
-<div>
-
-Rp ${harga}
-/ ${item.unit}
-
-</div>
-
-</div>
-
-
-<div class="info">
-
-<div class="box">
-
-<div class="small">
-
-Supplier
-
-</div>
-
-<div class="big">
-
-${item.supplier}
-
-</div>
-
-</div>
-
-
-<div class="box">
-
-<div class="small">
-
-Pembelian
-
-</div>
-
-<div class="big">
-
-${item.qty}
-${item.buyUnit}
-
-</div>
-
-</div>
-
-
-<div class="box">
-
-<div class="small">
-
-Konversi
-
-</div>
-
-<div class="big">
-
-${item.conversion}
-${item.unit}
-
-</div>
-
-</div>
-
-
-<div class="box">
-
-<div class="small">
-
-Waste
-
-</div>
-
-<div class="big">
-
-${item.waste}%
-
-</div>
-
-</div>
-
-
-<div class="box">
-
-<button
-class="btn"
-style="
-margin:0;
-height:44px;
-background:#f59e0b;
-width:100%;
-"
-onclick="editData(${index})"
->
-
-Edit
-
-</button>
-
-<br><br>
-
-<button
-class="btn"
-style="
-margin:0;
-height:44px;
-background:#d62828;
-width:100%;
-"
-onclick="hapusData(${index})"
->
-
-Hapus
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-`;
-
+function addItem(){
+  const data = readForm();
+
+  if(!data.nama){
+    alert("Isi Nama Bahan");
+    el.nama.focus();
+    return;
+  }
+
+  rawMaterials.unshift(data);
+  clearForm();
+  render();
 }
 
-);
+function openEdit(index){
+  editIndex = index;
+  const item = rawMaterials[index];
+  if(!item) return;
 
+  el.eNama.value = item.nama;
+  el.eMerk.value = item.merk;
+  el.eKategori.value = item.kategori;
+  el.eSupplier.value = item.supplier;
+  el.eQty.value = item.qty;
+  el.eBuyUnit.value = item.buyUnit;
+  el.eHarga.value = item.harga;
+  el.eConversion.value = item.conversion;
+  el.eUnit.value = item.unit;
+  el.eWaste.value = item.waste;
+
+  el.modal.style.display = "flex";
 }
 
-
-function tambahData(){
-
-const data=
-ambilData();
-
-if(
-!data.nama
-){
-
-alert(
-"Isi Nama Bahan"
-);
-
-return;
-
+function closeModal(){
+  el.modal.style.display = "none";
 }
 
-bahan.push(
-data
-);
+function saveEdit(){
+  if(editIndex === null) return;
 
-kosongkan();
+  rawMaterials[editIndex] = {
+    nama: titleCase(el.eNama.value),
+    merk: titleCase(el.eMerk.value),
+    kategori: el.eKategori.value,
+    supplier: titleCase(el.eSupplier.value),
+    qty: Number(el.eQty.value) || 0,
+    buyUnit: el.eBuyUnit.value,
+    harga: Number(numberOnly(el.eHarga.value)) || 0,
+    conversion: Number(el.eConversion.value) || 0,
+    unit: el.eUnit.value,
+    waste: Number(el.eWaste.value) || 0
+  };
 
-render();
-
+  editIndex = null;
+  closeModal();
+  render();
 }
 
-
-
-function editData(i){
-
-editIndex=i;
-
-let x=bahan[i];
-
-eNama.value=x.nama;
-eMerk.value=x.merk;
-eKategori.value=x.kategori;
-eSupplier.value=x.supplier;
-
-eQty.value=x.qty;
-eBuyUnit.value=x.buyUnit;
-
-eHarga.value=x.harga;
-
-eConversion.value=x.conversion;
-
-eUnit.value=x.unit;
-
-eWaste.value=x.waste;
-
-document
-.getElementById(
-"editModal"
-)
-
-.style.display=
-"flex";
-
+function deleteItem(index){
+  if(!confirm("Hapus data bahan ini?")) return;
+  rawMaterials.splice(index, 1);
+  render();
 }
 
+el.harga.addEventListener("input", () => {
+  const n = numberOnly(el.harga.value);
+  el.harga.value = n ? rupiah(n) : "";
+});
 
-function tutupModal(){
+el.eHarga.addEventListener("input", () => {
+  const n = numberOnly(el.eHarga.value);
+  el.eHarga.value = n ? rupiah(n) : "";
+});
 
-document
-.getElementById(
-"editModal"
-)
+document.getElementById("tambahBtn").addEventListener("click", addItem);
+el.search.addEventListener("input", render);
 
-.style.display=
-"none";
-
-}
-
-
-function simpanEdit(){
-
-bahan[editIndex]={
-
-nama:eNama.value,
-
-merk:eMerk.value,
-
-kategori:eKategori.value,
-
-supplier:eSupplier.value,
-
-qty:eQty.value,
-
-buyUnit:eBuyUnit.value,
-
-harga:Number(
-eHarga.value
-),
-
-conversion:Number(
-eConversion.value
-),
-
-unit:eUnit.value,
-
-waste:eWaste.value
-
-};
-
-render();
-
-tutupModal();
-
-}
-
-function updateData(){
-
-if(
-editIndex===null
-){
-
-alert(
-"Pilih Edit dulu"
-);
-
-return;
-
-}
-
-bahan[editIndex]=
-ambilData();
-
-render();
-
-}
-
-
-
-function hapusData(i){
-
-bahan.splice(
-i,
-1
-);
-
-render();
-
-}
-
-
-
-document
-.getElementById(
-"tambahBtn"
-)
-
-.addEventListener(
-"click",
-tambahData
-);
-
-
-
-
-
-
-search
-.addEventListener(
-"input",
-render
-);
-
-
+el.modal.addEventListener("click", (e) => {
+  if(e.target === el.modal) closeModal();
+});
 
 render();
 </script>
-  <div id="editModal" class="modal">
-
-<div class="modalBox">
-
-<h2>Edit Bahan</h2>
-
-<div class="grid">
-
-<div class="field">
-<label>Nama</label>
-<input id="eNama">
-</div>
-
-<div class="field">
-<label>Merk</label>
-<input id="eMerk">
-</div>
-
-<div class="field">
-<label>Kategori</label>
-
-<select id="eKategori">
-<option>Bahan Kering</option>
-<option>Bahan Basah</option>
-<option>Buah</option>
-<option>Packaging</option>
-</select>
-
-</div>
-
-<div class="field">
-<label>Supplier</label>
-<input id="eSupplier">
-</div>
-
-<div class="field">
-<label>Qty</label>
-<input id="eQty">
-</div>
-
-<div class="field">
-<label>Buy Unit</label>
-
-<select id="eBuyUnit">
-<option>Kg</option>
-<option>Pack</option>
-<option>Liter</option>
-<option>Pcs</option>
-</select>
-
-</div>
-
-<div class="field">
-<label>Harga</label>
-<input id="eHarga">
-</div>
-
-<div class="field">
-<label>Konversi</label>
-<input id="eConversion">
-</div>
-
-<div class="field">
-<label>Unit</label>
-
-<select id="eUnit">
-<option>gr</option>
-<option>ml</option>
-<option>pcs</option>
-</select>
-
-</div>
-
-<div class="field">
-<label>Waste</label>
-<input id="eWaste">
-</div>
-
-</div>
-
-<div style="display:flex;gap:10px;margin-top:20px">
-
-<button
-class="btn"
-onclick="simpanEdit()"
->
-Simpan
-</button>
-
-<button
-class="btn"
-style="background:#d62828"
-onclick="tutupModal()"
->
-Batal
-</button>
-
-</div>
-
-</div>
-
-</div>
-
 </body>
-</body>
-
 </html>
