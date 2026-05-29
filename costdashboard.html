@@ -1,1485 +1,232 @@
 <!DOCTYPE html>
-
 <html lang="id">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>BIYA • Dashboard</title>
-<style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BIYA • Dashboard</title>
+  <style>
     :root{
-      --bg:#07173a;
-      --panel:#102766;
-      --panel-2:#0d2158;
-      --panel-3:#1b3d96;
-      --primary:#2563eb;
+      --bg:#04122B;
+      --surface:#102B63;
+      --surface-2:#081A3A;
+      --surface-3:#163A87;
+      --primary:#0066FF;
+      --success:#00D66B;
+      --cyan:#2ED8FF;
+      --warning:#FFB800;
+      --danger:#FF4D4F;
       --text:#fff;
-      --muted:rgba(255,255,255,.7);
-      --muted-2:rgba(255,255,255,.55);
-      --danger:#ef4444;
-      --warning:#f59e0b;
-      --success:#22c55e;
-      --shadow:0 10px 30px rgba(37,99,235,.16);
-      --radius:18px;
+      --muted:rgba(215,227,255,.72);
+      --border:rgba(255,255,255,.08);
+      --shadow:0 8px 24px rgba(0,0,0,.20);
+      --shadow-active:0 0 20px rgba(0,102,255,.35);
     }
-
     *{margin:0;padding:0;box-sizing:border-box}
     body{
-      background:var(--bg);
-      font-family:Arial,Helvetica,sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(46,216,255,.12), transparent 25%),
+        radial-gradient(circle at left center, rgba(0,214,107,.10), transparent 22%),
+        var(--bg);
       color:var(--text);
+      font-family:Inter, Arial, sans-serif;
     }
-
-    .wrapper{display:flex;min-height:100vh}
-    .sidebar{
-      position:fixed;left:0;top:0;width:260px;height:100vh;background:#102766;
-      padding:30px;overflow:auto
+    .wrap{max-width:1500px;margin:0 auto;padding:48px 32px}
+    .hero{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:24px;
+      margin-bottom:28px;
+      flex-wrap:wrap;
     }
-    .logo{
-      font-size:34px;font-weight:700;margin-bottom:45px;letter-spacing:.2px;
-      line-height:1.1;
-    }
-    .logo small{
-      display:block;
-      font-size:12px;
-      font-weight:400;
-      opacity:.65;
-      margin-top:8px;
-      letter-spacing:1.6px;
-    }
-    .item{
-      height:56px;padding:0 18px;display:flex;align-items:center;border-radius:16px;
-      margin-bottom:12px;cursor:pointer;font-size:16px;transition:.22s;color:white;
-      user-select:none;
-    }
-    .item:hover{transform:translateX(6px);background:rgba(255,255,255,.06)}
-    .item.active{
-      background:var(--primary);transform:translateX(10px);
-      box-shadow:0 10px 30px rgba(37,99,235,.35)
-    }
-    .btn{
-      margin-top:18px;height:54px;width:100%;border:none;border-radius:14px;
-      background:var(--primary);color:white;cursor:pointer;font-weight:700
-    }
-
-    .main{margin-left:260px;width:calc(100% - 260px);padding:40px}
-    .page{
-      width:100%;
-      max-width:1600px;
-      margin:0 auto;
-    }
-    .title{font-size:44px;margin-bottom:10px;line-height:1.05}
-    .sub{opacity:.72;margin-bottom:30px;font-size:16px}
-
-    .section{
-      background:var(--panel);
-      padding:28px;
-      border-radius:22px;
-      margin-bottom:24px;
-      box-shadow:var(--shadow);
-    }
-
-    .summary-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
-      gap:16px;
-    }
-    .summary-box{
-      background:var(--panel-2);
-      padding:20px;
-      border-radius:16px;
-      min-height:110px;
-    }
-    .summary-title{
-      opacity:.6;
-      margin-bottom:10px;
-      font-size:13px;
-    }
-    .summary-value{
-      font-size:26px;
-      font-weight:700;
-      line-height:1.15;
-      white-space:pre-line;
-    }
-
-    .top-grid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:16px;
-      margin-top:20px;
-    }
-
-    .card{
-      background:var(--panel-2);
-      padding:22px;
+    .brand{
+      display:inline-flex;
+      gap:14px;
+      align-items:center;
+      padding:14px 18px;
+      border:1px solid var(--border);
       border-radius:18px;
-      height:100%;
-    }
-    .card-title{
-      font-size:22px;
-      font-weight:700;
-      margin-bottom:10px;
-    }
-    .card-sub{
-      opacity:.7;
-      font-size:13px;
+      background:rgba(8,26,58,.7);
+      box-shadow:var(--shadow);
       margin-bottom:18px;
     }
-
-    .product-hero{
-      display:flex;
-      gap:16px;
-      align-items:flex-start;
-    }
-    .thumb{
-      width:74px;height:74px;border-radius:16px;overflow:hidden;
-      background:#07173a;border:1px solid rgba(255,255,255,.08);flex:0 0 auto
-    }
-    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
-    .thumb .empty{
-      width:100%;height:100%;display:flex;align-items:center;justify-content:center;
-      font-size:12px;color:#9bb3ee;text-align:center;padding:8px
-    }
-    .product-name{font-size:20px;font-weight:700;margin-bottom:8px}
-    .pill-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-    .pill{
-      display:inline-block;padding:6px 10px;border-radius:999px;background:var(--primary);
-      font-size:12px;
-    }
-    .pill.gray{background:#334155}
-    .pill.green{background:rgba(34,197,94,.18);color:#86efac}
-    .pill.yellow{background:rgba(234,179,8,.18);color:#fde68a}
-    .pill.red{background:rgba(239,68,68,.18);color:#fca5a5}
-
-    .health-score{
-      display:flex;
-      gap:16px;
-      align-items:flex-start;
-    }
-    .score-circle{
-      width:86px;
-      height:86px;
-      border-radius:22px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:#07173a;
-      font-size:34px;
+    .brand-mark{
+      width:46px;height:46px;border-radius:14px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--primary),var(--success));
+      box-shadow:var(--shadow-active);
       font-weight:700;
-      border:1px solid rgba(255,255,255,.08);
-      flex:0 0 auto;
     }
-    .score-desc{
-      font-size:14px;
-      line-height:1.65;
-      opacity:.92;
-      margin-top:8px;
+    .title{
+      font-size:48px;
+      line-height:1;
+      letter-spacing:-1.2px;
+      margin-bottom:12px;
     }
-
-    .chart-box{display:flex;flex-direction:column;gap:16px}
-    .chart-meta{
-      display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap
+    .sub{
+      color:var(--muted);
+      max-width:780px;
+      line-height:1.7;
+      font-size:16px;
     }
-    .chart-select{
-      width:100%;
-      height:52px;
+    .hero-cta{
+      display:flex;gap:12px;flex-wrap:wrap
+    }
+    .cta{
+      height:48px;
       padding:0 18px;
-      background:#07173a;
       border:none;
-      border-radius:14px;
+      border-radius:12px;
+      background:linear-gradient(135deg,var(--primary),var(--success));
       color:#fff;
-      outline:none;
+      font-weight:700;
+      cursor:pointer;
+      box-shadow:var(--shadow-active);
     }
-    .bars{display:flex;flex-direction:column;gap:14px;margin-top:8px}
-    .bar-item{
-      display:grid;
-      grid-template-columns:130px 1fr 72px;
-      gap:12px;
-      align-items:center;
-    }
-    .bar-label{font-size:14px;opacity:.92}
-    .bar-track{
-      width:100%;
-      height:16px;
-      border-radius:999px;
-      background:#07173a;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.06)
-    }
-    .bar-fill{height:100%;border-radius:999px;min-width:4px}
-    .bar-value{text-align:right;font-size:13px;opacity:.85}
-
-    .search-wrap{
-      display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:18px
-    }
-    .search-box,.filter-box{width:280px;max-width:100%}
-    .search-box input,.filter-box select{
-      width:100%;
-      height:52px;
-      padding:0 18px;
-      background:#07173a;
-      border:none;
-      border-radius:14px;
-      color:white;
-      outline:none;
+    .cta.alt{
+      background:rgba(255,255,255,.08);
+      box-shadow:none;
     }
 
-    table{
-      width:100%;
-      border-collapse:collapse;
-      overflow:hidden;
-      border-radius:14px;
-      min-width:900px;
-    }
-    th{
-      background:var(--panel-3);
-      padding:14px 16px;
+    .section-title{
       font-size:14px;
-      text-align:left;
-      white-space:nowrap;
+      opacity:.62;
+      margin:24px 0 14px;
+      letter-spacing:2px;
     }
-    td{
-      padding:14px 16px;
-      background:var(--panel-2);
-      border-bottom:1px solid rgba(255,255,255,.05);
-      vertical-align:top;
-    }
-    .status{
-      display:inline-block;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:700;
-    }
-    .ok{background:rgba(34,197,94,.18);color:#86efac}
-    .warn{background:rgba(234,179,8,.18);color:#fde68a}
-    .danger{background:rgba(239,68,68,.18);color:#fca5a5}
-    .muted{opacity:.72;font-size:13px}
 
-    .info-grid{
+    .grid{
       display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-      gap:16px;
+      grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
+      gap:18px;
     }
-    .mini-box{
-      background:#07173a;
-      border:1px solid rgba(255,255,255,.06);
-      border-radius:16px;
-      padding:18px;
-      min-height:98px;
+    .card{
+      background:linear-gradient(180deg, rgba(16,43,99,.96), rgba(12,34,83,.98));
+      border:1px solid var(--border);
+      border-radius:22px;
+      padding:28px;
+      min-height:210px;
+      box-shadow:var(--shadow);
+      transition:.22s;
+      cursor:pointer;
+      position:relative;
+      overflow:hidden;
     }
-    .mini-title{
+    .card:before{
+      content:"";
+      position:absolute;
+      inset:auto -20px -35px auto;
+      width:120px;
+      height:120px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(46,216,255,.18), transparent 65%);
+      pointer-events:none;
+    }
+    .card:hover{
+      transform:translateY(-6px);
+      border-color:rgba(255,255,255,.14);
+    }
+    .card.active{
+      background:linear-gradient(135deg, rgba(0,102,255,.95), rgba(0,214,107,.92));
+      box-shadow:var(--shadow-active);
+    }
+    .icon{
+      width:56px;height:56px;border-radius:16px;
+      display:grid;place-items:center;
+      background:rgba(255,255,255,.10);
+      margin-bottom:18px;
+      font-size:28px;
+    }
+    .card.active .icon{background:rgba(255,255,255,.16)}
+    .card-title{font-size:26px;font-weight:700;margin-bottom:10px}
+    .card-desc{color:rgba(215,227,255,.78);line-height:1.65;font-size:15px}
+    .badge{
+      display:inline-flex;
+      margin-top:18px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.10);
+      font-size:12px;
+      letter-spacing:.6px;
+    }
+    .footer{
+      margin-top:34px;
+      color:rgba(215,227,255,.45);
       font-size:13px;
-      opacity:.65;
-      margin-bottom:8px;
     }
-    .mini-value{
-      font-size:22px;
-      font-weight:700;
-      line-height:1.15;
-      white-space:pre-line;
+    @media (max-width: 900px){
+      .wrap{padding:28px 18px}
+      .title{font-size:38px}
+      .card{min-height:180px}
     }
-
-    .alert-list{display:flex;flex-direction:column;gap:12px;margin-top:14px}
-    .alert-item{
-      padding:16px;
-      border-radius:14px;
-      background:#07173a;
-      border:1px solid rgba(255,255,255,.06);
-      display:flex;
-      gap:12px;
-      align-items:flex-start;
-    }
-    .alert-dot{
-      width:10px;height:10px;border-radius:999px;margin-top:6px;flex:0 0 auto
-    }
-    .dot-green{background:#22c55e}
-    .dot-yellow{background:#eab308}
-    .dot-red{background:#ef4444}
-
-    .insight-list{display:flex;flex-direction:column;gap:12px;margin-top:14px}
-    .insight-item{
-      background:#07173a;
-      border:1px solid rgba(255,255,255,.06);
-      border-radius:14px;
-      padding:16px;
-      line-height:1.6;
-    }
-
-    .flex-between{
-      display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap
-    }
-
-    @media (max-width: 1180px){
-      .top-grid{grid-template-columns:repeat(2,1fr)}
-    }
-    @media (max-width: 980px){
-      .sidebar{position:relative;width:100%;height:auto}
-      .main{margin-left:0;width:100%}
-      .top-grid{grid-template-columns:1fr}
-      .search-box,.filter-box{width:100%}
-      .bar-item{grid-template-columns:110px 1fr 60px}
-    }
-    /* =========================
-   BIYA MOBILE NAVIGATION
-========================= */
-
-.mobile-header{
-  display:none;
-}
-
-.mobile-logo{
-  font-size:20px;
-  font-weight:700;
-  color:white;
-}
-
-.menu-toggle{
-  width:48px;
-  height:48px;
-  border:none;
-  border-radius:12px;
-  cursor:pointer;
-  color:white;
-  font-size:22px;
-  background:linear-gradient(
-    135deg,
-    #0066FF,
-    #00D66B
-  );
-}
-
-.mobile-overlay{
-  display:none;
-}
-
-@media(max-width:980px){
-
-  .mobile-header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:14px 18px;
-    position:sticky;
-    top:0;
-    z-index:1002;
-
-    background:#081A3A;
-    border-bottom:1px solid rgba(255,255,255,.08);
-  }
-
-  .mobile-overlay.open{
-    display:block;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.5);
-    z-index:998;
-  }
-
-  .sidebar{
-    position:fixed !important;
-    top:0 !important;
-    left:-280px !important;
-
-    width:260px !important;
-    height:100vh !important;
-
-    z-index:999 !important;
-
-    transition:.3s ease;
-    overflow:auto;
-  }
-
-  .sidebar.open{
-    left:0 !important;
-  }
-
-  .wrapper{
-    display:block !important;
-  }
-
-  .main{
-    width:100% !important;
-    margin-left:0 !important;
-    padding:20px !important;
-  }
-
-}
   </style>
-
-<style id="biya-theme">
-:root{
-  --biya-bg:#04122B;
-  --biya-sidebar:#081A3A;
-  --biya-surface:#102B63;
-  --biya-surface-hover:#163A87;
-  --biya-primary:#0066FF;
-  --biya-success:#00D66B;
-  --biya-cyan:#2ED8FF;
-  --biya-warning:#FFB800;
-  --biya-danger:#FF4D4F;
-  --biya-text:#FFFFFF;
-  --biya-muted:#D7E3FF;
-  --biya-border:rgba(255,255,255,0.08);
-  --biya-card-shadow:0 8px 24px rgba(0,0,0,0.20);
-  --biya-modal-shadow:0 20px 40px rgba(0,0,0,0.30);
-  --biya-active-shadow:0 0 20px rgba(0,102,255,0.35);
-  --biya-radius-card:16px;
-  --biya-radius-btn:12px;
-  --biya-radius-input:12px;
-  --biya-radius-modal:20px;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  background:var(--biya-bg)!important;
-  color:var(--biya-text)!important;
-  font-family:Inter, "Segoe UI", Arial, sans-serif!important;
-}
-
-.wrapper{
-  background:transparent!important;
-}
-
-.sidebar{
-  background:linear-gradient(180deg, rgba(8,26,58,.98), rgba(4,18,43,.98))!important;
-  border-right:1px solid var(--biya-border)!important;
-  box-shadow:var(--biya-card-shadow)!important;
-}
-
-.logo{
-  color:#fff!important;
-  letter-spacing:.2px!important;
-}
-
-.logo small{
-  display:block!important;
-  margin-top:8px!important;
-  font-size:12px!important;
-  font-weight:400!important;
-  opacity:.65!important;
-  letter-spacing:1.6px!important;
-}
-
-.item{
-  color:var(--biya-muted)!important;
-  border:1px solid transparent!important;
-  border-radius:16px!important;
-}
-
-.item:hover{
-  background:var(--biya-surface-hover)!important;
-  color:#fff!important;
-  transform:translateX(6px)!important;
-}
-
-.item.active{
-  background:linear-gradient(135deg, var(--biya-primary), var(--biya-success))!important;
-  color:#fff!important;
-  box-shadow:var(--biya-active-shadow)!important;
-}
-
-.btn,
-.btn-action,
-.save-btn,
-.add-row-btn,
-.action,
-.loginBtn,
-.primary-btn{
-  background:linear-gradient(135deg, var(--biya-primary), var(--biya-success))!important;
-  color:#fff!important;
-  border:none!important;
-  border-radius:var(--biya-radius-btn)!important;
-  box-shadow:var(--biya-card-shadow)!important;
-}
-
-.btn.secondary,
-.btn-action.red,
-.action.alt,
-.btn.alt{
-  background:var(--biya-surface-hover)!important;
-  color:#fff!important;
-}
-
-.section,
-.card,
-.summary-box,
-.mini-box,
-.detail-card,
-.menu-item,
-.prep-item,
-.category-block,
-.box,
-.alert-item,
-.insight-item,
-.modalBox,
-.section-card,
-.panel{
-  background:linear-gradient(180deg, rgba(16,43,99,.96), rgba(12,34,83,.98))!important;
-  border:1px solid var(--biya-border)!important;
-  border-radius:var(--biya-radius-card)!important;
-  box-shadow:var(--biya-card-shadow)!important;
-}
-
-.modal{
-  background:rgba(0,0,0,.56)!important;
-}
-
-.modalBox{
-  border-radius:var(--biya-radius-modal)!important;
-  box-shadow:var(--biya-modal-shadow)!important;
-}
-
-input,
-select,
-textarea,
-.table-input,
-.table-select,
-.search-box input,
-.chart-select,
-input[type="file"]{
-  background:rgba(16,43,99,.95)!important;
-  border:1px solid var(--biya-border)!important;
-  border-radius:var(--biya-radius-input)!important;
-  color:#fff!important;
-  outline:none!important;
-}
-
-input::placeholder,
-textarea::placeholder{
-  color:rgba(215,227,255,.5)!important;
-}
-
-th,
-thead th{
-  background:#163A87!important;
-  color:#fff!important;
-}
-
-td,
-tbody td{
-  background:#102B63!important;
-  color:#fff!important;
-}
-
-tbody tr:hover td{
-  background:#163A87!important;
-}
-
-.summary-title,
-.mini-title,
-.card-sub,
-.sub,
-.small-note,
-.notice,
-.muted{
-  color:rgba(215,227,255,.72)!important;
-}
-
-.pill,
-.menu-badge,
-.prep-category,
-.status{
-  border-radius:999px!important;
-}
-
-.pill.green,
-.profit-green,
-.ok{
-  background:rgba(0,214,107,.18)!important;
-  color:#96f5b7!important;
-}
-
-.pill.yellow,
-.profit-yellow,
-.warn{
-  background:rgba(255,184,0,.18)!important;
-  color:#ffe08a!important;
-}
-
-.pill.red,
-.profit-red,
-.danger{
-  background:rgba(255,77,79,.18)!important;
-  color:#ffb4b4!important;
-}
-
-.pill.gray{
-  background:#163A87!important;
-  color:#fff!important;
-}
-
-::-webkit-scrollbar{
-  width:10px;
-  height:10px;
-}
-::-webkit-scrollbar-thumb{
-  background:#163A87;
-  border-radius:999px;
-}
-::-webkit-scrollbar-track{
-  background:transparent;
-}
-
-@media (max-width: 980px){
-  .sidebar{
-    position:relative!important;
-    width:100%!important;
-    height:auto!important;
-  }
-
-  .main{
-    margin-left:0!important;
-    width:100%!important;
-  }
-
-  .grid,
-  .grid3,
-  .summary,
-  .summary-grid,
-  .top-grid,
-  .info,
-  .detail-grid,
-  .summary-callout{
-    grid-template-columns:1fr!important;
-  }
-
-  .search-box,
-  .filter-box{
-    width:100%!important;
-    max-width:100%!important;
-  }
-
-  .menu-cost,
-  .preview-right,
-  .prep-right{
-    min-width:0!important;
-    text-align:left!important;
-  }
-
-  .menu-header,
-  .headerCard,
-  .prep-header,
-  .product-hero,
-  .preview-top{
-    flex-direction:column!important;
-  }
-}
-</style>
-
-<style id="biya-mobile-nav">
-.mobile-header{
-  display:none;
-}
-.mobile-logo{
-  font-size:20px;
-  font-weight:700;
-  letter-spacing:.6px;
-}
-.menu-toggle{
-  width:48px;
-  height:48px;
-  border:none;
-  border-radius:12px;
-  background:linear-gradient(135deg, #0066FF, #00D66B);
-  color:#fff;
-  font-size:22px;
-  font-weight:700;
-  cursor:pointer;
-  box-shadow:0 8px 24px rgba(0,0,0,.2);
-}
-.mobile-overlay{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.52);
-  z-index:998;
-}
-@media (max-width: 980px){
-  body{
-    overflow-x:hidden !important;
-  }
-  .mobile-header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:16px;
-    position:sticky;
-    top:0;
-    z-index:1002;
-    padding:14px 18px;
-    background:linear-gradient(180deg, rgba(8,26,58,.98), rgba(4,18,43,.96));
-    border-bottom:1px solid rgba(255,255,255,.08);
-    backdrop-filter:blur(14px);
-  }
-  .mobile-overlay.open{
-    display:block;
-  }
-  .sidebar,
-  aside.sidebar,
-  div.sidebar{
-    position:fixed !important;
-    left:-280px !important;
-    top:0 !important;
-    width:260px !important;
-    height:100vh !important;
-    z-index:999 !important;
-    transition:left .28s ease !important;
-    overflow:auto !important;
-    box-shadow:0 20px 40px rgba(0,0,0,.35) !important;
-  }
-  .sidebar.open{
-    left:0 !important;
-  }
-  .main{
-    margin-left:0 !important;
-    width:100% !important;
-    padding:20px !important;
-    padding-top:18px !important;
-  }
-  .wrapper{
-    display:block !important;
-  }
-  .section,
-  .card,
-  .summary-box{
-    border-radius:18px !important;
-  }
-}
-</style>
-
 </head>
 <body>
-
-<div class="mobile-header">
-  <button id="menuToggle" class="menu-toggle">☰</button>
-  <div class="mobile-logo">BIYA</div>
-</div>
-
-<div id="mobileOverlay" class="mobile-overlay"></div>
-
-<div class="wrapper">
-<div class="sidebar" id="biyaSidebar">
-
-  <div class="logo">
-    BIYA
-    <small>BUSINESS IN YOUR HAND</small>
-  </div>
-
-  <div class="item" onclick="location.href='costdashboard.html'">
-    📊 Dashboard
-  </div>
-
-  <div class="item" onclick="location.href='rawmaterial.html'">
-    📦 Raw Material
-  </div>
-
-  <div class="item" onclick="location.href='preparation.html'">
-    🥣 Preparation
-  </div>
-
-  <div class="item" onclick="location.href='menu.html'">
-    🍔 Menu
-  </div>
-
-  <div class="item" onclick="location.href='producthpp.html'">
-    📈 Product HPP
-  </div>
-
-  <div class="item" onclick="location.href='exportcenter.html'">
-    📄 Export Center
-  </div>
-
-  <div class="item" onclick="location.href='settings.html'">
-    ⚙ Settings
-  </div>
-
-  <button class="btn" onclick="location.href='dashboard.html'">
-    ← Kembali
-  </button>
-
-<main class="main">
-<div class="page">
-<div class="title">Dashboard</div>
-<div class="sub">Ringkasan cepat kondisi bisnis, profit, dan performa menu.</div>
-<div class="summary-grid">
-<div class="summary-box">
-<div class="summary-title">Total Product</div>
-<div class="summary-value" id="dashTotalProduct">0</div>
-</div>
-<div class="summary-box">
-<div class="summary-title">Average Profit</div>
-<div class="summary-value" id="dashAverageProfit">0%</div>
-</div>
-<div class="summary-box">
-<div class="summary-title">Average Food Cost</div>
-<div class="summary-value" id="dashAverageFoodCost">0%</div>
-</div>
-<div class="summary-box">
-<div class="summary-title">Potential Revenue</div>
-<div class="summary-value" id="dashPotentialRevenue">Rp 0</div>
-</div>
-</div>
-<div class="top-grid">
-<div class="section">
-<div class="card-title">Business Health</div>
-<div class="card-sub">Skor ringkas kondisi bisnis</div>
-<div id="healthScoreCard"></div>
-</div>
-<div class="section">
-<div class="card-title">Best Product</div>
-<div class="card-sub">Produk dengan profit tertinggi</div>
-<div id="bestProductCard"></div>
-</div>
-<div class="section">
-<div class="card-title">Worst Product</div>
-<div class="card-sub">Produk dengan margin terendah</div>
-<div id="worstProductCard"></div>
-</div>
-<div class="section">
-<div class="card-title">Top Profit Ranking</div>
-<div class="card-sub">3 produk paling untung</div>
-<div id="rankingCard"></div>
-</div>
-</div>
-<div class="section">
-<div class="card-title">Smart Alert</div>
-<div class="card-sub">Peringatan otomatis yang perlu dicek</div>
-<div id="quickAlertCard"></div>
-</div>
-<div class="section">
-<div class="flex-between" style="margin-bottom:18px;">
-<div>
-<div class="card-title">Category Performance</div>
-<div class="card-sub">Performa rata-rata per kategori custom</div>
-</div>
-<div class="muted" id="categoryMeta"></div>
-</div>
-<div class="info-grid" id="categoryPerformance"></div>
-</div>
-<div class="section">
-<div class="card-title">Lowest Margin Product</div>
-<div class="card-sub">Produk yang perlu perhatian</div>
-<div id="lowestMarginCard"></div>
-</div>
-<div class="section">
-<div class="card-title">Missing Data Center</div>
-<div class="card-sub">Data produk yang belum lengkap</div>
-<div class="alert-list" id="missingDataList"></div>
-</div>
-<div class="section">
-<div class="card-title">Cost Composition</div>
-<div class="card-sub">Pilih produk untuk melihat komposisi biaya</div>
-<div class="chart-box">
-<div class="chart-meta">
-<div style="min-width:240px;flex:1;">
-<select class="chart-select" id="compositionSelect" onchange="renderComposition()"></select>
-</div>
-<div class="muted" id="compositionSummary"></div>
-</div>
-<div class="bars" id="compositionBars"></div>
-</div>
-</div>
-<div class="section">
-<div class="flex-between" style="margin-bottom:18px;">
-<div>
-<div class="card-title">Product Health Table</div>
-<div class="card-sub">Daftar ringkas performa produk</div>
-</div>
-<div class="search-wrap" style="margin-bottom:0;">
-<div class="search-box">
-<input id="searchHealth" oninput="renderHealthTable()" placeholder="Cari menu / kategori..." type="text"/>
-</div>
-<div class="filter-box">
-<select id="filterHealthCategory" onchange="renderHealthTable()">
-<option value="">All Category</option>
-</select>
-</div>
-</div>
-</div>
-<div style="overflow:auto;">
-<table>
-<thead>
-<tr>
-<th>Menu</th>
-<th>Category</th>
-<th>Sub Category</th>
-<th>HPP</th>
-<th>Selling Price</th>
-<th>Profit</th>
-<th>Health</th>
-</tr>
-</thead>
-<tbody id="healthTableBody"></tbody>
-</table>
-</div>
-</div>
-<div class="section">
-<div class="card-title">Business Insight</div>
-<div class="card-sub">Rekomendasi otomatis berdasarkan data HPP</div>
-<div class="insight-list" id="insightList"></div>
-</div>
-</div>
-</main>
-</div>
-<script>
-function titleCase(text){
-  return String(text || "")
-    .trim()
-    .toLowerCase()
-    .replace(/\b\w/g, c => c.toUpperCase());
-}
-
-function formatRupiah(value){
-  const n = Math.round(Number(value) || 0);
-  return "Rp " + n.toLocaleString("id-ID");
-}
-
-function statusClass(pct){
-  if(pct >= 60) return "ok";
-  if(pct >= 40) return "warn";
-  return "danger";
-}
-
-function statusText(pct){
-  if(pct >= 60) return "Excellent";
-  if(pct >= 40) return "Good";
-  return "Low Margin";
-}
-
-function calcAverage(arr, getter){
-  if(!arr.length) return 0;
-  return arr.reduce((sum, item) => sum + Number(getter(item) || 0), 0) / arr.length;
-}
-
-function safeText(v){
-  return String(v ?? "").trim();
-}
-
-function normalizeProduct(raw){
-  const selling = Number(raw.sellingPrice || raw.selling || 0);
-  const food = Number(raw.foodCost || raw.recipeCost || 0);
-  const packaging = Number(raw.packaging || 0);
-  const overhead = Number(raw.overhead || 0);
-  const hpp = Number(raw.hpp || (food + packaging + overhead));
-  const profitRp = Number(raw.profitRp || (selling - hpp));
-  const profitPct = Number(raw.profitPct || (selling ? (profitRp / selling) * 100 : 0));
-  const foodCostPct = Number(raw.foodCostPct || (selling ? (food / selling) * 100 : 0));
-
-  return {
-    id: raw.id ?? crypto.randomUUID(),
-    name: titleCase(raw.name || raw.menu || raw.product || "Untitled"),
-    category: titleCase(raw.category || raw.cat || "Uncategorized"),
-    subCategory: titleCase(raw.subCategory || raw.sub || "General"),
-    sellingPrice: selling,
-    hpp,
-    profitRp,
-    profitPct,
-    foodCostPct,
-    overhead,
-    foodCost: food,
-    packaging,
-    description: titleCase(raw.description || ""),
-    photoUrl: raw.photoUrl || raw.photo || "",
-    status: titleCase(raw.status || "ACTIVE"),
-  };
-}
-
-function computeFromLocalStorage(){
-  const keys = [
-    "biya_product_hpp",
-    "biya_products",
-    "biya_menu_products",
-    "biya_menu_data",
-    "product_hpp",
-    "products"
-  ];
-
-  for(const key of keys){
-    try{
-      const raw = localStorage.getItem(key);
-      if(!raw) continue;
-      const parsed = JSON.parse(raw);
-      if(Array.isArray(parsed) && parsed.length){
-        return parsed.map(normalizeProduct);
-      }
-    }catch(e){}
-  }
-
-  return [
-    {
-      id: 1,
-      name: "Nasi Ayam Crispy",
-      category: "Food",
-      subCategory: "Main Course",
-      sellingPrice: 28000,
-      hpp: 15000,
-      profitRp: 13000,
-      profitPct: 46.43,
-      foodCostPct: 42.86,
-      overhead: 2000,
-      foodCost: 11000,
-      packaging: 2000,
-      description: "Nasi ayam crispy dengan sambal bawang dan salad ringan.",
-      photoUrl: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=80",
-      status: "ACTIVE"
-    },
-    {
-      id: 2,
-      name: "Es Kopi Susu",
-      category: "Beverage",
-      subCategory: "Coffee",
-      sellingPrice: 22000,
-      hpp: 9000,
-      profitRp: 13000,
-      profitPct: 59.09,
-      foodCostPct: 29.09,
-      overhead: 1500,
-      foodCost: 6400,
-      packaging: 900,
-      description: "Minuman kopi susu creamy dengan es batu dan aroma kopi yang ringan.",
-      photoUrl: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=900&q=80",
-      status: "ACTIVE"
-    },
-    {
-      id: 3,
-      name: "French Fries",
-      category: "Food",
-      subCategory: "Snack",
-      sellingPrice: 18000,
-      hpp: 11800,
-      profitRp: 6200,
-      profitPct: 34.44,
-      foodCostPct: 48.89,
-      overhead: 1200,
-      foodCost: 8800,
-      packaging: 700,
-      description: "Kentang goreng crispy dengan seasoning ringan.",
-      photoUrl: "",
-      status: "ACTIVE"
-    },
-    {
-      id: 4,
-      name: "Chocolate Milk",
-      category: "Beverage",
-      subCategory: "Non Coffee",
-      sellingPrice: 18000,
-      hpp: 9800,
-      profitRp: 8200,
-      profitPct: 45.56,
-      foodCostPct: 38.89,
-      overhead: 1400,
-      foodCost: 7000,
-      packaging: 1400,
-      description: "Minuman cokelat dingin yang creamy dan manis.",
-      photoUrl: "",
-      status: "ACTIVE"
-    }
-  ].map(normalizeProduct);
-}
-
-let products = computeFromLocalStorage();
-
-function loadSettings(){
-  try{
-    return JSON.parse(localStorage.getItem("biya_settings") || "{}");
-  }catch(e){
-    return {};
-  }
-}
-
-function targetFoodCost(){
-  const settings = loadSettings();
-  const v = Number(settings.foodCostTarget || settings.targetFoodCost || 35);
-  return Number.isFinite(v) && v > 0 ? v : 35;
-}
-
-function targetProfit(){
-  const settings = loadSettings();
-  const v = Number(settings.profitTarget || 50);
-  return Number.isFinite(v) && v > 0 ? v : 50;
-}
-
-function getUniqueCategories(){
-  return [...new Set(products.map(p => titleCase(p.category)).filter(Boolean))];
-}
-
-function getHealthScore(avgProfit, avgFood){
-  const foodTarget = targetFoodCost();
-  const profitTargetVal = targetProfit();
-
-  let score = 0;
-  if(avgProfit >= profitTargetVal) score += 2;
-  else if(avgProfit >= profitTargetVal * 0.8) score += 1;
-
-  if(avgFood <= foodTarget) score += 2;
-  else if(avgFood <= foodTarget * 1.15) score += 1;
-
-  if(products.length >= 4) score += 1;
-  if(products.some(p => p.photoUrl)) score += 1;
-
-  if(score >= 5) return { letter:"A", label:"Excellent", tone:"success" };
-  if(score >= 4) return { letter:"B", label:"Healthy", tone:"green" };
-  if(score >= 3) return { letter:"C", label:"Need Attention", tone:"yellow" };
-  return { letter:"D", label:"Critical", tone:"red" };
-}
-
-function renderSummary(){
-  const totalProduct = products.length;
-  const avgProfit = calcAverage(products, p => p.profitPct);
-  const avgFood = calcAverage(products, p => p.foodCostPct);
-  const potentialRevenue = products.reduce((sum, p) => sum + Number(p.sellingPrice || 0), 0);
-
-  document.getElementById("dashTotalProduct").innerText = totalProduct;
-  document.getElementById("dashAverageProfit").innerText = totalProduct ? avgProfit.toFixed(2) + "%" : "0%";
-  document.getElementById("dashAverageFoodCost").innerText = totalProduct ? avgFood.toFixed(2) + "%" : "0%";
-  document.getElementById("dashPotentialRevenue").innerText = formatRupiah(potentialRevenue);
-
-  const score = getHealthScore(avgProfit, avgFood);
-  document.getElementById("healthScoreCard").innerHTML = `
-    <div class="health-score">
-      <div class="score-circle">${score.letter}</div>
+  <div class="wrap">
+    <div class="hero">
       <div>
-        <div style="font-size:22px;font-weight:700;">${score.label}</div>
-        <div class="score-desc">
-          Food Cost Target: ${targetFoodCost().toFixed(0)}%<br>
-          Profit Target: ${targetProfit().toFixed(0)}%<br>
-          Total Product: ${totalProduct}
+        <div class="brand">
+          <div class="brand-mark">B</div>
+          <div>
+            <div style="font-weight:700;letter-spacing:.8px;">BIYA</div>
+            <div style="font-size:12px;opacity:.72;letter-spacing:1.6px;">BUSINESS IN YOUR HAND</div>
+          </div>
         </div>
+        <div class="title">Module Center</div>
+        <div class="sub">Pusat masuk ke modul operasional BIYA. Semua halaman mengikuti BIYA Design System agar konsisten di desktop, tablet, dan mobile.</div>
+      </div>
+      <div class="hero-cta">
+        <button class="cta" onclick="location.href='costdashboard.html'">Open Cost Management</button>
+        <button class="cta alt" onclick="location.href='settings.html'">Open Settings</button>
       </div>
     </div>
-  `;
-}
 
-function renderBestWorst(){
-  const sortedProfit = [...products].sort((a,b) => b.profitRp - a.profitRp);
-  const best = sortedProfit[0];
-  const worst = [...products].sort((a,b) => a.profitPct - b.profitPct)[0];
+    <div class="section-title">CORE MODULES</div>
+    <div class="grid">
+      <div class="card active" onclick="location.href='costdashboard.html'">
+        <div class="icon">🍽️</div>
+        <div class="card-title">Cost Management</div>
+        <div class="card-desc">Dashboard, Raw Material, Preparation, Menu, Product HPP, dan report costing untuk operasional F&B.</div>
+        <div class="badge">AVAILABLE</div>
+      </div>
 
-  document.getElementById("bestProductCard").innerHTML = best ? `
-    <div class="product-hero">
-      <div class="thumb">
-        ${best.photoUrl ? `<img src="${best.photoUrl}" alt="${best.name}" />` : `<div class="empty">No Photo</div>`}
+      <div class="card" onclick="location.href='exportcenter.html'">
+        <div class="icon">📄</div>
+        <div class="card-title">Export Center</div>
+        <div class="card-desc">Export PDF, Excel, backup JSON, dan recipe book tanpa cost untuk kitchen atau audit.</div>
+        <div class="badge">AVAILABLE</div>
       </div>
-      <div>
-        <div class="product-name">${best.name}</div>
-        <div class="pill-row">
-          <span class="pill">${best.category}</span>
-          <span class="pill gray">${best.subCategory}</span>
-        </div>
-        <div class="pill-row">
-          <span class="pill green">Profit ${formatRupiah(best.profitRp)}</span>
-          <span class="pill green">Margin ${best.profitPct.toFixed(2)}%</span>
-        </div>
-      </div>
-    </div>
-  ` : `<div class="notice">Belum ada data</div>`;
 
-  document.getElementById("worstProductCard").innerHTML = worst ? `
-    <div class="product-hero">
-      <div class="thumb">
-        ${worst.photoUrl ? `<img src="${worst.photoUrl}" alt="${worst.name}" />` : `<div class="empty">No Photo</div>`}
+      <div class="card" onclick="location.href='settings.html'">
+        <div class="icon">⚙</div>
+        <div class="card-title">Settings</div>
+        <div class="card-desc">Business profile, logo, target food cost, profit target, dan currency untuk satu brand bisnis.</div>
+        <div class="badge">AVAILABLE</div>
       </div>
-      <div>
-        <div class="product-name">${worst.name}</div>
-        <div class="pill-row">
-          <span class="pill">${worst.category}</span>
-          <span class="pill gray">${worst.subCategory}</span>
-        </div>
-        <div class="pill-row">
-          <span class="pill red">Profit ${formatRupiah(worst.profitRp)}</span>
-          <span class="pill red">Margin ${worst.profitPct.toFixed(2)}%</span>
-        </div>
-      </div>
-    </div>
-  ` : `<div class="notice">Belum ada data</div>`;
-}
 
-function renderRankings(){
-  const ranking = [...products].sort((a,b) => b.profitRp - a.profitRp).slice(0,3);
-  document.getElementById("rankingCard").innerHTML = ranking.map((p, i) => `
-    <div style="display:flex;justify-content:space-between;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06);${i===ranking.length-1 ? 'border-bottom:none;' : ''}">
-      <div>
-        <div style="font-weight:700;">${i+1}. ${p.name}</div>
-        <div class="muted">${p.category} • ${p.subCategory}</div>
+      <div class="card" style="cursor:default;opacity:.55">
+        <div class="icon">📦</div>
+        <div class="card-title">Inventory</div>
+        <div class="card-desc">Stock, purchase, supplier, warehouse, dan pengelolaan inventori lanjutan.</div>
+        <div class="badge">COMING SOON</div>
       </div>
-      <div style="text-align:right;">
-        <div style="font-weight:700;">${formatRupiah(p.profitRp)}</div>
-        <div class="muted">${p.profitPct.toFixed(2)}%</div>
+
+      <div class="card" style="cursor:default;opacity:.55">
+        <div class="icon">💳</div>
+        <div class="card-title">Finance</div>
+        <div class="card-desc">Cashflow, expense, profit summary, dan data keuangan bisnis.</div>
+        <div class="badge">COMING SOON</div>
+      </div>
+
+      <div class="card" style="cursor:default;opacity:.55">
+        <div class="icon">🧠</div>
+        <div class="card-title">Intelligent Cost</div>
+        <div class="card-desc">AI analysis untuk optimasi biaya dan rekomendasi bisnis yang lebih cerdas.</div>
+        <div class="badge">COMING SOON</div>
       </div>
     </div>
-  `).join("") || `<div class="notice">Belum ada data</div>`;
-}
 
-function renderSmartAlert(){
-  const highFood = products.filter(p => p.foodCostPct > targetFoodCost());
-  const lowProfit = products.filter(p => p.profitPct < targetProfit());
-  const noPhoto = products.filter(p => !p.photoUrl);
-  const noDesc = products.filter(p => !p.description);
-
-  const alerts = [];
-  if(highFood.length){
-    const p = [...highFood].sort((a,b) => b.foodCostPct - a.foodCostPct)[0];
-    alerts.push({ color:"red", text:`${p.name} food cost ${p.foodCostPct.toFixed(2)}% di atas target ${targetFoodCost().toFixed(0)}%` });
-  }
-  if(lowProfit.length){
-    const p = [...lowProfit].sort((a,b) => a.profitPct - b.profitPct)[0];
-    alerts.push({ color:"red", text:`${p.name} margin hanya ${p.profitPct.toFixed(2)}%` });
-  }
-  if(noPhoto.length) alerts.push({ color:"yellow", text:`${noPhoto.length} produk belum memiliki foto` });
-  if(noDesc.length) alerts.push({ color:"yellow", text:`${noDesc.length} produk belum memiliki deskripsi` });
-
-  if(!alerts.length) alerts.push({ color:"green", text:"Semua produk terlihat sehat dan siap dipantau." });
-
-  document.getElementById("quickAlertCard").innerHTML = `
-    <div class="alert-list">
-      ${alerts.map(a => `
-        <div class="alert-item">
-          <span class="alert-dot dot-${a.color}"></span>
-          <div>${a.text}</div>
-        </div>
-      `).join("")}
-    </div>
-  `;
-}
-
-function renderCategoryPerformance(){
-  const groups = {};
-  products.forEach(p => {
-    const key = titleCase(p.category) || "Uncategorized";
-    if(!groups[key]) groups[key] = [];
-    groups[key].push(p);
-  });
-
-  const entries = Object.entries(groups).sort((a,b) => b[1].length - a[1].length);
-  document.getElementById("categoryMeta").innerText = `${entries.length} kategori`;
-
-  document.getElementById("categoryPerformance").innerHTML = entries.map(([cat, items]) => {
-    const avgProfit = calcAverage(items, p => p.profitPct);
-    const avgFood = calcAverage(items, p => p.foodCostPct);
-    return `
-      <div class="mini-box">
-        <div class="mini-title">${cat}</div>
-        <div class="mini-value">${items.length} Product</div>
-        <div class="muted" style="margin-top:8px;">Avg Profit ${avgProfit.toFixed(2)}%</div>
-        <div class="muted">Avg Food Cost ${avgFood.toFixed(2)}%</div>
-      </div>
-    `;
-  }).join("") || `<div class="notice">Belum ada kategori</div>`;
-}
-
-function renderLowestMargin(){
-  const low = [...products].sort((a,b) => a.profitPct - b.profitPct)[0];
-  document.getElementById("lowestMarginCard").innerHTML = low ? `
-    <div class="product-hero">
-      <div class="thumb">
-        ${low.photoUrl ? `<img src="${low.photoUrl}" alt="${low.name}" />` : `<div class="empty">No Photo</div>`}
-      </div>
-      <div>
-        <div class="product-name">${low.name}</div>
-        <div class="pill-row">
-          <span class="pill">${low.category}</span>
-          <span class="pill gray">${low.subCategory}</span>
-        </div>
-        <div class="pill-row">
-          <span class="pill red">Profit ${formatRupiah(low.profitRp)}</span>
-          <span class="pill red">Margin ${low.profitPct.toFixed(2)}%</span>
-        </div>
-      </div>
-    </div>
-  ` : `<div class="notice">Belum ada data</div>`;
-}
-
-function renderMissingData(){
-  const missing = [];
-  const noPhoto = products.filter(p => !p.photoUrl);
-  const noDesc = products.filter(p => !p.description);
-  const noCategory = products.filter(p => !p.category);
-  const noSub = products.filter(p => !p.subCategory);
-  const noPrice = products.filter(p => !p.sellingPrice);
-
-  if(noPhoto.length) missing.push({ color:"yellow", text:`${noPhoto.length} produk belum memiliki foto` });
-  if(noDesc.length) missing.push({ color:"yellow", text:`${noDesc.length} produk belum memiliki deskripsi` });
-  if(noCategory.length) missing.push({ color:"red", text:`${noCategory.length} produk belum memiliki kategori` });
-  if(noSub.length) missing.push({ color:"red", text:`${noSub.length} produk belum memiliki sub kategori` });
-  if(noPrice.length) missing.push({ color:"red", text:`${noPrice.length} produk belum memiliki selling price` });
-
-  if(!missing.length) missing.push({ color:"green", text:"Semua data produk terlihat lengkap." });
-
-  document.getElementById("missingDataList").innerHTML = missing.map(a => `
-    <div class="alert-item">
-      <span class="alert-dot dot-${a.color}"></span>
-      <div>${a.text}</div>
-    </div>
-  `).join("");
-}
-
-function renderCompositionOptions(){
-  const select = document.getElementById("compositionSelect");
-  select.innerHTML = products.map(p => `<option value="${p.id}">${p.name}</option>`).join("");
-}
-
-function renderComposition(){
-  const id = Number(document.getElementById("compositionSelect").value);
-  const product = products.find(p => p.id === id) || products[0];
-  if(!product) return;
-
-  const foodCost = Number(product.foodCost || 0);
-  const packaging = Number(product.packaging || 0);
-  const overhead = Number(product.overhead || 0);
-  const profit = Number(product.profitRp || 0);
-  const total = foodCost + packaging + overhead + profit || 1;
-
-  const items = [
-    { label:"Food Cost", value:foodCost, color:"#3b82f6" },
-    { label:"Packaging", value:packaging, color:"#8b5cf6" },
-    { label:"Overhead", value:overhead, color:"#f59e0b" },
-    { label:"Profit", value:profit, color:"#22c55e" }
-  ];
-
-  document.getElementById("compositionSummary").innerText =
-    `${product.name} • HPP ${formatRupiah(product.hpp)} • Selling ${formatRupiah(product.sellingPrice)}`;
-
-  document.getElementById("compositionBars").innerHTML = items.map(item => {
-    const pct = (item.value / total) * 100;
-    return `
-      <div class="bar-item">
-        <div class="bar-label">${item.label}</div>
-        <div class="bar-track">
-          <div class="bar-fill" style="width:${Math.max(pct,2)}%;background:${item.color};"></div>
-        </div>
-        <div class="bar-value">${pct.toFixed(1)}%</div>
-      </div>
-    `;
-  }).join("");
-}
-
-function renderHealthTable(){
-  const query = document.getElementById("searchHealth").value.trim().toLowerCase();
-  const category = document.getElementById("filterHealthCategory").value;
-  const tbody = document.getElementById("healthTableBody");
-
-  const filtered = products.filter(p => {
-    const n = p.name.toLowerCase();
-    const c = titleCase(p.category);
-    const s = titleCase(p.subCategory);
-    const matchQuery = n.includes(query) || c.toLowerCase().includes(query) || s.toLowerCase().includes(query);
-    const matchCategory = !category || c === category;
-    return matchQuery && matchCategory;
-  });
-
-  if(!filtered.length){
-    tbody.innerHTML = `<tr><td colspan="7" class="notice">Belum ada data product hpp</td></tr>`;
-    renderBusinessInsight(filtered);
-    return;
-  }
-
-  tbody.innerHTML = filtered.map(p => `
-    <tr>
-      <td>${p.name}</td>
-      <td>${titleCase(p.category)}</td>
-      <td>${titleCase(p.subCategory)}</td>
-      <td>${formatRupiah(p.hpp)}</td>
-      <td>${formatRupiah(p.sellingPrice)}</td>
-      <td>${formatRupiah(p.profitRp)}<div class="muted">${p.profitPct.toFixed(2)}%</div></td>
-      <td><span class="status ${statusClass(p.profitPct)}">${statusText(p.profitPct)}</span></td>
-    </tr>
-  `).join("");
-
-  renderBusinessInsight(filtered);
-}
-
-function renderBusinessInsight(list){
-  const data = list && list.length ? list : products;
-  const top = [...data].sort((a,b) => b.profitPct - a.profitPct)[0];
-  const low = [...data].sort((a,b) => a.profitPct - b.profitPct)[0];
-  const highFood = data.filter(p => p.foodCostPct > targetFoodCost());
-  const bestCategory = (() => {
-    const groups = {};
-    data.forEach(p => {
-      const key = titleCase(p.category) || "Uncategorized";
-      (groups[key] ||= []).push(p);
-    });
-    const ranked = Object.entries(groups).map(([cat, items]) => ({
-      cat,
-      avgProfit: calcAverage(items, p => p.profitPct),
-      avgFood: calcAverage(items, p => p.foodCostPct),
-      count: items.length
-    })).sort((a,b) => b.avgProfit - a.avgProfit);
-    return ranked[0];
-  })();
-
-  const insights = [];
-  if(top) insights.push(`Produk terbaik saat ini adalah <b>${top.name}</b> dengan profit ${top.profitPct.toFixed(2)}% (${formatRupiah(top.profitRp)}).`);
-  if(low) insights.push(`Produk yang perlu dicek adalah <b>${low.name}</b> karena margin hanya ${low.profitPct.toFixed(2)}%.`);
-  if(highFood.length) insights.push(`Ada <b>${highFood.length}</b> produk dengan food cost di atas target ${targetFoodCost().toFixed(0)}%. Coba evaluasi recipe atau harga jual.`);
-  if(bestCategory) insights.push(`Kategori dengan performa terbaik saat ini adalah <b>${bestCategory.cat}</b> dengan average profit ${bestCategory.avgProfit.toFixed(2)}%.`);
-  if(data.length) insights.push(`Rata-rata profit seluruh produk adalah <b>${calcAverage(data, p => p.profitPct).toFixed(2)}%</b>.`);
-
-  document.getElementById("insightList").innerHTML = insights.map(t => `<div class="insight-item">${t}</div>`).join("") || `<div class="notice">Belum ada insight</div>`;
-}
-
-function initFilters(){
-  const cat = document.getElementById("filterHealthCategory");
-  [...new Set(products.map(p => titleCase(p.category)).filter(Boolean))].forEach(c => {
-    const opt = document.createElement("option");
-    opt.value = c;
-    opt.textContent = c;
-    cat.appendChild(opt);
-  });
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  initFilters();
-  renderSummary();
-  renderBestWorst();
-  renderRankings();
-  renderSmartAlert();
-  renderCategoryPerformance();
-  renderLowestMargin();
-  renderMissingData();
-  renderCompositionOptions();
-  renderComposition();
-  renderHealthTable();
-});
-</script>
-
-<script>
-(function(){
-  const toggle = document.getElementById('menuToggle');
-  const sidebar = document.getElementById('biyaSidebar');
-  const overlay = document.getElementById('mobileOverlay');
-  if(!toggle || !sidebar || !overlay) return;
-
-  const closeSidebar = () => {
-    sidebar.classList.remove('open');
-    overlay.classList.remove('open');
-    document.body.classList.remove('biya-no-scroll');
-  };
-
-  const openSidebar = () => {
-    sidebar.classList.add('open');
-    overlay.classList.add('open');
-    document.body.classList.add('biya-no-scroll');
-  };
-
-  toggle.addEventListener('click', () => {
-    if(sidebar.classList.contains('open')) closeSidebar();
-    else openSidebar();
-  });
-
-  overlay.addEventListener('click', closeSidebar);
-
-  window.addEventListener('resize', () => {
-    if(window.innerWidth > 980) closeSidebar();
-  });
-
-  const style = document.createElement('style');
-  style.textContent = '.biya-no-scroll{overflow:hidden !important;}';
-  document.head.appendChild(style);
-})();
-</script>
+    <div class="footer">BIYA © Phase 1 Development</div>
+  </div>
 </body>
 </html>
