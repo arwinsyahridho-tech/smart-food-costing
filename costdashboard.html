@@ -319,6 +319,91 @@
       .search-box,.filter-box{width:100%}
       .bar-item{grid-template-columns:110px 1fr 60px}
     }
+    /* =========================
+   BIYA MOBILE NAVIGATION
+========================= */
+
+.mobile-header{
+  display:none;
+}
+
+.mobile-logo{
+  font-size:20px;
+  font-weight:700;
+  color:white;
+}
+
+.menu-toggle{
+  width:48px;
+  height:48px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  color:white;
+  font-size:22px;
+  background:linear-gradient(
+    135deg,
+    #0066FF,
+    #00D66B
+  );
+}
+
+.mobile-overlay{
+  display:none;
+}
+
+@media(max-width:980px){
+
+  .mobile-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 18px;
+    position:sticky;
+    top:0;
+    z-index:1002;
+
+    background:#081A3A;
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+
+  .mobile-overlay.open{
+    display:block;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.5);
+    z-index:998;
+  }
+
+  .sidebar{
+    position:fixed !important;
+    top:0 !important;
+    left:-280px !important;
+
+    width:260px !important;
+    height:100vh !important;
+
+    z-index:999 !important;
+
+    transition:.3s ease;
+    overflow:auto;
+  }
+
+  .sidebar.open{
+    left:0 !important;
+  }
+
+  .wrapper{
+    display:block !important;
+  }
+
+  .main{
+    width:100% !important;
+    margin-left:0 !important;
+    padding:20px !important;
+  }
+
+}
   </style>
 
 <style id="biya-theme">
@@ -583,10 +668,131 @@ tbody tr:hover td{
   }
 }
 </style>
+
+<style id="biya-mobile-nav">
+.mobile-header{
+  display:none;
+}
+.mobile-logo{
+  font-size:20px;
+  font-weight:700;
+  letter-spacing:.6px;
+}
+.menu-toggle{
+  width:48px;
+  height:48px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(135deg, #0066FF, #00D66B);
+  color:#fff;
+  font-size:22px;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 8px 24px rgba(0,0,0,.2);
+}
+.mobile-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.52);
+  z-index:998;
+}
+@media (max-width: 980px){
+  body{
+    overflow-x:hidden !important;
+  }
+  .mobile-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    position:sticky;
+    top:0;
+    z-index:1002;
+    padding:14px 18px;
+    background:linear-gradient(180deg, rgba(8,26,58,.98), rgba(4,18,43,.96));
+    border-bottom:1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(14px);
+  }
+  .mobile-overlay.open{
+    display:block;
+  }
+  .sidebar,
+  aside.sidebar,
+  div.sidebar{
+    position:fixed !important;
+    left:-280px !important;
+    top:0 !important;
+    width:260px !important;
+    height:100vh !important;
+    z-index:999 !important;
+    transition:left .28s ease !important;
+    overflow:auto !important;
+    box-shadow:0 20px 40px rgba(0,0,0,.35) !important;
+  }
+  .sidebar.open{
+    left:0 !important;
+  }
+  .main{
+    margin-left:0 !important;
+    width:100% !important;
+    padding:20px !important;
+    padding-top:18px !important;
+  }
+  .wrapper{
+    display:block !important;
+  }
+  .section,
+  .card,
+  .summary-box{
+    border-radius:18px !important;
+  }
+}
+</style>
+
 </head>
 <body>
 <div class="wrapper">
-<aside class="sidebar">
+<div class="sidebar" id="biyaSidebar">
+
+  <div class="logo">
+    BIYA
+    <small>BUSINESS IN YOUR HAND</small>
+  </div>
+
+  <div class="item" onclick="location.href='costdashboard.html'">
+    📊 Dashboard
+  </div>
+
+  <div class="item" onclick="location.href='rawmaterial.html'">
+    📦 Raw Material
+  </div>
+
+  <div class="item" onclick="location.href='preparation.html'">
+    🥣 Preparation
+  </div>
+
+  <div class="item" onclick="location.href='menu.html'">
+    🍔 Menu
+  </div>
+
+  <div class="item" onclick="location.href='producthpp.html'">
+    📈 Product HPP
+  </div>
+
+  <div class="item" onclick="location.href='exportcenter.html'">
+    📄 Export Center
+  </div>
+
+  <div class="item" onclick="location.href='settings.html'">
+    ⚙ Settings
+  </div>
+
+  <button class="btn" onclick="location.href='dashboard.html'">
+    ← Kembali
+  </button>
+
+</div>
 <div class="logo">BIYA<small>BUSINESS IN YOUR HAND</small></div>
 <div class="item active">📊 Dashboard</div>
 <div class="item" onclick="location.href='rawmaterial.html'">📦 Raw Material</div>
@@ -1242,5 +1448,100 @@ document.addEventListener("DOMContentLoaded", () => {
   renderHealthTable();
 });
 </script>
+
+<script>
+(function(){
+  const toggle = document.getElementById('menuToggle');
+  const sidebar = document.getElementById('biyaSidebar');
+  const overlay = document.getElementById('mobileOverlay');
+  if(!toggle || !sidebar || !overlay) return;
+
+  const closeSidebar = () => {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('open');
+    document.body.classList.remove('biya-no-scroll');
+  };
+
+  const openSidebar = () => {
+    sidebar.classList.add('open');
+    overlay.classList.add('open');
+    document.body.classList.add('biya-no-scroll');
+  };
+
+  toggle.addEventListener('click', () => {
+    if(sidebar.classList.contains('open')) closeSidebar();
+    else openSidebar();
+  });
+
+  overlay.addEventListener('click', closeSidebar);
+
+  window.addEventListener('resize', () => {
+    if(window.innerWidth > 980) closeSidebar();
+  });
+
+  const style = document.createElement('style');
+  style.textContent = '.biya-no-scroll{overflow:hidden !important;}';
+  document.head.appendChild(style);
+})();
+</script>
+<script>
+
+(function(){
+
+  const toggle =
+    document.getElementById("menuToggle");
+
+  const sidebar =
+    document.getElementById("biyaSidebar");
+
+  const overlay =
+    document.getElementById("mobileOverlay");
+
+  if(!toggle || !sidebar || !overlay)
+    return;
+
+  function openMenu(){
+
+    sidebar.classList.add("open");
+    overlay.classList.add("open");
+
+  }
+
+  function closeMenu(){
+
+    sidebar.classList.remove("open");
+    overlay.classList.remove("open");
+
+  }
+
+  toggle.addEventListener(
+    "click",
+    ()=>{
+
+      if(sidebar.classList.contains("open"))
+        closeMenu();
+      else
+        openMenu();
+
+    }
+  );
+
+  overlay.addEventListener(
+    "click",
+    closeMenu
+  );
+
+})();
+
+</script>
 </body>
+    <!-- MOBILE HEADER -->
+<div class="mobile-header">
+  <button id="menuToggle" class="menu-toggle">☰</button>
+  <div class="mobile-logo">BIYA</div>
+</div>
+
+<div id="mobileOverlay" class="mobile-overlay"></div>
+
+<div class="wrapper">
 </html>
