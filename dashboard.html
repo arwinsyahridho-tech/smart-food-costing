@@ -1,393 +1,80 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="id">
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-name="viewport"
-content="width=device-width,initial-scale=1"
->
-
-<title>
-BIYA
-</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BIYA</title>
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-body{
-
-background:#07173a;
-
-font-family:Arial;
-
-color:white;
-
-}
-
-.wrapper{
-
-padding:50px;
-
-max-width:1500px;
-
-margin:auto;
-
-}
-
-.logo{
-
-font-size:48px;
-
-font-weight:bold;
-
-margin-bottom:8px;
-
-}
-
-.sub{
-
-opacity:.7;
-
-margin-bottom:50px;
-
-}
-
-.section{
-
-font-size:14px;
-
-opacity:.6;
-
-margin-bottom:18px;
-
-letter-spacing:2px;
-
-}
-
-.grid{
-
-display:grid;
-
-grid-template-columns:
-
-repeat(
-auto-fit,
-minmax(
-320px,
-1fr
-)
-
-);
-
-gap:26px;
-
-}
-
-.card{
-
-background:#102766;
-
-padding:32px;
-
-border-radius:26px;
-
-cursor:pointer;
-
-transition:.25s;
-
-}
-
-.card:hover{
-
-transform:
-translateY(-8px);
-
-}
-
-.active:hover{
-
-background:#1c45aa;
-
-}
-
-.lock{
-
-opacity:.45;
-
-cursor:not-allowed;
-
-}
-
-.icon{
-
-font-size:52px;
-
-margin-bottom:20px;
-
-}
-
-.title{
-
-font-size:30px;
-
-margin-bottom:10px;
-
-}
-
-.desc{
-
-opacity:.7;
-
-line-height:1.7;
-
-}
-
-.badge{
-
-margin-top:18px;
-
-display:inline-block;
-
-padding:
-
-8px
-14px;
-
-border-radius:999px;
-
-background:
-
-rgba(
-255,
-255,
-255,
-.08
-);
-
-font-size:13px;
-
-}
-
-.footer{
-
-margin-top:70px;
-
-opacity:.45;
-
-}
-
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#07173a;font-family:Arial,sans-serif;color:#fff}
+.wrapper{padding:50px;max-width:1500px;margin:auto}
+.logo{font-size:48px;font-weight:bold;margin-bottom:8px}
+.sub{opacity:.7;margin-bottom:50px}
+.section{font-size:14px;opacity:.6;margin-bottom:18px;letter-spacing:2px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:26px}
+.card{background:#102766;padding:32px;border-radius:26px;cursor:pointer;transition:.25s}
+.card:hover{transform:translateY(-8px)}
+.active:hover{background:#1c45aa}
+.lock{opacity:.45;cursor:not-allowed}
+.icon{font-size:52px;margin-bottom:20px}
+.title{font-size:30px;margin-bottom:10px}
+.desc{opacity:.7;line-height:1.7}
+.badge{margin-top:18px;display:inline-block;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.08);font-size:13px}
+.footer{margin-top:70px;opacity:.45}
 </style>
-
 </head>
-
 <body>
-
 <div class="wrapper">
+<div class="logo">🍽️ BIYA</div>
+<div class="sub">Business in Your Hand</div>
 
-<div class="logo">
-
-🍽️ BIYA
-
-</div>
-
-<div class="sub">
-
-Business in Your Hand
-
-</div>
-
-
-
-<div class="section">
-
-MODULES
-
-</div>
-
-
+<div class="section">MODULES</div>
 
 <div class="grid">
-
-<div
-class="
-card
-active
-"
-
-onclick=
-"
-location.href=
-'costdashboard.html'
-"
-
->
-
-<div class="icon">
-
-🍽️
-
+<div class="card active" onclick="location.href='costdashboard.html'">
+<div class="icon">🍽️</div>
+<div class="title">Cost Management</div>
+<div class="desc">Dashboard, Raw Material, Preparation, Recipe, Menu, dan HPP.</div>
+<div class="badge">AVAILABLE</div>
 </div>
 
-<div class="title">
-
-Cost Management
-
+<div class="card active" onclick="location.href='exportcenter.html'">
+<div class="icon">📄</div>
+<div class="title">Export Center</div>
+<div class="desc">PDF Cost Report, Recipe Book, Excel backup, dan export data.</div>
+<div class="badge">AVAILABLE</div>
 </div>
 
-<div class="desc">
-
-Dashboard,
-Raw Material,
-Preparation,
-Recipe,
-Menu,
-dan HPP.
-
+<div class="card active" onclick="location.href='settings.html'">
+<div class="icon">⚙</div>
+<div class="title">Settings</div>
+<div class="desc">Business profile, logo, target food cost, profit target, dan currency.</div>
+<div class="badge">AVAILABLE</div>
 </div>
 
-<div class="badge">
-
-AVAILABLE
-
+<div class="card lock">
+<div class="icon">📦</div>
+<div class="title">Inventory</div>
+<div class="desc">Stock, purchase, supplier, warehouse.</div>
+<div class="badge">COMING SOON</div>
 </div>
 
+<div class="card lock">
+<div class="icon">💳</div>
+<div class="title">Finance</div>
+<div class="desc">Cashflow, profit, expense.</div>
+<div class="badge">COMING SOON</div>
 </div>
 
-
-
-<div
-class="
-card
-lock
-"
-
->
-
-<div class="icon">
-
-📦
-
+<div class="card lock">
+<div class="icon">🧠</div>
+<div class="title">Intelligent Cost</div>
+<div class="desc">AI analysis untuk optimasi bisnis.</div>
+<div class="badge">COMING SOON</div>
+</div>
 </div>
 
-<div class="title">
-
-Inventory
-
+<div class="footer">BIYA © Phase 1 Development</div>
 </div>
-
-<div class="desc">
-
-Stock,
-purchase,
-supplier,
-warehouse.
-
-</div>
-
-<div class="badge">
-
-COMING SOON
-
-</div>
-
-</div>
-
-
-
-<div
-class="
-card
-lock
-"
-
->
-
-<div class="icon">
-
-💳
-
-</div>
-
-<div class="title">
-
-Finance
-
-</div>
-
-<div class="desc">
-
-Cashflow,
-profit,
-expense.
-
-</div>
-
-<div class="badge">
-
-COMING SOON
-
-</div>
-
-</div>
-
-
-
-<div
-class="
-card
-lock
-"
-
->
-
-<div class="icon">
-
-🧠
-
-</div>
-
-<div class="title">
-
-Intelligent Cost
-
-</div>
-
-<div class="desc">
-
-AI analysis
-untuk optimasi
-bisnis.
-
-</div>
-
-<div class="badge">
-
-COMING SOON
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<div class="footer">
-
-BIYA © Phase 1 Development
-
-</div>
-
-</div>
-
 </body>
-
 </html>
