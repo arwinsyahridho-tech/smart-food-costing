@@ -127,17 +127,22 @@
 </head>
 <body>
   <div class="wrapper">
+
     <div class="sidebar">
       <div class="logo">🍽️ SFC</div>
+
       <div class="item" onclick="location.href='costdashboard.html'">📊 Dashboard</div>
       <div class="item" onclick="location.href='rawmaterial.html'">📦 Raw Material</div>
       <div class="item" onclick="location.href='preparation.html'">🥣 Preparation</div>
       <div class="item active">🍔 Menu</div>
       <div class="item" onclick="location.href='producthpp.html'">📈 Product HPP</div>
+      <div class="item" onclick="location.href='exportcenter.html'">📄 Export Center</div>
+      <div class="item" onclick="location.href='settings.html'">⚙ Settings</div>
+
       <button class="btn" onclick="location.href='dashboard.html'">← Kembali</button>
     </div>
 
-    <div class="main">
+<div class="main">
       <div class="title">Menu</div>
       <div class="sub">Produk jual akhir yang menyusun bahan dari raw material, preparation, dan packaging.</div>
 
@@ -266,7 +271,13 @@ const packagings = [
   { name:"Sendok Plastik", unit:"pcs", price:250, type:"Packaging" }
 ];
 
-let menus = [];
+let menus = JSON.parse(localStorage.getItem("biya_menus") || "[]");
+let storedMenus = localStorage.getItem("biya_menus");
+if (!Array.isArray(menus)) menus = [];
+function persistMenus(){
+  localStorage.setItem("biya_menus", JSON.stringify(menus));
+  localStorage.setItem("biya_menus_updated", new Date().toISOString());
+}
 let editMode = false;
 let editMenuId = null;
 
@@ -486,6 +497,7 @@ function saveMenu(){
   }else{
     menus.push(menuData);
   }
+  persistMenus();
 
   renderMenuList();
   resetMenuForm();
@@ -554,6 +566,7 @@ function cancelEditMode(){
 function deleteMenu(id){
   if(!confirm("Hapus menu ini?")) return;
   menus = menus.filter(m => m.id !== id);
+  persistMenus();
   renderMenuList();
   if(editMode && editMenuId === id){
     cancelEditMode();
