@@ -647,30 +647,22 @@
 </head>
 <body>
   <div class="wrapper">
+
     <div class="sidebar">
       <div class="logo">🍽️ SFC</div>
 
       <div class="item" onclick="location.href='costdashboard.html'">📊 Dashboard</div>
       <div class="item" onclick="location.href='rawmaterial.html'">📦 Raw Material</div>
       <div class="item active">🥣 Preparation</div>
-     <div 
-class="item"
-
-onclick="
-location.href=
-'menu.html'
-"
->
-
-🍔 Menu
-
-</div>
+      <div class="item" onclick="location.href='menu.html'">🍔 Menu</div>
       <div class="item" onclick="location.href='producthpp.html'">📈 Product HPP</div>
+      <div class="item" onclick="location.href='exportcenter.html'">📄 Export Center</div>
+      <div class="item" onclick="location.href='settings.html'">⚙ Settings</div>
 
       <button class="btn" onclick="location.href='dashboard.html'">← Kembali</button>
     </div>
 
-    <div class="main">
+<div class="main">
       <div class="page-shell">
         <div class="title">Preparation</div>
         <div class="sub">Produk setengah jadi sebelum masuk Recipe</div>
@@ -813,7 +805,12 @@ location.href=
     const saveBtn = document.getElementById("saveBtn");
     const formTitle = document.getElementById("formTitle");
 
-    let preparations = [];
+    let preparations = JSON.parse(localStorage.getItem("biya_preparations") || "[]");
+    if (!Array.isArray(preparations)) preparations = [];
+    function persistPreparations(){
+      localStorage.setItem("biya_preparations", JSON.stringify(preparations));
+      localStorage.setItem("biya_preparations_updated", new Date().toISOString());
+    }
     let editingId = null;
     let expandedPrepId = null;
 
@@ -1041,8 +1038,10 @@ function formatPreparationName(value) {
       if (editingId) {
         const index = preparations.findIndex(item => item.id === editingId);
         if (index !== -1) preparations[index] = prepData;
+        persistPreparations();
       } else {
         preparations.unshift(prepData);
+        persistPreparations();
       }
 
       renderPreparationList();
@@ -1220,6 +1219,7 @@ function toggleDetail(id) {
       if (!confirmDelete) return;
 
       preparations = preparations.filter(item => item.id !== id);
+      persistPreparations();
       if (expandedPrepId === id) expandedPrepId = null;
       renderPreparationList();
       if (editingId !== null) hidePreparationListSection();
