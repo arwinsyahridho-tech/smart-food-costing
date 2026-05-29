@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BIYA • Settings</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{background:#07173a;font-family:Arial,sans-serif;color:#fff}
+    .wrapper{display:flex;min-height:100vh}
+    .sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;background:#102766;padding:30px;overflow:auto}
+    .logo{font-size:34px;font-weight:bold;margin-bottom:45px}
+    .item{height:56px;padding:0 18px;display:flex;align-items:center;border-radius:16px;margin-bottom:12px;cursor:pointer;font-size:16px;transition:.22s;color:white}
+    .item:hover{transform:translateX(6px);background:rgba(255,255,255,.06)}
+    .item.active{background:#2563eb;transform:translateX(10px);box-shadow:0 10px 30px rgba(37,99,235,.35)}
+    .btn{margin-top:18px;height:54px;width:100%;border:none;border-radius:14px;background:#2563eb;color:white;cursor:pointer;font-weight:bold}
+    .main{margin-left:260px;width:calc(100% - 260px);padding:40px}
+    .title{font-size:44px;margin-bottom:10px}
+    .sub{opacity:.7;margin-bottom:30px}
+    .section{background:#102766;padding:28px;border-radius:22px;margin-bottom:24px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    label{display:block;margin-bottom:10px;opacity:.7}
+    input,select,textarea{width:100%;height:56px;padding:0 18px;background:#0d2158;border:none;border-radius:14px;color:white;outline:none}
+    textarea{height:auto;min-height:120px;padding:16px 18px;resize:vertical}
+    .btn-action{height:54px;padding:0 24px;border:none;border-radius:14px;background:#2563eb;color:white;cursor:pointer;font-weight:bold}
+    .summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+    .summary-box{background:#0d2158;padding:20px;border-radius:16px}
+    .summary-title{opacity:.6;margin-bottom:10px}
+    .summary-value{font-size:24px;font-weight:bold;white-space:pre-line}
+    .pill-note{display:inline-block;margin-top:8px;padding:6px 10px;border-radius:999px;background:rgba(37,99,235,.18);color:#cfe0ff;font-size:12px}
+    @media (max-width:980px){.sidebar{position:relative;width:100%;height:auto}.main{margin-left:0;width:100%}.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="sidebar">
+    <div class="logo">🍽️ BIYA</div>
+    <div class="item" onclick="location.href='costdashboard.html'">📊 Dashboard</div>
+    <div class="item" onclick="location.href='rawmaterial.html'">📦 Raw Material</div>
+    <div class="item" onclick="location.href='preparation.html'">🥣 Preparation</div>
+    <div class="item" onclick="location.href='menu.html'">🍔 Menu</div>
+    <div class="item" onclick="location.href='producthpp.html'">📈 Product HPP</div>
+    <div class="item" onclick="location.href='exportcenter.html'">📄 Export Center</div>
+    <div class="item active">⚙ Settings</div>
+    <button class="btn" onclick="location.href='dashboard.html'">← Kembali</button>
+  </div>
+
+  <div class="main">
+    <div class="title">Settings</div>
+    <div class="sub">Atur identitas bisnis, target costing, dan preferensi sistem BIYA.</div>
+
+    <div class="section">
+      <div style="font-size:22px;font-weight:bold;margin-bottom:16px;">Business Profile</div>
+      <div class="grid">
+        <div><label>Business Name</label><input id="businessName" placeholder="Coffee XYZ"></div>
+        <div><label>Business Type</label><input id="businessType" placeholder="Coffee Shop"></div>
+        <div><label>Owner Name</label><input id="ownerName" placeholder="Nama Owner"></div>
+        <div><label>Phone</label><input id="phone" placeholder="08xxxxxxxxxx"></div>
+        <div><label>Email</label><input id="email" placeholder="owner@email.com"></div>
+        <div><label>Logo URL</label><input id="logoUrl" placeholder="https://.../logo.png"></div>
+        <div style="grid-column:1/-1;"><label>Address</label><textarea id="address" placeholder="Alamat bisnis"></textarea></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div style="font-size:22px;font-weight:bold;margin-bottom:16px;">Cost Settings</div>
+      <div class="grid">
+        <div><label>Food Cost Target %</label><input id="foodCostTarget" type="number" placeholder="35"></div>
+        <div><label>Profit Target %</label><input id="profitTarget" type="number" placeholder="50"></div>
+        <div><label>Currency</label><select id="currency"><option value="IDR">IDR</option><option value="USD">USD</option><option value="MYR">MYR</option></select></div>
+        <div><label>Date Format</label><select id="dateFormat"><option value="dd/mm/yyyy">DD/MM/YYYY</option><option value="yyyy-mm-dd">YYYY-MM-DD</option></select></div>
+      </div>
+      <div style="margin-top:10px;" class="pill-note">Dipakai di Dashboard, Product HPP, dan Export Center</div>
+    </div>
+
+    <div class="section">
+      <div style="font-size:22px;font-weight:bold;margin-bottom:16px;">System</div>
+      <div class="grid">
+        <div><label>Auto Capitalize</label><select id="autoCapitalize"><option value="on">ON</option><option value="off">OFF</option></select></div>
+        <div><label>Default Status</label><select id="defaultStatus"><option>ACTIVE</option><option>INACTIVE</option></select></div>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;">
+        <button class="btn-action" id="saveBtn">Simpan Settings</button>
+        <button class="btn-action" style="background:#334155" id="resetBtn">Reset</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <div style="font-size:22px;font-weight:bold;margin-bottom:16px;">Current Summary</div>
+      <div class="summary-grid" id="summaryGrid"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const KEY = "biya_settings";
+const defaults = {
+  businessName: "BIYA Cost Management",
+  businessType: "F&B",
+  ownerName: "",
+  phone: "",
+  email: "",
+  address: "",
+  logoUrl: "",
+  foodCostTarget: 35,
+  profitTarget: 50,
+  currency: "IDR",
+  dateFormat: "dd/mm/yyyy",
+  autoCapitalize: "on",
+  defaultStatus: "ACTIVE"
+};
+
+function loadSettings(){
+  try{
+    return Object.assign({}, defaults, JSON.parse(localStorage.getItem(KEY) || "{}"));
+  }catch(e){
+    return {...defaults};
+  }
+}
+function saveSettings(s){
+  localStorage.setItem(KEY, JSON.stringify(s));
+}
+function fill(){
+  const s = loadSettings();
+  businessName.value = s.businessName;
+  businessType.value = s.businessType;
+  ownerName.value = s.ownerName;
+  phone.value = s.phone;
+  email.value = s.email;
+  address.value = s.address;
+  logoUrl.value = s.logoUrl;
+  foodCostTarget.value = s.foodCostTarget;
+  profitTarget.value = s.profitTarget;
+  currency.value = s.currency;
+  dateFormat.value = s.dateFormat;
+  autoCapitalize.value = s.autoCapitalize;
+  defaultStatus.value = s.defaultStatus;
+
+  const summary = [
+    ["Business", s.businessName],
+    ["Type", s.businessType],
+    ["Food Cost Target", s.foodCostTarget + "%"],
+    ["Profit Target", s.profitTarget + "%"],
+    ["Currency", s.currency],
+    ["Auto Capitalize", s.autoCapitalize.toUpperCase()]
+  ];
+  summaryGrid.innerHTML = summary.map(([k,v])=>`<div class="summary-box"><div class="summary-title">${k}</div><div class="summary-value">${v}</div></div>`).join("");
+}
+
+saveBtn.onclick = () => {
+  const s = {
+    businessName: businessName.value.trim() || defaults.businessName,
+    businessType: businessType.value.trim(),
+    ownerName: ownerName.value.trim(),
+    phone: phone.value.trim(),
+    email: email.value.trim(),
+    address: address.value.trim(),
+    logoUrl: logoUrl.value.trim(),
+    foodCostTarget: Number(foodCostTarget.value) || defaults.foodCostTarget,
+    profitTarget: Number(profitTarget.value) || defaults.profitTarget,
+    currency: currency.value,
+    dateFormat: dateFormat.value,
+    autoCapitalize: autoCapitalize.value,
+    defaultStatus: defaultStatus.value
+  };
+  saveSettings(s);
+  fill();
+  alert("Settings tersimpan");
+};
+resetBtn.onclick = () => {
+  localStorage.removeItem(KEY);
+  fill();
+  alert("Settings direset");
+};
+fill();
+</script>
+</body>
+</html>
