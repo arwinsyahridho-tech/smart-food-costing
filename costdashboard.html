@@ -3,42 +3,78 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SFC • Dashboard</title>
+  <title>BIYA • Dashboard</title>
   <style>
+    :root{
+      --bg:#07173a;
+      --panel:#102766;
+      --panel-2:#0d2158;
+      --panel-3:#1b3d96;
+      --primary:#2563eb;
+      --text:#fff;
+      --muted:rgba(255,255,255,.7);
+      --muted-2:rgba(255,255,255,.55);
+      --danger:#ef4444;
+      --warning:#f59e0b;
+      --success:#22c55e;
+      --shadow:0 10px 30px rgba(37,99,235,.16);
+      --radius:18px;
+    }
+
     *{margin:0;padding:0;box-sizing:border-box}
     body{
-      background:#07173a;
-      font-family:Arial,sans-serif;
-      color:#fff;
+      background:var(--bg);
+      font-family:Arial,Helvetica,sans-serif;
+      color:var(--text);
     }
-    .wrapper{display:flex}
+
+    .wrapper{display:flex;min-height:100vh}
     .sidebar{
       position:fixed;left:0;top:0;width:260px;height:100vh;background:#102766;
       padding:30px;overflow:auto
     }
-    .logo{font-size:34px;font-weight:bold;margin-bottom:45px}
+    .logo{
+      font-size:34px;font-weight:700;margin-bottom:45px;letter-spacing:.2px;
+      line-height:1.1;
+    }
+    .logo small{
+      display:block;
+      font-size:12px;
+      font-weight:400;
+      opacity:.65;
+      margin-top:8px;
+      letter-spacing:1.6px;
+    }
     .item{
       height:56px;padding:0 18px;display:flex;align-items:center;border-radius:16px;
-      margin-bottom:12px;cursor:pointer;font-size:16px;transition:.22s;color:white
+      margin-bottom:12px;cursor:pointer;font-size:16px;transition:.22s;color:white;
+      user-select:none;
     }
     .item:hover{transform:translateX(6px);background:rgba(255,255,255,.06)}
     .item.active{
-      background:#2563eb;transform:translateX(10px);
+      background:var(--primary);transform:translateX(10px);
       box-shadow:0 10px 30px rgba(37,99,235,.35)
     }
     .btn{
       margin-top:18px;height:54px;width:100%;border:none;border-radius:14px;
-      background:#2563eb;color:white;cursor:pointer;font-weight:bold
+      background:var(--primary);color:white;cursor:pointer;font-weight:700
     }
+
     .main{margin-left:260px;width:calc(100% - 260px);padding:40px}
-    .title{font-size:44px;margin-bottom:10px}
-    .sub{opacity:.7;margin-bottom:30px}
+    .page{
+      width:100%;
+      max-width:1600px;
+      margin:0 auto;
+    }
+    .title{font-size:44px;margin-bottom:10px;line-height:1.05}
+    .sub{opacity:.72;margin-bottom:30px;font-size:16px}
 
     .section{
-      background:#102766;
+      background:var(--panel);
       padding:28px;
       border-radius:22px;
       margin-bottom:24px;
+      box-shadow:var(--shadow);
     }
 
     .summary-grid{
@@ -47,7 +83,7 @@
       gap:16px;
     }
     .summary-box{
-      background:#0d2158;
+      background:var(--panel-2);
       padding:20px;
       border-radius:16px;
       min-height:110px;
@@ -59,27 +95,27 @@
     }
     .summary-value{
       font-size:26px;
-      font-weight:bold;
+      font-weight:700;
       line-height:1.15;
       white-space:pre-line;
     }
 
-    .split{
+    .top-grid{
       display:grid;
-      grid-template-columns:1.1fr .9fr;
-      gap:24px;
-      align-items:stretch;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+      margin-top:20px;
     }
 
     .card{
-      background:#0d2158;
+      background:var(--panel-2);
       padding:22px;
       border-radius:18px;
       height:100%;
     }
     .card-title{
       font-size:22px;
-      font-weight:bold;
+      font-weight:700;
       margin-bottom:10px;
     }
     .card-sub{
@@ -87,6 +123,7 @@
       font-size:13px;
       margin-bottom:18px;
     }
+
     .product-hero{
       display:flex;
       gap:16px;
@@ -101,24 +138,43 @@
       width:100%;height:100%;display:flex;align-items:center;justify-content:center;
       font-size:12px;color:#9bb3ee;text-align:center;padding:8px
     }
-    .product-name{
-      font-size:20px;font-weight:bold;margin-bottom:8px;
-    }
-    .pill-row{
-      display:flex;gap:10px;flex-wrap:wrap;margin-top:10px
-    }
+    .product-name{font-size:20px;font-weight:700;margin-bottom:8px}
+    .pill-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
     .pill{
-      display:inline-block;padding:6px 10px;border-radius:999px;background:#2563eb;
-      font-size:12px
+      display:inline-block;padding:6px 10px;border-radius:999px;background:var(--primary);
+      font-size:12px;
     }
     .pill.gray{background:#334155}
-    .pill.green{background:rgba(22,163,74,.18);color:#86efac}
+    .pill.green{background:rgba(34,197,94,.18);color:#86efac}
     .pill.yellow{background:rgba(234,179,8,.18);color:#fde68a}
     .pill.red{background:rgba(239,68,68,.18);color:#fca5a5}
 
-    .chart-box{
-      display:flex;flex-direction:column;gap:16px
+    .health-score{
+      display:flex;
+      gap:16px;
+      align-items:flex-start;
     }
+    .score-circle{
+      width:86px;
+      height:86px;
+      border-radius:22px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#07173a;
+      font-size:34px;
+      font-weight:700;
+      border:1px solid rgba(255,255,255,.08);
+      flex:0 0 auto;
+    }
+    .score-desc{
+      font-size:14px;
+      line-height:1.65;
+      opacity:.92;
+      margin-top:8px;
+    }
+
+    .chart-box{display:flex;flex-direction:column;gap:16px}
     .chart-meta{
       display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap
     }
@@ -132,22 +188,14 @@
       color:#fff;
       outline:none;
     }
-    .bars{
-      display:flex;
-      flex-direction:column;
-      gap:14px;
-      margin-top:8px;
-    }
+    .bars{display:flex;flex-direction:column;gap:14px;margin-top:8px}
     .bar-item{
       display:grid;
-      grid-template-columns:130px 1fr 70px;
+      grid-template-columns:130px 1fr 72px;
       gap:12px;
       align-items:center;
     }
-    .bar-label{
-      font-size:14px;
-      opacity:.9;
-    }
+    .bar-label{font-size:14px;opacity:.92}
     .bar-track{
       width:100%;
       height:16px;
@@ -156,30 +204,11 @@
       overflow:hidden;
       border:1px solid rgba(255,255,255,.06)
     }
-    .bar-fill{
-      height:100%;
-      border-radius:999px;
-      min-width:4px;
-    }
-    .bar-value{
-      text-align:right;
-      font-size:13px;
-      opacity:.85;
-    }
-
-    .top-grid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:16px;
-      margin-top:20px;
-    }
+    .bar-fill{height:100%;border-radius:999px;min-width:4px}
+    .bar-value{text-align:right;font-size:13px;opacity:.85}
 
     .search-wrap{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      align-items:center;
-      margin-bottom:18px;
+      display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:18px
     }
     .search-box,.filter-box{width:280px;max-width:100%}
     .search-box input,.filter-box select{
@@ -198,9 +227,10 @@
       border-collapse:collapse;
       overflow:hidden;
       border-radius:14px;
+      min-width:900px;
     }
     th{
-      background:#1b3d96;
+      background:var(--panel-3);
       padding:14px 16px;
       font-size:14px;
       text-align:left;
@@ -208,7 +238,7 @@
     }
     td{
       padding:14px 16px;
-      background:#0d2158;
+      background:var(--panel-2);
       border-bottom:1px solid rgba(255,255,255,.05);
       vertical-align:top;
     }
@@ -217,11 +247,12 @@
       padding:6px 10px;
       border-radius:999px;
       font-size:12px;
-      font-weight:bold;
+      font-weight:700;
     }
-    .ok{background:rgba(22,163,74,.18);color:#86efac}
+    .ok{background:rgba(34,197,94,.18);color:#86efac}
     .warn{background:rgba(234,179,8,.18);color:#fde68a}
     .danger{background:rgba(239,68,68,.18);color:#fca5a5}
+    .muted{opacity:.72;font-size:13px}
 
     .info-grid{
       display:grid;
@@ -242,17 +273,12 @@
     }
     .mini-value{
       font-size:22px;
-      font-weight:bold;
+      font-weight:700;
       line-height:1.15;
       white-space:pre-line;
     }
 
-    .alert-list{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      margin-top:14px;
-    }
+    .alert-list{display:flex;flex-direction:column;gap:12px;margin-top:14px}
     .alert-item{
       padding:16px;
       border-radius:14px;
@@ -269,9 +295,7 @@
     .dot-yellow{background:#eab308}
     .dot-red{background:#ef4444}
 
-    .insight-list{
-      display:flex;flex-direction:column;gap:12px;margin-top:14px
-    }
+    .insight-list{display:flex;flex-direction:column;gap:12px;margin-top:14px}
     .insight-item{
       background:#07173a;
       border:1px solid rgba(255,255,255,.06);
@@ -280,13 +304,11 @@
       line-height:1.6;
     }
 
-    .muted{
-      opacity:.72;
-      font-size:13px;
+    .flex-between{
+      display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap
     }
 
     @media (max-width: 1180px){
-      .split{grid-template-columns:1fr}
       .top-grid{grid-template-columns:repeat(2,1fr)}
     }
     @media (max-width: 980px){
@@ -300,150 +322,152 @@
 </head>
 <body>
   <div class="wrapper">
-
-    <div class="sidebar">
-      <div class="logo">🍽️ SFC</div>
-
+    <aside class="sidebar">
+      <div class="logo">BIYA<small>BUSINESS IN YOUR HAND</small></div>
       <div class="item active">📊 Dashboard</div>
       <div class="item" onclick="location.href='rawmaterial.html'">📦 Raw Material</div>
       <div class="item" onclick="location.href='preparation.html'">🥣 Preparation</div>
       <div class="item" onclick="location.href='menu.html'">🍔 Menu</div>
       <div class="item" onclick="location.href='producthpp.html'">📈 Product HPP</div>
-      <div class="item" onclick="location.href='exportcenter.html'">📄 Export Center</div>
-      <div class="item" onclick="location.href='settings.html'">⚙ Settings</div>
-
       <button class="btn" onclick="location.href='dashboard.html'">← Kembali</button>
-    </div>
+    </aside>
 
-<div class="main">
-      <div class="title">Dashboard</div>
-      <div class="sub">Ringkasan cepat kondisi bisnis, profit, dan performa menu.</div>
+    <main class="main">
+      <div class="page">
+        <div class="title">Dashboard</div>
+        <div class="sub">Ringkasan cepat kondisi bisnis, profit, dan performa menu.</div>
 
-      <div class="summary-grid">
-        <div class="summary-box">
-          <div class="summary-title">Total Product</div>
-          <div class="summary-value" id="dashTotalProduct">0</div>
-        </div>
-        <div class="summary-box">
-          <div class="summary-title">Average Profit</div>
-          <div class="summary-value" id="dashAverageProfit">0%</div>
-        </div>
-        <div class="summary-box">
-          <div class="summary-title">Average Food Cost</div>
-          <div class="summary-value" id="dashAverageFoodCost">0%</div>
-        </div>
-        <div class="summary-box">
-          <div class="summary-title">Potential Revenue</div>
-          <div class="summary-value" id="dashPotentialRevenue">Rp 0</div>
-        </div>
-      </div>
-
-
-      <div class="section">
-        <div class="card-title">Quick Actions</div>
-        <div class="card-sub">Akses cepat ke fitur baru BIYA</div>
-        <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr));">
-          <div class="card" onclick="location.href='exportcenter.html'" style="cursor:pointer;">
-            <div class="title" style="font-size:22px;margin-bottom:8px;">📄 Export Center</div>
-            <div class="desc">Backup, PDF, dan Excel export.</div>
+        <div class="summary-grid">
+          <div class="summary-box">
+            <div class="summary-title">Total Product</div>
+            <div class="summary-value" id="dashTotalProduct">0</div>
           </div>
-          <div class="card" onclick="location.href='settings.html'" style="cursor:pointer;">
-            <div class="title" style="font-size:22px;margin-bottom:8px;">⚙ Settings</div>
-            <div class="desc">Business profile dan target costing.</div>
+          <div class="summary-box">
+            <div class="summary-title">Average Profit</div>
+            <div class="summary-value" id="dashAverageProfit">0%</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-title">Average Food Cost</div>
+            <div class="summary-value" id="dashAverageFoodCost">0%</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-title">Potential Revenue</div>
+            <div class="summary-value" id="dashPotentialRevenue">Rp 0</div>
           </div>
         </div>
-      </div>
 
-      <div class="top-grid">
-        <div class="section">
-          <div class="card-title">Best Product</div>
-          <div class="card-sub">Produk dengan profit tertinggi</div>
-          <div id="bestProductCard"></div>
+        <div class="top-grid">
+          <div class="section">
+            <div class="card-title">Business Health</div>
+            <div class="card-sub">Skor ringkas kondisi bisnis</div>
+            <div id="healthScoreCard"></div>
+          </div>
+
+          <div class="section">
+            <div class="card-title">Best Product</div>
+            <div class="card-sub">Produk dengan profit tertinggi</div>
+            <div id="bestProductCard"></div>
+          </div>
+
+          <div class="section">
+            <div class="card-title">Worst Product</div>
+            <div class="card-sub">Produk dengan margin terendah</div>
+            <div id="worstProductCard"></div>
+          </div>
+
+          <div class="section">
+            <div class="card-title">Top Profit Ranking</div>
+            <div class="card-sub">3 produk paling untung</div>
+            <div id="rankingCard"></div>
+          </div>
         </div>
 
         <div class="section">
-          <div class="card-title">Worst Product</div>
-          <div class="card-sub">Produk dengan margin paling rendah</div>
-          <div id="worstProductCard"></div>
-        </div>
-
-        <div class="section">
-          <div class="card-title">Quick Alert</div>
+          <div class="card-title">Smart Alert</div>
           <div class="card-sub">Peringatan otomatis yang perlu dicek</div>
           <div id="quickAlertCard"></div>
         </div>
 
         <div class="section">
-          <div class="card-title">Top Profit Ranking</div>
-          <div class="card-sub">3 produk paling untung</div>
-          <div id="rankingCard"></div>
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="card-title">Cost Composition</div>
-        <div class="card-sub">Pilih produk untuk melihat komposisi biaya.</div>
-        <div class="chart-box">
-          <div class="chart-meta">
-            <div style="min-width:240px;flex:1;">
-              <select id="compositionSelect" class="chart-select" onchange="renderComposition()"></select>
+          <div class="flex-between" style="margin-bottom:18px;">
+            <div>
+              <div class="card-title">Category Performance</div>
+              <div class="card-sub">Performa rata-rata per kategori custom</div>
             </div>
-            <div class="muted" id="compositionSummary"></div>
+            <div class="muted" id="categoryMeta"></div>
           </div>
-
-          <div class="bars" id="compositionBars"></div>
+          <div class="info-grid" id="categoryPerformance"></div>
         </div>
-      </div>
 
-      <div class="section">
-        <div class="list-header">
-          <div>
-            <div class="card-title">Product Health Table</div>
-            <div class="card-sub">Daftar ringkas performa produk</div>
-          </div>
+        <div class="section">
+          <div class="card-title">Lowest Margin Product</div>
+          <div class="card-sub">Produk yang perlu perhatian</div>
+          <div id="lowestMarginCard"></div>
+        </div>
 
-          <div class="search-wrap">
-            <div class="search-box">
-              <input id="searchHealth" type="text" placeholder="Cari menu / kategori..." oninput="renderHealthTable()" />
+        <div class="section">
+          <div class="card-title">Missing Data Center</div>
+          <div class="card-sub">Data produk yang belum lengkap</div>
+          <div class="alert-list" id="missingDataList"></div>
+        </div>
+
+        <div class="section">
+          <div class="card-title">Cost Composition</div>
+          <div class="card-sub">Pilih produk untuk melihat komposisi biaya</div>
+          <div class="chart-box">
+            <div class="chart-meta">
+              <div style="min-width:240px;flex:1;">
+                <select id="compositionSelect" class="chart-select" onchange="renderComposition()"></select>
+              </div>
+              <div class="muted" id="compositionSummary"></div>
             </div>
-            <div class="filter-box">
-              <select id="filterHealthCategory" onchange="renderHealthTable()">
-                <option value="">All Category</option>
-              </select>
-            </div>
+            <div class="bars" id="compositionBars"></div>
           </div>
         </div>
 
-        <div style="overflow:auto;">
-          <table>
-            <thead>
-              <tr>
-                <th>Menu</th>
-                <th>Category</th>
-                <th>Sub Category</th>
-                <th>HPP</th>
-                <th>Selling Price</th>
-                <th>Profit</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="healthTableBody"></tbody>
-          </table>
+        <div class="section">
+          <div class="flex-between" style="margin-bottom:18px;">
+            <div>
+              <div class="card-title">Product Health Table</div>
+              <div class="card-sub">Daftar ringkas performa produk</div>
+            </div>
+            <div class="search-wrap" style="margin-bottom:0;">
+              <div class="search-box">
+                <input id="searchHealth" type="text" placeholder="Cari menu / kategori..." oninput="renderHealthTable()" />
+              </div>
+              <div class="filter-box">
+                <select id="filterHealthCategory" onchange="renderHealthTable()">
+                  <option value="">All Category</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div style="overflow:auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Menu</th>
+                  <th>Category</th>
+                  <th>Sub Category</th>
+                  <th>HPP</th>
+                  <th>Selling Price</th>
+                  <th>Profit</th>
+                  <th>Health</th>
+                </tr>
+              </thead>
+              <tbody id="healthTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="card-title">Business Insight</div>
+          <div class="card-sub">Rekomendasi otomatis berdasarkan data HPP</div>
+          <div class="insight-list" id="insightList"></div>
         </div>
       </div>
-
-      <div class="section">
-        <div class="card-title">Alert Center</div>
-        <div class="card-sub">Peringatan yang perlu diperhatikan segera</div>
-        <div class="alert-list" id="alertList"></div>
-      </div>
-
-      <div class="section">
-        <div class="card-title">Business Insight</div>
-        <div class="card-sub">Rekomendasi otomatis berdasarkan data HPP</div>
-        <div class="insight-list" id="insightList"></div>
-      </div>
-    </div>
+    </main>
   </div>
 
 <script>
@@ -471,81 +495,181 @@ function statusText(pct){
   return "Low Margin";
 }
 
-/* SAMPLE DATA - tinggal diganti dengan data PRODUCT HPP sungguhan nanti */
-const products = [
-  {
-    id: 1,
-    name: "Nasi Ayam Crispy",
-    category: "Food",
-    subCategory: "Main Course",
-    sellingPrice: 28000,
-    hpp: 15000,
-    profitRp: 13000,
-    profitPct: 46.43,
-    foodCostPct: 42.86,
-    overhead: 2000,
-    foodCost: 11000,
-    packaging: 2000,
-    description: "Nasi ayam crispy dengan sambal bawang dan salad ringan.",
-    photoUrl: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=80"
-  },
-  {
-    id: 2,
-    name: "Es Kopi Susu",
-    category: "Beverage",
-    subCategory: "Coffee",
-    sellingPrice: 22000,
-    hpp: 9000,
-    profitRp: 13000,
-    profitPct: 59.09,
-    foodCostPct: 29.09,
-    overhead: 1500,
-    foodCost: 6400,
-    packaging: 900,
-    description: "Minuman kopi susu creamy dengan es batu dan aroma kopi yang ringan.",
-    photoUrl: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=900&q=80"
-  },
-  {
-    id: 3,
-    name: "French Fries",
-    category: "Food",
-    subCategory: "Snack",
-    sellingPrice: 18000,
-    hpp: 11800,
-    profitRp: 6200,
-    profitPct: 34.44,
-    foodCostPct: 48.89,
-    overhead: 1200,
-    foodCost: 8800,
-    packaging: 700,
-    description: "Kentang goreng crispy dengan seasoning ringan.",
-    photoUrl: ""
-  },
-  {
-    id: 4,
-    name: "Chocolate Milk",
-    category: "Beverage",
-    subCategory: "Non Coffee",
-    sellingPrice: 18000,
-    hpp: 9800,
-    profitRp: 8200,
-    profitPct: 45.56,
-    foodCostPct: 38.89,
-    overhead: 1400,
-    foodCost: 7000,
-    packaging: 1400,
-    description: "Minuman cokelat dingin yang creamy dan manis.",
-    photoUrl: ""
-  }
-];
-
 function calcAverage(arr, getter){
   if(!arr.length) return 0;
   return arr.reduce((sum, item) => sum + Number(getter(item) || 0), 0) / arr.length;
 }
 
-function getCategories(){
+function safeText(v){
+  return String(v ?? "").trim();
+}
+
+function normalizeProduct(raw){
+  const selling = Number(raw.sellingPrice || raw.selling || 0);
+  const food = Number(raw.foodCost || raw.recipeCost || 0);
+  const packaging = Number(raw.packaging || 0);
+  const overhead = Number(raw.overhead || 0);
+  const hpp = Number(raw.hpp || (food + packaging + overhead));
+  const profitRp = Number(raw.profitRp || (selling - hpp));
+  const profitPct = Number(raw.profitPct || (selling ? (profitRp / selling) * 100 : 0));
+  const foodCostPct = Number(raw.foodCostPct || (selling ? (food / selling) * 100 : 0));
+
+  return {
+    id: raw.id ?? crypto.randomUUID(),
+    name: titleCase(raw.name || raw.menu || raw.product || "Untitled"),
+    category: titleCase(raw.category || raw.cat || "Uncategorized"),
+    subCategory: titleCase(raw.subCategory || raw.sub || "General"),
+    sellingPrice: selling,
+    hpp,
+    profitRp,
+    profitPct,
+    foodCostPct,
+    overhead,
+    foodCost: food,
+    packaging,
+    description: titleCase(raw.description || ""),
+    photoUrl: raw.photoUrl || raw.photo || "",
+    status: titleCase(raw.status || "ACTIVE"),
+  };
+}
+
+function computeFromLocalStorage(){
+  const keys = [
+    "biya_product_hpp",
+    "biya_products",
+    "biya_menu_products",
+    "biya_menu_data",
+    "product_hpp",
+    "products"
+  ];
+
+  for(const key of keys){
+    try{
+      const raw = localStorage.getItem(key);
+      if(!raw) continue;
+      const parsed = JSON.parse(raw);
+      if(Array.isArray(parsed) && parsed.length){
+        return parsed.map(normalizeProduct);
+      }
+    }catch(e){}
+  }
+
+  return [
+    {
+      id: 1,
+      name: "Nasi Ayam Crispy",
+      category: "Food",
+      subCategory: "Main Course",
+      sellingPrice: 28000,
+      hpp: 15000,
+      profitRp: 13000,
+      profitPct: 46.43,
+      foodCostPct: 42.86,
+      overhead: 2000,
+      foodCost: 11000,
+      packaging: 2000,
+      description: "Nasi ayam crispy dengan sambal bawang dan salad ringan.",
+      photoUrl: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=80",
+      status: "ACTIVE"
+    },
+    {
+      id: 2,
+      name: "Es Kopi Susu",
+      category: "Beverage",
+      subCategory: "Coffee",
+      sellingPrice: 22000,
+      hpp: 9000,
+      profitRp: 13000,
+      profitPct: 59.09,
+      foodCostPct: 29.09,
+      overhead: 1500,
+      foodCost: 6400,
+      packaging: 900,
+      description: "Minuman kopi susu creamy dengan es batu dan aroma kopi yang ringan.",
+      photoUrl: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=900&q=80",
+      status: "ACTIVE"
+    },
+    {
+      id: 3,
+      name: "French Fries",
+      category: "Food",
+      subCategory: "Snack",
+      sellingPrice: 18000,
+      hpp: 11800,
+      profitRp: 6200,
+      profitPct: 34.44,
+      foodCostPct: 48.89,
+      overhead: 1200,
+      foodCost: 8800,
+      packaging: 700,
+      description: "Kentang goreng crispy dengan seasoning ringan.",
+      photoUrl: "",
+      status: "ACTIVE"
+    },
+    {
+      id: 4,
+      name: "Chocolate Milk",
+      category: "Beverage",
+      subCategory: "Non Coffee",
+      sellingPrice: 18000,
+      hpp: 9800,
+      profitRp: 8200,
+      profitPct: 45.56,
+      foodCostPct: 38.89,
+      overhead: 1400,
+      foodCost: 7000,
+      packaging: 1400,
+      description: "Minuman cokelat dingin yang creamy dan manis.",
+      photoUrl: "",
+      status: "ACTIVE"
+    }
+  ].map(normalizeProduct);
+}
+
+let products = computeFromLocalStorage();
+
+function loadSettings(){
+  try{
+    return JSON.parse(localStorage.getItem("biya_settings") || "{}");
+  }catch(e){
+    return {};
+  }
+}
+
+function targetFoodCost(){
+  const settings = loadSettings();
+  const v = Number(settings.foodCostTarget || settings.targetFoodCost || 35);
+  return Number.isFinite(v) && v > 0 ? v : 35;
+}
+
+function targetProfit(){
+  const settings = loadSettings();
+  const v = Number(settings.profitTarget || 50);
+  return Number.isFinite(v) && v > 0 ? v : 50;
+}
+
+function getUniqueCategories(){
   return [...new Set(products.map(p => titleCase(p.category)).filter(Boolean))];
+}
+
+function getHealthScore(avgProfit, avgFood){
+  const foodTarget = targetFoodCost();
+  const profitTargetVal = targetProfit();
+
+  let score = 0;
+  if(avgProfit >= profitTargetVal) score += 2;
+  else if(avgProfit >= profitTargetVal * 0.8) score += 1;
+
+  if(avgFood <= foodTarget) score += 2;
+  else if(avgFood <= foodTarget * 1.15) score += 1;
+
+  if(products.length >= 4) score += 1;
+  if(products.some(p => p.photoUrl)) score += 1;
+
+  if(score >= 5) return { letter:"A", label:"Excellent", tone:"success" };
+  if(score >= 4) return { letter:"B", label:"Healthy", tone:"green" };
+  if(score >= 3) return { letter:"C", label:"Need Attention", tone:"yellow" };
+  return { letter:"D", label:"Critical", tone:"red" };
 }
 
 function renderSummary(){
@@ -558,13 +682,27 @@ function renderSummary(){
   document.getElementById("dashAverageProfit").innerText = totalProduct ? avgProfit.toFixed(2) + "%" : "0%";
   document.getElementById("dashAverageFoodCost").innerText = totalProduct ? avgFood.toFixed(2) + "%" : "0%";
   document.getElementById("dashPotentialRevenue").innerText = formatRupiah(potentialRevenue);
+
+  const score = getHealthScore(avgProfit, avgFood);
+  document.getElementById("healthScoreCard").innerHTML = `
+    <div class="health-score">
+      <div class="score-circle">${score.letter}</div>
+      <div>
+        <div style="font-size:22px;font-weight:700;">${score.label}</div>
+        <div class="score-desc">
+          Food Cost Target: ${targetFoodCost().toFixed(0)}%<br>
+          Profit Target: ${targetProfit().toFixed(0)}%<br>
+          Total Product: ${totalProduct}
+        </div>
+      </div>
+    </div>
+  `;
 }
 
 function renderBestWorst(){
   const sortedProfit = [...products].sort((a,b) => b.profitRp - a.profitRp);
   const best = sortedProfit[0];
   const worst = [...products].sort((a,b) => a.profitPct - b.profitPct)[0];
-  const quickIssues = products.filter(p => p.foodCostPct > 40 || p.profitPct < 35 || !p.photoUrl || !p.description);
 
   document.getElementById("bestProductCard").innerHTML = best ? `
     <div class="product-hero">
@@ -603,38 +741,123 @@ function renderBestWorst(){
       </div>
     </div>
   ` : `<div class="notice">Belum ada data</div>`;
+}
 
-  const alertText = quickIssues.length
-    ? [
-        quickIssues.some(p => p.foodCostPct > 40) ? `${quickIssues.filter(p => p.foodCostPct > 40).length} produk food cost di atas 40%` : null,
-        quickIssues.some(p => p.profitPct < 35) ? `${quickIssues.filter(p => p.profitPct < 35).length} produk margin rendah` : null,
-        quickIssues.some(p => !p.photoUrl) ? `${quickIssues.filter(p => !p.photoUrl).length} produk belum ada foto` : null,
-        quickIssues.some(p => !p.description) ? `${quickIssues.filter(p => !p.description).length} produk belum ada deskripsi` : null
-      ].filter(Boolean)
-    : ["Semua produk terlihat aman"];
-
-  document.getElementById("quickAlertCard").innerHTML = `
-    <div class="alert-list">
-      ${alertText.map(item => `
-        <div class="alert-item">
-          <span class="alert-dot ${item.includes('di atas') || item.includes('rendah') ? 'dot-red' : 'dot-yellow'}"></span>
-          <div>${item}</div>
-        </div>
-      `).join("")}
-    </div>
-  `;
-
+function renderRankings(){
   const ranking = [...products].sort((a,b) => b.profitRp - a.profitRp).slice(0,3);
   document.getElementById("rankingCard").innerHTML = ranking.map((p, i) => `
     <div style="display:flex;justify-content:space-between;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06);${i===ranking.length-1 ? 'border-bottom:none;' : ''}">
       <div>
-        <div style="font-weight:bold;">${i+1}. ${p.name}</div>
+        <div style="font-weight:700;">${i+1}. ${p.name}</div>
         <div class="muted">${p.category} • ${p.subCategory}</div>
       </div>
       <div style="text-align:right;">
-        <div style="font-weight:bold;">${formatRupiah(p.profitRp)}</div>
+        <div style="font-weight:700;">${formatRupiah(p.profitRp)}</div>
         <div class="muted">${p.profitPct.toFixed(2)}%</div>
       </div>
+    </div>
+  `).join("") || `<div class="notice">Belum ada data</div>`;
+}
+
+function renderSmartAlert(){
+  const highFood = products.filter(p => p.foodCostPct > targetFoodCost());
+  const lowProfit = products.filter(p => p.profitPct < targetProfit());
+  const noPhoto = products.filter(p => !p.photoUrl);
+  const noDesc = products.filter(p => !p.description);
+
+  const alerts = [];
+  if(highFood.length){
+    const p = [...highFood].sort((a,b) => b.foodCostPct - a.foodCostPct)[0];
+    alerts.push({ color:"red", text:`${p.name} food cost ${p.foodCostPct.toFixed(2)}% di atas target ${targetFoodCost().toFixed(0)}%` });
+  }
+  if(lowProfit.length){
+    const p = [...lowProfit].sort((a,b) => a.profitPct - b.profitPct)[0];
+    alerts.push({ color:"red", text:`${p.name} margin hanya ${p.profitPct.toFixed(2)}%` });
+  }
+  if(noPhoto.length) alerts.push({ color:"yellow", text:`${noPhoto.length} produk belum memiliki foto` });
+  if(noDesc.length) alerts.push({ color:"yellow", text:`${noDesc.length} produk belum memiliki deskripsi` });
+
+  if(!alerts.length) alerts.push({ color:"green", text:"Semua produk terlihat sehat dan siap dipantau." });
+
+  document.getElementById("quickAlertCard").innerHTML = `
+    <div class="alert-list">
+      ${alerts.map(a => `
+        <div class="alert-item">
+          <span class="alert-dot dot-${a.color}"></span>
+          <div>${a.text}</div>
+        </div>
+      `).join("")}
+    </div>
+  `;
+}
+
+function renderCategoryPerformance(){
+  const groups = {};
+  products.forEach(p => {
+    const key = titleCase(p.category) || "Uncategorized";
+    if(!groups[key]) groups[key] = [];
+    groups[key].push(p);
+  });
+
+  const entries = Object.entries(groups).sort((a,b) => b[1].length - a[1].length);
+  document.getElementById("categoryMeta").innerText = `${entries.length} kategori`;
+
+  document.getElementById("categoryPerformance").innerHTML = entries.map(([cat, items]) => {
+    const avgProfit = calcAverage(items, p => p.profitPct);
+    const avgFood = calcAverage(items, p => p.foodCostPct);
+    return `
+      <div class="mini-box">
+        <div class="mini-title">${cat}</div>
+        <div class="mini-value">${items.length} Product</div>
+        <div class="muted" style="margin-top:8px;">Avg Profit ${avgProfit.toFixed(2)}%</div>
+        <div class="muted">Avg Food Cost ${avgFood.toFixed(2)}%</div>
+      </div>
+    `;
+  }).join("") || `<div class="notice">Belum ada kategori</div>`;
+}
+
+function renderLowestMargin(){
+  const low = [...products].sort((a,b) => a.profitPct - b.profitPct)[0];
+  document.getElementById("lowestMarginCard").innerHTML = low ? `
+    <div class="product-hero">
+      <div class="thumb">
+        ${low.photoUrl ? `<img src="${low.photoUrl}" alt="${low.name}" />` : `<div class="empty">No Photo</div>`}
+      </div>
+      <div>
+        <div class="product-name">${low.name}</div>
+        <div class="pill-row">
+          <span class="pill">${low.category}</span>
+          <span class="pill gray">${low.subCategory}</span>
+        </div>
+        <div class="pill-row">
+          <span class="pill red">Profit ${formatRupiah(low.profitRp)}</span>
+          <span class="pill red">Margin ${low.profitPct.toFixed(2)}%</span>
+        </div>
+      </div>
+    </div>
+  ` : `<div class="notice">Belum ada data</div>`;
+}
+
+function renderMissingData(){
+  const missing = [];
+  const noPhoto = products.filter(p => !p.photoUrl);
+  const noDesc = products.filter(p => !p.description);
+  const noCategory = products.filter(p => !p.category);
+  const noSub = products.filter(p => !p.subCategory);
+  const noPrice = products.filter(p => !p.sellingPrice);
+
+  if(noPhoto.length) missing.push({ color:"yellow", text:`${noPhoto.length} produk belum memiliki foto` });
+  if(noDesc.length) missing.push({ color:"yellow", text:`${noDesc.length} produk belum memiliki deskripsi` });
+  if(noCategory.length) missing.push({ color:"red", text:`${noCategory.length} produk belum memiliki kategori` });
+  if(noSub.length) missing.push({ color:"red", text:`${noSub.length} produk belum memiliki sub kategori` });
+  if(noPrice.length) missing.push({ color:"red", text:`${noPrice.length} produk belum memiliki selling price` });
+
+  if(!missing.length) missing.push({ color:"green", text:"Semua data produk terlihat lengkap." });
+
+  document.getElementById("missingDataList").innerHTML = missing.map(a => `
+    <div class="alert-item">
+      <span class="alert-dot dot-${a.color}"></span>
+      <div>${a.text}</div>
     </div>
   `).join("");
 }
@@ -671,7 +894,7 @@ function renderComposition(){
       <div class="bar-item">
         <div class="bar-label">${item.label}</div>
         <div class="bar-track">
-          <div class="bar-fill" style="width:${Math.max(pct, 2)}%;background:${item.color};"></div>
+          <div class="bar-fill" style="width:${Math.max(pct,2)}%;background:${item.color};"></div>
         </div>
         <div class="bar-value">${pct.toFixed(1)}%</div>
       </div>
@@ -695,66 +918,58 @@ function renderHealthTable(){
 
   if(!filtered.length){
     tbody.innerHTML = `<tr><td colspan="7" class="notice">Belum ada data product hpp</td></tr>`;
-    renderAlertsAndInsights(filtered);
+    renderBusinessInsight(filtered);
     return;
   }
 
-  tbody.innerHTML = filtered.map(p => {
-    const stClass = statusClass(p.profitPct);
-    return `
-      <tr>
-        <td>${p.name}</td>
-        <td>${titleCase(p.category)}</td>
-        <td>${titleCase(p.subCategory)}</td>
-        <td>${formatRupiah(p.hpp)}</td>
-        <td>${formatRupiah(p.sellingPrice)}</td>
-        <td>${formatRupiah(p.profitRp)}<div class="muted">${p.profitPct.toFixed(2)}%</div></td>
-        <td><span class="status ${stClass}">${statusText(p.profitPct)}</span></td>
-      </tr>
-    `;
-  }).join("");
-
-  renderAlertsAndInsights(filtered);
-}
-
-function renderAlertsAndInsights(list){
-  const data = list && list.length ? list : products;
-
-  const alerts = [];
-  const highFood = data.filter(p => p.foodCostPct > 40);
-  const lowProfit = data.filter(p => p.profitPct < 35);
-  const noPhoto = data.filter(p => !p.photoUrl);
-  const noDesc = data.filter(p => !p.description);
-
-  if(highFood.length) alerts.push({ color:"red", text:`${highFood.length} produk memiliki food cost di atas 40%` });
-  if(lowProfit.length) alerts.push({ color:"red", text:`${lowProfit.length} produk memiliki margin di bawah 35%` });
-  if(noPhoto.length) alerts.push({ color:"yellow", text:`${noPhoto.length} produk belum memiliki foto` });
-  if(noDesc.length) alerts.push({ color:"yellow", text:`${noDesc.length} produk belum memiliki deskripsi` });
-
-  if(!alerts.length) alerts.push({ color:"green", text:"Semua produk terlihat sehat dan siap dipantau." });
-
-  document.getElementById("alertList").innerHTML = alerts.map(a => `
-    <div class="alert-item">
-      <span class="alert-dot dot-${a.color}"></span>
-      <div>${a.text}</div>
-    </div>
+  tbody.innerHTML = filtered.map(p => `
+    <tr>
+      <td>${p.name}</td>
+      <td>${titleCase(p.category)}</td>
+      <td>${titleCase(p.subCategory)}</td>
+      <td>${formatRupiah(p.hpp)}</td>
+      <td>${formatRupiah(p.sellingPrice)}</td>
+      <td>${formatRupiah(p.profitRp)}<div class="muted">${p.profitPct.toFixed(2)}%</div></td>
+      <td><span class="status ${statusClass(p.profitPct)}">${statusText(p.profitPct)}</span></td>
+    </tr>
   `).join("");
 
+  renderBusinessInsight(filtered);
+}
+
+function renderBusinessInsight(list){
+  const data = list && list.length ? list : products;
   const top = [...data].sort((a,b) => b.profitPct - a.profitPct)[0];
   const low = [...data].sort((a,b) => a.profitPct - b.profitPct)[0];
+  const highFood = data.filter(p => p.foodCostPct > targetFoodCost());
+  const bestCategory = (() => {
+    const groups = {};
+    data.forEach(p => {
+      const key = titleCase(p.category) || "Uncategorized";
+      (groups[key] ||= []).push(p);
+    });
+    const ranked = Object.entries(groups).map(([cat, items]) => ({
+      cat,
+      avgProfit: calcAverage(items, p => p.profitPct),
+      avgFood: calcAverage(items, p => p.foodCostPct),
+      count: items.length
+    })).sort((a,b) => b.avgProfit - a.avgProfit);
+    return ranked[0];
+  })();
 
   const insights = [];
   if(top) insights.push(`Produk terbaik saat ini adalah <b>${top.name}</b> dengan profit ${top.profitPct.toFixed(2)}% (${formatRupiah(top.profitRp)}).`);
   if(low) insights.push(`Produk yang perlu dicek adalah <b>${low.name}</b> karena margin hanya ${low.profitPct.toFixed(2)}%.`);
-  if(highFood.length) insights.push(`Ada <b>${highFood.length}</b> produk dengan food cost di atas target. Coba evaluasi recipe atau harga jual.`);
+  if(highFood.length) insights.push(`Ada <b>${highFood.length}</b> produk dengan food cost di atas target ${targetFoodCost().toFixed(0)}%. Coba evaluasi recipe atau harga jual.`);
+  if(bestCategory) insights.push(`Kategori dengan performa terbaik saat ini adalah <b>${bestCategory.cat}</b> dengan average profit ${bestCategory.avgProfit.toFixed(2)}%.`);
   if(data.length) insights.push(`Rata-rata profit seluruh produk adalah <b>${calcAverage(data, p => p.profitPct).toFixed(2)}%</b>.`);
 
-  document.getElementById("insightList").innerHTML = insights.map(t => `<div class="insight-item">${t}</div>`).join("");
+  document.getElementById("insightList").innerHTML = insights.map(t => `<div class="insight-item">${t}</div>`).join("") || `<div class="notice">Belum ada insight</div>`;
 }
 
 function initFilters(){
   const cat = document.getElementById("filterHealthCategory");
-  [...new Set(products.map(p => titleCase(p.category)))].forEach(c => {
+  [...new Set(products.map(p => titleCase(p.category)).filter(Boolean))].forEach(c => {
     const opt = document.createElement("option");
     opt.value = c;
     opt.textContent = c;
@@ -766,6 +981,11 @@ document.addEventListener("DOMContentLoaded", () => {
   initFilters();
   renderSummary();
   renderBestWorst();
+  renderRankings();
+  renderSmartAlert();
+  renderCategoryPerformance();
+  renderLowestMargin();
+  renderMissingData();
   renderCompositionOptions();
   renderComposition();
   renderHealthTable();
