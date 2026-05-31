@@ -1,1 +1,371 @@
-patchedExportContent
+<!DOCTYPE html> <html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>BIYA - Export Center</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#07173a;font-family:Arial,sans-serif;color:#fff}
+.wrapper{display:flex;min-height:100vh}
+.sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;background:#102766;padding:30px;overflow:auto}
+.logo{font-size:34px;font-weight:bold;margin-bottom:45px}
+.item{height:56px;padding:0 18px;display:flex;align-items:center;border-radius:16px;margin-bottom:12px;cursor:pointer;font-size:16px;transition:.22s;color:white}
+.item:hover{transform:translateX(6px);background:rgba(255,255,255,.06)}
+.item.active{background:#2563eb;transform:translateX(10px);box-shadow:0 10px 30px rgba(37,99,235,.35)}
+.btn{margin-top:18px;height:54px;width:100%;border:none;border-radius:14px;background:#2563eb;color:white;cursor:pointer;font-weight:bold}
+.main{margin-left:260px;width:calc(100% - 260px);padding:40px}
+.title{font-size:44px;margin-bottom:10px}
+.sub{opacity:.7;margin-bottom:30px}
+.section{background:#102766;padding:28px;border-radius:22px;margin-bottom:24px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{background:#0d2158;padding:20px;border-radius:16px}
+.card h3{margin-bottom:8px;font-size:18px}
+.card p{opacity:.7;line-height:1.6;font-size:14px}
+.action{margin-top:16px;height:46px;width:100%;border:none;border-radius:12px;background:#2563eb;color:white;cursor:pointer;font-weight:bold}
+.action.alt{background:#334155}
+.notice{opacity:.65;text-align:center;padding:20px}
+.small{opacity:.65;font-size:13px}
+table{width:100%;border-collapse:collapse}
+th{background:#1b3d96;padding:14px 16px;font-size:14px;text-align:left;white-space:nowrap}
+td{padding:14px 16px;background:#0d2158;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:top}
+input[type=file]{width:100%;background:#0d2158;padding:12px;border-radius:12px;border:none;color:#fff}
+@media (max-width:980px){.sidebar{position:relative;width:100%;height:auto}.main{margin-left:0;width:100%}}
+</style> <style id="biya-theme">
+:root{ --biya-bg:#04122B; --biya-sidebar:#081A3A; --biya-surface:#102B63; --biya-surface-hover:#163A87; --biya-primary:#0066FF; --biya-success:#00D66B; --biya-cyan:#2ED8FF; --biya-warning:#FFB800; --biya-danger:#FF4D4F; --biya-text:#FFFFFF; --biya-muted:#D7E3FF; --biya-border:rgba(255,255,255,0.08); --biya-card-shadow:0 8px 24px rgba(0,0,0,0.20); --biya-modal-shadow:0 20px 40px rgba(0,0,0,0.30); --biya-active-shadow:0 0 20px rgba(0,102,255,0.35); --biya-radius-card:16px; --biya-radius-btn:12px; --biya-radius-input:12px; --biya-radius-modal:20px;
+} html{ scroll-behavior:smooth;
+} body{ background:var(--biya-bg)!important; color:var(--biya-text)!important; font-family:Inter, "Segoe UI", Arial, sans-serif!important;
+} .wrapper{ background:transparent!important;
+} .sidebar{ background:linear-gradient(180deg, rgba(8,26,58,.98), rgba(4,18,43,.98))!important; border-right:1px solid var(--biya-border)!important; box-shadow:var(--biya-card-shadow)!important;
+} .logo{ color:#fff!important; letter-spacing:.2px!important;
+} .logo small{ display:block!important; margin-top:8px!important; font-size:12px!important; font-weight:400!important; opacity:.65!important; letter-spacing:1.6px!important;
+} .item{ color:var(--biya-muted)!important; border:1px solid transparent!important; border-radius:16px!important;
+} .item:hover{ background:var(--biya-surface-hover)!important; color:#fff!important; transform:translateX(6px)!important;
+} .item.active{ background:linear-gradient(135deg, var(--biya-primary), var(--biya-success))!important; color:#fff!important; box-shadow:var(--biya-active-shadow)!important;
+} .btn,
+.btn-action,
+.save-btn,
+.add-row-btn,
+.action,
+.loginBtn,
+.primary-btn{ background:linear-gradient(135deg, var(--biya-primary), var(--biya-success))!important; color:#fff!important; border:none!important; border-radius:var(--biya-radius-btn)!important; box-shadow:var(--biya-card-shadow)!important;
+} .btn.secondary,
+.btn-action.red,
+.action.alt,
+.btn.alt{ background:var(--biya-surface-hover)!important; color:#fff!important;
+} .section,
+.card,
+.summary-box,
+.mini-box,
+.detail-card,
+.menu-item,
+.prep-item,
+.category-block,
+.box,
+.alert-item,
+.insight-item,
+.modalBox,
+.section-card,
+.panel{ background:linear-gradient(180deg, rgba(16,43,99,.96), rgba(12,34,83,.98))!important; border:1px solid var(--biya-border)!important; border-radius:var(--biya-radius-card)!important; box-shadow:var(--biya-card-shadow)!important;
+} .modal{ background:rgba(0,0,0,.56)!important;
+} .modalBox{ border-radius:var(--biya-radius-modal)!important; box-shadow:var(--biya-modal-shadow)!important;
+} input,
+select,
+textarea,
+.table-input,
+.table-select,
+.search-box input,
+.chart-select,
+input[type="file"]{ background:rgba(16,43,99,.95)!important; border:1px solid var(--biya-border)!important; border-radius:var(--biya-radius-input)!important; color:#fff!important; outline:none!important;
+} input::placeholder,
+textarea::placeholder{ color:rgba(215,227,255,.5)!important;
+} th,
+thead th{ background:#163A87!important; color:#fff!important;
+} td,
+tbody td{ background:#102B63!important; color:#fff!important;
+} tbody tr:hover td{ background:#163A87!important;
+} .summary-title,
+.mini-title,
+.card-sub,
+.sub,
+.small-note,
+.notice,
+.muted{ color:rgba(215,227,255,.72)!important;
+} .pill,
+.menu-badge,
+.prep-category,
+.status{ border-radius:999px!important;
+} .pill.green,
+.profit-green,
+.ok{ background:rgba(0,214,107,.18)!important; color:#96f5b7!important;
+} .pill.yellow,
+.profit-yellow,
+.warn{ background:rgba(255,184,0,.18)!important; color:#ffe08a!important;
+} .pill.red,
+.profit-red,
+.danger{ background:rgba(255,77,79,.18)!important; color:#ffb4b4!important;
+} .pill.gray{ background:#163A87!important; color:#fff!important;
+} ::-webkit-scrollbar{ width:10px; height:10px;
+}
+::-webkit-scrollbar-thumb{ background:#163A87; border-radius:999px;
+}
+::-webkit-scrollbar-track{ background:transparent;
+} @media (max-width: 980px){ .sidebar{ position:relative!important; width:100%!important; height:auto!important; } .main{ margin-left:0!important; width:100%!important; } .grid, .grid3, .summary, .summary-grid, .top-grid, .info, .detail-grid, .summary-callout{ grid-template-columns:1fr!important; } .search-box, .filter-box{ width:100%!important; max-width:100%!important; } .menu-cost, .preview-right, .prep-right{ min-width:0!important; text-align:left!important; } .menu-header, .headerCard, .prep-header, .product-hero, .preview-top{ flex-direction:column!important; }
+}
+</style> <style id="biya-mobile-nav">
+.mobile-header{ display:none;
+}
+.mobile-logo{ font-size:20px; font-weight:700; letter-spacing:.6px;
+}
+.menu-toggle{ width:48px; height:48px; border:none; border-radius:12px; background:linear-gradient(135deg, #0066FF, #00D66B); color:#fff; font-size:22px; font-weight:700; cursor:pointer; box-shadow:0 8px 24px rgba(0,0,0,.2);
+}
+.mobile-overlay{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.52); z-index:998;
+}
+@media (max-width: 980px){ body{ overflow-x:hidden !important; } .mobile-header{ display:flex; align-items:center; justify-content:space-between; gap:16px; position:sticky; top:0; z-index:1002; padding:14px 18px; background:linear-gradient(180deg, rgba(8,26,58,.98), rgba(4,18,43,.96)); border-bottom:1px solid rgba(255,255,255,.08); backdrop-filter:blur(14px); } .mobile-overlay.open{ display:block; } .sidebar, aside.sidebar, div.sidebar{ position:fixed !important; left:-280px !important; top:0 !important; width:260px !important; height:100vh !important; z-index:999 !important; transition:left .28s ease !important; overflow:auto !important; box-shadow:0 20px 40px rgba(0,0,0,.35) !important; } .sidebar.open{ left:0 !important; } .main{ margin-left:0 !important; width:100% !important; padding:20px !important; padding-top:18px !important; } .wrapper{ display:block !important; } .section, .card, .summary-box{ border-radius:18px !important; }
+}
+</style> <style id="biya-mobile-first-overrides">
+/* Mobile-first responsive layer. Keep this after page styles. */
+html{ -webkit-text-size-adjust:100%;
+} body{ overflow-x:hidden !important;
+} img,
+svg,
+canvas,
+video{ max-width:100%; height:auto;
+} .wrapper{ display:block !important; min-height:100vh;
+} .mobile-header{ display:flex !important; align-items:center; justify-content:space-between; gap:12px; position:sticky; top:0; z-index:1002; min-height:64px; padding:12px 16px; background:linear-gradient(180deg, rgba(8,26,58,.98), rgba(4,18,43,.96)); border-bottom:1px solid rgba(255,255,255,.08); backdrop-filter:blur(14px);
+} .mobile-logo{ min-width:0; font-size:18px !important; font-weight:700; letter-spacing:.4px; line-height:1.2;
+} .mobile-logo small{ display:block; margin-top:2px; font-size:10px; font-weight:400; letter-spacing:.9px; opacity:.68;
+} .menu-toggle{ flex:0 0 46px; width:46px !important; height:46px !important; border:none; border-radius:12px; background:linear-gradient(135deg, #0066FF, #00D66B); color:#fff; font-size:22px; font-weight:700; line-height:1; cursor:pointer; box-shadow:0 8px 24px rgba(0,0,0,.2);
+} .mobile-overlay{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.52); z-index:998;
+} .mobile-overlay.open{ display:block;
+} .sidebar,
+aside.sidebar,
+div.sidebar{ position:fixed !important; left:-280px !important; top:0 !important; width:260px !important; height:100vh !important; z-index:999 !important; overflow:auto !important; transition:left .28s ease !important; box-shadow:0 20px 40px rgba(0,0,0,.35) !important;
+} .sidebar.open{ left:0 !important;
+} .main{ margin-left:0 !important; width:100% !important; max-width:100%; padding:20px !important; padding-top:18px !important;
+} .title{ font-size:clamp(30px, 9vw, 40px) !important; line-height:1.08 !important; overflow-wrap:anywhere;
+} .sub{ line-height:1.6;
+} .section,
+.card,
+.menu-item,
+.prep-item,
+.panel{ padding:18px !important; margin-bottom:18px !important;
+} .grid,
+.grid3,
+.top-grid,
+.summary-grid,
+.info,
+.detail-grid,
+.summary-callout,
+.info-grid,
+.prep-groups{ display:grid !important; grid-template-columns:1fr !important; gap:14px !important;
+} .summary{ display:grid !important; grid-template-columns:1fr !important; gap:14px !important;
+} .headerCard,
+.preview-top,
+.menu-top,
+.prep-header,
+.product-hero,
+.flex-between,
+.list-header,
+.chart-head,
+.section-head,
+.detail-footer,
+.save-row,
+.list-tools{ flex-direction:column !important; align-items:stretch !important;
+} .menu-cost,
+.prep-right,
+.preview-right,
+.prep-cost{ min-width:0 !important; width:100%; text-align:left !important; white-space:normal !important;
+} .search-box,
+.filter-box,
+.chart-select,
+.btn,
+.btn-action,
+.save-btn,
+.add-row-btn,
+.action,
+.primary-btn{ width:100% !important; max-width:100% !important;
+} input,
+select,
+textarea,
+button{ max-width:100%;
+} .table-wrapper,
+.prep-table,
+.menu-table,
+[style*="overflow:auto"]{ max-width:100%; overflow-x:auto !important; -webkit-overflow-scrolling:touch;
+} table{ width:100%;
+} .table-wrapper table,
+.prep-table table,
+.menu-table,
+table[id],
+table:not(.mobile-card-table){ min-width:720px;
+} .modal{ padding:14px !important; align-items:flex-start !important; overflow:auto !important;
+} .modalBox,
+.modal-card{ width:100% !important; max-width:100% !important; max-height:calc(100vh - 28px) !important; padding:20px !important;
+} @media (min-width: 700px){ .main{ padding:28px !important; } .grid, .summary-grid, .info, .info-grid, .prep-groups{ grid-template-columns:repeat(2, minmax(0, 1fr)) !important; } .grid3, .top-grid{ grid-template-columns:repeat(2, minmax(0, 1fr)) !important; } .summary{ grid-template-columns:repeat(2, minmax(0, 1fr)) !important; } .search-box, .filter-box, .chart-select{ width:min(100%, 340px) !important; }
+} @media (min-width: 981px){ body{ overflow-x:auto !important; } .mobile-header, .mobile-overlay{ display:none !important; } .wrapper{ display:flex !important; } .sidebar, aside.sidebar, div.sidebar{ position:fixed !important; left:0 !important; top:0 !important; width:260px !important; height:100vh !important; z-index:auto !important; transition:none !important; } .main{ margin-left:260px !important; width:calc(100% - 260px) !important; padding:40px !important; } .grid{ grid-template-columns:repeat(2, minmax(0, 1fr)) !important; } .grid3{ grid-template-columns:repeat(3, minmax(0, 1fr)) !important; } .top-grid{ grid-template-columns:repeat(4, minmax(0, 1fr)) !important; } .info, .info-grid{ grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)) !important; } .detail-grid{ grid-template-columns:240px 1fr !important; } .summary{ display:flex !important; } .headerCard, .preview-top, .menu-top, .prep-header, .product-hero, .flex-between, .list-header, .chart-head, .section-head, .detail-footer, .save-row, .list-tools{ flex-direction:row !important; align-items:flex-start !important; } .flex-between, .list-header, .chart-head, .section-head, .detail-footer{ align-items:center !important; } .menu-cost, .prep-right, .preview-right, .prep-cost{ width:auto; text-align:right !important; } .search-box, .filter-box, .chart-select, .save-btn, .add-row-btn, .action, .primary-btn{ width:auto !important; } .sidebar .btn{ width:100% !important; } .modal{ align-items:center !important; } .modalBox{ max-width:900px !important; }
+}
+</style> <style id="biya-icon-system">
+.biya-icon{ width:1.15em; height:1.15em; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; fill:none; flex:0 0 auto;
+}
+.item .biya-icon{ margin-right:10px;
+}
+.icon .biya-icon{ width:30px; height:30px; margin:0;
+}
+.btn .biya-icon,
+button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
+}
+.delete-btn .biya-icon,
+.menu-toggle .biya-icon{ margin:0;
+}
+</style> </head>
+<body> <svg class="biya-icon-sprite" xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"> <symbol id="biya-icon-layout-dashboard" viewBox="0 0 24 24"> <rect width="7" height="9" x="3" y="3" rx="1"></rect> <rect width="7" height="5" x="14" y="3" rx="1"></rect> <rect width="7" height="9" x="14" y="12" rx="1"></rect> <rect width="7" height="5" x="3" y="16" rx="1"></rect> </symbol> <symbol id="biya-icon-package" viewBox="0 0 24 24"> <path d="m7.5 4.27 9 5.15"></path> <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path> <path d="m3.3 7 8.7 5 8.7-5"></path> <path d="M12 22V12"></path> </symbol> <symbol id="biya-icon-flask-conical" viewBox="0 0 24 24"> <path d="M10 2v7.31"></path> <path d="M14 9.3V2"></path> <path d="M8.5 2h7"></path> <path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path> <path d="M5.52 16h12.96"></path> </symbol> <symbol id="biya-icon-clipboard-list" viewBox="0 0 24 24"> <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path> <path d="M12 11h4"></path> <path d="M12 16h4"></path> <path d="M8 11h.01"></path> <path d="M8 16h.01"></path> </symbol> <symbol id="biya-icon-calculator" viewBox="0 0 24 24"> <rect width="16" height="20" x="4" y="2" rx="2"></rect> <path d="M8 6h8"></path> <path d="M16 14v4"></path> <path d="M16 10h.01"></path> <path d="M12 10h.01"></path> <path d="M8 10h.01"></path> <path d="M12 14h.01"></path> <path d="M8 14h.01"></path> <path d="M12 18h.01"></path> <path d="M8 18h.01"></path> </symbol> <symbol id="biya-icon-download" viewBox="0 0 24 24"> <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path> <path d="M7 10l5 5 5-5"></path> <path d="M12 15V3"></path> </symbol> <symbol id="biya-icon-settings" viewBox="0 0 24 24"> <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2Z"></path> <circle cx="12" cy="12" r="3"></circle> </symbol> <symbol id="biya-icon-arrow-left" viewBox="0 0 24 24"> <path d="M19 12H5"></path> <path d="m12 19-7-7 7-7"></path> </symbol> <symbol id="biya-icon-search" viewBox="0 0 24 24"> <circle cx="11" cy="11" r="8"></circle> <path d="m21 21-4.3-4.3"></path> </symbol> <symbol id="biya-icon-x" viewBox="0 0 24 24"> <path d="M18 6 6 18"></path> <path d="m6 6 12 12"></path> </symbol>
+</svg> <header class="mobile-header" aria-label="BIYA mobile navigation"> <div class="mobile-logo">BIYA<small>BUSINESS IN YOUR HAND</small></div> <button class="menu-toggle" id="menuToggle" type="button" aria-label="Buka menu">&#9776;</button>
+</header>
+<div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div>
+<div class="wrapper">
+<div class="sidebar" id="biyaSidebar">
+<div class="logo">BIYA<small>BUSINESS IN YOUR HAND</small></div>
+<div class="item" onclick="location.href='costdashboard.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-layout-dashboard"></use></svg><span>Dashboard</span></div>
+<div class="item" onclick="location.href='rawmaterial.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-package"></use></svg><span>Raw Material</span></div>
+<div class="item" onclick="location.href='preparation.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-flask-conical"></use></svg><span>Preparation</span></div>
+<div class="item" onclick="location.href='menu.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-clipboard-list"></use></svg><span>Menu</span></div>
+<div class="item" onclick="location.href='producthpp.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-calculator"></use></svg><span>Product HPP</span></div>
+<div class="item active"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-download"></use></svg><span>Export Center</span></div>
+<div class="item" onclick="location.href='settings.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-settings"></use></svg><span>Settings</span></div>
+<button class="btn" onclick="location.href='/menu-modules/dashboard.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-arrow-left"></use></svg><span>Kembali</span></button>
+</div>
+<div class="main">
+<div class="title">Export Center</div>
+<div class="sub">Backup data, export report, dan cetak recipe tanpa cost.</div>
+<div class="section">
+<div class="grid">
+<div class="card">
+<h3>Full Backup JSON</h3>
+<p>Menyimpan settings, raw material, preparation, menu, dan product HPP ke file JSON.</p>
+<button class="action" onclick="downloadBackup()">Download Backup</button>
+</div>
+<div class="card">
+<h3>Restore Backup</h3>
+<p>Upload file JSON backup untuk mengembalikan data yang tersimpan.</p>
+<input accept=".json" id="restoreFile" type="file"/>
+<button class="action alt" onclick="restoreBackup()">Restore</button>
+</div>
+<div class="card">
+<h3>PDF Cost Report</h3>
+<p>Print-friendly report untuk disimpan sebagai PDF dari browser.</p>
+<button class="action" onclick="exportPrintable('cost')">Open Print View</button>
+</div>
+<div class="card">
+<h3>PDF Recipe Book</h3>
+<p>Recipe tanpa cost agar aman dibagikan ke kitchen.</p>
+<button class="action" onclick="exportPrintable('recipe')">Open Print View</button>
+</div>
+</div>
+</div>
+<div class="section">
+<div style="font-size:22px;font-weight:bold;margin-bottom:14px;">Excel / CSV Export</div>
+<div class="grid">
+<div class="card">
+<h3>Raw Material</h3><p>CSV yang bisa dibuka di Excel.</p><button class="action" onclick="downloadCSV('rawmaterials')">Export CSV</button>
+</div>
+<div class="card">
+<h3>Preparation</h3><p>CSV yang bisa dibuka di Excel.</p><button class="action" onclick="downloadCSV('preparations')">Export CSV</button>
+</div>
+<div class="card">
+<h3>Menu</h3><p>CSV yang bisa dibuka di Excel.</p><button class="action" onclick="downloadCSV('menus')">Export CSV</button>
+</div>
+<div class="card">
+<h3>Product HPP</h3><p>CSV ringkasan product HPP.</p><button class="action" onclick="downloadCSV('producthpp')">Export CSV</button>
+</div>
+</div>
+</div>
+<div class="section">
+<div style="font-size:22px;font-weight:bold;margin-bottom:14px;">Data Snapshot</div>
+<div style="overflow:auto;">
+<table>
+<thead>
+<tr><th>Data</th><th>Count</th><th>Last Update</th></tr>
+</thead>
+<tbody id="snapshotBody"></tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<script>
+const KEY = "biya_settings";
+const getJSON = (k, fallback=[]) => { try { return JSON.parse(localStorage.getItem(k) || JSON.stringify(fallback)); } catch(e) { return fallback; }
+};
+const getSettings = () => { try { return JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e) { return {}; }
+};
+function download(filename, text, type="application/json"){ const blob = new Blob([text], {type}); const url = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = url; a.download = filename; a.click(); URL.revokeObjectURL(url);
+}
+function toCSV(rows, headers){ const esc = v => `"${String(v ?? "").replaceAll('"','""')}"`; return [headers.map(esc).join(","), ...rows.map(r => headers.map(h => esc(r[h])).join(","))].join("\n");
+}
+function slugDate(){ return new Date().toISOString().slice(0,10);
+}
+function makeBackup(){ return { settings: getSettings(), rawMaterials: getJSON("biya_rawMaterials", []), preparations: getJSON("biya_preparations", []), menus: getJSON("biya_menus", []), productHPP: getJSON("biya_producthpp", []), };
+}
+function downloadBackup(){ download(`BIYA_BACKUP_${slugDate()}.json`, JSON.stringify(makeBackup(), null, 2));
+}
+function restoreBackup(){ const f = restoreFile.files[0]; if(!f){ alert("Pilih file JSON backup"); return; } const reader = new FileReader(); reader.onload = () => { try{ const data = JSON.parse(reader.result); if(data.settings) localStorage.setItem(KEY, JSON.stringify(data.settings)); if(data.rawMaterials) localStorage.setItem("biya_rawMaterials", JSON.stringify(data.rawMaterials)); if(data.preparations) localStorage.setItem("biya_preparations", JSON.stringify(data.preparations)); if(data.menus) localStorage.setItem("biya_menus", JSON.stringify(data.menus)); if(data.productHPP) localStorage.setItem("biya_producthpp", JSON.stringify(data.productHPP)); alert("Backup berhasil direstore"); location.reload(); }catch(e){ alert("File backup tidak valid"); } }; reader.readAsText(f);
+}
+function downloadCSV(kind){ const s = getSettings(); let rows = [], headers = []; if(kind === "rawmaterials"){ rows = getJSON("biya_rawMaterials", []); headers = ["nama","merk","kategori","supplier","qty","buyUnit","harga","conversion","unit","waste"]; }else if(kind === "preparations"){ rows = getJSON("biya_preparations", []); headers = ["name","category","status","yieldQty","yieldUnit","waste","total","costPerYield"]; }else if(kind === "menus"){ rows = getJSON("biya_menus", []); headers = ["name","category","subCategory","sellingPrice","status","description","photoUrl"]; }else if(kind === "producthpp"){ rows = getJSON("biya_producthpp", []); headers = ["name","category","subCategory","sellingPrice","hpp","profitRp","profitPct","foodCostPct"]; } const csv = toCSV(rows, headers); download(`${kind}_${slugDate()}.csv`, csv, "text/csv");
+}
+function exportPrintable(kind){ const s = getSettings(); let body = ""; if(kind === "cost"){ const menus = getJSON("biya_menus", []); body = `<h1>BIYA Cost Report</h1><p>${s.businessName || "BIYA"}</p>` + menus.map(m => `<div style="margin:16px 0;padding:16px;border:1px solid #ccc;border-radius:12px;"><h3>${m.name}</h3><p>Category: ${m.category}</p><p>Sub Category: ${m.subCategory || "-"}</p><p>Selling Price: ${m.sellingPrice || "-"}</p><p>Description: ${m.description || "-"}</p></div>`).join(""); }else{ const menus = getJSON("biya_menus", []); body = `<h1>BIYA Recipe Book</h1><p>${s.businessName || "BIYA"}</p>` + menus.map(m => { const rows = (m.ingredients || []).map(i => `<li>${i.ingredient || i.name || "-"} - ${i.qty || ""} ${i.unit || ""}</li>`).join(""); return `<div style="margin:16px 0;padding:16px;border:1px solid #ccc;border-radius:12px;"><h3>${m.name}</h3><ul>${rows || "<li>-</li>"}</ul></div>`; }).join(""); } const w = window.open("", "_blank"); w.document.write(`<html><head><title>BIYA Print</title><style>body{font-family:Arial;padding:24px} h1{margin-bottom:8px}</style></head><body>${body}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const menuToggle = document.getElementById("menuToggle");
+  const sidebar = document.getElementById("biyaSidebar");
+  const overlay = document.getElementById("mobileOverlay");
+
+  if (!menuToggle || !sidebar || !overlay) return;
+
+  const openSidebar = () => {
+    sidebar.classList.add("open");
+    overlay.classList.add("open");
+    document.body.style.overflow = "hidden";
+    menuToggle.setAttribute("aria-expanded", "true");
+  };
+
+  const closeSidebar = () => {
+    sidebar.classList.remove("open");
+    overlay.classList.remove("open");
+    document.body.style.overflow = "";
+    menuToggle.setAttribute("aria-expanded", "false");
+  };
+
+  menuToggle.addEventListener("click", () => {
+    if (sidebar.classList.contains("open")) {
+      closeSidebar();
+    } else {
+      openSidebar();
+    }
+  });
+
+  overlay.addEventListener("click", closeSidebar);
+
+  sidebar.querySelectorAll("a, .item, button").forEach((el) => {
+    el.addEventListener("click", () => {
+      if (window.matchMedia("(max-width: 980px)").matches) {
+        closeSidebar();
+      }
+    });
+  });
+
+  window.addEventListener("resize", () => {
+    if (!window.matchMedia("(max-width: 980px)").matches) {
+      closeSidebar();
+    }
+  });
+});
+</script>
+
+</body></html>`); w.document.close(); w.focus(); w.print();
+}
+function renderSnapshot(){ const rows = [ ["Raw Material", getJSON("biya_rawMaterials", []).length, localStorage.getItem("biya_rawMaterials_updated") || "-"], ["Preparation", getJSON("biya_preparations", []).length, localStorage.getItem("biya_preparations_updated") || "-"], ["Menu", getJSON("biya_menus", []).length, localStorage.getItem("biya_menus_updated") || "-"], ["Product HPP", getJSON("biya_producthpp", []).length, localStorage.getItem("biya_producthpp_updated") || "-"], ["Settings", getSettings().businessName ? 1 : 0, localStorage.getItem("biya_settings_updated") || "-"], ]; snapshotBody.innerHTML = rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("");
+}
+renderSnapshot();
+</script>
+</body>
+</html> 
