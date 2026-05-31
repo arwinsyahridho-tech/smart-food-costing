@@ -312,7 +312,56 @@ function restoreBackup(){ const f = restoreFile.files[0]; if(!f){ alert("Pilih f
 }
 function downloadCSV(kind){ const s = getSettings(); let rows = [], headers = []; if(kind === "rawmaterials"){ rows = getJSON("biya_rawMaterials", []); headers = ["nama","merk","kategori","supplier","qty","buyUnit","harga","conversion","unit","waste"]; }else if(kind === "preparations"){ rows = getJSON("biya_preparations", []); headers = ["name","category","status","yieldQty","yieldUnit","waste","total","costPerYield"]; }else if(kind === "menus"){ rows = getJSON("biya_menus", []); headers = ["name","category","subCategory","sellingPrice","status","description","photoUrl"]; }else if(kind === "producthpp"){ rows = getJSON("biya_producthpp", []); headers = ["name","category","subCategory","sellingPrice","hpp","profitRp","profitPct","foodCostPct"]; } const csv = toCSV(rows, headers); download(`${kind}_${slugDate()}.csv`, csv, "text/csv");
 }
-function exportPrintable(kind){ const s = getSettings(); let body = ""; if(kind === "cost"){ const menus = getJSON("biya_menus", []); body = `<h1>BIYA Cost Report</h1><p>${s.businessName || "BIYA"}</p>` + menus.map(m => `<div style="margin:16px 0;padding:16px;border:1px solid #ccc;border-radius:12px;"><h3>${m.name}</h3><p>Category: ${m.category}</p><p>Sub Category: ${m.subCategory || "-"}</p><p>Selling Price: ${m.sellingPrice || "-"}</p><p>Description: ${m.description || "-"}</p></div>`).join(""); }else{ const menus = getJSON("biya_menus", []); body = `<h1>BIYA Recipe Book</h1><p>${s.businessName || "BIYA"}</p>` + menus.map(m => { const rows = (m.ingredients || []).map(i => `<li>${i.ingredient || i.name || "-"} - ${i.qty || ""} ${i.unit || ""}</li>`).join(""); return `<div style="margin:16px 0;padding:16px;border:1px solid #ccc;border-radius:12px;"><h3>${m.name}</h3><ul>${rows || "<li>-</li>"}</ul></div>`; }).join(""); } const w = window.open("", "_blank"); w.document.write(`<html><head><title>BIYA Print</title><style>body{font-family:Arial;padding:24px} h1{margin-bottom:8px}</style></head><body>${body}</body></html>`); w.document.close(); w.focus(); w.print();
+function exportPrintable(kind){ const s = getSettings(); let body = ""; if(kind === "cost"){ const menus = getJSON("biya_menus", []); body = `<h1>BIYA Cost Report</h1><p>${s.businessName || "BIYA"}</p>` + menus.map(m => `<div style="margin:16px 0;padding:16px;border:1px solid #ccc;border-radius:12px;"><h3>${m.name}</h3><p>Category: ${m.category}</p><p>Sub Category: ${m.subCategory || "-"}</p><p>Selling Price: ${m.sellingPrice || "-"}</p><p>Description: ${m.description || "-"}</p></div>`).join(""); }else{ const menus = getJSON("biya_menus", []); body = `<h1>BIYA Recipe Book</h1><p>${s.businessName || "BIYA"}</p>` + menus.map(m => { const rows = (m.ingredients || []).map(i => `<li>${i.ingredient || i.name || "-"} - ${i.qty || ""} ${i.unit || ""}</li>`).join(""); return `<div style="margin:16px 0;padding:16px;border:1px solid #ccc;border-radius:12px;"><h3>${m.name}</h3><ul>${rows || "<li>-</li>"}</ul></div>`; }).join(""); } const w = window.open("", "_blank"); w.document.write(`<html><head><title>BIYA Print</title><style>body{font-family:Arial;padding:24px} h1{margin-bottom:8px}</style></head><body>${body}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const menuToggle = document.getElementById("menuToggle");
+  const sidebar = document.getElementById("biyaSidebar");
+  const overlay = document.getElementById("mobileOverlay");
+
+  if (!menuToggle || !sidebar || !overlay) return;
+
+  const openSidebar = () => {
+    sidebar.classList.add("open");
+    overlay.classList.add("open");
+    document.body.style.overflow = "hidden";
+    menuToggle.setAttribute("aria-expanded", "true");
+  };
+
+  const closeSidebar = () => {
+    sidebar.classList.remove("open");
+    overlay.classList.remove("open");
+    document.body.style.overflow = "";
+    menuToggle.setAttribute("aria-expanded", "false");
+  };
+
+  menuToggle.addEventListener("click", () => {
+    if (sidebar.classList.contains("open")) {
+      closeSidebar();
+    } else {
+      openSidebar();
+    }
+  });
+
+  overlay.addEventListener("click", closeSidebar);
+
+  sidebar.querySelectorAll("a, .item, button").forEach((el) => {
+    el.addEventListener("click", () => {
+      if (window.matchMedia("(max-width: 980px)").matches) {
+        closeSidebar();
+      }
+    });
+  });
+
+  window.addEventListener("resize", () => {
+    if (!window.matchMedia("(max-width: 980px)").matches) {
+      closeSidebar();
+    }
+  });
+});
+</script>
+
+</body></html>`); w.document.close(); w.focus(); w.print();
 }
 function renderSnapshot(){ const rows = [ ["Raw Material", getJSON("biya_rawMaterials", []).length, localStorage.getItem("biya_rawMaterials_updated") || "-"], ["Preparation", getJSON("biya_preparations", []).length, localStorage.getItem("biya_preparations_updated") || "-"], ["Menu", getJSON("biya_menus", []).length, localStorage.getItem("biya_menus_updated") || "-"], ["Product HPP", getJSON("biya_producthpp", []).length, localStorage.getItem("biya_producthpp_updated") || "-"], ["Settings", getSettings().businessName ? 1 : 0, localStorage.getItem("biya_settings_updated") || "-"], ]; snapshotBody.innerHTML = rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("");
 }
