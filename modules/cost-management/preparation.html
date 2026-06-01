@@ -271,6 +271,78 @@ table:not(.mobile-card-table){ min-width:720px;
     min-width:0;
   }
 }
+@media (max-width: 768px){
+  .ingredient-table-wrapper{
+    overflow-x:hidden !important;
+  }
+  #ingredientTable{
+    width:100% !important;
+    min-width:0 !important;
+    max-width:100% !important;
+    table-layout:fixed;
+  }
+  #ingredientTable th,
+  #ingredientTable td{
+    padding:8px 4px !important;
+    font-size:11px !important;
+  }
+  #ingredientTable th:nth-child(4),
+  #ingredientTable td:nth-child(4){
+    display:none !important;
+  }
+  #ingredientTable th:nth-child(1),
+  #ingredientTable td:nth-child(1){
+    width:40%;
+  }
+  #ingredientTable th:nth-child(2),
+  #ingredientTable td:nth-child(2){
+    width:16%;
+  }
+  #ingredientTable th:nth-child(3),
+  #ingredientTable td:nth-child(3){
+    width:15%;
+  }
+  #ingredientTable th:nth-child(5),
+  #ingredientTable td:nth-child(5){
+    width:18%;
+  }
+  #ingredientTable th:nth-child(6),
+  #ingredientTable td:nth-child(6){
+    width:11%;
+    text-align:center;
+  }
+  #ingredientTable .table-input,
+  #ingredientTable .table-select{
+    height:40px !important;
+    min-height:40px;
+    padding:0 6px !important;
+    border-radius:9px !important;
+    font-size:12px !important;
+  }
+  #ingredientTable .material-select{
+    font-size:12px !important;
+  }
+  #ingredientTable .qty-input{
+    text-align:center;
+  }
+  #ingredientTable .unit-input,
+  #ingredientTable .total-input{
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  #ingredientTable .delete-btn{
+    width:32px !important;
+    height:32px !important;
+    border-radius:9px !important;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+  }
+  #ingredientTable .delete-btn .biya-icon{
+    width:16px;
+    height:16px;
+  }
+}
 </style> <style id="biya-icon-system">
 .biya-icon{ width:1.15em; height:1.15em; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; fill:none; flex:0 0 auto;
 }
@@ -355,7 +427,7 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
 <input disabled="" id="grandTotal" placeholder="0"/>
 </div>
 </div>
-<div class="table-wrapper">
+<div class="table-wrapper ingredient-table-wrapper">
 <table id="ingredientTable">
 <thead>
 <tr>
