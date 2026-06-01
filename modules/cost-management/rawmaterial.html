@@ -75,7 +75,7 @@ tbody td{ background:#102B63!important; color:#fff!important;
 .warn{ background:rgba(255,184,0,.18)!important; color:#ffe08a!important;
 } .pill.red,
 .profit-red,
-.danger{ background:rgba(255,77,79,.18)!important; color:#ffb4b4!important;
+danger{ background:rgba(255,77,79,.18)!important; color:#ffb4b4!important;
 } .pill.gray{ background:#163A87!important; color:#fff!important;
 } ::-webkit-scrollbar{ width:10px; height:10px;
 }
@@ -138,7 +138,7 @@ div.sidebar{ position:fixed !important; left:-280px !important; top:0 !important
 .prep-header,
 .product-hero,
 .flex-between,
-.list-header,
+list-header,
 .chart-head,
 .section-head,
 .detail-footer,
@@ -357,9 +357,10 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
 <script>
 const SUPABASE_URL = window.BIYA_SUPABASE_URL || "";
 const SUPABASE_ANON_KEY = window.BIYA_SUPABASE_ANON_KEY || "";
-const supabaseClient = (SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase)
+const configuredSupabaseClient = window.biyaSupabase || window.supabaseClient || null;
+const supabaseClient = configuredSupabaseClient || ((SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase)
   ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-  : null;
+  : null);
 const rawMaterials = [];
 let currentUserId = null;
 let editIndex = null;
@@ -373,8 +374,8 @@ const el = { nama: document.getElementById("namaInput"), merk: document.getEleme
 } async function getCurrentUserId(){ if(!supabaseClient) return null; const { data, error } = await supabaseClient.auth.getUser(); if(error) return null; return data?.user?.id || null;
 } function rowToRawMaterial(row){ return { id: row.id, rawId: row.raw_id, nama: row.nama || "", merk: row.merk || "", kategori: row.category || "", supplier: row.supplier || "", qty: Number(row.qty_beli) || 0, buyUnit: row.satuan_beli || "", harga: Number(row.harga_beli) || 0, conversion: Number(row.conversion_qty) || 0, unit: row.unit_dasar || "", waste: Number(row.waste_percent) || 0, hargaUnit: Number(row.harga_unit) || 0, status: row.status || "ACTIVE", userId: row.user_id || null };
 } function rawMaterialToRow(item){ return { raw_id: item.rawId || `RAW-${Date.now()}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`, nama: item.nama, merk: item.merk, category: item.kategori, qty_beli: item.qty, satuan_beli: item.buyUnit, harga_beli: item.harga, conversion_qty: item.conversion, unit_dasar: item.unit, waste_percent: item.waste, harga_unit: calcHargaPerUnit(item), supplier: item.supplier, status: item.status || "ACTIVE", user_id: currentUserId };
-} function assertSupabaseReady(){ if(supabaseClient) return true; alert("Konfigurasi Supabase belum tersedia. Isi window.BIYA_SUPABASE_URL dan window.BIYA_SUPABASE_ANON_KEY sebelum memakai Raw Material."); return false;
-} async function loadRawMaterials(){ if(!assertSupabaseReady()){ render(); return; } setBusy(true); try { currentUserId = await getCurrentUserId(); let query = supabaseClient.from("raw_material").select("id,created_at,raw_id,nama,merk,category,qty_beli,satuan_beli,harga_beli,conversion_qty,unit_dasar,waste_percent,harga_unit,supplier,status,user_id").order("created_at", { ascending: false }); if(currentUserId){ query = query.eq("user_id", currentUserId); } const { data, error } = await query; if(error) throw error; rawMaterials.splice(0, rawMaterials.length, ...(data || []).map(rowToRawMaterial)); render(); } catch(error){ console.error("Gagal load raw material:", error); alert("Gagal memuat Raw Material dari Supabase."); render(); } finally { setBusy(false); }
+} function assertSupabaseReady(showAlert = true){ if(supabaseClient) return true; if(showAlert) alert("Konfigurasi Supabase belum tersedia. Isi window.BIYA_SUPABASE_URL dan window.BIYA_SUPABASE_ANON_KEY atau sediakan window.supabaseClient sebelum memakai Raw Material."); return false;
+} async function loadRawMaterials(){ if(!assertSupabaseReady(false)){ el.list.innerHTML = `<div class="section" style="text-align:center;opacity:.7;">Konfigurasi Supabase belum tersedia</div>`; return; } setBusy(true); try { currentUserId = await getCurrentUserId(); let query = supabaseClient.from("raw_material").select("id,created_at,raw_id,nama,merk,category,qty_beli,satuan_beli,harga_beli,conversion_qty,unit_dasar,waste_percent,harga_unit,supplier,status,user_id").order("created_at", { ascending: false }); if(currentUserId){ query = query.eq("user_id", currentUserId); } const { data, error } = await query; if(error) throw error; rawMaterials.splice(0, rawMaterials.length, ...(data || []).map(rowToRawMaterial)); render(); } catch(error){ console.error("Gagal load raw material:", error); alert("Gagal memuat Raw Material dari Supabase."); render(); } finally { setBusy(false); }
 } async function persistRawMaterials(action, item){ if(!assertSupabaseReady()) throw new Error("Supabase belum dikonfigurasi."); if(action === "insert"){ const payload = rawMaterialToRow(item); const { data, error } = await supabaseClient.from("raw_material").insert(payload).select("id,created_at,raw_id,nama,merk,category,qty_beli,satuan_beli,harga_beli,conversion_qty,unit_dasar,waste_percent,harga_unit,supplier,status,user_id").single(); if(error) throw error; return rowToRawMaterial(data); } if(action === "update"){ const payload = rawMaterialToRow(item); const id = item.id; const rawId = item.rawId; let query = supabaseClient.from("raw_material").update(payload).select("id,created_at,raw_id,nama,merk,category,qty_beli,satuan_beli,harga_beli,conversion_qty,unit_dasar,waste_percent,harga_unit,supplier,status,user_id"); query = id ? query.eq("id", id) : query.eq("raw_id", rawId); const { data, error } = await query.single(); if(error) throw error; return rowToRawMaterial(data); } if(action === "delete"){ let query = supabaseClient.from("raw_material").delete(); query = item.id ? query.eq("id", item.id) : query.eq("raw_id", item.rawId); const { error } = await query; if(error) throw error; return null; } throw new Error(`Aksi Supabase tidak dikenal: ${action}`);
 } function readForm(){ return { nama: titleCase(el.nama.value), merk: titleCase(el.merk.value), kategori: el.kategori.value, supplier: titleCase(el.supplier.value), qty: Number(el.qty.value) || 0, buyUnit: el.buyUnit.value, harga: Number(numberOnly(el.harga.value)) || 0, conversion: Number(el.conversion.value) || 0, unit: el.unit.value, waste: Number(el.waste.value) || 0 };
 } function clearForm(){ el.nama.value = ""; el.merk.value = ""; el.supplier.value = ""; el.qty.value = 1; el.buyUnit.value = "Kg"; el.harga.value = ""; el.conversion.value = ""; el.unit.value = "gr"; el.waste.value = 5;
