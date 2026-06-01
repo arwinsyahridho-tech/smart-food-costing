@@ -313,59 +313,15 @@ function restoreBackup(){ const f = restoreFile.files[0]; if(!f){ alert("Pilih f
 function downloadCSV(kind){ const s = getSettings(); let rows = [], headers = []; if(kind === "rawmaterials"){ rows = getJSON("biya_rawMaterials", []); headers = ["nama","merk","kategori","supplier","qty","buyUnit","harga","conversion","unit","waste"]; }else if(kind === "preparations"){ rows = getJSON("biya_preparations", []); headers = ["name","category","status","yieldQty","yieldUnit","waste","total","costPerYield"]; }else if(kind === "menus"){ rows = getJSON("biya_menus", []); headers = ["name","category","subCategory","sellingPrice","status","description","photoUrl"]; }else if(kind === "producthpp"){ rows = getJSON("biya_producthpp", []); headers = ["name","category","subCategory","sellingPrice","hpp","profitRp","profitPct","foodCostPct"]; } const csv = toCSV(rows, headers); download(`${kind}_${slugDate()}.csv`, csv, "text/csv");
 }
 function exportPrintable(kind){ const s = getSettings(); let body = ""; if(kind === "cost"){ const menus = getJSON("biya_menus", []); body = `<h1>BIYA Cost Report</h1><p>${s.businessName || "BIYA"}</p>` + menus.map(m => `<div style="margin:16px 0;padding:16px;border:1px solid #ccc;border-radius:12px;"><h3>${m.name}</h3><p>Category: ${m.category}</p><p>Sub Category: ${m.subCategory || "-"}</p><p>Selling Price: ${m.sellingPrice || "-"}</p><p>Description: ${m.description || "-"}</p></div>`).join(""); }else{ const menus = getJSON("biya_menus", []); body = `<h1>BIYA Recipe Book</h1><p>${s.businessName || "BIYA"}</p>` + menus.map(m => { const rows = (m.ingredients || []).map(i => `<li>${i.ingredient || i.name || "-"} - ${i.qty || ""} ${i.unit || ""}</li>`).join(""); return `<div style="margin:16px 0;padding:16px;border:1px solid #ccc;border-radius:12px;"><h3>${m.name}</h3><ul>${rows || "<li>-</li>"}</ul></div>`; }).join(""); } const w = window.open("", "_blank"); w.document.write(`<html><head><title>BIYA Print</title><style>body{font-family:Arial;padding:24px} h1{margin-bottom:8px}</style></head><body>${body}
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const menuToggle = document.getElementById("menuToggle");
-  const sidebar = document.getElementById("biyaSidebar");
-  const overlay = document.getElementById("mobileOverlay");
-
-  if (!menuToggle || !sidebar || !overlay) return;
-
-  const openSidebar = () => {
-    sidebar.classList.add("open");
-    overlay.classList.add("open");
-    document.body.style.overflow = "hidden";
-    menuToggle.setAttribute("aria-expanded", "true");
-  };
-
-  const closeSidebar = () => {
-    sidebar.classList.remove("open");
-    overlay.classList.remove("open");
-    document.body.style.overflow = "";
-    menuToggle.setAttribute("aria-expanded", "false");
-  };
-
-  menuToggle.addEventListener("click", () => {
-    if (sidebar.classList.contains("open")) {
-      closeSidebar();
-    } else {
-      openSidebar();
-    }
-  });
-
-  overlay.addEventListener("click", closeSidebar);
-
-  sidebar.querySelectorAll("a, .item, button").forEach((el) => {
-    el.addEventListener("click", () => {
-      if (window.matchMedia("(max-width: 980px)").matches) {
-        closeSidebar();
-      }
-    });
-  });
-
-  window.addEventListener("resize", () => {
-    if (!window.matchMedia("(max-width: 980px)").matches) {
-      closeSidebar();
-    }
-  });
-});
-</script>
-
 </body></html>`); w.document.close(); w.focus(); w.print();
 }
 function renderSnapshot(){ const rows = [ ["Raw Material", getJSON("biya_rawMaterials", []).length, localStorage.getItem("biya_rawMaterials_updated") || "-"], ["Preparation", getJSON("biya_preparations", []).length, localStorage.getItem("biya_preparations_updated") || "-"], ["Menu", getJSON("biya_menus", []).length, localStorage.getItem("biya_menus_updated") || "-"], ["Product HPP", getJSON("biya_producthpp", []).length, localStorage.getItem("biya_producthpp_updated") || "-"], ["Settings", getSettings().businessName ? 1 : 0, localStorage.getItem("biya_settings_updated") || "-"], ]; snapshotBody.innerHTML = rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("");
 }
 renderSnapshot();
+</script>
+<script>
+(function(){ const toggle = document.getElementById('menuToggle'); const sidebar = document.getElementById('biyaSidebar'); const overlay = document.getElementById('mobileOverlay'); if(!toggle || !sidebar || !overlay) return; const mobileQuery = window.matchMedia('(max-width: 980px)'); let closeButton = sidebar.querySelector('.sidebar-close'); if(!closeButton){ closeButton = document.createElement('button'); closeButton.className = 'sidebar-close'; closeButton.type = 'button'; closeButton.setAttribute('aria-label', 'Tutup menu'); closeButton.innerHTML = '&times;'; sidebar.prepend(closeButton); } const style = document.createElement('style'); style.textContent = '.biya-no-scroll{overflow:hidden !important;}.sidebar-close{display:none;}@media (max-width:980px){.sidebar-close{display:flex;align-items:center;justify-content:center;width:42px;height:42px;margin:0 0 18px auto;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:rgba(255,255,255,.08);color:#fff;font-size:28px;line-height:1;cursor:pointer;}}'; document.head.appendChild(style); toggle.setAttribute('aria-controls','biyaSidebar'); toggle.setAttribute('aria-expanded','false'); const closeSidebar = () => { sidebar.classList.remove('open'); overlay.classList.remove('open'); document.body.classList.remove('biya-no-scroll'); toggle.setAttribute('aria-expanded','false'); sidebar.setAttribute('aria-hidden', mobileQuery.matches ? 'true' : 'false'); overlay.setAttribute('aria-hidden','true'); }; const openSidebar = () => { sidebar.classList.add('open'); overlay.classList.add('open'); document.body.classList.add('biya-no-scroll'); toggle.setAttribute('aria-expanded','true'); sidebar.setAttribute('aria-hidden','false'); overlay.setAttribute('aria-hidden','false'); }; toggle.addEventListener('click', () => { if(sidebar.classList.contains('open')) closeSidebar(); else openSidebar(); }); closeButton.addEventListener('click', closeSidebar); overlay.addEventListener('click', closeSidebar); sidebar.addEventListener('click', (event) => { if(!mobileQuery.matches) return; if(event.target.closest('a, .item, .btn')) closeSidebar(); }); document.addEventListener('keydown', (event) => { if(event.key === 'Escape') closeSidebar(); }); const syncLayout = () => { if(mobileQuery.matches){ sidebar.setAttribute('aria-hidden', sidebar.classList.contains('open') ? 'false' : 'true'); } else { closeSidebar(); sidebar.setAttribute('aria-hidden','false'); } }; mobileQuery.addEventListener ? mobileQuery.addEventListener('change', syncLayout) : mobileQuery.addListener(syncLayout); syncLayout();
+})();
 </script>
 </body>
 </html> 
