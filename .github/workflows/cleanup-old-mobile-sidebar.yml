@@ -1,0 +1,60 @@
+name: Cleanup old mobile sidebar handler
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Remove old duplicate sidebar handlers
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          files = [
+              'modules/cost-management/costdashboard.html',
+              'modules/cost-management/rawmaterial.html',
+              'modules/cost-management/preparation.html',
+              'modules/cost-management/menu.html',
+              'modules/cost-management/producthpp.html',
+              'modules/cost-management/exportcenter.html',
+              'modules/cost-management/settings.html',
+          ]
+
+          old_handler = re.compile(
+              r"<script>\s*\(function\(\)\{ const toggle = document\.getElementById\('menuToggle'\);"
+              r"(?:(?!sidebar-close).)*?"
+              r"style\.textContent = '\.biya-no-scroll\{overflow:hidden !important;\}'; document\.head\.appendChild\(style\);\s*"
+              r"\}\)\(\);\s*</script>\s*",
+              re.S,
+          )
+
+          for file_name in files:
+              path = Path(file_name)
+              if not path.exists():
+                  continue
+              text = path.read_text(encoding='utf-8')
+              new_text, count = old_handler.subn('', text)
+              if new_text != text:
+                  path.write_text(new_text, encoding='utf-8')
+                  print(f'{file_name}: removed {count} old handler(s)')
+          PY
+      - name: Commit cleanup and remove workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/cleanup-old-mobile-sidebar.yml
+          git add modules/cost-management/*.html
+          git diff --cached --quiet || git commit -m "Remove duplicate mobile sidebar handlers"
+          git push
