@@ -1,380 +1,671 @@
-<!DOCTYPE html> <html lang="id">
+<!DOCTYPE html>
+<html lang="id">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>BIYA - Product HPP</title>
-<style> *{margin:0;padding:0;box-sizing:border-box} body{background:#07173a;font-family:Arial,sans-serif;color:#fff} .wrapper{display:flex} .sidebar{ position:fixed;left:0;top:0;width:260px;height:100vh;background:#102766; padding:30px;overflow:auto } .logo{font-size:34px;font-weight:bold;margin-bottom:45px} .item{ height:56px;padding:0 18px;display:flex;align-items:center;border-radius:16px; margin-bottom:12px;cursor:pointer;font-size:16px;transition:.22s;color:white } .item:hover{transform:translateX(6px);background:rgba(255,255,255,.06)} .item.active{ background:#2563eb;transform:translateX(10px); box-shadow:0 10px 30px rgba(37,99,235,.35) } .btn{ margin-top:18px;height:54px;width:100%;border:none;border-radius:14px; background:#2563eb;color:white;cursor:pointer;font-weight:bold } .main{margin-left:260px;width:calc(100% - 260px);padding:40px} .title{font-size:44px;margin-bottom:10px} .sub{opacity:.7;margin-bottom:35px} .summary-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; margin-bottom:24px } .summary-box{ background:#0d2158;padding:20px;border-radius:16px;min-height:110px } .summary-title{opacity:.6;margin-bottom:10px} .summary-value{font-size:24px;font-weight:bold;white-space:pre-line} .section{ background:#102766;padding:28px;border-radius:22px;margin-bottom:24px } .list-header{ display:flex;justify-content:space-between;align-items:flex-start;gap:20px; flex-wrap:wrap;margin-bottom:22px } .search-wrap{ display:flex;gap:12px;flex-wrap:wrap;align-items:center;width:100% } .search-box,.filter-box{width:280px;max-width:100%} .search-box input,.filter-box select{height:52px;width:100%} input,select,textarea{ width:100%;height:56px;padding:0 18px;background:#0d2158;border:none; border-radius:14px;color:white;outline:none } textarea{ min-height:120px;padding:16px 18px;resize:vertical;height:auto } label{display:block;margin-bottom:10px;opacity:.7} .notice{opacity:.65;text-align:center;padding:20px} .small-note{opacity:.65;font-size:13px;margin-top:6px} .pill-note{ display:inline-block;margin-top:8px;padding:6px 10px;border-radius:999px; background:rgba(37,99,235,.18);color:#cfe0ff;font-size:12px } .menu-item{ background:#0d2158;border-radius:18px;padding:22px;margin-bottom:18px } .menu-top{ display:flex;justify-content:space-between;align-items:flex-start;gap:20px; cursor:pointer;flex-wrap:wrap } .menu-left{display:flex;flex-direction:column;gap:8px;min-width:0;flex:1} .menu-header{ display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap } .thumb{ width:64px;height:64px;border-radius:14px;overflow:hidden; background:#07173a;border:1px solid rgba(255,255,255,.08); flex:0 0 auto } .thumb img{width:100%;height:100%;object-fit:cover;display:block} .thumb span{ width:100%;height:100%;display:flex;align-items:center;justify-content:center; color:#9bb3ee;font-size:11px;text-align:center;padding:8px } .menu-name{font-size:20px;font-weight:bold} .menu-badges{ display:flex;gap:10px;flex-wrap:wrap;margin-top:8px } .menu-badge{ display:inline-block;padding:6px 12px;background:#2563eb;border-radius:999px; font-size:12px;width:fit-content } .menu-badge.gray{background:#334155} .menu-cost{ text-align:right;min-width:220px } .cost-main{ font-size:22px;font-weight:bold } .cost-label{ display:block;font-size:13px;opacity:.7;font-weight:normal;margin-top:6px } .profit-pill{ display:inline-block;margin-top:12px;padding:6px 10px;border-radius:999px; font-size:12px;font-weight:bold } .profit-green{background:rgba(22,163,74,.18);color:#86efac} .profit-yellow{background:rgba(234,179,8,.18);color:#fde68a} .profit-red{background:rgba(239,68,68,.18);color:#fca5a5} .menu-detail{ margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08); display:none } .menu-detail.active{display:block} .detail-grid{ display:grid; grid-template-columns:240px 1fr; gap:20px; align-items:start; margin-bottom:20px; } .detail-photo{ width:100%; aspect-ratio:1/1; border-radius:16px; overflow:hidden; background:#07173a; display:flex; align-items:center; justify-content:center; color:#9bb3ee; font-size:13px; text-align:center; border:1px solid rgba(255,255,255,.08) } .detail-photo img{ width:100%; height:100%; object-fit:cover; display:block; } .detail-card{ background:#07173a; border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:18px; margin-bottom:18px; } .detail-desc{ opacity:.9; line-height:1.65; white-space:pre-wrap; } .menu-table{width:100%;border-collapse:collapse;margin-top:14px} .menu-table th{ background:#1b3d96;padding:12px;font-size:13px;white-space:nowrap;text-align:left } .menu-table td{padding:12px;background:#07173a} .menu-actions{ display:flex;gap:10px;margin-top:18px;justify-content:flex-end;flex-wrap:wrap } .action-btn{ height:42px;padding:0 18px;border:none;border-radius:10px;cursor:pointer; color:white;font-weight:bold } .edit-btn{background:#f59e0b} .delete-btn-2{background:#ef4444} .table-wrapper{margin-top:30px;overflow:auto} table{width:100%;border-collapse:collapse;margin-top:15px} th{ background:#1b3d96;padding:16px;font-size:14px;text-align:left;white-space:nowrap } td{ padding:14px;background:#0d2158;border-bottom:1px solid rgba(255,255,255,.05); vertical-align:top } .table-input,.table-select{ width:100%;height:46px;background:#07173a;border:none;border-radius:10px; padding:0 12px;color:white } .add-row-btn{ margin-top:18px;height:50px;padding:0 24px;border:none;border-radius:12px; background:#2563eb;color:white;cursor:pointer;font-weight:bold } .delete-btn{ width:40px;height:40px;border:none;border-radius:10px;background:#ef4444; color:white;cursor:pointer;font-size:18px } .inline-note{ opacity:.65;font-size:12px;margin-top:6px } .hidden{display:none !important} .summary-line{ display:flex;justify-content:space-between;align-items:center; gap:20px;flex-wrap:wrap;margin-top:24px;padding-top:20px; border-top:1px solid rgba(255,255,255,.08) } .summary-callout{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; margin-top:22px } .summary-callout .summary-box{ min-height:92px } @media (max-width: 980px){ .sidebar{position:relative;width:100%;height:auto} .main{margin-left:0;width:100%} .detail-grid{grid-template-columns:1fr} .search-box,.filter-box{width:100%} .menu-cost{text-align:left;min-width:0} .menu-header{width:100%} } </style> <style id="biya-theme">
-:root{ --biya-bg:#04122B; --biya-sidebar:#081A3A; --biya-surface:#102B63; --biya-surface-hover:#163A87; --biya-primary:#0066FF; --biya-success:#00D66B; --biya-cyan:#2ED8FF; --biya-warning:#FFB800; --biya-danger:#FF4D4F; --biya-text:#FFFFFF; --biya-muted:#D7E3FF; --biya-border:rgba(255,255,255,0.08); --biya-card-shadow:0 8px 24px rgba(0,0,0,0.20); --biya-modal-shadow:0 20px 40px rgba(0,0,0,0.30); --biya-active-shadow:0 0 20px rgba(0,102,255,0.35); --biya-radius-card:16px; --biya-radius-btn:12px; --biya-radius-input:12px; --biya-radius-modal:20px;
-} html{ scroll-behavior:smooth;
-} body{ background:var(--biya-bg)!important; color:var(--biya-text)!important; font-family:Inter, "Segoe UI", Arial, sans-serif!important;
-} .wrapper{ background:transparent!important;
-} .sidebar{ background:linear-gradient(180deg, rgba(8,26,58,.98), rgba(4,18,43,.98))!important; border-right:1px solid var(--biya-border)!important; box-shadow:var(--biya-card-shadow)!important;
-} .logo{ color:#fff!important; letter-spacing:.2px!important;
-} .logo small{ display:block!important; margin-top:8px!important; font-size:12px!important; font-weight:400!important; opacity:.65!important; letter-spacing:1.6px!important;
-} .item{ color:var(--biya-muted)!important; border:1px solid transparent!important; border-radius:16px!important;
-} .item:hover{ background:var(--biya-surface-hover)!important; color:#fff!important; transform:translateX(6px)!important;
-} .item.active{ background:linear-gradient(135deg, var(--biya-primary), var(--biya-success))!important; color:#fff!important; box-shadow:var(--biya-active-shadow)!important;
-} .btn,
-.btn-action,
-.save-btn,
-.add-row-btn,
-.action,
-.loginBtn,
-.primary-btn{ background:linear-gradient(135deg, var(--biya-primary), var(--biya-success))!important; color:#fff!important; border:none!important; border-radius:var(--biya-radius-btn)!important; box-shadow:var(--biya-card-shadow)!important;
-} .btn.secondary,
-.btn-action.red,
-.action.alt,
-.btn.alt{ background:var(--biya-surface-hover)!important; color:#fff!important;
-} .section,
-.card,
-.summary-box,
-.mini-box,
-.detail-card,
-.menu-item,
-.prep-item,
-.category-block,
-.box,
-.alert-item,
-.insight-item,
-.modalBox,
-.section-card,
-.panel{ background:linear-gradient(180deg, rgba(16,43,99,.96), rgba(12,34,83,.98))!important; border:1px solid var(--biya-border)!important; border-radius:var(--biya-radius-card)!important; box-shadow:var(--biya-card-shadow)!important;
-} .modal{ background:rgba(0,0,0,.56)!important;
-} .modalBox{ border-radius:var(--biya-radius-modal)!important; box-shadow:var(--biya-modal-shadow)!important;
-} input,
-select,
-textarea,
-.table-input,
-.table-select,
-.search-box input,
-.chart-select,
-input[type="file"]{ background:rgba(16,43,99,.95)!important; border:1px solid var(--biya-border)!important; border-radius:var(--biya-radius-input)!important; color:#fff!important; outline:none!important;
-} input::placeholder,
-textarea::placeholder{ color:rgba(215,227,255,.5)!important;
-} th,
-thead th{ background:#163A87!important; color:#fff!important;
-} td,
-tbody td{ background:#102B63!important; color:#fff!important;
-} tbody tr:hover td{ background:#163A87!important;
-} .summary-title,
-.mini-title,
-.card-sub,
-.sub,
-.small-note,
-.notice,
-.muted{ color:rgba(215,227,255,.72)!important;
-} .pill,
-.menu-badge,
-.prep-category,
-.status{ border-radius:999px!important;
-} .pill.green,
-.profit-green,
-.ok{ background:rgba(0,214,107,.18)!important; color:#96f5b7!important;
-} .pill.yellow,
-.profit-yellow,
-.warn{ background:rgba(255,184,0,.18)!important; color:#ffe08a!important;
-} .pill.red,
-.profit-red,
-.danger{ background:rgba(255,77,79,.18)!important; color:#ffb4b4!important;
-} .pill.gray{ background:#163A87!important; color:#fff!important;
-} ::-webkit-scrollbar{ width:10px; height:10px;
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#07173a;font-family:Arial,sans-serif;color:#fff}
+.wrapper{display:flex}
+.sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;background:#102766;padding:30px;overflow:auto}
+.logo{font-size:34px;font-weight:bold;margin-bottom:45px}
+.logo small{display:block;margin-top:8px;font-size:12px;font-weight:400;opacity:.65;letter-spacing:1.6px}
+.item{height:56px;padding:0 18px;display:flex;align-items:center;border-radius:16px;margin-bottom:12px;cursor:pointer;font-size:16px;transition:.22s;color:white}
+.item:hover{transform:translateX(6px);background:rgba(255,255,255,.06)}
+.item.active{background:#2563eb;transform:translateX(10px);box-shadow:0 10px 30px rgba(37,99,235,.35)}
+.btn{margin-top:18px;height:54px;width:100%;border:none;border-radius:14px;background:#2563eb;color:white;cursor:pointer;font-weight:bold}
+.main{margin-left:260px;width:calc(100% - 260px);padding:40px}
+.title{font-size:44px;margin-bottom:10px}
+.sub{opacity:.7;margin-bottom:35px;line-height:1.6}
+.section{background:#102766;padding:28px;border-radius:22px;margin-bottom:24px}
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:24px}
+.summary-box{background:#0d2158;padding:20px;border-radius:16px;min-height:108px}
+.summary-title{opacity:.6;margin-bottom:10px}
+.summary-value{font-size:24px;font-weight:bold;white-space:pre-line;line-height:1.25}
+.list-header{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;margin-bottom:22px}
+.search-wrap{display:flex;gap:12px;flex-wrap:wrap;align-items:center;width:100%}
+.search-box,.filter-box{width:280px;max-width:100%}
+input,select{width:100%;height:56px;padding:0 18px;background:#0d2158;border:none;border-radius:14px;color:white;outline:none}
+.notice{opacity:.75;text-align:center;padding:22px;line-height:1.55}
+.error{background:rgba(255,77,79,.14);border:1px solid rgba(255,77,79,.32);color:#ffcccc;border-radius:16px;padding:18px;margin-bottom:18px;line-height:1.55}
+.hidden{display:none!important}
+.product-hero{display:grid;grid-template-columns:260px 1fr;gap:22px;align-items:start}
+.product-photo{width:100%;aspect-ratio:1/1;border-radius:18px;overflow:hidden;background:#07173a;border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;color:#9bb3ee;text-align:center;padding:16px}
+.product-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.product-main{min-width:0}
+.product-title-row{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap}
+.product-name{font-size:30px;font-weight:bold;line-height:1.15;overflow-wrap:anywhere}
+.menu-badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.menu-badge,.status-pill{display:inline-block;padding:7px 12px;border-radius:999px;background:#2563eb;font-size:12px;font-weight:bold;width:fit-content}
+.menu-badge.gray{background:#334155}
+.status-green{background:rgba(0,214,107,.18)!important;color:#96f5b7!important}
+.status-yellow{background:rgba(255,184,0,.18)!important;color:#ffe08a!important}
+.status-red{background:rgba(255,77,79,.18)!important;color:#ffb4b4!important}
+.status-gray{background:#334155!important;color:#d7e3ff!important}
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-top:22px}
+.metric{background:#07173a;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px;min-height:92px}
+.metric-label{opacity:.62;font-size:13px;margin-bottom:8px}
+.metric-value{font-size:20px;font-weight:bold;line-height:1.25}
+.metric-note{opacity:.7;font-size:12px;margin-top:6px;line-height:1.45}
+.detail-desc{opacity:.86;line-height:1.65;margin-top:18px;white-space:pre-wrap}
+.menu-item{background:#0d2158;border-radius:18px;padding:20px;margin-bottom:16px;border:1px solid rgba(255,255,255,.06);cursor:pointer}
+.menu-top{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;flex-wrap:wrap}
+.menu-left{display:flex;gap:14px;min-width:0;flex:1}
+.thumb{width:58px;height:58px;border-radius:14px;overflow:hidden;background:#07173a;border:1px solid rgba(255,255,255,.08);flex:0 0 auto;display:flex;align-items:center;justify-content:center;color:#9bb3ee;font-size:11px;text-align:center}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.menu-name{font-size:20px;font-weight:bold;line-height:1.25;overflow-wrap:anywhere}
+.menu-cost{text-align:right;min-width:210px}
+.cost-main{font-size:22px;font-weight:bold}
+.cost-label{display:block;font-size:13px;opacity:.7;margin-top:6px}
+.recipe-head{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:14px;flex-wrap:wrap}
+.recipe-table-wrap{max-width:100%;overflow:auto}
+.recipe-table{width:100%;border-collapse:collapse}
+.recipe-table th{background:#1b3d96;padding:12px;font-size:13px;text-align:left;white-space:nowrap}
+.recipe-table td{padding:12px;background:#07173a;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:top}
+.recipe-mobile-list{display:none}
+.recipe-mobile-item{padding:13px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.recipe-mobile-item:last-child{border-bottom:none}
+.recipe-mobile-title{display:grid;grid-template-columns:auto 1fr;gap:8px;font-weight:bold;line-height:1.4;overflow-wrap:anywhere}
+.recipe-mobile-meta,.recipe-mobile-sub{margin-top:6px;padding-left:24px;color:rgba(215,227,255,.78);font-size:13px;line-height:1.45;overflow-wrap:anywhere}
+.biya-icon{width:1.15em;height:1.15em;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;fill:none;flex:0 0 auto}
+.item .biya-icon{margin-right:10px}
+.btn .biya-icon,.menu-toggle .biya-icon{margin-right:8px;vertical-align:-0.18em}
+:root{--biya-bg:#04122B;--biya-sidebar:#081A3A;--biya-surface:#102B63;--biya-surface-hover:#163A87;--biya-primary:#0066FF;--biya-success:#00D66B;--biya-text:#FFFFFF;--biya-muted:#D7E3FF;--biya-border:rgba(255,255,255,0.08);--biya-card-shadow:0 8px 24px rgba(0,0,0,0.20);--biya-active-shadow:0 0 20px rgba(0,102,255,0.35);--biya-radius-card:16px;--biya-radius-btn:12px;--biya-radius-input:12px}
+body{background:var(--biya-bg)!important;color:var(--biya-text)!important;font-family:Inter,"Segoe UI",Arial,sans-serif!important}
+.sidebar{background:linear-gradient(180deg,rgba(8,26,58,.98),rgba(4,18,43,.98))!important;border-right:1px solid var(--biya-border)!important;box-shadow:var(--biya-card-shadow)!important}
+.item{color:var(--biya-muted)!important;border:1px solid transparent!important}
+.item:hover{background:var(--biya-surface-hover)!important;color:#fff!important}
+.item.active,.btn{background:linear-gradient(135deg,var(--biya-primary),var(--biya-success))!important;color:#fff!important;box-shadow:var(--biya-active-shadow)!important}
+.section,.summary-box,.menu-item,.metric{background:linear-gradient(180deg,rgba(16,43,99,.96),rgba(12,34,83,.98))!important;border:1px solid var(--biya-border)!important;border-radius:var(--biya-radius-card)!important;box-shadow:var(--biya-card-shadow)!important}
+input,select{background:rgba(16,43,99,.95)!important;border:1px solid var(--biya-border)!important;border-radius:var(--biya-radius-input)!important;color:#fff!important}
+th{background:#163A87!important;color:#fff!important}
+td{background:#102B63!important;color:#fff!important}
+.summary-title,.sub,.notice,.metric-label,.metric-note{color:rgba(215,227,255,.72)!important}
+.mobile-header{display:none}
+.mobile-logo{font-size:20px;font-weight:700;letter-spacing:.6px}
+.mobile-logo small{display:block;margin-top:2px;font-size:10px;font-weight:400;letter-spacing:.9px;opacity:.68}
+.menu-toggle{width:46px;height:46px;border:none;border-radius:12px;background:linear-gradient(135deg,#0066FF,#00D66B);color:#fff;font-size:22px;font-weight:700;line-height:1;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.mobile-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.52);z-index:998}
+@media(max-width:980px){
+  body{overflow-x:hidden!important}
+  .mobile-header{display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:1002;min-height:64px;padding:12px 16px;background:linear-gradient(180deg,rgba(8,26,58,.98),rgba(4,18,43,.96));border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(14px)}
+  .mobile-overlay.open{display:block}
+  .sidebar{position:fixed!important;left:-280px!important;top:0!important;width:260px!important;height:100vh!important;z-index:999!important;overflow:auto!important;transition:left .28s ease!important;box-shadow:0 20px 40px rgba(0,0,0,.35)!important}
+  .sidebar.open{left:0!important}
+  .wrapper{display:block!important}
+  .main{margin-left:0!important;width:100%!important;max-width:100%;padding:20px!important;padding-top:18px!important}
+  .title{font-size:clamp(30px,9vw,40px)!important;line-height:1.08!important;overflow-wrap:anywhere}
+  .summary-grid,.metric-grid,.product-hero{grid-template-columns:1fr!important}
+  .section,.menu-item,.summary-box{padding:18px!important;margin-bottom:18px!important}
+  .list-header,.product-title-row,.menu-top{flex-direction:column!important;align-items:stretch!important}
+  .search-box,.filter-box,.btn{width:100%!important;max-width:100%!important}
+  .menu-cost{width:100%;min-width:0;text-align:left!important}
+  .menu-left{width:100%}
 }
-::-webkit-scrollbar-thumb{ background:#163A87; border-radius:999px;
+@media(max-width:700px){
+  .recipe-table-wrap{display:none}
+  .recipe-mobile-list{display:block}
+  .recipe-head{align-items:flex-start;flex-direction:column}
+  .product-name{font-size:25px}
 }
-::-webkit-scrollbar-track{ background:transparent;
-} @media (max-width: 980px){ .sidebar{ position:relative!important; width:100%!important; height:auto!important; } .main{ margin-left:0!important; width:100%!important; } .grid, .grid3, .summary, .summary-grid, .top-grid, .info, .detail-grid, .summary-callout{ grid-template-columns:1fr!important; } .search-box, .filter-box{ width:100%!important; max-width:100%!important; } .menu-cost, .preview-right, .prep-right{ min-width:0!important; text-align:left!important; } .menu-header, .headerCard, .prep-header, .product-hero, .preview-top{ flex-direction:column!important; }
-}
-</style> <style id="biya-mobile-nav">
-.mobile-header{ display:none;
-}
-.mobile-logo{ font-size:20px; font-weight:700; letter-spacing:.6px;
-}
-.menu-toggle{ width:48px; height:48px; border:none; border-radius:12px; background:linear-gradient(135deg, #0066FF, #00D66B); color:#fff; font-size:22px; font-weight:700; cursor:pointer; box-shadow:0 8px 24px rgba(0,0,0,.2);
-}
-.mobile-overlay{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.52); z-index:998;
-}
-@media (max-width: 980px){ body{ overflow-x:hidden !important; } .mobile-header{ display:flex; align-items:center; justify-content:space-between; gap:16px; position:sticky; top:0; z-index:1002; padding:14px 18px; background:linear-gradient(180deg, rgba(8,26,58,.98), rgba(4,18,43,.96)); border-bottom:1px solid rgba(255,255,255,.08); backdrop-filter:blur(14px); } .mobile-overlay.open{ display:block; } .sidebar, aside.sidebar, div.sidebar{ position:fixed !important; left:-280px !important; top:0 !important; width:260px !important; height:100vh !important; z-index:999 !important; transition:left .28s ease !important; overflow:auto !important; box-shadow:0 20px 40px rgba(0,0,0,.35) !important; } .sidebar.open{ left:0 !important; } .main{ margin-left:0 !important; width:100% !important; padding:20px !important; padding-top:18px !important; } .wrapper{ display:block !important; } .section, .card, .summary-box{ border-radius:18px !important; }
-}
-</style> <style id="biya-mobile-first-overrides">
-/* Mobile-first responsive layer. Keep this after page styles. */
-html{ -webkit-text-size-adjust:100%;
-} body{ overflow-x:hidden !important;
-} img,
-svg,
-canvas,
-video{ max-width:100%; height:auto;
-} .wrapper{ display:block !important; min-height:100vh;
-} .mobile-header{ display:flex !important; align-items:center; justify-content:space-between; gap:12px; position:sticky; top:0; z-index:1002; min-height:64px; padding:12px 16px; background:linear-gradient(180deg, rgba(8,26,58,.98), rgba(4,18,43,.96)); border-bottom:1px solid rgba(255,255,255,.08); backdrop-filter:blur(14px);
-} .mobile-logo{ min-width:0; font-size:18px !important; font-weight:700; letter-spacing:.4px; line-height:1.2;
-} .mobile-logo small{ display:block; margin-top:2px; font-size:10px; font-weight:400; letter-spacing:.9px; opacity:.68;
-} .menu-toggle{ flex:0 0 46px; width:46px !important; height:46px !important; border:none; border-radius:12px; background:linear-gradient(135deg, #0066FF, #00D66B); color:#fff; font-size:22px; font-weight:700; line-height:1; cursor:pointer; box-shadow:0 8px 24px rgba(0,0,0,.2);
-} .mobile-overlay{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.52); z-index:998;
-} .mobile-overlay.open{ display:block;
-} .sidebar,
-aside.sidebar,
-div.sidebar{ position:fixed !important; left:-280px !important; top:0 !important; width:260px !important; height:100vh !important; z-index:999 !important; overflow:auto !important; transition:left .28s ease !important; box-shadow:0 20px 40px rgba(0,0,0,.35) !important;
-} .sidebar.open{ left:0 !important;
-} .main{ margin-left:0 !important; width:100% !important; max-width:100%; padding:20px !important; padding-top:18px !important;
-} .title{ font-size:clamp(30px, 9vw, 40px) !important; line-height:1.08 !important; overflow-wrap:anywhere;
-} .sub{ line-height:1.6;
-} .section,
-.card,
-.menu-item,
-.prep-item,
-.panel{ padding:18px !important; margin-bottom:18px !important;
-} .grid,
-.grid3,
-.top-grid,
-.summary-grid,
-.info,
-.detail-grid,
-.summary-callout,
-.info-grid,
-.prep-groups{ display:grid !important; grid-template-columns:1fr !important; gap:14px !important;
-} .summary{ display:grid !important; grid-template-columns:1fr !important; gap:14px !important;
-} .headerCard,
-.preview-top,
-.menu-top,
-.prep-header,
-.product-hero,
-.flex-between,
-.list-header,
-.chart-head,
-.section-head,
-.detail-footer,
-.save-row,
-.list-tools{ flex-direction:column !important; align-items:stretch !important;
-} .menu-cost,
-.prep-right,
-.preview-right,
-.prep-cost{ min-width:0 !important; width:100%; text-align:left !important; white-space:normal !important;
-} .search-box,
-.filter-box,
-.chart-select,
-.btn,
-.btn-action,
-.save-btn,
-.add-row-btn,
-.action,
-.primary-btn{ width:100% !important; max-width:100% !important;
-} input,
-select,
-textarea,
-button{ max-width:100%;
-} .table-wrapper,
-.prep-table,
-.menu-table,
-[style*="overflow:auto"]{ max-width:100%; overflow-x:auto !important; -webkit-overflow-scrolling:touch;
-} table{ width:100%;
-} .table-wrapper table,
-.prep-table table,
-.menu-table,
-table[id],
-table:not(.mobile-card-table){ min-width:720px;
-} .modal{ padding:14px !important; align-items:flex-start !important; overflow:auto !important;
-} .modalBox,
-.modal-card{ width:100% !important; max-width:100% !important; max-height:calc(100vh - 28px) !important; padding:20px !important;
-} @media (min-width: 700px){ .main{ padding:28px !important; } .grid, .summary-grid, .info, .info-grid, .prep-groups{ grid-template-columns:repeat(2, minmax(0, 1fr)) !important; } .grid3, .top-grid{ grid-template-columns:repeat(2, minmax(0, 1fr)) !important; } .summary{ grid-template-columns:repeat(2, minmax(0, 1fr)) !important; } .search-box, .filter-box, .chart-select{ width:min(100%, 340px) !important; }
-} @media (min-width: 981px){ body{ overflow-x:auto !important; } .mobile-header, .mobile-overlay{ display:none !important; } .wrapper{ display:flex !important; } .sidebar, aside.sidebar, div.sidebar{ position:fixed !important; left:0 !important; top:0 !important; width:260px !important; height:100vh !important; z-index:auto !important; transition:none !important; } .main{ margin-left:260px !important; width:calc(100% - 260px) !important; padding:40px !important; } .grid{ grid-template-columns:repeat(2, minmax(0, 1fr)) !important; } .grid3{ grid-template-columns:repeat(3, minmax(0, 1fr)) !important; } .top-grid{ grid-template-columns:repeat(4, minmax(0, 1fr)) !important; } .info, .info-grid{ grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)) !important; } .detail-grid{ grid-template-columns:240px 1fr !important; } .summary{ display:flex !important; } .headerCard, .preview-top, .menu-top, .prep-header, .product-hero, .flex-between, .list-header, .chart-head, .section-head, .detail-footer, .save-row, .list-tools{ flex-direction:row !important; align-items:flex-start !important; } .flex-between, .list-header, .chart-head, .section-head, .detail-footer{ align-items:center !important; } .menu-cost, .prep-right, .preview-right, .prep-cost{ width:auto; text-align:right !important; } .search-box, .filter-box, .chart-select, .save-btn, .add-row-btn, .action, .primary-btn{ width:auto !important; } .sidebar .btn{ width:100% !important; } .modal{ align-items:center !important; } .modalBox{ max-width:900px !important; }
-}
-</style> <style id="biya-mobile-table-card-fix">
-@media (max-width: 980px){
-  html,
-  body{
-    width:100%;
-    max-width:100%;
-    overflow-x:hidden !important;
-  }
-  .wrapper,
-  .main,
-  .section,
-  .summary-grid,
-  .summary-box,
-  .summary-callout,
-  .menu-item,
-  .menu-top,
-  .menu-left,
-  .menu-header,
-  .menu-detail,
-  .detail-card,
-  #productList{
-    width:100% !important;
-    max-width:100% !important;
-    min-width:0 !important;
-    box-sizing:border-box !important;
-  }
-  .section,
-  .summary-box,
-  .menu-item,
-  .detail-card{
-    overflow:hidden;
-  }
-  .menu-name,
-  .menu-badges,
-  .menu-badge,
-  .menu-cost,
-  .cost-label,
-  .summary-value,
-  .detail-desc,
-  .summary-line{
-    max-width:100%;
-    min-width:0;
-    overflow-wrap:anywhere;
-  }
-  .menu-badge{
-    white-space:normal !important;
-  }
-  .mobile-table-scroll,
-  .table-wrapper{
-    display:block;
-    width:100% !important;
-    max-width:100% !important;
-    overflow-x:auto !important;
-    overflow-y:hidden;
-    -webkit-overflow-scrolling:touch;
-    overscroll-behavior-inline:contain;
-  }
-  .mobile-table-scroll .menu-table,
-  .table-wrapper table{
-    width:max-content;
-    min-width:680px !important;
-    max-width:none !important;
-  }
-  .menu-table{
-    margin-top:0 !important;
-  }
-  th,
-  td,
-  .menu-table th,
-  .menu-table td{
-    padding:10px 12px !important;
-    font-size:12px !important;
-  }
-  .summary-line{
-    align-items:stretch !important;
-  }
-  .summary-line [style*="text-align:right"]{
-    text-align:left !important;
-  }
-  .menu-actions{
-    justify-content:stretch !important;
-  }
-  .action-btn{
-    width:100%;
-  }
-}
-</style> <style id="biya-icon-system">
-.biya-icon{ width:1.15em; height:1.15em; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; fill:none; flex:0 0 auto;
-}
-.item .biya-icon{ margin-right:10px;
-}
-.icon .biya-icon{ width:30px; height:30px; margin:0;
-}
-.btn .biya-icon,
-button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
-}
-.delete-btn .biya-icon,
-.menu-toggle .biya-icon{ margin:0;
-}
-</style> </head>
-<body> <svg class="biya-icon-sprite" xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"> <symbol id="biya-icon-layout-dashboard" viewBox="0 0 24 24"> <rect width="7" height="9" x="3" y="3" rx="1"></rect> <rect width="7" height="5" x="14" y="3" rx="1"></rect> <rect width="7" height="9" x="14" y="12" rx="1"></rect> <rect width="7" height="5" x="3" y="16" rx="1"></rect> </symbol> <symbol id="biya-icon-package" viewBox="0 0 24 24"> <path d="m7.5 4.27 9 5.15"></path> <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path> <path d="m3.3 7 8.7 5 8.7-5"></path> <path d="M12 22V12"></path> </symbol> <symbol id="biya-icon-flask-conical" viewBox="0 0 24 24"> <path d="M10 2v7.31"></path> <path d="M14 9.3V2"></path> <path d="M8.5 2h7"></path> <path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path> <path d="M5.52 16h12.96"></path> </symbol> <symbol id="biya-icon-clipboard-list" viewBox="0 0 24 24"> <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path> <path d="M12 11h4"></path> <path d="M12 16h4"></path> <path d="M8 11h.01"></path> <path d="M8 16h.01"></path> </symbol> <symbol id="biya-icon-calculator" viewBox="0 0 24 24"> <rect width="16" height="20" x="4" y="2" rx="2"></rect> <path d="M8 6h8"></path> <path d="M16 14v4"></path> <path d="M16 10h.01"></path> <path d="M12 10h.01"></path> <path d="M8 10h.01"></path> <path d="M12 14h.01"></path> <path d="M8 14h.01"></path> <path d="M12 18h.01"></path> <path d="M8 18h.01"></path> </symbol> <symbol id="biya-icon-download" viewBox="0 0 24 24"> <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path> <path d="M7 10l5 5 5-5"></path> <path d="M12 15V3"></path> </symbol> <symbol id="biya-icon-settings" viewBox="0 0 24 24"> <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2Z"></path> <circle cx="12" cy="12" r="3"></circle> </symbol> <symbol id="biya-icon-arrow-left" viewBox="0 0 24 24"> <path d="M19 12H5"></path> <path d="m12 19-7-7 7-7"></path> </symbol> <symbol id="biya-icon-search" viewBox="0 0 24 24"> <circle cx="11" cy="11" r="8"></circle> <path d="m21 21-4.3-4.3"></path> </symbol> <symbol id="biya-icon-x" viewBox="0 0 24 24"> <path d="M18 6 6 18"></path> <path d="m6 6 12 12"></path> </symbol>
-</svg> <header class="mobile-header" aria-label="BIYA mobile navigation"> <div class="mobile-logo">BIYA<small>BUSINESS IN YOUR HAND</small></div> <button class="menu-toggle" id="menuToggle" type="button" aria-label="Buka menu">&#9776;</button>
+</style>
+</head>
+<body>
+<svg class="biya-icon-sprite" xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="biya-icon-layout-dashboard" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect><rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect></symbol>
+  <symbol id="biya-icon-package" viewBox="0 0 24 24"><path d="m7.5 4.27 9 5.15"></path><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path></symbol>
+  <symbol id="biya-icon-flask-conical" viewBox="0 0 24 24"><path d="M10 2v7.31"></path><path d="M14 9.3V2"></path><path d="M8.5 2h7"></path><path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path><path d="M5.52 16h12.96"></path></symbol>
+  <symbol id="biya-icon-clipboard-list" viewBox="0 0 24 24"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><path d="M12 11h4"></path><path d="M12 16h4"></path><path d="M8 11h.01"></path><path d="M8 16h.01"></path></symbol>
+  <symbol id="biya-icon-calculator" viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"></rect><path d="M8 6h8"></path><path d="M16 14v4"></path><path d="M16 10h.01"></path><path d="M12 10h.01"></path><path d="M8 10h.01"></path><path d="M12 14h.01"></path><path d="M8 14h.01"></path><path d="M12 18h.01"></path><path d="M8 18h.01"></path></symbol>
+  <symbol id="biya-icon-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></symbol>
+  <symbol id="biya-icon-settings" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2Z"></path><circle cx="12" cy="12" r="3"></circle></symbol>
+  <symbol id="biya-icon-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></symbol>
+</svg>
+<header class="mobile-header" aria-label="BIYA mobile navigation">
+  <div class="mobile-logo">BIYA<small>BUSINESS IN YOUR HAND</small></div>
+  <button class="menu-toggle" id="menuToggle" type="button" aria-label="Buka menu">&#9776;</button>
 </header>
 <div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div>
 <div class="wrapper">
-<div class="sidebar" id="biyaSidebar">
-<div class="logo">BIYA<small>BUSINESS IN YOUR HAND</small></div>
-<div class="item" onclick="location.href='costdashboard.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-layout-dashboard"></use></svg><span>Dashboard</span></div>
-<div class="item" onclick="location.href='rawmaterial.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-package"></use></svg><span>Raw Material</span></div>
-<div class="item" onclick="location.href='preparation.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-flask-conical"></use></svg><span>Preparation</span></div>
-<div class="item" onclick="location.href='menu.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-clipboard-list"></use></svg><span>Menu</span></div>
-<div class="item active"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-calculator"></use></svg><span>Product HPP</span></div>
-<div class="item" onclick="location.href='exportcenter.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-download"></use></svg><span>Export Center</span></div>
-<div class="item" onclick="location.href='settings.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-settings"></use></svg><span>Settings</span></div>
-<button class="btn" onclick="location.href='/menu-modules/dashboard.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-arrow-left"></use></svg><span>Kembali</span></button>
+  <div class="sidebar" id="biyaSidebar">
+    <div class="logo">BIYA<small>BUSINESS IN YOUR HAND</small></div>
+    <div class="item" onclick="location.href='costdashboard.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-layout-dashboard"></use></svg><span>Dashboard</span></div>
+    <div class="item" onclick="location.href='rawmaterial.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-package"></use></svg><span>Raw Material</span></div>
+    <div class="item" onclick="location.href='preparation.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-flask-conical"></use></svg><span>Preparation</span></div>
+    <div class="item" onclick="location.href='menu.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-clipboard-list"></use></svg><span>Menu</span></div>
+    <div class="item active"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-calculator"></use></svg><span>Product HPP</span></div>
+    <div class="item" onclick="location.href='exportcenter.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-download"></use></svg><span>Export Center</span></div>
+    <div class="item" onclick="location.href='settings.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-settings"></use></svg><span>Settings</span></div>
+    <button class="btn" onclick="location.href='/menu-modules/dashboard.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-arrow-left"></use></svg><span>Kembali</span></button>
+  </div>
+  <main class="main">
+    <div class="title">Product HPP</div>
+    <div class="sub">Analisis HPP bahan, food cost, gross profit, margin, dan rekomendasi harga dari data Menu Supabase.</div>
+
+    <div id="errorBox" class="error hidden"></div>
+
+    <section class="summary-grid" aria-label="Ringkasan Product HPP">
+      <div class="summary-box">
+        <div class="summary-title">Total Product</div>
+        <div class="summary-value" id="sumTotalProduct">0</div>
+      </div>
+      <div class="summary-box">
+        <div class="summary-title">Average Food Cost</div>
+        <div class="summary-value" id="sumAverageFoodCost">0.00%</div>
+      </div>
+      <div class="summary-box">
+        <div class="summary-title">Average Gross Margin</div>
+        <div class="summary-value" id="sumAverageMargin">0.00%</div>
+      </div>
+      <div class="summary-box">
+        <div class="summary-title">Best Product</div>
+        <div class="summary-value" id="sumBestProduct">-</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="list-header">
+        <div>
+          <div style="font-size:28px;font-weight:bold;margin-bottom:6px;">Pilih Produk / Menu</div>
+          <div style="opacity:.6;line-height:1.5;">Data diambil dari tabel Menu dan recipe yang sama dengan halaman menu.html.</div>
+        </div>
+        <div class="search-wrap">
+          <div class="filter-box">
+            <select id="menuSelect" aria-label="Pilih menu">
+              <option value="">Memuat menu...</option>
+            </select>
+          </div>
+          <div class="search-box">
+            <input id="searchProduct" placeholder="Cari nama / category / sub category..." type="text"/>
+          </div>
+          <div class="filter-box">
+            <select id="filterCategory">
+              <option value="">All Category</option>
+            </select>
+          </div>
+          <div class="filter-box">
+            <select id="filterSubCategory">
+              <option value="">All Sub Category</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div id="selectedProduct">
+        <div class="notice">Memuat data menu...</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="list-header">
+        <div>
+          <div style="font-size:28px;font-weight:bold;margin-bottom:6px;">Product HPP List</div>
+          <div style="opacity:.6;">Klik salah satu menu untuk melihat detail perhitungan.</div>
+        </div>
+      </div>
+      <div id="productList">
+        <div class="notice">Memuat data menu...</div>
+      </div>
+    </section>
+  </main>
 </div>
-<div class="main">
-<div class="title">Product HPP</div>
-<div class="sub">Analisis biaya akhir dari setiap menu untuk melihat HPP, margin, profit, dan harga rekomendasi.</div>
-<div class="summary-grid">
-<div class="summary-box">
-<div class="summary-title">Total Product</div>
-<div class="summary-value" id="sumTotalProduct">0</div>
-</div>
-<div class="summary-box">
-<div class="summary-title">Average Food Cost</div>
-<div class="summary-value" id="sumAverageFoodCost">0%</div>
-</div>
-<div class="summary-box">
-<div class="summary-title">Average Profit</div>
-<div class="summary-value" id="sumAverageProfit">0%</div>
-</div>
-<div class="summary-box">
-<div class="summary-title">Best Product</div>
-<div class="summary-value" id="sumBestProduct">-</div>
-</div>
-</div>
-<div class="section">
-<div class="list-header">
-<div>
-<div style="font-size:28px;font-weight:bold;margin-bottom:6px;">Product HPP List</div>
-<div style="opacity:.6;">Data diambil dari menu, lalu dihitung HPP dan profit otomatis.</div>
-</div>
-<div class="search-wrap">
-<div class="search-box">
-<input id="searchProduct" oninput="renderProductHPP()" placeholder="Cari nama / category / sub category..." type="text"/>
-</div>
-<div class="filter-box">
-<select id="filterCategory" onchange="renderProductHPP()">
-<option value="">All Category</option>
-</select>
-</div>
-<div class="filter-box">
-<select id="filterSubCategory" onchange="renderProductHPP()">
-<option value="">All Sub Category</option>
-</select>
-</div>
-</div>
-</div>
-<div id="productList">
-<div class="notice">Belum ada data product hpp</div>
-</div>
-</div>
-</div>
-</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-function titleCase(text){ return String(text || "") .trim() .toLowerCase() .replace(/\b\w/g, c => c.toUpperCase());
-} function formatRupiah(value){ const n = Math.round(Number(value) || 0); return "Rp " + n.toLocaleString("id-ID");
-} function parseNumberFromRupiah(value){ const raw = String(value || "").replace(/[^\d]/g, ""); return raw ? parseInt(raw, 10) : 0;
-} function formatOverheadInput(input){ const n = parseNumberFromRupiah(input.value); input.value = n ? formatRupiah(n) : "";
-} function unformatOverheadInput(input){ const n = parseNumberFromRupiah(input.value); input.value = n ? String(n) : "";
-} function profitBadgeClass(profitPct){ if(profitPct >= 60) return "profit-green"; if(profitPct >= 40) return "profit-yellow"; return "profit-red";
-} function statusLabel(profitPct){ if(profitPct >= 60) return "Excellent"; if(profitPct >= 40) return "Good"; return "Low Margin";
-} /* SAMPLE DATA - nanti bisa diganti dari data MENU */
-const defaultProducts = [ { id: 1, name: titleCase("Nasi Ayam Crispy"), category: titleCase("Food"), subCategory: titleCase("Main Course"), sellingPrice: 28000, description: titleCase("Nasi ayam crispy dengan sambal bawang dan salad ringan."), photoUrl: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=80", ingredients: [ { ingredientType:"Raw Material", ingredient:"Tepung", qty:100, unit:"gr", pricePerUnit:50, waste:5, totalCost:5250 }, { ingredientType:"Preparation", ingredient:"Sambal Bawang", qty:30, unit:"gr", pricePerUnit:250, waste:0, totalCost:7500 }, { ingredientType:"Packaging", ingredient:"Box Rice Bowl", qty:1, unit:"pcs", pricePerUnit:1500, waste:0, totalCost:1500 } ], overhead: 2000 }, { id: 2, name: titleCase("Es Kopi Susu"), category: titleCase("Beverage"), subCategory: titleCase("Coffee"), sellingPrice: 22000, description: titleCase("Minuman kopi susu creamy dengan es batu dan aroma kopi yang ringan."), photoUrl: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=900&q=80", ingredients: [ { ingredientType:"Raw Material", ingredient:"Kopi", qty:20, unit:"gr", pricePerUnit:180, waste:0, totalCost:3600 }, { ingredientType:"Raw Material", ingredient:"Susu", qty:120, unit:"ml", pricePerUnit:25, waste:0, totalCost:3000 }, { ingredientType:"Packaging", ingredient:"Cup Plastic", qty:1, unit:"pcs", pricePerUnit:900, waste:0, totalCost:900 } ], overhead: 1500 }, { id: 3, name: titleCase("French Fries"), category: titleCase("Food"), subCategory: titleCase("Snack"), sellingPrice: 18000, description: titleCase("Kentang goreng crispy dengan seasoning ringan."), photoUrl: "", ingredients: [ { ingredientType:"Raw Material", ingredient:"Kentang", qty:200, unit:"gr", pricePerUnit:40, waste:10, totalCost:8800 }, { ingredientType:"Packaging", ingredient:"Paper Box", qty:1, unit:"pcs", pricePerUnit:700, waste:0, totalCost:700 } ], overhead: 1200 }
-]; let products = JSON.parse(localStorage.getItem("biya_producthpp") || "[]");
-if (!Array.isArray(products) || !products.length) { products = defaultProducts.map(p => ({...p}));
+const SUPABASE_URL = window.BIYA_SUPABASE_URL || "https://pkjmkjyylgzjvhcreucc.supabase.co";
+const SUPABASE_ANON_KEY = window.BIYA_SUPABASE_ANON_KEY || "sb_publishable_Tq4d0o3PIAd_zh11uJa2uQ_M_zPIYFX";
+const configuredSupabaseClient = window.biyaSupabase || window.supabaseClient || null;
+const supabaseClient = configuredSupabaseClient || ((SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase) ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null);
+
+let menus = [];
+let selectedMenuId = "";
+
+const el = {
+  errorBox: document.getElementById("errorBox"),
+  menuSelect: document.getElementById("menuSelect"),
+  searchProduct: document.getElementById("searchProduct"),
+  filterCategory: document.getElementById("filterCategory"),
+  filterSubCategory: document.getElementById("filterSubCategory"),
+  selectedProduct: document.getElementById("selectedProduct"),
+  productList: document.getElementById("productList"),
+  sumTotalProduct: document.getElementById("sumTotalProduct"),
+  sumAverageFoodCost: document.getElementById("sumAverageFoodCost"),
+  sumAverageMargin: document.getElementById("sumAverageMargin"),
+  sumBestProduct: document.getElementById("sumBestProduct")
+};
+
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "\"": "&quot;",
+    "'": "&#39;"
+  }[c]));
 }
-function persistProducts(){ localStorage.setItem("biya_producthpp", JSON.stringify(products)); localStorage.setItem("biya_producthpp_updated", new Date().toISOString());
-} function calcTotalRecipeCost(product){ return (product.ingredients || []).reduce((sum, item) => sum + Number(item.totalCost || 0), 0);
-} function calcHPP(product){ return calcTotalRecipeCost(product) + Number(product.overhead || 0);
-} function calcProfitRp(product){ return Number(product.sellingPrice || 0) - calcHPP(product);
-} function calcProfitPct(product){ const selling = Number(product.sellingPrice || 0); if(!selling) return 0; return (calcProfitRp(product) / selling) * 100;
-} function calcFoodCostPct(product){ const selling = Number(product.sellingPrice || 0); if(!selling) return 0; return (calcTotalRecipeCost(product) / selling) * 100;
-} function calcRecommendedPrice(product, targetFoodCostPct = 35){ const hpp = calcHPP(product); if(!targetFoodCostPct) return 0; return hpp / (targetFoodCostPct / 100);
-} function getUniqueCategories(){ return [...new Set(products.map(p => titleCase(p.category)).filter(Boolean))];
-} function getUniqueSubCategories(){ return [...new Set(products.map(p => titleCase(p.subCategory)).filter(Boolean))];
-} function populateFilters(){ const cat = document.getElementById("filterCategory"); const sub = document.getElementById("filterSubCategory"); getUniqueCategories().forEach(v => { const opt = document.createElement("option"); opt.value = v; opt.textContent = v; cat.appendChild(opt); }); getUniqueSubCategories().forEach(v => { const opt = document.createElement("option"); opt.value = v; opt.textContent = v; sub.appendChild(opt); });
-} function toggleDetail(id){ const detail = document.getElementById(`detail-${id}`); detail.classList.toggle("active");
-} function saveOverhead(id){ const input = document.getElementById(`overhead-${id}`); const val = parseNumberFromRupiah(input.value); const item = products.find(p => p.id === id); if(item){ item.overhead = val; persistProducts(); formatOverheadInput(input); renderProductHPP(); }
-} function editProduct(id){ const detail = document.getElementById(`detail-${id}`); if(detail) detail.classList.add("active"); const input = document.getElementById(`overhead-${id}`); if(input){ unformatOverheadInput(input); input.focus(); } window.scrollTo({ top: 0, behavior: "smooth" });
-} function removeProduct(id){ if(!confirm("Hapus product ini dari list HPP?")) return; const idx = products.findIndex(p => p.id === id); if(idx !== -1) products.splice(idx, 1); persistProducts(); renderProductHPP();
-} function updateSummaryCards(list){ const data = list.length ? list : products; const total = data.length; const avgFood = total ? data.reduce((sum, p) => sum + calcFoodCostPct(p), 0) / total : 0; const avgProfit = total ? data.reduce((sum, p) => sum + calcProfitPct(p), 0) / total : 0; const highest = [...data].sort((a,b) => calcProfitRp(b) - calcProfitRp(a))[0]; document.getElementById("sumTotalProduct").innerText = total; document.getElementById("sumAverageFoodCost").innerText = total ? avgFood.toFixed(2) + "%" : "0%"; document.getElementById("sumAverageProfit").innerText = total ? avgProfit.toFixed(2) + "%" : "0%"; document.getElementById("sumBestProduct").innerText = highest ? `${titleCase(highest.name)}\n${formatRupiah(calcProfitRp(highest))}` : "-";
-} function renderProductHPP(){ const container = document.getElementById("productList"); const query = document.getElementById("searchProduct").value.trim().toLowerCase(); const catFilter = document.getElementById("filterCategory").value; const subFilter = document.getElementById("filterSubCategory").value; const filtered = products.filter(product => { const name = titleCase(product.name).toLowerCase(); const category = titleCase(product.category).toLowerCase(); const subCategory = titleCase(product.subCategory).toLowerCase(); const description = titleCase(product.description).toLowerCase(); const matchQuery = name.includes(query) || category.includes(query) || subCategory.includes(query) || description.includes(query); const matchCategory = !catFilter || titleCase(product.category) === catFilter; const matchSubCategory = !subFilter || titleCase(product.subCategory) === subFilter; return matchQuery && matchCategory && matchSubCategory; }); if(filtered.length === 0){ container.innerHTML = `<div class="notice">Belum ada data product hpp</div>`; updateSummaryCards([]); return; } container.innerHTML = ""; filtered.forEach(product => { const totalRecipeCost = calcTotalRecipeCost(product); const hpp = calcHPP(product); const profitRp = calcProfitRp(product); const profitPct = calcProfitPct(product); const foodCostPct = calcFoodCostPct(product); const recommendedPrice = calcRecommendedPrice(product, 35); const badgeClass = profitBadgeClass(profitPct); const badgeText = statusLabel(profitPct); const ingredientRows = (product.ingredients || []).map(item => ` <tr> <td>${item.ingredientType}</td> <td>${item.ingredient}</td> <td>${item.qty}</td> <td>${item.unit}</td> <td>${formatRupiah(item.pricePerUnit)}</td> <td>${Number(item.waste || 0)}%</td> <td>${formatRupiah(item.totalCost)}</td> </tr> `).join(""); container.innerHTML += ` <div class="menu-item"> <div class="menu-top" onclick="toggleDetail(${product.id})"> <div class="menu-left"> <div class="menu-header"> <div class="thumb"> ${ product.photoUrl ? `<img src="${product.photoUrl}" alt="${titleCase(product.name)}" />` : `<span>No Photo</span>` } </div> <div style="min-width:0;flex:1;"> <div class="menu-name">${titleCase(product.name)}</div> <div class="menu-badges"> <div class="menu-badge">${titleCase(product.category)}</div> <div class="menu-badge gray">${titleCase(product.subCategory || "-")}</div> <div class="menu-badge ${badgeClass}">${badgeText}</div> </div> <div style="opacity:.7;margin-top:6px;">${product.description || ""}</div> </div> </div> </div> <div class="menu-cost"> ${formatRupiah(product.sellingPrice)} <span class="cost-label">Selling Price</span> <div style="margin-top:12px;font-size:18px;"> ${formatRupiah(hpp)} </div> <span class="cost-label">HPP Total</span> <div style="margin-top:12px;font-size:16px;opacity:.85;"> ${formatRupiah(profitRp)} </div> <span class="cost-label">Profit</span> </div> </div> <div class="menu-detail" id="detail-${product.id}"> <div class="detail-grid"> <div class="detail-photo"> ${ product.photoUrl ? `<img src="${product.photoUrl}" alt="${titleCase(product.name)}" />` : `<div>Tidak ada foto</div>` } </div> <div> <div class="detail-card"> <div style="font-size:18px;font-weight:bold;margin-bottom:12px;">Description</div> <div class="detail-desc">${product.description || "-"}</div> </div> <div class="summary-callout"> <div class="summary-box"> <div class="summary-title">Food Cost</div> <div class="summary-value">${formatRupiah(totalRecipeCost)}</div> </div> <div class="summary-box"> <div class="summary-title">Overhead</div> <div class="summary-value" style="font-size:18px;font-weight:normal;"> <input id="overhead-${product.id}" type="text" inputmode="numeric" value="${formatRupiah(product.overhead)}" style="height:46px;border-radius:12px;background:#07173a;color:#fff;border:none;padding:0 12px;width:100%;" onfocus="unformatOverheadInput(this)" onblur="saveOverhead(${product.id})" oninput="this.value=this.value.replace(/[^\\d]/g,'')" /> <div class="inline-note">Input disini</div> </div> </div> <div class="summary-box"> <div class="summary-title">Profit</div> <div class="summary-value">${formatRupiah(profitRp)}</div> <div class="inline-note">${profitPct.toFixed(2)}%</div> </div> <div class="summary-box"> <div class="summary-title">Recommended Price</div> <div class="summary-value">${formatRupiah(recommendedPrice)}</div> <div class="inline-note">Target food cost 35%</div> </div> </div> </div> </div> <div class="mobile-table-scroll"> <table class="menu-table"> <thead> <tr> <th>Type</th> <th>Ingredient</th> <th>Qty</th> <th>Unit</th> <th>Harga/Unit</th> <th>Waste %</th> <th>Total</th> </tr> </thead> <tbody> ${ingredientRows} </tbody> </table> </div> <div class="summary-line"> <div> <div style="font-size:13px;opacity:.6;margin-bottom:6px;">HPP / ANALYSIS</div> <div style="font-size:24px;font-weight:bold;">${formatRupiah(hpp)}</div> <div style="opacity:.75;margin-top:8px;font-size:14px;"> Profit: ${profitPct.toFixed(2)}% - Food Cost: ${foodCostPct.toFixed(2)}% </div> </div> <div style="opacity:.8;font-size:14px;text-align:right;"> <div>Category: ${titleCase(product.category)}</div> <div>Sub Category: ${titleCase(product.subCategory || "-")}</div> </div> </div> <div class="menu-actions"> <button class="action-btn edit-btn" onclick="editProduct(${product.id})">Edit Overhead</button> <button class="action-btn delete-btn-2" onclick="removeProduct(${product.id})">Hapus</button> </div> </div> </div> `; }); updateSummaryCards(filtered);
-} document.addEventListener("DOMContentLoaded", () => { populateFilters(); renderProductHPP();
+
+function toNumber(value) {
+  return Number(String(value ?? "").replace(/[^0-9.-]/g, "")) || 0;
+}
+
+function formatRupiah(value) {
+  const n = Math.round(Number(value) || 0);
+  return "Rp " + n.toLocaleString("id-ID");
+}
+
+function formatPercent(value) {
+  const n = Number(value);
+  return Number.isFinite(n) ? n.toFixed(2) + "%" : "0.00%";
+}
+
+function normalizeMenu(row, items = []) {
+  const normalizedItems = items.map(normalizeMenuItem);
+  const recipeCost = normalizedItems.reduce((sum, item) => sum + item.total, 0);
+  const sellingPrice = toNumber(row.selling_price ?? row.sellingPrice);
+  const grossProfit = sellingPrice - recipeCost;
+  return {
+    id: row.id,
+    name: row.nama || row.name || "",
+    category: row.category || "",
+    subCategory: row.sub_category || row.subCategory || "",
+    sellingPrice,
+    recipeCost,
+    totalIngredients: normalizedItems.length,
+    foodCostPercent: sellingPrice > 0 ? (recipeCost / sellingPrice) * 100 : 0,
+    grossProfit,
+    grossMarginPercent: sellingPrice > 0 ? (grossProfit / sellingPrice) * 100 : 0,
+    recommendedSellingPrice: recipeCost > 0 ? recipeCost / 0.30 : 0,
+    status: row.status || "ACTIVE",
+    photoUrl: row.photo_url || row.photoUrl || "",
+    description: row.description || "",
+    createdAt: row.created_at || "",
+    items: normalizedItems
+  };
+}
+
+function normalizeMenuItem(row) {
+  const qty = toNumber(row.qty);
+  const pricePerUnit = toNumber(row.price_per_unit ?? row.pricePerUnit);
+  const wastePercent = toNumber(row.waste_percent ?? row.waste);
+  const computedTotal = qty * pricePerUnit * (1 + wastePercent / 100);
+  return {
+    id: row.id,
+    menuId: row.menu_id,
+    ingredientType: row.ingredient_type || "raw_material",
+    ingredientName: row.ingredient_name || row.nama_bahan || row.ingredient || "",
+    qty,
+    unit: row.unit || "",
+    pricePerUnit,
+    wastePercent,
+    total: toNumber(row.total) || computedTotal
+  };
+}
+
+function getStatusInfo(menu) {
+  if (menu.sellingPrice <= 0) {
+    return { label: "Harga Jual Kosong", cls: "status-gray" };
+  }
+  if (menu.foodCostPercent <= 30) {
+    return { label: "Aman / Sehat", cls: "status-green" };
+  }
+  if (menu.foodCostPercent <= 35) {
+    return { label: "Perlu Dipantau", cls: "status-yellow" };
+  }
+  return { label: "Tidak Ideal / Perlu Review Harga", cls: "status-red" };
+}
+
+function ingredientTypeLabel(type) {
+  const value = String(type || "").toLowerCase();
+  if (value === "raw_material") return "Raw Material";
+  if (value === "preparation") return "Preparation";
+  return value ? value.replace(/_/g, " ") : "-";
+}
+
+function setError(message = "") {
+  el.errorBox.textContent = message;
+  el.errorBox.classList.toggle("hidden", !message);
+}
+
+function showLoading() {
+  el.selectedProduct.innerHTML = '<div class="notice">Memuat data menu dari Supabase...</div>';
+  el.productList.innerHTML = '<div class="notice">Memuat data menu dari Supabase...</div>';
+}
+
+function filteredMenus() {
+  const query = el.searchProduct.value.trim().toLowerCase();
+  const category = el.filterCategory.value;
+  const subCategory = el.filterSubCategory.value;
+  return menus.filter(menu => {
+    const haystack = [menu.name, menu.category, menu.subCategory, menu.status].join(" ").toLowerCase();
+    const matchQuery = !query || haystack.includes(query);
+    const matchCategory = !category || menu.category === category;
+    const matchSubCategory = !subCategory || menu.subCategory === subCategory;
+    return matchQuery && matchCategory && matchSubCategory;
+  });
+}
+
+function populateFilters() {
+  const currentCategory = el.filterCategory.value;
+  const currentSubCategory = el.filterSubCategory.value;
+  const categories = [...new Set(menus.map(menu => menu.category).filter(Boolean))].sort();
+  const subCategories = [...new Set(menus.map(menu => menu.subCategory).filter(Boolean))].sort();
+  el.filterCategory.innerHTML = '<option value="">All Category</option>' + categories.map(value => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("");
+  el.filterSubCategory.innerHTML = '<option value="">All Sub Category</option>' + subCategories.map(value => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("");
+  if (categories.includes(currentCategory)) el.filterCategory.value = currentCategory;
+  if (subCategories.includes(currentSubCategory)) el.filterSubCategory.value = currentSubCategory;
+}
+
+function populateMenuSelect(list) {
+  if (!menus.length) {
+    el.menuSelect.innerHTML = '<option value="">Belum ada menu</option>';
+    return;
+  }
+  if (!list.length) {
+    el.menuSelect.innerHTML = '<option value="">Tidak ada menu cocok</option>';
+    selectedMenuId = "";
+    return;
+  }
+  const options = list;
+  el.menuSelect.innerHTML = options.map(menu => `<option value="${escapeHtml(menu.id)}">${escapeHtml(menu.name || "-")}</option>`).join("");
+  if (!options.some(menu => String(menu.id) === String(selectedMenuId))) {
+    selectedMenuId = options[0]?.id || "";
+  }
+  el.menuSelect.value = selectedMenuId;
+}
+
+function updateSummaryCards(list) {
+  const data = list.length ? list : menus;
+  const total = data.length;
+  const withSelling = data.filter(menu => menu.sellingPrice > 0);
+  const avgFoodCost = withSelling.length ? withSelling.reduce((sum, menu) => sum + menu.foodCostPercent, 0) / withSelling.length : 0;
+  const avgMargin = withSelling.length ? withSelling.reduce((sum, menu) => sum + menu.grossMarginPercent, 0) / withSelling.length : 0;
+  const best = [...data].sort((a, b) => b.grossProfit - a.grossProfit)[0];
+  el.sumTotalProduct.textContent = total;
+  el.sumAverageFoodCost.textContent = formatPercent(avgFoodCost);
+  el.sumAverageMargin.textContent = formatPercent(avgMargin);
+  el.sumBestProduct.textContent = best ? `${best.name || "-"}\n${formatRupiah(best.grossProfit)}` : "-";
+}
+
+function renderSelectedProduct() {
+  if (!menus.length) {
+    el.selectedProduct.innerHTML = '<div class="notice">Belum ada data menu. Tambahkan menu terlebih dahulu dari halaman Menu.</div>';
+    return;
+  }
+  const currentList = filteredMenus();
+  const menu = currentList.find(item => String(item.id) === String(selectedMenuId)) || currentList[0];
+  if (!menu) {
+    el.selectedProduct.innerHTML = '<div class="notice">Tidak ada menu yang cocok dengan filter.</div>';
+    return;
+  }
+  selectedMenuId = menu.id;
+  const status = getStatusInfo(menu);
+  el.selectedProduct.innerHTML = `
+    <div class="product-hero">
+      <div class="product-photo">
+        ${menu.photoUrl ? `<img src="${escapeHtml(menu.photoUrl)}" alt="${escapeHtml(menu.name)}">` : '<div>Tidak ada foto menu</div>'}
+      </div>
+      <div class="product-main">
+        <div class="product-title-row">
+          <div>
+            <div class="product-name">${escapeHtml(menu.name || "-")}</div>
+            <div class="menu-badges">
+              <span class="menu-badge">${escapeHtml(menu.category || "-")}</span>
+              <span class="menu-badge gray">${escapeHtml(menu.subCategory || "-")}</span>
+              <span class="menu-badge gray">${escapeHtml(menu.status || "-")}</span>
+              <span class="status-pill ${status.cls}">${escapeHtml(status.label)}</span>
+            </div>
+          </div>
+          <div class="menu-cost">
+            <div class="cost-main">${formatRupiah(menu.sellingPrice)}</div>
+            <span class="cost-label">Selling Price</span>
+          </div>
+        </div>
+        <div class="metric-grid">
+          <div class="metric"><div class="metric-label">Recipe Cost / HPP Bahan</div><div class="metric-value">${formatRupiah(menu.recipeCost)}</div></div>
+          <div class="metric"><div class="metric-label">Total Bahan</div><div class="metric-value">${menu.totalIngredients}</div></div>
+          <div class="metric"><div class="metric-label">Estimated Food Cost</div><div class="metric-value">${formatPercent(menu.foodCostPercent)}</div></div>
+          <div class="metric"><div class="metric-label">Gross Profit</div><div class="metric-value">${formatRupiah(menu.grossProfit)}</div></div>
+          <div class="metric"><div class="metric-label">Gross Margin</div><div class="metric-value">${formatPercent(menu.grossMarginPercent)}</div></div>
+          <div class="metric"><div class="metric-label">Recommended Selling Price</div><div class="metric-value">${formatRupiah(menu.recommendedSellingPrice)}</div><div class="metric-note">Target food cost 30%</div></div>
+        </div>
+        ${menu.description ? `<div class="detail-desc">${escapeHtml(menu.description)}</div>` : ""}
+      </div>
+    </div>
+  `;
+  renderRecipeDetail(menu);
+}
+
+function renderRecipeDetail(menu) {
+  const rows = menu.items.map(item => `
+    <tr>
+      <td>${escapeHtml(ingredientTypeLabel(item.ingredientType))}</td>
+      <td>${escapeHtml(item.ingredientName || "-")}</td>
+      <td>${escapeHtml(item.qty)}</td>
+      <td>${escapeHtml(item.unit || "-")}</td>
+      <td>${formatRupiah(item.pricePerUnit)}</td>
+      <td>${formatPercent(item.wastePercent).replace(".00%", "%")}</td>
+      <td>${formatRupiah(item.total)}</td>
+    </tr>
+  `).join("");
+  const mobileRows = menu.items.map((item, index) => `
+    <div class="recipe-mobile-item">
+      <div class="recipe-mobile-title"><span>${index + 1}.</span><strong>${escapeHtml(item.ingredientName || "-")}</strong></div>
+      <div class="recipe-mobile-meta">${escapeHtml(ingredientTypeLabel(item.ingredientType))} | ${escapeHtml(item.qty)} ${escapeHtml(item.unit || "")} x ${formatRupiah(item.pricePerUnit)}</div>
+      <div class="recipe-mobile-sub">Waste ${formatPercent(item.wastePercent).replace(".00%", "%")} | Total ${formatRupiah(item.total)}</div>
+    </div>
+  `).join("");
+  const recipeHtml = menu.items.length ? `
+    <div class="recipe-table-wrap">
+      <table class="recipe-table">
+        <thead>
+          <tr>
+            <th>Ingredient Type</th>
+            <th>Ingredient</th>
+            <th>Qty</th>
+            <th>Unit</th>
+            <th>Harga/Unit</th>
+            <th>Waste %</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+    <div class="recipe-mobile-list">${mobileRows}</div>
+  ` : '<div class="notice">Menu ini belum punya recipe.</div>';
+  el.selectedProduct.innerHTML += `
+    <div style="height:22px"></div>
+    <div class="recipe-head">
+      <div>
+        <div style="font-size:22px;font-weight:bold;">Detail Recipe / Menu Items</div>
+        <div style="opacity:.65;margin-top:6px;">Total recipe cost dihitung dari total semua bahan.</div>
+      </div>
+      <div class="status-pill ${getStatusInfo(menu).cls}">${escapeHtml(getStatusInfo(menu).label)}</div>
+    </div>
+    ${recipeHtml}
+  `;
+}
+
+function renderProductList() {
+  const list = filteredMenus();
+  updateSummaryCards(list);
+  populateMenuSelect(list);
+  if (!menus.length) {
+    el.productList.innerHTML = '<div class="notice">Belum ada data menu. Product HPP akan muncul setelah data Menu tersimpan di Supabase.</div>';
+    renderSelectedProduct();
+    return;
+  }
+  if (!list.length) {
+    el.productList.innerHTML = '<div class="notice">Tidak ada menu yang cocok dengan pencarian atau filter.</div>';
+    el.selectedProduct.innerHTML = '<div class="notice">Tidak ada menu yang cocok dengan pencarian atau filter.</div>';
+    return;
+  }
+  el.productList.innerHTML = list.map(menu => {
+    const status = getStatusInfo(menu);
+    return `
+      <div class="menu-item" data-menu-id="${escapeHtml(menu.id)}" tabindex="0" role="button" aria-label="Pilih ${escapeHtml(menu.name)}">
+        <div class="menu-top">
+          <div class="menu-left">
+            <div class="thumb">${menu.photoUrl ? `<img src="${escapeHtml(menu.photoUrl)}" alt="${escapeHtml(menu.name)}">` : "No Photo"}</div>
+            <div style="min-width:0;flex:1;">
+              <div class="menu-name">${escapeHtml(menu.name || "-")}</div>
+              <div class="menu-badges">
+                <span class="menu-badge">${escapeHtml(menu.category || "-")}</span>
+                <span class="menu-badge gray">${escapeHtml(menu.subCategory || "-")}</span>
+                <span class="status-pill ${status.cls}">${escapeHtml(status.label)}</span>
+              </div>
+            </div>
+          </div>
+          <div class="menu-cost">
+            <div class="cost-main">${formatRupiah(menu.recipeCost)}</div>
+            <span class="cost-label">Recipe Cost</span>
+            <div style="margin-top:10px;font-size:16px;">${formatPercent(menu.foodCostPercent)}</div>
+            <span class="cost-label">Food Cost</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
+  document.querySelectorAll("[data-menu-id]").forEach(card => {
+    card.addEventListener("click", () => selectMenu(card.dataset.menuId));
+    card.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        selectMenu(card.dataset.menuId);
+      }
+    });
+  });
+  renderSelectedProduct();
+}
+
+function selectMenu(id) {
+  selectedMenuId = id;
+  el.menuSelect.value = id;
+  renderSelectedProduct();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+async function loadMenusFromSupabase() {
+  if (!supabaseClient) {
+    setError("Konfigurasi Supabase belum tersedia. Pastikan library Supabase dan key sudah termuat.");
+    menus = [];
+    renderProductList();
+    return;
+  }
+  showLoading();
+  setError("");
+  try {
+    let menuResult = await supabaseClient.from("menus").select("*").order("created_at", { ascending: false });
+    if (menuResult.error && menuResult.error.code === "42703") {
+      menuResult = await supabaseClient.from("menus").select("*");
+    }
+    if (menuResult.error) throw menuResult.error;
+    const menuRows = menuResult.data || [];
+    const ids = menuRows.map(row => row.id).filter(Boolean);
+    let itemRows = [];
+    if (ids.length) {
+      const itemResult = await supabaseClient.from("menu_items").select("*").in("menu_id", ids);
+      if (itemResult.error) throw itemResult.error;
+      itemRows = itemResult.data || [];
+    }
+    const itemMap = new Map();
+    itemRows.forEach(item => {
+      const key = String(item.menu_id);
+      if (!itemMap.has(key)) itemMap.set(key, []);
+      itemMap.get(key).push(item);
+    });
+    menus = menuRows.map(row => normalizeMenu(row, itemMap.get(String(row.id)) || []));
+    selectedMenuId = menus[0]?.id || "";
+    populateFilters();
+    renderProductList();
+  } catch (error) {
+    console.error("[Product HPP] Load Supabase gagal", {
+      error,
+      message: error?.message,
+      details: error?.details,
+      hint: error?.hint,
+      code: error?.code
+    });
+    setError("Gagal memuat data Product HPP dari Supabase. Cek console untuk detail error.");
+    menus = [];
+    renderProductList();
+  }
+}
+
+el.menuSelect.addEventListener("change", event => {
+  selectedMenuId = event.target.value;
+  renderSelectedProduct();
 });
-</script> <script>
-(function(){ const toggle = document.getElementById('menuToggle'); const sidebar = document.getElementById('biyaSidebar'); const overlay = document.getElementById('mobileOverlay'); if(!toggle || !sidebar || !overlay) return; const mobileQuery = window.matchMedia('(max-width: 980px)'); let closeButton = sidebar.querySelector('.sidebar-close'); if(!closeButton){ closeButton = document.createElement('button'); closeButton.className = 'sidebar-close'; closeButton.type = 'button'; closeButton.setAttribute('aria-label', 'Tutup menu'); closeButton.innerHTML = '&times;'; sidebar.prepend(closeButton); } const style = document.createElement('style'); style.textContent = '.biya-no-scroll{overflow:hidden !important;}.sidebar-close{display:none;}@media (max-width:980px){.sidebar-close{display:flex;align-items:center;justify-content:center;width:42px;height:42px;margin:0 0 18px auto;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:rgba(255,255,255,.08);color:#fff;font-size:28px;line-height:1;cursor:pointer;}}'; document.head.appendChild(style); toggle.setAttribute('aria-controls','biyaSidebar'); toggle.setAttribute('aria-expanded','false'); const closeSidebar = () => { sidebar.classList.remove('open'); overlay.classList.remove('open'); document.body.classList.remove('biya-no-scroll'); toggle.setAttribute('aria-expanded','false'); sidebar.setAttribute('aria-hidden', mobileQuery.matches ? 'true' : 'false'); overlay.setAttribute('aria-hidden','true'); }; const openSidebar = () => { sidebar.classList.add('open'); overlay.classList.add('open'); document.body.classList.add('biya-no-scroll'); toggle.setAttribute('aria-expanded','true'); sidebar.setAttribute('aria-hidden','false'); overlay.setAttribute('aria-hidden','false'); }; toggle.addEventListener('click', () => { if(sidebar.classList.contains('open')) closeSidebar(); else openSidebar(); }); closeButton.addEventListener('click', closeSidebar); overlay.addEventListener('click', closeSidebar); sidebar.addEventListener('click', (event) => { if(!mobileQuery.matches) return; if(event.target.closest('a, .item, .btn')) closeSidebar(); }); document.addEventListener('keydown', (event) => { if(event.key === 'Escape') closeSidebar(); }); const syncLayout = () => { if(mobileQuery.matches){ sidebar.setAttribute('aria-hidden', sidebar.classList.contains('open') ? 'false' : 'true'); } else { closeSidebar(); sidebar.setAttribute('aria-hidden','false'); } }; mobileQuery.addEventListener ? mobileQuery.addEventListener('change', syncLayout) : mobileQuery.addListener(syncLayout); syncLayout();
+el.searchProduct.addEventListener("input", renderProductList);
+el.filterCategory.addEventListener("change", renderProductList);
+el.filterSubCategory.addEventListener("change", renderProductList);
+document.addEventListener("DOMContentLoaded", loadMenusFromSupabase);
+
+Object.assign(window, {
+  loadMenusFromSupabase,
+  renderProductList,
+  selectMenu
+});
+</script>
+<script>
+(function(){
+  const toggle = document.getElementById("menuToggle");
+  const sidebar = document.getElementById("biyaSidebar");
+  const overlay = document.getElementById("mobileOverlay");
+  if (!toggle || !sidebar || !overlay) return;
+  const mobileQuery = window.matchMedia("(max-width: 980px)");
+  let closeButton = sidebar.querySelector(".sidebar-close");
+  if (!closeButton) {
+    closeButton = document.createElement("button");
+    closeButton.className = "sidebar-close";
+    closeButton.type = "button";
+    closeButton.setAttribute("aria-label", "Tutup menu");
+    closeButton.innerHTML = "&times;";
+    sidebar.prepend(closeButton);
+  }
+  const style = document.createElement("style");
+  style.textContent = ".biya-no-scroll{overflow:hidden!important}.sidebar-close{display:none}@media(max-width:980px){.sidebar-close{display:flex;align-items:center;justify-content:center;width:42px;height:42px;margin:0 0 18px auto;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:rgba(255,255,255,.08);color:#fff;font-size:28px;line-height:1;cursor:pointer}}";
+  document.head.appendChild(style);
+  toggle.setAttribute("aria-controls", "biyaSidebar");
+  toggle.setAttribute("aria-expanded", "false");
+  const closeSidebar = () => {
+    sidebar.classList.remove("open");
+    overlay.classList.remove("open");
+    document.body.classList.remove("biya-no-scroll");
+    toggle.setAttribute("aria-expanded", "false");
+    sidebar.setAttribute("aria-hidden", mobileQuery.matches ? "true" : "false");
+    overlay.setAttribute("aria-hidden", "true");
+  };
+  const openSidebar = () => {
+    sidebar.classList.add("open");
+    overlay.classList.add("open");
+    document.body.classList.add("biya-no-scroll");
+    toggle.setAttribute("aria-expanded", "true");
+    sidebar.setAttribute("aria-hidden", "false");
+    overlay.setAttribute("aria-hidden", "false");
+  };
+  toggle.addEventListener("click", () => sidebar.classList.contains("open") ? closeSidebar() : openSidebar());
+  closeButton.addEventListener("click", closeSidebar);
+  overlay.addEventListener("click", closeSidebar);
+  sidebar.addEventListener("click", event => {
+    if (!mobileQuery.matches) return;
+    if (event.target.closest("a, .item, .btn")) closeSidebar();
+  });
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") closeSidebar();
+  });
+  const syncLayout = () => {
+    if (mobileQuery.matches) {
+      sidebar.setAttribute("aria-hidden", sidebar.classList.contains("open") ? "false" : "true");
+    } else {
+      closeSidebar();
+      sidebar.setAttribute("aria-hidden", "false");
+    }
+  };
+  if (mobileQuery.addEventListener) mobileQuery.addEventListener("change", syncLayout);
+  else mobileQuery.addListener(syncLayout);
+  syncLayout();
 })();
-</script> </body>
-</html> 
+</script>
+</body>
+</html>
