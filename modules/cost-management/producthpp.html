@@ -149,12 +149,12 @@ td{background:#102B63!important;color:#fff!important}
     <button class="btn" onclick="location.href='/menu-modules/dashboard.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-arrow-left"></use></svg><span>Kembali</span></button>
   </div>
   <main class="main">
-    <div class="title">Product HPP</div>
-    <div class="sub">Analisis HPP bahan, food cost, gross profit, margin, dan rekomendasi harga dari data Menu Supabase.</div>
+    <div class="title" id="productPageTitle">Product HPP</div>
+    <div class="sub" id="productPageDescription">Analisis HPP bahan, food cost, gross profit, margin, dan rekomendasi harga dari data Menu Supabase.</div>
 
     <div id="errorBox" class="error hidden"></div>
 
-    <section class="summary-grid" aria-label="Ringkasan Product HPP">
+    <section class="summary-grid" id="summarySection" aria-label="Ringkasan Product HPP">
       <div class="summary-box">
         <div class="summary-title">Total Product</div>
         <div class="summary-value" id="sumTotalProduct">0</div>
@@ -173,7 +173,7 @@ td{background:#102B63!important;color:#fff!important}
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="productFilterSection">
       <div class="list-header">
         <div>
           <div style="font-size:28px;font-weight:bold;margin-bottom:6px;">Pilih Produk / Menu</div>
@@ -204,8 +204,9 @@ td{background:#102B63!important;color:#fff!important}
           </div>
         </div>
       </div>
-      <div id="selectedProduct" class="hidden"></div>
     </section>
+
+    <section class="section hidden" id="selectedProduct"></section>
 
     <section class="section" id="productListSection">
       <div class="list-header">
@@ -234,6 +235,10 @@ let detailOpen = false;
 
 const el = {
   errorBox: document.getElementById("errorBox"),
+  productPageTitle: document.getElementById("productPageTitle"),
+  productPageDescription: document.getElementById("productPageDescription"),
+  summarySection: document.getElementById("summarySection"),
+  productFilterSection: document.getElementById("productFilterSection"),
   menuSelect: document.getElementById("menuSelect"),
   searchProduct: document.getElementById("searchProduct"),
   filterCategory: document.getElementById("filterCategory"),
@@ -339,12 +344,20 @@ function setError(message = "") {
   el.errorBox.classList.toggle("hidden", !message);
 }
 
+function setDetailMode(open) {
+  detailOpen = open;
+  el.productPageTitle.classList.toggle("hidden", open);
+  el.productPageDescription.classList.toggle("hidden", open);
+  el.summarySection.classList.toggle("hidden", open);
+  el.productFilterSection.classList.toggle("hidden", open);
+  el.productListSection.classList.toggle("hidden", open);
+  el.selectedProduct.classList.toggle("hidden", !open);
+}
+
 function showLoading() {
-  detailOpen = false;
+  setDetailMode(false);
   selectedMenuId = "";
-  el.selectedProduct.classList.add("hidden");
   el.selectedProduct.innerHTML = "";
-  el.productListSection.classList.remove("hidden");
   el.productList.innerHTML = '<div class="notice">Memuat data menu dari Supabase...</div>';
 }
 
@@ -401,18 +414,18 @@ function updateSummaryCards(list) {
 
 function renderSelectedProduct() {
   if (!menus.length) {
-    el.selectedProduct.classList.add("hidden");
     el.selectedProduct.innerHTML = "";
+    setDetailMode(false);
     return;
   }
   const menu = menus.find(item => String(item.id) === String(selectedMenuId));
   if (!menu) {
-    el.selectedProduct.classList.add("hidden");
     el.selectedProduct.innerHTML = "";
+    setDetailMode(false);
     return;
   }
   const status = getStatusInfo(menu);
-  el.selectedProduct.classList.remove("hidden");
+  setDetailMode(true);
   el.selectedProduct.innerHTML = `
     <div class="detail-actions">
       <button class="back-btn" type="button" onclick="backToProductList()">← Kembali ke Daftar Produk</button>
@@ -508,13 +521,12 @@ function renderProductList() {
   updateSummaryCards(list);
   populateMenuSelect(list);
   if (detailOpen) {
-    el.productListSection.classList.add("hidden");
+    setDetailMode(true);
     renderSelectedProduct();
     return;
   }
-  el.selectedProduct.classList.add("hidden");
+  setDetailMode(false);
   el.selectedProduct.innerHTML = "";
-  el.productListSection.classList.remove("hidden");
   if (!menus.length) {
     el.productList.innerHTML = '<div class="notice">Belum ada data menu. Product HPP akan muncul setelah data Menu tersimpan di Supabase.</div>';
     return;
@@ -563,21 +575,17 @@ function renderProductList() {
 function selectMenu(id) {
   if (!id) return;
   selectedMenuId = id;
-  detailOpen = true;
   el.searchProduct.value = "";
   el.menuSelect.value = "";
-  el.productListSection.classList.add("hidden");
   renderSelectedProduct();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function backToProductList() {
-  detailOpen = false;
   selectedMenuId = "";
   el.searchProduct.value = "";
-  el.selectedProduct.classList.add("hidden");
   el.selectedProduct.innerHTML = "";
-  el.productListSection.classList.remove("hidden");
+  setDetailMode(false);
   renderProductList();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
