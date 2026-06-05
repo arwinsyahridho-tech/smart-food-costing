@@ -246,6 +246,13 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
 .restore-message.success{color:#96f5b7}
 .restore-message.error{color:#ffb4b4}
 .export-card .action:disabled{opacity:.48;cursor:not-allowed;filter:saturate(.65);box-shadow:none!important}
+.snapshot-table-wrap{overflow:auto}
+.snapshot-mobile-list{display:none}
+.snapshot-card{width:100%;border:1px solid rgba(255,255,255,.08);border-radius:13px;background:rgba(13,33,88,.72);padding:11px 12px}
+.snapshot-card-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.snapshot-name{min-width:0;font-size:13px;font-weight:800;line-height:1.25;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.snapshot-count{flex:0 0 auto;border-radius:999px;background:rgba(0,102,255,.2);border:1px solid rgba(46,216,255,.2);color:#d9f7ff;font-size:11px;font-weight:800;line-height:1;padding:6px 8px}
+.snapshot-date{margin-top:7px;color:rgba(215,227,255,.66);font-size:11px;line-height:1.35;overflow-wrap:anywhere}
 @media (min-width:981px){
   .export-page .section{padding:24px!important}
   .export-page .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
@@ -268,6 +275,10 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
   .export-section-sub{font-size:12px!important;line-height:1.35!important;margin:0 0 10px!important}
   .restore-upload-wrap{gap:6px!important}
   .restore-file-name,.restore-message{font-size:11px!important}
+  .snapshot-table-wrap{display:none!important}
+  .snapshot-mobile-list{display:grid!important;grid-template-columns:1fr!important;gap:8px!important;width:100%;overflow:visible!important}
+  .snapshot-card{border-radius:12px!important;padding:10px 11px!important}
+  .snapshot-date{font-size:10.5px!important}
 }
 </style></head>
 <body> <svg class="biya-icon-sprite" xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"> <symbol id="biya-icon-layout-dashboard" viewBox="0 0 24 24"> <rect width="7" height="9" x="3" y="3" rx="1"></rect> <rect width="7" height="5" x="14" y="3" rx="1"></rect> <rect width="7" height="9" x="14" y="12" rx="1"></rect> <rect width="7" height="5" x="3" y="16" rx="1"></rect> </symbol> <symbol id="biya-icon-package" viewBox="0 0 24 24"> <path d="m7.5 4.27 9 5.15"></path> <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path> <path d="m3.3 7 8.7 5 8.7-5"></path> <path d="M12 22V12"></path> </symbol> <symbol id="biya-icon-flask-conical" viewBox="0 0 24 24"> <path d="M10 2v7.31"></path> <path d="M14 9.3V2"></path> <path d="M8.5 2h7"></path> <path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path> <path d="M5.52 16h12.96"></path> </symbol> <symbol id="biya-icon-clipboard-list" viewBox="0 0 24 24"> <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path> <path d="M12 11h4"></path> <path d="M12 16h4"></path> <path d="M8 11h.01"></path> <path d="M8 16h.01"></path> </symbol> <symbol id="biya-icon-calculator" viewBox="0 0 24 24"> <rect width="16" height="20" x="4" y="2" rx="2"></rect> <path d="M8 6h8"></path> <path d="M16 14v4"></path> <path d="M16 10h.01"></path> <path d="M12 10h.01"></path> <path d="M8 10h.01"></path> <path d="M12 14h.01"></path> <path d="M8 14h.01"></path> <path d="M12 18h.01"></path> <path d="M8 18h.01"></path> </symbol> <symbol id="biya-icon-download" viewBox="0 0 24 24"> <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path> <path d="M7 10l5 5 5-5"></path> <path d="M12 15V3"></path> </symbol> <symbol id="biya-icon-settings" viewBox="0 0 24 24"> <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2Z"></path> <circle cx="12" cy="12" r="3"></circle> </symbol> <symbol id="biya-icon-arrow-left" viewBox="0 0 24 24"> <path d="M19 12H5"></path> <path d="m12 19-7-7 7-7"></path> </symbol> <symbol id="biya-icon-search" viewBox="0 0 24 24"> <circle cx="11" cy="11" r="8"></circle> <path d="m21 21-4.3-4.3"></path> </symbol> <symbol id="biya-icon-x" viewBox="0 0 24 24"> <path d="M18 6 6 18"></path> <path d="m6 6 12 12"></path> </symbol>
@@ -341,7 +352,7 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
 <div class="section">
 <div class="export-section-title">Data Snapshot</div>
 <div class="export-section-sub">Ringkasan jumlah data yang tersimpan saat ini.</div>
-<div style="overflow:auto;">
+<div class="snapshot-table-wrap">
 <table>
 <thead>
 <tr><th>Data</th><th>Count</th><th>Last Update</th></tr>
@@ -349,6 +360,7 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
 <tbody id="snapshotBody"></tbody>
 </table>
 </div>
+<div class="snapshot-mobile-list" id="snapshotCards" aria-label="Data Snapshot"></div>
 </div>
 </div>
 </div>
@@ -380,7 +392,11 @@ function downloadCSV(kind){ const s = getSettings(); let rows = [], headers = []
 function exportPrintable(kind){ const s = getSettings(); let body = ""; if(kind === "cost"){ const menus = getJSON("biya_menus", []); body = `<h1>BIYA Cost Report</h1><p>${s.businessName || "BIYA"}</p>` + menus.map(m => `<div style="margin:16px 0;padding:16px;border:1px solid #ccc;border-radius:12px;"><h3>${m.name}</h3><p>Category: ${m.category}</p><p>Sub Category: ${m.subCategory || "-"}</p><p>Selling Price: ${m.sellingPrice || "-"}</p><p>Description: ${m.description || "-"}</p></div>`).join(""); }else{ const menus = getJSON("biya_menus", []); body = `<h1>BIYA Recipe Book</h1><p>${s.businessName || "BIYA"}</p>` + menus.map(m => { const rows = (m.ingredients || []).map(i => `<li>${i.ingredient || i.name || "-"} - ${i.qty || ""} ${i.unit || ""}</li>`).join(""); return `<div style="margin:16px 0;padding:16px;border:1px solid #ccc;border-radius:12px;"><h3>${m.name}</h3><ul>${rows || "<li>-</li>"}</ul></div>`; }).join(""); } const w = window.open("", "_blank"); w.document.write(`<html><head><title>BIYA Print</title><style>body{font-family:Arial;padding:24px} h1{margin-bottom:8px}</style></head><body>${body}
 </body></html>`); w.document.close(); w.focus(); w.print();
 }
-function renderSnapshot(){ const rows = [ ["Raw Material", getJSON("biya_rawMaterials", []).length, localStorage.getItem("biya_rawMaterials_updated") || "-"], ["Preparation", getJSON("biya_preparations", []).length, localStorage.getItem("biya_preparations_updated") || "-"], ["Menu", getJSON("biya_menus", []).length, localStorage.getItem("biya_menus_updated") || "-"], ["Product HPP", getJSON("biya_producthpp", []).length, localStorage.getItem("biya_producthpp_updated") || "-"], ["Settings", getSettings().businessName ? 1 : 0, localStorage.getItem("biya_settings_updated") || "-"], ]; snapshotBody.innerHTML = rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("");
+function escapeHTML(value){ return String(value ?? "").replace(/[&<>"']/g, ch => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", "\"":"&quot;", "'":"&#39;" }[ch]));
+}
+function formatSnapshotDate(value){ if(!value) return "-"; const text = String(value).trim(); if(!text || text === "-") return "-"; const iso = text.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/); if(iso){ const months = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"]; return `${iso[3]} ${months[Number(iso[2]) - 1] || iso[2]} ${iso[1]}, ${iso[4]}:${iso[5]}`; } const parsed = new Date(text); if(!Number.isNaN(parsed.getTime())){ const months = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"]; const pad = n => String(n).padStart(2, "0"); return `${pad(parsed.getDate())} ${months[parsed.getMonth()]} ${parsed.getFullYear()}, ${pad(parsed.getHours())}:${pad(parsed.getMinutes())}`; } return text;
+}
+function renderSnapshot(){ const rows = [ ["Raw Material", getJSON("biya_rawMaterials", []).length, localStorage.getItem("biya_rawMaterials_updated") || "-"], ["Preparation", getJSON("biya_preparations", []).length, localStorage.getItem("biya_preparations_updated") || "-"], ["Menu", getJSON("biya_menus", []).length, localStorage.getItem("biya_menus_updated") || "-"], ["Product HPP", getJSON("biya_producthpp", []).length, localStorage.getItem("biya_producthpp_updated") || "-"], ["Settings", getSettings().businessName ? 1 : 0, localStorage.getItem("biya_settings_updated") || "-"], ]; const formattedRows = rows.map(r => [r[0], r[1], formatSnapshotDate(r[2])]); snapshotBody.innerHTML = formattedRows.map(r => `<tr><td>${escapeHTML(r[0])}</td><td>${escapeHTML(r[1])}</td><td>${escapeHTML(r[2])}</td></tr>`).join(""); const snapshotCards = document.getElementById("snapshotCards"); if(snapshotCards) snapshotCards.innerHTML = formattedRows.map(r => `<div class="snapshot-card"><div class="snapshot-card-top"><div class="snapshot-name">${escapeHTML(r[0])}</div><div class="snapshot-count">Count: ${escapeHTML(r[1])}</div></div><div class="snapshot-date">Last Update: ${escapeHTML(r[2])}</div></div>`).join("");
 }
 renderSnapshot();
 document.getElementById("restoreFile")?.addEventListener("change", updateRestoreFileName);
