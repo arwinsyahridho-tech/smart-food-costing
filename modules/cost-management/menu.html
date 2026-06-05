@@ -1,16 +1,323 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html> <html lang="id">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>BIYA - Menu</title>
-<style>
-:root{--bg:#04122b;--sidebar:#081a3a;--panel:#102b63;--field:#0d2158;--line:rgba(255,255,255,.08);--primary:#0066ff;--success:#00d66b;--danger:#ef4444;--warning:#f59e0b;--muted:#d7e3ff;--shadow:0 8px 24px rgba(0,0,0,.2);--radius:16px}*{box-sizing:border-box;margin:0;padding:0}body{background:var(--bg);color:#fff;font-family:Inter,"Segoe UI",Arial,sans-serif;overflow-x:hidden}.wrapper{display:flex;min-height:100vh}.sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;background:linear-gradient(180deg,var(--sidebar),#04122b);padding:30px;overflow:auto;border-right:1px solid var(--line);box-shadow:var(--shadow)}.logo{font-size:34px;font-weight:700;margin-bottom:45px}.logo small,.mobile-logo small{display:block;margin-top:8px;font-size:12px;font-weight:400;opacity:.65;letter-spacing:1.6px}.item{min-height:56px;padding:0 18px;display:flex;align-items:center;border-radius:16px;margin-bottom:12px;cursor:pointer;font-size:16px;color:var(--muted);transition:.22s;gap:10px}.item:hover{transform:translateX(6px);background:#163a87;color:#fff}.item.active{background:linear-gradient(135deg,var(--primary),var(--success));color:#fff;transform:translateX(10px);box-shadow:0 0 20px rgba(0,102,255,.35)}.btn,.add-row-btn,.action-btn,.category-manage-btn{border:none;color:#fff;cursor:pointer;font-weight:700;box-shadow:var(--shadow)}.btn{margin-top:18px;min-height:54px;width:100%;border-radius:14px;background:linear-gradient(135deg,var(--primary),var(--success))}.btn.secondary{background:#334155}.main{margin-left:260px;width:calc(100% - 260px);padding:40px}.title{font-size:44px;line-height:1.05;margin-bottom:10px}.sub{opacity:.74;margin-bottom:30px;line-height:1.6}.section,.summary-box,.menu-item,.modalBox{background:linear-gradient(180deg,rgba(16,43,99,.96),rgba(12,34,83,.98));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.section{padding:28px;margin-bottom:24px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.field{display:flex;flex-direction:column;gap:10px}.field.full{grid-column:1/-1}label{opacity:.72;font-size:15px}input,select,textarea{width:100%;min-height:56px;padding:0 18px;background:rgba(16,43,99,.95);border:1px solid var(--line);border-radius:14px;color:#fff;outline:none;font-size:15px}textarea{min-height:120px;padding:16px 18px;resize:vertical}.category-label-row{display:flex;align-items:center;justify-content:space-between;gap:10px}.category-manage-btn{min-height:36px;padding:0 12px;border-radius:10px;background:#334155;font-size:12px;white-space:nowrap}.pill-note{display:inline-block;margin-top:8px;padding:6px 10px;border-radius:999px;background:rgba(37,99,235,.18);color:#cfe0ff;font-size:12px}.table-wrapper{margin-top:30px;overflow:auto;border-radius:14px}table{width:100%;min-width:760px;border-collapse:collapse;margin-top:15px}th{background:#163a87;padding:14px;text-align:left;font-size:13px;white-space:nowrap}td{padding:12px;background:#102b63;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:top}.table-input,.table-select{min-height:44px;border-radius:10px;background:#07173a;padding:0 12px}.add-row-btn{margin-top:18px;min-height:50px;padding:0 24px;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--success))}.delete-btn{width:40px;height:40px;border:none;border-radius:10px;background:var(--danger);color:#fff;cursor:pointer;font-size:18px}.summary{margin-top:25px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}.summary-box{padding:20px}.summary-title{opacity:.62;margin-bottom:10px}.summary-value{font-size:24px;font-weight:700}.save-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.list-header{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:22px}.search-box{width:340px;max-width:100%}.menu-item{padding:22px;margin-bottom:18px}.menu-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;cursor:pointer;flex-wrap:wrap}.menu-left{display:flex;flex-direction:column;gap:8px}.menu-name{font-size:20px;font-weight:700}.menu-badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}.menu-badge{display:inline-block;padding:6px 12px;background:#2563eb;border-radius:999px;font-size:12px;width:fit-content}.menu-cost{font-size:22px;font-weight:700;text-align:right;min-width:180px}.menu-detail{display:none;margin-top:20px;padding-top:20px;border-top:1px solid var(--line)}.menu-detail.active{display:block}.menu-actions{display:flex;gap:10px;margin-top:18px;justify-content:flex-end;flex-wrap:wrap}.action-btn{min-height:42px;padding:0 18px;border-radius:10px}.edit-btn{background:var(--warning)}.delete-btn-2{background:var(--danger)}.notice{opacity:.68;text-align:center;padding:20px}.small-note{opacity:.68;font-size:13px;margin-top:6px}.hidden{display:none!important}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.56);z-index:1200;justify-content:center;align-items:center;padding:20px}.modalBox{width:720px;max-width:95%;max-height:90vh;overflow:auto;padding:28px}.modalTitle{font-size:24px;font-weight:700;margin-bottom:18px}.modalActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.category-list{display:flex;flex-direction:column;gap:12px}.category-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px;border-radius:12px;background:#0d2158}.category-row-name{font-weight:700;word-break:break-word}.category-empty{padding:18px;border-radius:12px;background:#0d2158;color:rgba(255,255,255,.72);text-align:center}.mobile-header{display:none}.mobile-overlay{display:none}@media(max-width:980px){.mobile-header{display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:1002;min-height:64px;padding:12px 16px;background:linear-gradient(180deg,rgba(8,26,58,.98),rgba(4,18,43,.96));border-bottom:1px solid var(--line)}.mobile-logo{font-size:18px;font-weight:700}.menu-toggle{width:46px;height:46px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--success));color:#fff;font-size:22px;font-weight:700}.mobile-overlay.open{display:block;position:fixed;inset:0;background:rgba(0,0,0,.52);z-index:998}.sidebar{left:-280px;z-index:999;transition:left .28s ease}.sidebar.open{left:0}.sidebar-close{display:flex;align-items:center;justify-content:center;width:42px;height:42px;margin:0 0 18px auto;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:rgba(255,255,255,.08);color:#fff;font-size:28px;line-height:1;cursor:pointer}.wrapper{display:block}.main{margin-left:0;width:100%;padding:20px}.title{font-size:clamp(30px,9vw,40px)}.section{padding:18px}.grid,.summary{grid-template-columns:1fr}.category-label-row,.category-row,.menu-top,.list-header{align-items:stretch;flex-direction:column}.category-manage-btn,.search-box,.btn,.add-row-btn{width:100%;max-width:100%}.menu-cost{text-align:left;min-width:0;width:100%}table{min-width:720px}}@media(min-width:981px){.sidebar-close{display:none}}
-</style>
-</head>
-<body>
-<header class="mobile-header" aria-label="BIYA mobile navigation"><div class="mobile-logo">BIYA<small>BUSINESS IN YOUR HAND</small></div><button class="menu-toggle" id="menuToggle" type="button" aria-label="Buka menu">&#9776;</button></header>
-<div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div><div class="wrapper"><aside class="sidebar" id="biyaSidebar"><div class="logo">BIYA<small>BUSINESS IN YOUR HAND</small></div><div class="item" onclick="location.href='costdashboard.html'"><span>Dashboard</span></div><div class="item" onclick="location.href='rawmaterial.html'"><span>Raw Material</span></div><div class="item" onclick="location.href='preparation.html'"><span>Preparation</span></div><div class="item active"><span>Menu</span></div><div class="item" onclick="location.href='producthpp.html'"><span>Product HPP</span></div><div class="item" onclick="location.href='exportcenter.html'"><span>Export Center</span></div><div class="item" onclick="location.href='settings.html'"><span>Settings</span></div><button class="btn" onclick="location.href='/menu-modules/dashboard.html'">Kembali</button></aside><main class="main"><div class="title">Menu</div><div class="sub">Produk jual akhir yang menyusun bahan dari raw material dan preparation.</div><section class="section" id="menuFormSection"><div class="grid"><div class="field"><label>Nama Menu</label><input id="menuName" placeholder="Nasi Ayam Crispy"/></div><div class="field"><div class="category-label-row"><label>Category</label><button class="category-manage-btn" type="button" onclick="openCategoryManager()">Kelola Category</button></div><select id="menuCategory" onchange="toggleNewCategoryField()"></select><div class="pill-note">Dari Supabase</div></div><div class="field" id="newCategoryField"><label>Nama category baru</label><input id="newMenuCategory" placeholder="Contoh: Signature"/></div><div class="field"><div class="category-label-row"><label>Sub Category</label><button class="category-manage-btn" type="button" onclick="openSubCategoryManager()">Kelola Sub Category</button></div><select id="menuSubCategory" onchange="toggleNewSubCategoryField()"></select><div class="pill-note">Dari Supabase</div></div><div class="field" id="newSubCategoryField"><label>Nama sub category baru</label><input id="newMenuSubCategory" placeholder="Contoh: Rice Bowl"/></div><div class="field"><label>Selling Price</label><input id="menuSellingPrice" placeholder="25000" type="number"/></div><div class="field"><label>Status</label><select id="menuStatus"><option>ACTIVE</option><option>INACTIVE</option></select></div><div class="field"><label>Photo URL</label><input id="menuPhotoUrl" placeholder="https://..."/></div><div class="field full"><label>Description</label><textarea id="menuDescription" placeholder="Deskripsi menu"></textarea></div></div><div class="table-wrapper"><div style="font-size:22px;font-weight:bold;margin-bottom:8px">Menu Recipe</div><div class="small-note">Pilih ingredient type, lalu pilih ingredient. Unit, harga/unit, dan waste akan otomatis terisi jika data tersedia.</div><table id="recipeTable"><thead><tr><th>Ingredient Type</th><th>Ingredient</th><th>Qty</th><th>Unit</th><th>Harga / Unit</th><th>Waste %</th><th>Total</th><th>Action</th></tr></thead><tbody id="recipeBody"></tbody></table></div><button class="add-row-btn" onclick="addRecipeRow()">+ Tambah Ingredient</button><div class="summary"><div class="summary-box"><div class="summary-title">Total Bahan</div><div class="summary-value" id="totalIngredients">0</div></div><div class="summary-box"><div class="summary-title">Total HPP / Cost Menu</div><div class="summary-value" id="totalRecipeCost">Rp 0</div></div><div class="summary-box"><div class="summary-title">Food Cost</div><div class="summary-value" id="estimatedFoodCost">Rp 0</div></div></div><div class="save-row"><button class="btn" id="saveMenuBtn" onclick="saveMenu()">+ Simpan Menu</button><button class="btn secondary hidden" id="cancelEditBtn" onclick="cancelEditMode()">Batal Edit</button></div></section><section class="section" id="menuListSection"><div class="list-header"><div><div style="font-size:28px;font-weight:bold;margin-bottom:6px">Menu List</div><div style="opacity:.68">Daftar menu yang sudah disimpan di Supabase</div></div><div class="search-box"><input id="searchMenu" oninput="renderMenuList()" placeholder="Cari menu, category, sub category, status..." type="text"/></div></div><div id="menuList"><div class="notice">Belum ada data menu</div></div></section></main></div><div class="modal" id="categoryModal"><div class="modalBox"><div class="modalTitle">Kelola Category</div><div class="category-list" id="categoryList"></div><div class="modalActions"><button class="btn secondary" type="button" onclick="closeCategoryManager()">Tutup</button></div></div></div><div class="modal" id="subCategoryModal"><div class="modalBox"><div class="modalTitle">Kelola Sub Category</div><div class="category-list" id="subCategoryList"></div><div class="modalActions"><button class="btn secondary" type="button" onclick="closeSubCategoryManager()">Tutup</button></div></div></div>
+<style> *{margin:0;padding:0;box-sizing:border-box} body{background:#07173a;font-family:Arial,sans-serif;color:#fff} .wrapper{display:flex} .sidebar{ position:fixed;left:0;top:0;width:260px;height:100vh;background:#102766; padding:30px;overflow:auto } .logo{font-size:34px;font-weight:bold;margin-bottom:45px} .item{ height:56px;padding:0 18px;display:flex;align-items:center;border-radius:16px; margin-bottom:12px;cursor:pointer;font-size:16px;transition:.22s;color:white } .item:hover{transform:translateX(6px);background:rgba(255,255,255,.06)} .item.active{ background:#2563eb;transform:translateX(10px); box-shadow:0 10px 30px rgba(37,99,235,.35) } .btn{ margin-top:18px;height:54px;width:100%;border:none;border-radius:14px; background:#2563eb;color:white;cursor:pointer;font-weight:bold } .btn.secondary{background:#334155} .main{margin-left:260px;width:calc(100% - 260px);padding:40px} .title{font-size:44px;margin-bottom:10px} .sub{opacity:.7;margin-bottom:35px} .section{ background:#102766;padding:28px;border-radius:22px;margin-bottom:24px } .grid{display:grid;grid-template-columns:1fr 1fr;gap:20px} label{display:block;margin-bottom:10px;opacity:.7} input,select,textarea{ width:100%;height:56px;padding:0 18px;background:#0d2158;border:none; border-radius:14px;color:white;outline:none } textarea{height:auto;min-height:120px;padding:16px 18px;resize:vertical} .table-wrapper{margin-top:30px;overflow:auto} table{width:100%;border-collapse:collapse;margin-top:15px} th{ background:#1b3d96;padding:16px;font-size:14px;text-align:left;white-space:nowrap } td{ padding:14px;background:#0d2158;border-bottom:1px solid rgba(255,255,255,.05); vertical-align:top } .table-input,.table-select{ width:100%;height:46px;background:#07173a;border:none;border-radius:10px; padding:0 12px;color:white } .add-row-btn{ margin-top:18px;height:50px;padding:0 24px;border:none;border-radius:12px; background:#2563eb;color:white;cursor:pointer;font-weight:bold } .delete-btn{ width:40px;height:40px;border:none;border-radius:10px;background:#ef4444; color:white;cursor:pointer;font-size:18px } .summary{margin-top:25px;display:flex;gap:20px;flex-wrap:wrap} .summary-box{ flex:1;min-width:200px;background:#0d2158;padding:20px;border-radius:16px } .summary-title{opacity:.6;margin-bottom:10px} .summary-value{font-size:24px;font-weight:bold} .list-header{ display:flex;justify-content:space-between;align-items:center;gap:20px; flex-wrap:wrap;margin-bottom:22px } .search-box{width:340px;max-width:100%} .search-box input{height:52px} .menu-item{ background:#0d2158;border-radius:18px;padding:22px;margin-bottom:18px } .menu-top{ display:flex;justify-content:space-between;align-items:flex-start;gap:20px; cursor:pointer;flex-wrap:wrap } .menu-left{display:flex;flex-direction:column;gap:8px} .menu-name{font-size:20px;font-weight:bold} .menu-badges{ display:flex;gap:10px;flex-wrap:wrap;margin-top:8px } .menu-badge{ display:inline-block;padding:6px 12px;background:#2563eb;border-radius:999px; font-size:12px;width:fit-content } .menu-cost{ font-size:22px;font-weight:bold;text-align:right;min-width:180px } .menu-detail{ margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08); display:none } .menu-detail.active{display:block} .menu-table{width:100%;border-collapse:collapse;margin-top:14px} .menu-table th{background:#1b3d96;padding:12px;font-size:13px} .menu-table td{padding:12px;background:#07173a} .menu-actions{ display:flex;gap:10px;margin-top:18px;justify-content:flex-end;flex-wrap:wrap } .action-btn{ height:42px;padding:0 18px;border:none;border-radius:10px;cursor:pointer; color:white;font-weight:bold } .edit-btn{background:#f59e0b} .delete-btn-2{background:#ef4444} .notice{opacity:.65;text-align:center;padding:20px} .small-note{opacity:.65;font-size:13px;margin-top:6px} .hidden{display:none !important} .pill-note{ display:inline-block;margin-top:8px;padding:6px 10px;border-radius:999px; background:rgba(37,99,235,.18);color:#cfe0ff;font-size:12px } @media (max-width: 980px){ .sidebar{position:relative;width:100%;height:auto} .main{margin-left:0;width:100%} .grid{grid-template-columns:1fr} .search-box{width:100%} } </style> <style id="biya-theme">
+:root{ --biya-bg:#04122B; --biya-sidebar:#081A3A; --biya-surface:#102B63; --biya-surface-hover:#163A87; --biya-primary:#0066FF; --biya-success:#00D66B; --biya-cyan:#2ED8FF; --biya-warning:#FFB800; --biya-danger:#FF4D4F; --biya-text:#FFFFFF; --biya-muted:#D7E3FF; --biya-border:rgba(255,255,255,0.08); --biya-card-shadow:0 8px 24px rgba(0,0,0,0.20); --biya-modal-shadow:0 20px 40px rgba(0,0,0,0.30); --biya-active-shadow:0 0 20px rgba(0,102,255,0.35); --biya-radius-card:16px; --biya-radius-btn:12px; --biya-radius-input:12px; --biya-radius-modal:20px;
+} html{ scroll-behavior:smooth;
+} body{ background:var(--biya-bg)!important; color:var(--biya-text)!important; font-family:Inter, "Segoe UI", Arial, sans-serif!important;
+} .wrapper{ background:transparent!important;
+} .sidebar{ background:linear-gradient(180deg, rgba(8,26,58,.98), rgba(4,18,43,.98))!important; border-right:1px solid var(--biya-border)!important; box-shadow:var(--biya-card-shadow)!important;
+} .logo{ color:#fff!important; letter-spacing:.2px!important;
+} .logo small{ display:block!important; margin-top:8px!important; font-size:12px!important; font-weight:400!important; opacity:.65!important; letter-spacing:1.6px!important;
+} .item{ color:var(--biya-muted)!important; border:1px solid transparent!important; border-radius:16px!important;
+} .item:hover{ background:var(--biya-surface-hover)!important; color:#fff!important; transform:translateX(6px)!important;
+} .item.active{ background:linear-gradient(135deg, var(--biya-primary), var(--biya-success))!important; color:#fff!important; box-shadow:var(--biya-active-shadow)!important;
+} .btn,
+.btn-action,
+.save-btn,
+.add-row-btn,
+.action,
+.loginBtn,
+.primary-btn{ background:linear-gradient(135deg, var(--biya-primary), var(--biya-success))!important; color:#fff!important; border:none!important; border-radius:var(--biya-radius-btn)!important; box-shadow:var(--biya-card-shadow)!important;
+} .btn.secondary,
+.btn-action.red,
+.action.alt,
+.btn.alt{ background:var(--biya-surface-hover)!important; color:#fff!important;
+} .section,
+.card,
+.summary-box,
+.mini-box,
+.detail-card,
+.menu-item,
+.prep-item,
+.category-block,
+.box,
+.alert-item,
+.insight-item,
+.modalBox,
+.section-card,
+.panel{ background:linear-gradient(180deg, rgba(16,43,99,.96), rgba(12,34,83,.98))!important; border:1px solid var(--biya-border)!important; border-radius:var(--biya-radius-card)!important; box-shadow:var(--biya-card-shadow)!important;
+} .modal{ background:rgba(0,0,0,.56)!important;
+} .modalBox{ border-radius:var(--biya-radius-modal)!important; box-shadow:var(--biya-modal-shadow)!important;
+} input,
+select,
+textarea,
+.table-input,
+.table-select,
+.search-box input,
+.chart-select,
+input[type="file"]{ background:rgba(16,43,99,.95)!important; border:1px solid var(--biya-border)!important; border-radius:var(--biya-radius-input)!important; color:#fff!important; outline:none!important;
+} input::placeholder,
+textarea::placeholder{ color:rgba(215,227,255,.5)!important;
+} th,
+thead th{ background:#163A87!important; color:#fff!important;
+} td,
+tbody td{ background:#102B63!important; color:#fff!important;
+} tbody tr:hover td{ background:#163A87!important;
+} .summary-title,
+.mini-title,
+.card-sub,
+.sub,
+.small-note,
+.notice,
+.muted{ color:rgba(215,227,255,.72)!important;
+} .pill,
+.menu-badge,
+.prep-category,
+.status{ border-radius:999px!important;
+} .pill.green,
+.profit-green,
+.ok{ background:rgba(0,214,107,.18)!important; color:#96f5b7!important;
+} .pill.yellow,
+.profit-yellow,
+.warn{ background:rgba(255,184,0,.18)!important; color:#ffe08a!important;
+} .pill.red,
+.profit-red,
+.danger{ background:rgba(255,77,79,.18)!important; color:#ffb4b4!important;
+} .pill.gray{ background:#163A87!important; color:#fff!important;
+} ::-webkit-scrollbar{ width:10px; height:10px;
+}
+::-webkit-scrollbar-thumb{ background:#163A87; border-radius:999px;
+}
+::-webkit-scrollbar-track{ background:transparent;
+} @media (max-width: 980px){ .sidebar{ position:relative!important; width:100%!important; height:auto!important; } .main{ margin-left:0!important; width:100%!important; } .grid, .grid3, .summary, .summary-grid, .top-grid, .info, .detail-grid, .summary-callout{ grid-template-columns:1fr!important; } .search-box, .filter-box{ width:100%!important; max-width:100%!important; } .menu-cost, .preview-right, .prep-right{ min-width:0!important; text-align:left!important; } .menu-header, .headerCard, .prep-header, .product-hero, .preview-top{ flex-direction:column!important; }
+}
+</style> <style id="biya-mobile-nav">
+.mobile-header{ display:none;
+}
+.mobile-logo{ font-size:20px; font-weight:700; letter-spacing:.6px;
+}
+.menu-toggle{ width:48px; height:48px; border:none; border-radius:12px; background:linear-gradient(135deg, #0066FF, #00D66B); color:#fff; font-size:22px; font-weight:700; cursor:pointer; box-shadow:0 8px 24px rgba(0,0,0,.2);
+}
+.mobile-overlay{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.52); z-index:998;
+}
+@media (max-width: 980px){ body{ overflow-x:hidden !important; } .mobile-header{ display:flex; align-items:center; justify-content:space-between; gap:16px; position:sticky; top:0; z-index:1002; padding:14px 18px; background:linear-gradient(180deg, rgba(8,26,58,.98), rgba(4,18,43,.96)); border-bottom:1px solid rgba(255,255,255,.08); backdrop-filter:blur(14px); } .mobile-overlay.open{ display:block; } .sidebar, aside.sidebar, div.sidebar{ position:fixed !important; left:-280px !important; top:0 !important; width:260px !important; height:100vh !important; z-index:999 !important; transition:left .28s ease !important; overflow:auto !important; box-shadow:0 20px 40px rgba(0,0,0,.35) !important; } .sidebar.open{ left:0 !important; } .main{ margin-left:0 !important; width:100% !important; padding:20px !important; padding-top:18px !important; } .wrapper{ display:block !important; } .section, .card, .summary-box{ border-radius:18px !important; }
+}
+</style> <style id="biya-mobile-first-overrides">
+/* Mobile-first responsive layer. Keep this after page styles. */
+html{ -webkit-text-size-adjust:100%;
+} body{ overflow-x:hidden !important;
+} img,
+svg,
+canvas,
+video{ max-width:100%; height:auto;
+} .wrapper{ display:block !important; min-height:100vh;
+} .mobile-header{ display:flex !important; align-items:center; justify-content:space-between; gap:12px; position:sticky; top:0; z-index:1002; min-height:64px; padding:12px 16px; background:linear-gradient(180deg, rgba(8,26,58,.98), rgba(4,18,43,.96)); border-bottom:1px solid rgba(255,255,255,.08); backdrop-filter:blur(14px);
+} .mobile-logo{ min-width:0; font-size:18px !important; font-weight:700; letter-spacing:.4px; line-height:1.2;
+} .mobile-logo small{ display:block; margin-top:2px; font-size:10px; font-weight:400; letter-spacing:.9px; opacity:.68;
+} .menu-toggle{ flex:0 0 46px; width:46px !important; height:46px !important; border:none; border-radius:12px; background:linear-gradient(135deg, #0066FF, #00D66B); color:#fff; font-size:22px; font-weight:700; line-height:1; cursor:pointer; box-shadow:0 8px 24px rgba(0,0,0,.2);
+} .mobile-overlay{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.52); z-index:998;
+} .mobile-overlay.open{ display:block;
+} .sidebar,
+aside.sidebar,
+div.sidebar{ position:fixed !important; left:-280px !important; top:0 !important; width:260px !important; height:100vh !important; z-index:999 !important; overflow:auto !important; transition:left .28s ease !important; box-shadow:0 20px 40px rgba(0,0,0,.35) !important;
+} .sidebar.open{ left:0 !important;
+} .main{ margin-left:0 !important; width:100% !important; max-width:100%; padding:20px !important; padding-top:18px !important;
+} .title{ font-size:clamp(30px, 9vw, 40px) !important; line-height:1.08 !important; overflow-wrap:anywhere;
+} .sub{ line-height:1.6;
+} .section,
+.card,
+.menu-item,
+.prep-item,
+.panel{ padding:18px !important; margin-bottom:18px !important;
+} .grid,
+.grid3,
+.top-grid,
+.summary-grid,
+.info,
+.detail-grid,
+.summary-callout,
+.info-grid,
+.prep-groups{ display:grid !important; grid-template-columns:1fr !important; gap:14px !important;
+} .summary{ display:grid !important; grid-template-columns:1fr !important; gap:14px !important;
+} .headerCard,
+.preview-top,
+.menu-top,
+.prep-header,
+.product-hero,
+.flex-between,
+.list-header,
+.chart-head,
+.section-head,
+.detail-footer,
+.save-row,
+.list-tools{ flex-direction:column !important; align-items:stretch !important;
+} .menu-cost,
+.prep-right,
+.preview-right,
+.prep-cost{ min-width:0 !important; width:100%; text-align:left !important; white-space:normal !important;
+} .search-box,
+.filter-box,
+.chart-select,
+.btn,
+.btn-action,
+.save-btn,
+.add-row-btn,
+.action,
+.primary-btn{ width:100% !important; max-width:100% !important;
+} input,
+select,
+textarea,
+button{ max-width:100%;
+} .table-wrapper,
+.prep-table,
+.menu-table,
+[style*="overflow:auto"]{ max-width:100%; overflow-x:auto !important; -webkit-overflow-scrolling:touch;
+} table{ width:100%;
+} .table-wrapper table,
+.prep-table table,
+.menu-table,
+table[id],
+table:not(.mobile-card-table){ min-width:720px;
+} .modal{ padding:14px !important; align-items:flex-start !important; overflow:auto !important;
+} .modalBox,
+.modal-card{ width:100% !important; max-width:100% !important; max-height:calc(100vh - 28px) !important; padding:20px !important;
+} @media (min-width: 700px){ .main{ padding:28px !important; } .grid, .summary-grid, .info, .info-grid, .prep-groups{ grid-template-columns:repeat(2, minmax(0, 1fr)) !important; } .grid3, .top-grid{ grid-template-columns:repeat(2, minmax(0, 1fr)) !important; } .summary{ grid-template-columns:repeat(2, minmax(0, 1fr)) !important; } .search-box, .filter-box, .chart-select{ width:min(100%, 340px) !important; }
+} @media (min-width: 981px){ body{ overflow-x:auto !important; } .mobile-header, .mobile-overlay{ display:none !important; } .wrapper{ display:flex !important; } .sidebar, aside.sidebar, div.sidebar{ position:fixed !important; left:0 !important; top:0 !important; width:260px !important; height:100vh !important; z-index:auto !important; transition:none !important; } .main{ margin-left:260px !important; width:calc(100% - 260px) !important; padding:40px !important; } .grid{ grid-template-columns:repeat(2, minmax(0, 1fr)) !important; } .grid3{ grid-template-columns:repeat(3, minmax(0, 1fr)) !important; } .top-grid{ grid-template-columns:repeat(4, minmax(0, 1fr)) !important; } .info, .info-grid{ grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)) !important; } .detail-grid{ grid-template-columns:240px 1fr !important; } .summary{ display:flex !important; } .headerCard, .preview-top, .menu-top, .prep-header, .product-hero, .flex-between, .list-header, .chart-head, .section-head, .detail-footer, .save-row, .list-tools{ flex-direction:row !important; align-items:flex-start !important; } .flex-between, .list-header, .chart-head, .section-head, .detail-footer{ align-items:center !important; } .menu-cost, .prep-right, .preview-right, .prep-cost{ width:auto; text-align:right !important; } .search-box, .filter-box, .chart-select, .save-btn, .add-row-btn, .action, .primary-btn{ width:auto !important; } .sidebar .btn{ width:100% !important; } .modal{ align-items:center !important; } .modalBox{ max-width:900px !important; }
+}
+</style> <style id="biya-icon-system">
+.biya-icon{ width:1.15em; height:1.15em; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; fill:none; flex:0 0 auto;
+}
+.item .biya-icon{ margin-right:10px;
+}
+.icon .biya-icon{ width:30px; height:30px; margin:0;
+}
+.btn .biya-icon,
+button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
+}
+.delete-btn .biya-icon,
+.menu-toggle .biya-icon{ margin:0;
+}
+.category-label-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; } .category-manage-btn{ height:34px; padding:0 12px; border:none; border-radius:10px; background:#334155; color:#fff; font-size:12px; font-weight:bold; cursor:pointer; white-space:nowrap; } .category-list{ display:flex; flex-direction:column; gap:12px; } .category-row{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px; border-radius:12px; background:#0d2158; } .category-row-actions{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; } .category-row-name{ font-weight:bold; word-break:break-word; } .category-empty{ padding:18px; border-radius:12px; background:#0d2158; color:rgba(255,255,255,.72); text-align:center; } .modal{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.56); z-index:1200; justify-content:center; align-items:center; padding:20px; } .modalBox{ width:720px; max-width:95%; max-height:90vh; overflow:auto; background:#102766; padding:28px; border-radius:20px; } .modalTitle{ font-size:24px; font-weight:bold; margin-bottom:18px; } .modalActions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:20px; } @media(max-width:700px){ .category-label-row, .category-row{ align-items:stretch; flex-direction:column; } .category-manage-btn, .category-row-actions .action-btn{ width:100%; height:40px; } .category-row-actions{ width:100%; } }
+</style> </head>
+<body> <svg class="biya-icon-sprite" xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"> <symbol id="biya-icon-layout-dashboard" viewBox="0 0 24 24"> <rect width="7" height="9" x="3" y="3" rx="1"></rect> <rect width="7" height="5" x="14" y="3" rx="1"></rect> <rect width="7" height="9" x="14" y="12" rx="1"></rect> <rect width="7" height="5" x="3" y="16" rx="1"></rect> </symbol> <symbol id="biya-icon-package" viewBox="0 0 24 24"> <path d="m7.5 4.27 9 5.15"></path> <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path> <path d="m3.3 7 8.7 5 8.7-5"></path> <path d="M12 22V12"></path> </symbol> <symbol id="biya-icon-flask-conical" viewBox="0 0 24 24"> <path d="M10 2v7.31"></path> <path d="M14 9.3V2"></path> <path d="M8.5 2h7"></path> <path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path> <path d="M5.52 16h12.96"></path> </symbol> <symbol id="biya-icon-clipboard-list" viewBox="0 0 24 24"> <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path> <path d="M12 11h4"></path> <path d="M12 16h4"></path> <path d="M8 11h.01"></path> <path d="M8 16h.01"></path> </symbol> <symbol id="biya-icon-calculator" viewBox="0 0 24 24"> <rect width="16" height="20" x="4" y="2" rx="2"></rect> <path d="M8 6h8"></path> <path d="M16 14v4"></path> <path d="M16 10h.01"></path> <path d="M12 10h.01"></path> <path d="M8 10h.01"></path> <path d="M12 14h.01"></path> <path d="M8 14h.01"></path> <path d="M12 18h.01"></path> <path d="M8 18h.01"></path> </symbol> <symbol id="biya-icon-download" viewBox="0 0 24 24"> <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path> <path d="M7 10l5 5 5-5"></path> <path d="M12 15V3"></path> </symbol> <symbol id="biya-icon-settings" viewBox="0 0 24 24"> <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2Z"></path> <circle cx="12" cy="12" r="3"></circle> </symbol> <symbol id="biya-icon-arrow-left" viewBox="0 0 24 24"> <path d="M19 12H5"></path> <path d="m12 19-7-7 7-7"></path> </symbol> <symbol id="biya-icon-search" viewBox="0 0 24 24"> <circle cx="11" cy="11" r="8"></circle> <path d="m21 21-4.3-4.3"></path> </symbol> <symbol id="biya-icon-x" viewBox="0 0 24 24"> <path d="M18 6 6 18"></path> <path d="m6 6 12 12"></path> </symbol>
+</svg> <header class="mobile-header" aria-label="BIYA mobile navigation"> <div class="mobile-logo">BIYA<small>BUSINESS IN YOUR HAND</small></div> <button class="menu-toggle" id="menuToggle" type="button" aria-label="Buka menu">&#9776;</button>
+</header>
+<div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div>
+<div class="wrapper">
+<div class="sidebar" id="biyaSidebar">
+<div class="logo">BIYA<small>BUSINESS IN YOUR HAND</small></div>
+<div class="item" onclick="location.href='costdashboard.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-layout-dashboard"></use></svg><span>Dashboard</span></div>
+<div class="item" onclick="location.href='rawmaterial.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-package"></use></svg><span>Raw Material</span></div>
+<div class="item" onclick="location.href='preparation.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-flask-conical"></use></svg><span>Preparation</span></div>
+<div class="item active"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-clipboard-list"></use></svg><span>Menu</span></div>
+<div class="item" onclick="location.href='producthpp.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-calculator"></use></svg><span>Product HPP</span></div>
+<div class="item" onclick="location.href='exportcenter.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-download"></use></svg><span>Export Center</span></div>
+<div class="item" onclick="location.href='settings.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-settings"></use></svg><span>Settings</span></div>
+<button class="btn" onclick="location.href='/menu-modules/dashboard.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-arrow-left"></use></svg><span>Kembali</span></button>
+</div>
+<div class="main">
+<div class="title">Menu</div>
+<div class="sub">Produk jual akhir yang menyusun bahan dari raw material dan preparation.</div>
+<div class="section" id="menuFormSection">
+<div class="grid">
+<div>
+<label>Nama Menu</label>
+<input id="menuName" placeholder="Nasi Ayam Crispy"/>
+</div>
+<div>
+<div class="category-label-row">
+<label>Category</label>
+<button class="category-manage-btn" id="manageCategoryBtn" type="button" onclick="openCategoryManager()">Kelola Category</button>
+</div>
+<select id="menuCategory" onchange="toggleNewCategoryField()"></select>
+<div class="pill-note">Dari Supabase</div>
+</div>
+<div id="newCategoryField">
+<label>Nama category baru</label>
+<input id="newMenuCategory" placeholder="Contoh: Signature"/>
+</div>
+<div>
+<div class="category-label-row">
+<label>Sub Category</label>
+<button class="category-manage-btn" id="manageSubCategoryBtn" type="button" onclick="openSubCategoryManager()">Kelola Sub Category</button>
+</div>
+<select id="menuSubCategory" onchange="toggleNewSubCategoryField()"></select>
+<div class="pill-note">Dari Supabase</div>
+</div>
+<div id="newSubCategoryField">
+<label>Nama sub category baru</label>
+<input id="newMenuSubCategory" placeholder="Contoh: Rice Bowl"/>
+</div>
+<div>
+<label>Selling Price</label>
+<input id="menuSellingPrice" placeholder="25000" type="number"/>
+</div>
+<div>
+<label>Status</label>
+<select id="menuStatus">
+<option>ACTIVE</option>
+<option>INACTIVE</option>
+</select>
+</div>
+<div>
+<label>Photo URL</label>
+<input id="menuPhotoUrl" placeholder="https://..."/>
+</div>
+<div style="grid-column:1 / -1;">
+<label>Description</label>
+<textarea id="menuDescription" placeholder="Deskripsi menu"></textarea>
+</div>
+</div>
+<div class="table-wrapper">
+<div style="font-size:22px;font-weight:bold;margin-bottom:8px;">Menu Recipe</div>
+<div class="small-note">Pilih ingredient type, lalu pilih ingredient. Unit, harga/unit, dan waste akan otomatis terisi jika data tersedia.</div>
+<table id="recipeTable">
+<thead>
+<tr>
+<th>Ingredient Type</th>
+<th>Ingredient</th>
+<th>Qty</th>
+<th>Unit</th>
+<th>Harga / Unit</th>
+<th>Waste %</th>
+<th>Total</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody id="recipeBody"></tbody>
+</table>
+<button class="add-row-btn" onclick="addRecipeRow()">+ Tambah Bahan</button>
+</div>
+<div class="summary">
+<div class="summary-box">
+<div class="summary-title">Total Bahan</div>
+<div class="summary-value" id="totalIngredients">0</div>
+</div>
+<div class="summary-box">
+<div class="summary-title">Total Recipe Cost</div>
+<div class="summary-value" id="totalRecipeCost">Rp 0</div>
+</div>
+<div class="summary-box">
+<div class="summary-title">Estimated Food Cost</div>
+<div class="summary-value" id="estimatedFoodCost">Rp 0</div>
+</div>
+</div>
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;">
+<button class="btn" id="saveMenuBtn" onclick="saveMenu()">+ Simpan Menu</button>
+<button class="btn secondary hidden" id="cancelEditBtn" onclick="cancelEditMode()">Batal Edit</button>
+</div>
+</div>
+<div class="section" id="menuListSection">
+<div class="list-header">
+<div>
+<div style="font-size:28px;font-weight:bold;margin-bottom:6px;">Menu List</div>
+<div style="opacity:.6;">Daftar menu yang sudah disimpan</div>
+</div>
+<div class="search-box">
+<input id="searchMenu" oninput="renderMenuList()" placeholder="Cari menu atau category..." type="text"/>
+</div>
+</div>
+<div id="menuList">
+<div class="notice">Belum ada data menu</div>
+</div>
+</div>
+</div>
+</div>
+<div class="modal" id="categoryModal"><div class="modalBox"><div class="modalTitle">Kelola Category</div><div class="category-list" id="categoryList"></div><div class="modalActions"><button class="btn secondary" type="button" onclick="closeCategoryManager()">Tutup</button></div></div></div>
+<div class="modal" id="subCategoryModal"><div class="modalBox"><div class="modalTitle">Kelola Sub Category</div><div class="category-list" id="subCategoryList"></div><div class="modalActions"><button class="btn secondary" type="button" onclick="closeSubCategoryManager()">Tutup</button></div></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL=window.BIYA_SUPABASE_URL||"https://pkjmkjyylgzjvhcreucc.supabase.co";
@@ -34,25 +341,28 @@ function assertSupabaseReady(showAlert=true){if(supabaseClient)return true;if(sh
 function setBusy(state){isSaving=state;el.saveMenuBtn.disabled=state;el.saveMenuBtn.style.opacity=state?".65":"";el.saveMenuBtn.style.cursor=state?"not-allowed":""}
 function logSupabaseError(context,error,extra={}){console.error(`[Menu] ${context}`,{error,message:error?.message,details:error?.details,hint:error?.hint,code:error?.code,...extra})}
 function uniqueByName(rows,defaults){const map=new Map();defaults.forEach(nama=>map.set(nama.toLowerCase(),{id:null,nama,is_default:true}));(rows||[]).forEach(row=>{const nama=normalizeName(row.nama||row.name||row);if(nama)map.set(nama.toLowerCase(),{id:row.id||null,nama,is_default:row.is_default!==false,created_at:row.created_at})});return[...map.values()]}
-function getCategoryRows(){return uniqueByName(menuCategories,DEFAULT_MENU_CATEGORIES)}function getSubcategoryRows(){return uniqueByName(menuSubcategories,DEFAULT_MENU_SUBCATEGORIES)}
+function getCategoryRows(){return uniqueByName(menuCategories,DEFAULT_MENU_CATEGORIES)}
+function getSubcategoryRows(){return uniqueByName(menuSubcategories,DEFAULT_MENU_SUBCATEGORIES)}
 function renderCategoryOptions(selected=el.menuCategory.value){const rows=getCategoryRows(),current=selected&&selected!==ADD_CATEGORY_VALUE?normalizeName(selected):"";el.menuCategory.innerHTML=rows.map(row=>`<option value="${escapeHtml(row.nama)}">${escapeHtml(row.nama)}</option>`).join("")+`<option value="${ADD_CATEGORY_VALUE}">+ Tambah Category Baru</option>`;if(current&&!rows.some(row=>row.nama.toLowerCase()===current.toLowerCase()))el.menuCategory.add(new Option(current,current),el.menuCategory.options[el.menuCategory.options.length-1]);el.menuCategory.value=current||rows[0]?.nama||ADD_CATEGORY_VALUE;toggleNewCategoryField()}
 function renderSubcategoryOptions(selected=el.menuSubCategory.value){const rows=getSubcategoryRows(),current=selected&&selected!==ADD_SUBCATEGORY_VALUE?normalizeName(selected):"";el.menuSubCategory.innerHTML=rows.map(row=>`<option value="${escapeHtml(row.nama)}">${escapeHtml(row.nama)}</option>`).join("")+`<option value="${ADD_SUBCATEGORY_VALUE}">+ Tambah Sub Category Baru</option>`;if(current&&!rows.some(row=>row.nama.toLowerCase()===current.toLowerCase()))el.menuSubCategory.add(new Option(current,current),el.menuSubCategory.options[el.menuSubCategory.options.length-1]);el.menuSubCategory.value=current||rows[0]?.nama||ADD_SUBCATEGORY_VALUE;toggleNewSubCategoryField()}
 function toggleNewCategoryField(){const adding=el.menuCategory.value===ADD_CATEGORY_VALUE;el.newCategoryField.style.display=adding?"flex":"none";if(adding)el.newMenuCategory.focus()}
 function toggleNewSubCategoryField(){const adding=el.menuSubCategory.value===ADD_SUBCATEGORY_VALUE;el.newSubCategoryField.style.display=adding?"flex":"none";if(adding)el.newMenuSubCategory.focus()}
-function renderCategoryManager(){const custom=menuCategories.filter(row=>row.is_default===false);el.categoryList.innerHTML=custom.length?custom.map(row=>`<div class="category-row"><div><div class="category-row-name">${escapeHtml(row.nama)}</div><div class="small-note">Custom</div></div><button class="action-btn delete-btn-2" type="button" onclick="deleteMenuCategory('${escapeHtml(row.id)}')">Hapus</button></div>`).join(""):`<div class="category-empty">Belum ada category custom.</div>`}
-function renderSubCategoryManager(){const custom=menuSubcategories.filter(row=>row.is_default===false);el.subCategoryList.innerHTML=custom.length?custom.map(row=>`<div class="category-row"><div><div class="category-row-name">${escapeHtml(row.nama)}</div><div class="small-note">Custom</div></div><button class="action-btn delete-btn-2" type="button" onclick="deleteMenuSubCategory('${escapeHtml(row.id)}')">Hapus</button></div>`).join(""):`<div class="category-empty">Belum ada sub category custom.</div>`}
+function renderCategoryManager(){const custom=menuCategories.filter(row=>row.is_default===false);el.categoryList.innerHTML=custom.length?custom.map(row=>`<div class="category-row"><div><div class="category-row-name">${escapeHtml(row.nama)}</div><div class="small-note">Custom</div></div><div class="category-row-actions"><button class="action-btn edit-btn" type="button" onclick="editMenuCategory('${escapeHtml(row.id)}')">Edit</button><button class="action-btn delete-btn-2" type="button" onclick="deleteMenuCategory('${escapeHtml(row.id)}')">Hapus</button></div></div>`).join(""):`<div class="category-empty">Belum ada category custom.</div>`}
+function renderSubCategoryManager(){const custom=menuSubcategories.filter(row=>row.is_default===false);el.subCategoryList.innerHTML=custom.length?custom.map(row=>`<div class="category-row"><div><div class="category-row-name">${escapeHtml(row.nama)}</div><div class="small-note">Custom</div></div><div class="category-row-actions"><button class="action-btn edit-btn" type="button" onclick="editMenuSubCategory('${escapeHtml(row.id)}')">Edit</button><button class="action-btn delete-btn-2" type="button" onclick="deleteMenuSubCategory('${escapeHtml(row.id)}')">Hapus</button></div></div>`).join(""):`<div class="category-empty">Belum ada sub category custom.</div>`}
 function openCategoryManager(){renderCategoryManager();el.categoryModal.style.display="flex"}function closeCategoryManager(){el.categoryModal.style.display="none"}function openSubCategoryManager(){renderSubCategoryManager();el.subCategoryModal.style.display="flex"}function closeSubCategoryManager(){el.subCategoryModal.style.display="none"}
 async function loadMenuCategories(){if(!assertSupabaseReady(false)){renderCategoryOptions();return}try{const{data,error}=await supabaseClient.from("menu_categories").select("id,nama,is_default,created_at").order("is_default",{ascending:false}).order("nama",{ascending:true});if(error){console.error("[Menu] Category operation gagal",{error,payload:{action:"load"}});throw error}menuCategories.splice(0,menuCategories.length,...(data||[]).map(row=>({id:row.id,nama:normalizeName(row.nama),is_default:Boolean(row.is_default),created_at:row.created_at})));renderCategoryOptions();renderCategoryManager()}catch(error){console.error("[Menu] Category operation gagal",{error,payload:{action:"load"}});renderCategoryOptions()}}
 async function loadMenuSubcategories(){if(!assertSupabaseReady(false)){renderSubcategoryOptions();return}try{const{data,error}=await supabaseClient.from("menu_subcategories").select("id,nama,is_default,created_at").order("is_default",{ascending:false}).order("nama",{ascending:true});if(error){console.error("[Menu] Sub Category operation gagal",{error,payload:{action:"load"}});throw error}menuSubcategories.splice(0,menuSubcategories.length,...(data||[]).map(row=>({id:row.id,nama:normalizeName(row.nama),is_default:Boolean(row.is_default),created_at:row.created_at})));renderSubcategoryOptions();renderSubCategoryManager()}catch(error){console.error("[Menu] Sub Category operation gagal",{error,payload:{action:"load"}});renderSubcategoryOptions()}}
 async function ensureMenuCategory(){if(el.menuCategory.value!==ADD_CATEGORY_VALUE)return normalizeName(el.menuCategory.value);const nama=normalizeName(el.newMenuCategory.value);if(!nama){alert("Nama category baru wajib diisi");el.newMenuCategory.focus();throw new Error("Nama category baru kosong.")}const existing=getCategoryRows().find(row=>row.nama.toLowerCase()===nama.toLowerCase());if(existing)return existing.nama;const payload={nama,is_default:false};try{const{data,error}=await supabaseClient.from("menu_categories").insert(payload).select("id,nama,is_default,created_at").single();if(error){console.error("[Menu] Category operation gagal",{error,payload});throw error}menuCategories.push({id:data.id,nama:normalizeName(data.nama),is_default:Boolean(data.is_default),created_at:data.created_at});renderCategoryOptions(data.nama);renderCategoryManager();return normalizeName(data.nama)}catch(error){console.error("[Menu] Category operation gagal",{error,payload});alert("Gagal menambah category baru. Cek console untuk detail error.");throw error}}
 async function ensureMenuSubcategory(){if(el.menuSubCategory.value!==ADD_SUBCATEGORY_VALUE)return normalizeName(el.menuSubCategory.value);const nama=normalizeName(el.newMenuSubCategory.value);if(!nama){alert("Nama sub category baru wajib diisi");el.newMenuSubCategory.focus();throw new Error("Nama sub category baru kosong.")}const existing=getSubcategoryRows().find(row=>row.nama.toLowerCase()===nama.toLowerCase());if(existing)return existing.nama;const payload={nama,is_default:false};try{const{data,error}=await supabaseClient.from("menu_subcategories").insert(payload).select("id,nama,is_default,created_at").single();if(error){console.error("[Menu] Sub Category operation gagal",{error,payload});throw error}menuSubcategories.push({id:data.id,nama:normalizeName(data.nama),is_default:Boolean(data.is_default),created_at:data.created_at});renderSubcategoryOptions(data.nama);renderSubCategoryManager();return normalizeName(data.nama)}catch(error){console.error("[Menu] Sub Category operation gagal",{error,payload});alert("Gagal menambah sub category baru. Cek console untuk detail error.");throw error}}
+async function editMenuCategory(id){const category=menuCategories.find(row=>String(row.id)===String(id));if(!category||category.is_default!==false)return;const nama=normalizeName(prompt("Edit category",category.nama)||"");if(!nama||nama===category.nama)return;const duplicate=getCategoryRows().find(row=>String(row.id)!==String(id)&&row.nama.toLowerCase()===nama.toLowerCase());if(duplicate){alert("Nama category sudah ada.");return}const payload={id:category.id,nama,updated_at:new Date().toISOString()};try{const{data,error}=await supabaseClient.from("menu_categories").update({nama,updated_at:payload.updated_at}).eq("id",category.id).select("id,nama,is_default,created_at,updated_at").single();if(error){console.error("[Menu] Category operation gagal",{error,payload});throw error}category.nama=normalizeName(data.nama);category.updated_at=data.updated_at;renderCategoryOptions(category.nama);renderCategoryManager()}catch(error){console.error("[Menu] Category operation gagal",{error,payload});alert("Gagal mengedit category. Cek console untuk detail error.")}}
+async function editMenuSubCategory(id){const sub=menuSubcategories.find(row=>String(row.id)===String(id));if(!sub||sub.is_default!==false)return;const nama=normalizeName(prompt("Edit sub category",sub.nama)||"");if(!nama||nama===sub.nama)return;const duplicate=getSubcategoryRows().find(row=>String(row.id)!==String(id)&&row.nama.toLowerCase()===nama.toLowerCase());if(duplicate){alert("Nama sub category sudah ada.");return}const payload={id:sub.id,nama,updated_at:new Date().toISOString()};try{const{data,error}=await supabaseClient.from("menu_subcategories").update({nama,updated_at:payload.updated_at}).eq("id",sub.id).select("id,nama,is_default,created_at,updated_at").single();if(error){console.error("[Menu] Sub Category operation gagal",{error,payload});throw error}sub.nama=normalizeName(data.nama);sub.updated_at=data.updated_at;renderSubcategoryOptions(sub.nama);renderSubCategoryManager()}catch(error){console.error("[Menu] Sub Category operation gagal",{error,payload});alert("Gagal mengedit sub category. Cek console untuk detail error.")}}
 async function deleteMenuCategory(id){const category=menuCategories.find(row=>String(row.id)===String(id));if(!category||category.is_default!==false)return;if(!confirm(`Hapus category "${category.nama}"? Data menu lama tidak akan dihapus.`))return;const payload={id:category.id,nama:category.nama};try{const{error}=await supabaseClient.from("menu_categories").delete().eq("id",category.id);if(error){console.error("[Menu] Category operation gagal",{error,payload});throw error}await loadMenuCategories()}catch(error){console.error("[Menu] Category operation gagal",{error,payload});alert("Gagal menghapus category. Cek console untuk detail error.")}}
 async function deleteMenuSubCategory(id){const sub=menuSubcategories.find(row=>String(row.id)===String(id));if(!sub||sub.is_default!==false)return;if(!confirm(`Hapus sub category "${sub.nama}"? Data menu lama tidak akan dihapus.`))return;const payload={id:sub.id,nama:sub.nama};try{const{error}=await supabaseClient.from("menu_subcategories").delete().eq("id",sub.id);if(error){console.error("[Menu] Sub Category operation gagal",{error,payload});throw error}await loadMenuSubcategories()}catch(error){console.error("[Menu] Sub Category operation gagal",{error,payload});alert("Gagal menghapus sub category. Cek console untuk detail error.")}}
 function rowToRawMaterial(row){const conversion=Number(row.convertion_qty??row.conversion_qty??row.conversion_hasil)||1,price=Number(row.harga_unit??row.unit_cost??row.price_per_unit??row.harga_per_unit??row.price??0)||((Number(row.harga_beli)||0)/conversion),rawId=row.id||row.raw_id;return{id:isUuid(row.id)?row.id:null,key:String(rawId||row.nama||row.name||""),name:row.nama||row.name||"",unit:row.unit_dasar||row.satuan_dasar||row.unit||"",price,waste:Number(row.waste_percent)||0,status:row.status||"ACTIVE"}}
 function rowToPreparationSource(row){const yieldQty=Number(row.yield_qty??row["yield"])||1,totalCost=Number(row.total_cost)||0,price=Number(row.cost_per_unit??row.price_per_unit??row.harga_per_unit??0)||(yieldQty?totalCost/yieldQty:0);return{id:isUuid(row.id)?row.id:null,key:String(row.id||row.nama||row.name||""),name:row.nama||row.name||"",unit:row.yield_unit||row.unit||"",price,waste:Number(row.waste_percent)||0,status:row.status||"ACTIVE"}}
 async function loadIngredientSources(){if(!assertSupabaseReady(false))return;try{const{data,error}=await supabaseClient.from("raw_material").select("*").order("created_at",{ascending:false});if(error)throw error;rawMaterials.splice(0,rawMaterials.length,...(data||[]).map(rowToRawMaterial).filter(item=>item.name&&item.status!=="INACTIVE"))}catch(error){logSupabaseError("Load raw_material gagal",error)}try{const{data,error}=await supabaseClient.from("preparations").select("id,nama,category,status,yield_qty,yield_unit,total_cost,cost_per_unit,created_at").order("created_at",{ascending:false});if(error)throw error;preparations.splice(0,preparations.length,...(data||[]).map(rowToPreparationSource).filter(item=>item.name&&item.status!=="INACTIVE"))}catch(error){logSupabaseError("Load preparations gagal",error)}}
 function getSourceOptions(type){if(type==="raw_material")return rawMaterials;if(type==="preparation")return preparations;return[]}
-function addRecipeRow(data={}){const row=document.createElement("tr"),selectedType=data.ingredient_type||data.ingredientType||"";row.innerHTML=`<td><select class="table-select ingredient-type-select" onchange="updateRecipeRow(this)"><option value="">Pilih</option><option value="raw_material" ${selectedType==="raw_material"?"selected":""}>Raw Material</option><option value="preparation" ${selectedType==="preparation"?"selected":""}>Preparation</option></select></td><td><select class="table-select ingredient-select" onchange="updateRecipeName(this)"><option value="">Pilih ingredient type dulu</option></select></td><td><input type="number" class="table-input qty-input" value="${escapeHtml(data.qty??1)}" oninput="calculateRecipeRow(this)"></td><td><input class="table-input unit-input" disabled></td><td><input class="table-input price-input" disabled></td><td><input type="number" class="table-input waste-input" value="${escapeHtml(data.waste_percent??data.waste??0)}" oninput="calculateRecipeRow(this)"></td><td><input class="table-input total-input" disabled></td><td><button class="delete-btn" onclick="deleteRecipeRow(this)" aria-label="Hapus">x</button></td>`;recipeBody.appendChild(row);if(selectedType)updateRecipeRow(row.querySelector(".ingredient-type-select"),data);calculateRecipeRow(row.querySelector(".qty-input"))}
+function addRecipeRow(data={}){const row=document.createElement("tr"),selectedType=data.ingredient_type||data.ingredientType||"";row.innerHTML=`<td><select class="table-select ingredient-type-select" onchange="updateRecipeRow(this)"><option value="">Pilih</option><option value="raw_material" ${selectedType==="raw_material"?"selected":""}>Raw Material</option><option value="preparation" ${selectedType==="preparation"?"selected":""}>Preparation</option></select></td><td><select class="table-select ingredient-select" onchange="updateRecipeName(this)"><option value="">Pilih ingredient type dulu</option></select></td><td><input type="number" class="table-input qty-input" value="${escapeHtml(data.qty??1)}" oninput="calculateRecipeRow(this)"></td><td><input class="table-input unit-input" disabled></td><td><input class="table-input price-input" disabled></td><td><input type="number" class="table-input waste-input" value="${escapeHtml(data.waste_percent??data.waste??0)}" oninput="calculateRecipeRow(this)"></td><td><input class="table-input total-input" disabled></td><td><button class="delete-btn" onclick="deleteRecipeRow(this)" aria-label="Hapus"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-x"></use></svg></button></td>`;recipeBody.appendChild(row);if(selectedType)updateRecipeRow(row.querySelector(".ingredient-type-select"),data);calculateRecipeRow(row.querySelector(".qty-input"))}
 function updateRecipeRow(select,preset=null){const row=select.closest("tr"),ingredientSelect=row.querySelector(".ingredient-select"),source=getSourceOptions(select.value),selectedId=String(preset?.ingredient_id||preset?.ingredientId||""),selectedName=preset?.ingredient_name||preset?.ingredientName||preset?.ingredient||"";ingredientSelect.innerHTML=source.length?`<option value="">Pilih</option>`+source.map(item=>`<option value="${escapeHtml(item.key)}" data-id="${escapeHtml(item.id||"")}" ${String(item.id)===selectedId||item.name===selectedName?"selected":""}>${escapeHtml(item.name)}</option>`).join(""):`<option value="">Belum ada data</option>`;updateRecipeName(ingredientSelect,preset)}
 function updateRecipeName(select,preset=null){const row=select.closest("tr"),type=row.querySelector(".ingredient-type-select").value,source=getSourceOptions(type),item=source.find(x=>x.key===select.value||String(x.id)===String(select.value)||x.name===select.value);row.dataset.ingredientId=item?.id||preset?.ingredient_id||preset?.ingredientId||"";row.dataset.ingredientName=item?.name||preset?.ingredient_name||preset?.ingredientName||preset?.ingredient||"";row.querySelector(".unit-input").value=preset?.unit||item?.unit||"";row.querySelector(".price-input").value=preset?.price_per_unit??preset?.pricePerUnit??item?.price??"";if(preset?.waste_percent!==undefined)row.querySelector(".waste-input").value=preset.waste_percent;else if(preset?.waste!==undefined)row.querySelector(".waste-input").value=preset.waste;else if(item?.waste!==undefined)row.querySelector(".waste-input").value=item.waste;calculateRecipeRow(row.querySelector(".qty-input"))}
 function calculateRecipeRow(input){const row=input.closest("tr"),qty=toNumber(row.querySelector(".qty-input").value),price=toNumber(row.querySelector(".price-input").value),waste=toNumber(row.querySelector(".waste-input").value),total=qty*price*(1+waste/100);row.querySelector(".total-input").value=total.toFixed(2);updateSummary()}
@@ -73,11 +383,12 @@ async function loadMenuItems(menuId){const{data,error}=await supabaseClient.from
 function cancelEditMode(){resetMenuForm();showMenuListSection()}
 async function deleteMenu(id){if(!confirm("Hapus menu ini?"))return;if(!assertSupabaseReady())return;setBusy(true);try{const itemDelete=await supabaseClient.from("menu_items").delete().eq("menu_id",id);if(itemDelete.error){logSupabaseError("Delete menu_items gagal",itemDelete.error,{payload:{menu_id:id}});throw itemDelete.error}const menuDelete=await supabaseClient.from("menus").delete().eq("id",id);if(menuDelete.error){logSupabaseError("Delete menus gagal",menuDelete.error,{payload:{id}});throw menuDelete.error}if(editMode&&String(editMenuId)===String(id))cancelEditMode();await loadMenus()}catch(error){logSupabaseError("Delete menu gagal",error,{payload:{id}});alert("Gagal menghapus Menu dari Supabase. Cek console untuk detail error.")}finally{setBusy(false)}}
 function toggleMenuDetail(id){expandedMenuId=String(expandedMenuId)===String(id)?null:String(id);renderMenuList()}
-function renderMenuList(){const query=el.searchMenu.value.trim().toLowerCase(),filtered=menus.filter(menu=>[menu.nama,menu.category,menu.sub_category,menu.status].join(" ").toLowerCase().includes(query));if(!filtered.length){el.menuList.innerHTML=`<div class="notice">${menus.length?"Tidak ada menu yang cocok dengan pencarian":"Belum ada data menu"}</div>`;return}el.menuList.innerHTML=filtered.map(menu=>{const rows=(menu.items||[]).map(item=>`<tr><td>${escapeHtml(item.ingredient_type==="raw_material"?"Raw Material":"Preparation")}</td><td>${escapeHtml(item.ingredient_name)}</td><td>${escapeHtml(item.qty)}</td><td>${escapeHtml(item.unit)}</td><td>${formatRupiah(item.price_per_unit)}</td><td>${escapeHtml(item.waste_percent)}%</td><td>${formatRupiah(item.total)}</td></tr>`).join(""),open=String(expandedMenuId)===String(menu.id);return`<div class="menu-item"><div class="menu-top" onclick="toggleMenuDetail('${escapeHtml(menu.id)}')"><div class="menu-left"><div class="menu-name">${escapeHtml(menu.nama)}</div><div class="menu-badges"><div class="menu-badge">${escapeHtml(menu.category)}</div><div class="menu-badge">${escapeHtml(menu.sub_category||"-")}</div><div class="menu-badge">${escapeHtml(menu.status)}</div></div><div style="opacity:.7;margin-top:6px">${escapeHtml(menu.description||"")}</div></div><div class="menu-cost">${formatRupiah(menu.total_cost)}<div style="font-size:13px;opacity:.7;margin-top:6px">Recipe Cost</div></div></div><div class="menu-detail${open?" active":""}" id="detail-${escapeHtml(menu.id)}"><div style="font-size:18px;font-weight:bold;margin-bottom:16px">Recipe Detail</div><table class="menu-table"><thead><tr><th>Type</th><th>Ingredient</th><th>Qty</th><th>Unit</th><th>Harga/Unit</th><th>Waste %</th><th>Total</th></tr></thead><tbody>${rows}</tbody></table><div style="display:flex;justify-content:space-between;align-items:center;margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);flex-wrap:wrap;gap:20px"><div><div style="font-size:13px;opacity:.6;margin-bottom:6px">TOTAL HPP / COST MENU</div><div style="font-size:24px;font-weight:bold">${formatRupiah(menu.total_cost)}</div></div><div style="opacity:.8;font-size:14px">Selling Price: ${formatRupiah(menu.selling_price)} | Food Cost: ${Number(menu.food_cost_percent||0).toFixed(2)}% | Gross Profit: ${formatRupiah(menu.gross_profit)}</div></div><div class="menu-actions"><button class="action-btn edit-btn" onclick="event.stopPropagation();openEditMenu('${escapeHtml(menu.id)}')">Edit</button><button class="action-btn delete-btn-2" onclick="event.stopPropagation();deleteMenu('${escapeHtml(menu.id)}')">Hapus</button></div></div></div>`}).join("")}
+function renderMenuList(){const query=el.searchMenu.value.trim().toLowerCase(),filtered=menus.filter(menu=>[menu.nama,menu.category,menu.sub_category,menu.status].join(" ").toLowerCase().includes(query));if(!filtered.length){el.menuList.innerHTML=`<div class="notice">${menus.length?"Tidak ada menu yang cocok dengan pencarian":"Belum ada data menu"}</div>`;return}el.menuList.innerHTML=filtered.map(menu=>{const rows=(menu.items||[]).map(item=>`<tr><td>${escapeHtml(item.ingredient_type==="raw_material"?"Raw Material":"Preparation")}</td><td>${escapeHtml(item.ingredient_name)}</td><td>${escapeHtml(item.qty)}</td><td>${escapeHtml(item.unit)}</td><td>${formatRupiah(item.price_per_unit)}</td><td>${escapeHtml(item.waste_percent)}%</td><td>${formatRupiah(item.total)}</td></tr>`).join(""),open=String(expandedMenuId)===String(menu.id);return`<div class="menu-item"><div class="menu-top" onclick="toggleMenuDetail('${escapeHtml(menu.id)}')"><div class="menu-left"><div class="menu-name">${escapeHtml(menu.nama)}</div><div class="menu-badges"><div class="menu-badge">${escapeHtml(menu.category)}</div><div class="menu-badge">${escapeHtml(menu.sub_category||"-")}</div><div class="menu-badge">${escapeHtml(menu.status)}</div></div><div style="opacity:.7;margin-top:6px">${escapeHtml(menu.description||"")}</div></div><div class="menu-cost">${formatRupiah(menu.total_cost)}<div style="font-size:13px;opacity:.7;margin-top:6px">Recipe Cost</div></div></div><div class="menu-detail${open?" active":""}" id="detail-${escapeHtml(menu.id)}"><div style="font-size:18px;font-weight:bold;margin-bottom:16px">Recipe Detail</div><table class="menu-table"><thead><tr><th>Type</th><th>Ingredient</th><th>Qty</th><th>Unit</th><th>Harga/Unit</th><th>Waste %</th><th>Total</th></tr></thead><tbody>${rows}</tbody></table><div style="display:flex;justify-content:space-between;align-items:center;margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);flex-wrap:wrap;gap:20px"><div><div style="font-size:13px;opacity:.6;margin-bottom:6px">TOTAL RECIPE COST</div><div style="font-size:24px;font-weight:bold">${formatRupiah(menu.total_cost)}</div></div><div style="opacity:.8;font-size:14px">Selling Price: ${formatRupiah(menu.selling_price)} | Food Cost: ${Number(menu.food_cost_percent||0).toFixed(2)}% | Gross Profit: ${formatRupiah(menu.gross_profit)}</div></div><div class="menu-actions"><button class="action-btn edit-btn" onclick="event.stopPropagation();openEditMenu('${escapeHtml(menu.id)}')">Edit</button><button class="action-btn delete-btn-2" onclick="event.stopPropagation();deleteMenu('${escapeHtml(menu.id)}')">Hapus</button></div></div></div>`}).join("")}
 async function initMenuPage(){renderCategoryOptions();renderSubcategoryOptions();if(!assertSupabaseReady(false)){el.menuList.innerHTML=`<div class="notice">Konfigurasi Supabase belum tersedia</div>`;clearRecipe();return}try{await Promise.all([loadIngredientSources(),loadMenuCategories(),loadMenuSubcategories()]);clearRecipe();await loadMenus()}catch(error){logSupabaseError("Load gagal",error);if(!recipeBody.children.length)clearRecipe()}}
-Object.assign(window,{addRecipeRow,updateRecipeRow,updateRecipeName,calculateRecipeRow,deleteRecipeRow,saveMenu,resetMenuForm,openEditMenu,cancelEditMode,deleteMenu,toggleMenuDetail,renderMenuList,toggleNewCategoryField,toggleNewSubCategoryField,openCategoryManager,closeCategoryManager,openSubCategoryManager,closeSubCategoryManager,deleteMenuCategory,deleteMenuSubCategory});
+Object.assign(window,{addRecipeRow,updateRecipeRow,updateRecipeName,calculateRecipeRow,deleteRecipeRow,saveMenu,resetMenuForm,openEditMenu,cancelEditMode,deleteMenu,toggleMenuDetail,renderMenuList,toggleNewCategoryField,toggleNewSubCategoryField,openCategoryManager,closeCategoryManager,openSubCategoryManager,closeSubCategoryManager,editMenuCategory,editMenuSubCategory,deleteMenuCategory,deleteMenuSubCategory});
 el.menuSellingPrice.addEventListener("input",updateSummary);el.categoryModal.addEventListener("click",e=>{if(e.target===el.categoryModal)closeCategoryManager()});el.subCategoryModal.addEventListener("click",e=>{if(e.target===el.subCategoryModal)closeSubCategoryManager()});document.addEventListener("DOMContentLoaded",initMenuPage);
-</script>
-<script>(function(){const toggle=document.getElementById("menuToggle"),sidebar=document.getElementById("biyaSidebar"),overlay=document.getElementById("mobileOverlay");if(!toggle||!sidebar||!overlay)return;const mobileQuery=window.matchMedia("(max-width: 980px)");let closeButton=sidebar.querySelector(".sidebar-close");if(!closeButton){closeButton=document.createElement("button");closeButton.className="sidebar-close";closeButton.type="button";closeButton.setAttribute("aria-label","Tutup menu");closeButton.innerHTML="&times;";sidebar.prepend(closeButton)}toggle.setAttribute("aria-controls","biyaSidebar");toggle.setAttribute("aria-expanded","false");const closeSidebar=()=>{sidebar.classList.remove("open");overlay.classList.remove("open");document.body.classList.remove("biya-no-scroll");toggle.setAttribute("aria-expanded","false");sidebar.setAttribute("aria-hidden",mobileQuery.matches?"true":"false");overlay.setAttribute("aria-hidden","true")};const openSidebar=()=>{sidebar.classList.add("open");overlay.classList.add("open");document.body.classList.add("biya-no-scroll");toggle.setAttribute("aria-expanded","true");sidebar.setAttribute("aria-hidden","false");overlay.setAttribute("aria-hidden","false")};toggle.addEventListener("click",()=>sidebar.classList.contains("open")?closeSidebar():openSidebar());closeButton.addEventListener("click",closeSidebar);overlay.addEventListener("click",closeSidebar);sidebar.addEventListener("click",event=>{if(mobileQuery.matches&&event.target.closest(".item,.btn"))closeSidebar()});document.addEventListener("keydown",event=>{if(event.key==="Escape")closeSidebar()});const sync=()=>{if(mobileQuery.matches)sidebar.setAttribute("aria-hidden",sidebar.classList.contains("open")?"false":"true");else{closeSidebar();sidebar.setAttribute("aria-hidden","false")}};mobileQuery.addEventListener?mobileQuery.addEventListener("change",sync):mobileQuery.addListener(sync);sync()})();</script>
-</body>
-</html>
+</script> <script>
+(function(){ const toggle = document.getElementById('menuToggle'); const sidebar = document.getElementById('biyaSidebar'); const overlay = document.getElementById('mobileOverlay'); if(!toggle || !sidebar || !overlay) return; const mobileQuery = window.matchMedia('(max-width: 980px)'); let closeButton = sidebar.querySelector('.sidebar-close'); if(!closeButton){ closeButton = document.createElement('button'); closeButton.className = 'sidebar-close'; closeButton.type = 'button'; closeButton.setAttribute('aria-label', 'Tutup menu'); closeButton.innerHTML = '&times;'; sidebar.prepend(closeButton); } const style = document.createElement('style'); style.textContent = '.biya-no-scroll{overflow:hidden !important;}.sidebar-close{display:none;}@media (max-width:980px){.sidebar-close{display:flex;align-items:center;justify-content:center;width:42px;height:42px;margin:0 0 18px auto;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:rgba(255,255,255,.08);color:#fff;font-size:28px;line-height:1;cursor:pointer;}}'; document.head.appendChild(style); toggle.setAttribute('aria-controls','biyaSidebar'); toggle.setAttribute('aria-expanded','false'); const closeSidebar = () => { sidebar.classList.remove('open'); overlay.classList.remove('open'); document.body.classList.remove('biya-no-scroll'); toggle.setAttribute('aria-expanded','false'); sidebar.setAttribute('aria-hidden', mobileQuery.matches ? 'true' : 'false'); overlay.setAttribute('aria-hidden','true'); }; const openSidebar = () => { sidebar.classList.add('open'); overlay.classList.add('open'); document.body.classList.add('biya-no-scroll'); toggle.setAttribute('aria-expanded','true'); sidebar.setAttribute('aria-hidden','false'); overlay.setAttribute('aria-hidden','false'); }; toggle.addEventListener('click', () => { if(sidebar.classList.contains('open')) closeSidebar(); else openSidebar(); }); closeButton.addEventListener('click', closeSidebar); overlay.addEventListener('click', closeSidebar); sidebar.addEventListener('click', (event) => { if(!mobileQuery.matches) return; if(event.target.closest('a, .item, .btn')) closeSidebar(); }); document.addEventListener('keydown', (event) => { if(event.key === 'Escape') closeSidebar(); }); const syncLayout = () => { if(mobileQuery.matches){ sidebar.setAttribute('aria-hidden', sidebar.classList.contains('open') ? 'false' : 'true'); } else { closeSidebar(); sidebar.setAttribute('aria-hidden','false'); } }; mobileQuery.addEventListener ? mobileQuery.addEventListener('change', syncLayout) : mobileQuery.addListener(syncLayout); syncLayout();
+})();
+</script> </body>
+</html> 
