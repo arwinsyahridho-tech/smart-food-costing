@@ -24,8 +24,10 @@ body{background:#07173a;font-family:Arial,sans-serif;color:#fff}
 .summary-title{opacity:.6;margin-bottom:10px}
 .summary-value{font-size:24px;font-weight:bold;white-space:pre-line;line-height:1.25}
 .list-header{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;margin-bottom:22px}
-.search-wrap{display:flex;gap:12px;flex-wrap:wrap;align-items:center;width:100%}
-.search-box,.filter-box{width:280px;max-width:100%}
+.filter-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;width:100%;align-items:end}
+.filter-field{min-width:0}
+.filter-label{display:block;margin-bottom:8px;color:rgba(215,227,255,.72);font-size:13px;font-weight:700}
+.filter-field input,.filter-field select{height:52px}
 input,select{width:100%;height:56px;padding:0 18px;background:#0d2158;border:none;border-radius:14px;color:white;outline:none}
 .notice{opacity:.75;text-align:center;padding:22px;line-height:1.55}
 .error{background:rgba(255,77,79,.14);border:1px solid rgba(255,77,79,.32);color:#ffcccc;border-radius:16px;padding:18px;margin-bottom:18px;line-height:1.55}
@@ -99,9 +101,13 @@ td{background:#102B63!important;color:#fff!important}
   .summary-grid,.metric-grid,.product-hero{grid-template-columns:1fr!important}
   .section,.menu-item,.summary-box{padding:18px!important;margin-bottom:18px!important}
   .list-header,.product-title-row,.menu-top{flex-direction:column!important;align-items:stretch!important}
-  .search-box,.filter-box,.btn{width:100%!important;max-width:100%!important}
+  .filter-grid{grid-template-columns:1fr!important;gap:10px!important}
+  .filter-field,.btn{width:100%!important;max-width:100%!important}
   .menu-cost{width:100%;min-width:0;text-align:left!important}
   .menu-left{width:100%}
+}
+@media(min-width:981px) and (max-width:1220px){
+  .filter-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:700px){
   .recipe-table-wrap{display:none}
@@ -168,23 +174,27 @@ td{background:#102B63!important;color:#fff!important}
       <div class="list-header">
         <div>
           <div style="font-size:28px;font-weight:bold;margin-bottom:6px;">Pilih Produk / Menu</div>
-          <div style="opacity:.6;line-height:1.5;">Data diambil dari tabel Menu dan recipe yang sama dengan halaman menu.html.</div>
+          <div style="opacity:.6;line-height:1.5;">Pilih produk untuk melihat HPP, food cost, margin, dan rekomendasi harga jual.</div>
         </div>
-        <div class="search-wrap">
-          <div class="filter-box">
+        <div class="filter-grid">
+          <div class="filter-field">
+            <label class="filter-label" for="menuSelect">Pilih Produk/Menu</label>
             <select id="menuSelect" aria-label="Pilih menu">
               <option value="">Memuat menu...</option>
             </select>
           </div>
-          <div class="search-box">
-            <input id="searchProduct" placeholder="Cari nama / category / sub category..." type="text"/>
+          <div class="filter-field">
+            <label class="filter-label" for="searchProduct">Search Produk</label>
+            <input id="searchProduct" placeholder="Cari produk..." type="text"/>
           </div>
-          <div class="filter-box">
+          <div class="filter-field">
+            <label class="filter-label" for="filterCategory">Category</label>
             <select id="filterCategory">
               <option value="">All Category</option>
             </select>
           </div>
-          <div class="filter-box">
+          <div class="filter-field">
+            <label class="filter-label" for="filterSubCategory">Sub Category</label>
             <select id="filterSubCategory">
               <option value="">All Sub Category</option>
             </select>
