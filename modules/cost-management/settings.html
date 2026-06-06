@@ -219,17 +219,35 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
 .settings-field label{margin-bottom:7px;color:rgba(215,227,255,.78);font-size:12px;font-weight:600;line-height:1.3}
 .settings-field input,.settings-field select{height:46px;padding:0 14px;font-size:14px}
 .settings-field textarea{min-height:86px;padding:12px 14px;font-size:14px;line-height:1.5}
+.logo-upload{display:flex;align-items:center;gap:12px;min-width:0;min-height:46px}
+.logo-file-input{display:none!important}
+.logo-upload-button{flex:0 0 auto;height:42px;padding:0 14px;border:1px solid rgba(46,216,255,.24);border-radius:11px;background:rgba(0,102,255,.18);color:#fff;font-size:12px;font-weight:700;cursor:pointer;transition:.2s}
+.logo-upload-button:hover{background:rgba(0,102,255,.3);border-color:rgba(46,216,255,.42)}
+.logo-file-meta{min-width:0;display:flex;align-items:center;gap:10px}
+.logo-file-name{min-width:0;color:rgba(215,227,255,.62);font-size:11px;line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.logo-preview{display:none;flex:0 0 42px;width:42px;height:42px;border:1px solid var(--biya-border);border-radius:11px;background:rgba(255,255,255,.06);overflow:hidden}
+.logo-preview.visible{display:block}
+.logo-preview img{width:100%;height:100%;object-fit:contain}
 .settings-helper{display:block;width:fit-content;max-width:100%;margin-top:12px;padding:5px 9px;font-size:11px;line-height:1.4}
 .settings-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;padding:2px 0}
 .settings-actions .btn-action{width:auto!important;min-width:138px;height:44px;padding:0 18px;font-size:13px}
-.settings-actions .btn-reset{min-width:92px;background:rgba(255,255,255,.08)!important;border:1px solid var(--biya-border)!important;box-shadow:none!important;color:rgba(255,255,255,.82)!important}
+.settings-actions .btn-reset{min-width:92px;background:linear-gradient(135deg,#ef4444,#f97316)!important;border:1px solid rgba(255,255,255,.08)!important;box-shadow:0 8px 20px rgba(239,68,68,.18)!important;color:#fff!important}
+.settings-actions .btn-reset:hover{background:linear-gradient(135deg,#dc2626,#ea580c)!important}
+.settings-actions .btn-reset:active{transform:translateY(1px)}
 .settings-summary{position:sticky;top:24px;margin-bottom:0!important;padding:18px!important;border-color:rgba(46,216,255,.16)!important}
 .settings-summary .settings-section-head{margin-bottom:12px}
 .settings-summary .settings-section-description{display:none}
-.settings-summary-grid{display:grid!important;grid-template-columns:1fr!important;gap:8px!important}
-.settings-summary-grid .summary-box{display:flex;align-items:center;justify-content:space-between;gap:16px;min-width:0;padding:11px 12px!important;border-radius:12px!important;box-shadow:none!important}
-.settings-summary-grid .summary-title{margin:0;font-size:11px;line-height:1.35}
-.settings-summary-grid .summary-value{max-width:64%;font-size:14px;font-weight:700;line-height:1.35;text-align:right;overflow-wrap:anywhere}
+.settings-summary-grid{display:block!important}
+.summary-identity{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--biya-border);border-radius:13px;background:rgba(13,33,88,.72)}
+.summary-logo{flex:0 0 44px;width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--biya-border);border-radius:11px;background:rgba(255,255,255,.06);color:rgba(215,227,255,.45);font-size:18px;font-weight:700;overflow:hidden}
+.summary-logo img{width:100%;height:100%;object-fit:contain}
+.summary-business{min-width:0}
+.summary-label{color:rgba(215,227,255,.58);font-size:10px;line-height:1.3}
+.summary-business-name{margin-top:3px;font-size:14px;font-weight:700;line-height:1.35;overflow-wrap:anywhere}
+.summary-logo-name{margin-top:3px;color:rgba(215,227,255,.62);font-size:10px;line-height:1.3;overflow-wrap:anywhere}
+.summary-details{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:8px}
+.summary-item{min-width:0;padding:9px 10px;border:1px solid var(--biya-border);border-radius:11px;background:rgba(13,33,88,.56)}
+.summary-value{margin-top:3px;font-size:12px!important;font-weight:700;line-height:1.3;overflow-wrap:anywhere}
 @media (max-width:980px){
   .main.settings-page{padding:18px 16px 28px!important}
   .settings-header{margin-bottom:14px}
@@ -245,6 +263,10 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
   .settings-field-wide{grid-column:auto}
   .settings-field input,.settings-field select{height:44px}
   .settings-field textarea{min-height:76px}
+  .logo-upload{align-items:flex-start;flex-direction:column;gap:8px}
+  .logo-upload-button{width:100%;height:44px}
+  .logo-file-meta{width:100%}
+  .logo-file-name{white-space:normal}
   .settings-actions{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.55fr);gap:10px}
   .settings-actions .btn-action{width:100%!important;min-width:0;height:44px}
   .settings-summary{position:static;padding:16px!important}
@@ -287,7 +309,17 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
 <div class="settings-field"><label for="ownerName">Owner Name</label><input id="ownerName" placeholder="Nama Owner"/></div>
 <div class="settings-field"><label for="phone">Phone</label><input id="phone" placeholder="08xxxxxxxxxx"/></div>
 <div class="settings-field"><label for="email">Email</label><input id="email" placeholder="owner@email.com"/></div>
-<div class="settings-field"><label for="logoUrl">Logo URL</label><input id="logoUrl" placeholder="https://.../logo.png"/></div>
+<div class="settings-field">
+<label for="logoFile">Upload Logo</label>
+<div class="logo-upload">
+<input class="logo-file-input" id="logoFile" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml"/>
+<button class="logo-upload-button" id="logoChooseBtn" type="button">Pilih File Logo</button>
+<div class="logo-file-meta">
+<div class="logo-preview" id="logoPreview"><img id="logoPreviewImage" alt="Preview logo bisnis"/></div>
+<div class="logo-file-name" id="logoFileName">Belum ada file dipilih</div>
+</div>
+</div>
+</div>
 <div class="settings-field settings-field-wide"><label for="address">Address</label><textarea id="address" placeholder="Alamat bisnis"></textarea></div>
 </div>
 </section>
@@ -331,13 +363,36 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
 </div>
 <script>
 const KEY = "biya_settings";
-const defaults = { businessName: "BIYA Cost Management", businessType: "F&B", ownerName: "", phone: "", email: "", address: "", logoUrl: "", foodCostTarget: 35, profitTarget: 50, currency: "IDR", dateFormat: "dd/mm/yyyy", autoCapitalize: "on", defaultStatus: "ACTIVE"
-}; function loadSettings(){ try{ return Object.assign({}, defaults, JSON.parse(localStorage.getItem(KEY) || "{}")); }catch(e){ return {...defaults}; }
+const MAX_LOGO_SIZE = 1024 * 1024;
+const ALLOWED_LOGO_TYPES = new Set(["image/png", "image/jpeg", "image/webp", "image/svg+xml"]);
+const defaults = { businessName: "BIYA Cost Management", businessType: "F&B", ownerName: "", phone: "", email: "", address: "", logoUrl: "", logoDataUrl: "", logoFileName: "", foodCostTarget: 35, profitTarget: 50, currency: "IDR", dateFormat: "dd/mm/yyyy", autoCapitalize: "on", defaultStatus: "ACTIVE"
+};
+let pendingLogoSource = "";
+let pendingLogoFileName = "";
+function loadSettings(){ try{ return Object.assign({}, defaults, JSON.parse(localStorage.getItem(KEY) || "{}")); }catch(e){ return {...defaults}; }
 }
-function saveSettings(s){ localStorage.setItem(KEY, JSON.stringify(s));
+function saveSettings(s){ try{ localStorage.setItem(KEY, JSON.stringify(s)); return true; }catch(e){ alert("Logo terlalu besar untuk disimpan. Pilih file yang lebih kecil."); return false; }
 }
-function fill(){ const s = loadSettings(); businessName.value = s.businessName; businessType.value = s.businessType; ownerName.value = s.ownerName; phone.value = s.phone; email.value = s.email; address.value = s.address; logoUrl.value = s.logoUrl; foodCostTarget.value = s.foodCostTarget; profitTarget.value = s.profitTarget; currency.value = s.currency; dateFormat.value = s.dateFormat; autoCapitalize.value = s.autoCapitalize; defaultStatus.value = s.defaultStatus; const displayValue = value => value === null || value === undefined || String(value).trim() === "" ? "-" : value; const displayPercent = value => displayValue(value) === "-" ? "-" : `${value}%`; const summary = [ ["Business", displayValue(s.businessName)], ["Type", displayValue(s.businessType)], ["Food Cost Target", displayPercent(s.foodCostTarget)], ["Profit Target", displayPercent(s.profitTarget)], ["Currency", displayValue(s.currency)], ["Auto Capitalize", displayValue(s.autoCapitalize).toString().toUpperCase()] ]; summaryGrid.innerHTML = summary.map(([k,v])=>`<div class="summary-box"><div class="summary-title">${k}</div><div class="summary-value">${v}</div></div>`).join("");
-} saveBtn.onclick = () => { const s = { businessName: businessName.value.trim() || defaults.businessName, businessType: businessType.value.trim(), ownerName: ownerName.value.trim(), phone: phone.value.trim(), email: email.value.trim(), address: address.value.trim(), logoUrl: logoUrl.value.trim(), foodCostTarget: Number(foodCostTarget.value) || defaults.foodCostTarget, profitTarget: Number(profitTarget.value) || defaults.profitTarget, currency: currency.value, dateFormat: dateFormat.value, autoCapitalize: autoCapitalize.value, defaultStatus: defaultStatus.value }; saveSettings(s); fill(); alert("Settings tersimpan");
+function displayValue(value){ return value === null || value === undefined || String(value).trim() === "" ? "-" : value;
+}
+function displayPercent(value){ return displayValue(value) === "-" ? "-" : `${value}%`;
+}
+function escapeHTML(value){ return String(value ?? "").replace(/[&<>"']/g, character => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", "\"":"&quot;", "'":"&#39;" }[character]));
+}
+function getLogoSource(settings){ return settings.logoDataUrl || settings.logoUrl || "";
+}
+function getSafeLogoSource(source){ const value = String(source || "").trim(); return /^(data:image\/(?:png|jpeg|webp|svg\+xml);base64,|https?:\/\/)/i.test(value) ? value : "";
+}
+function updateLogoField(){ const source = getSafeLogoSource(pendingLogoSource); logoFileName.textContent = pendingLogoFileName || (source ? "Logo tersimpan" : "Belum ada file dipilih"); logoPreview.classList.toggle("visible", Boolean(source)); if(source){ logoPreviewImage.src = source; }else{ logoPreviewImage.removeAttribute("src"); }
+}
+function renderSummary(settings){ const logoSource = getSafeLogoSource(getLogoSource(settings)); const logoName = displayValue(settings.logoFileName || (logoSource ? "Logo tersimpan" : "")); const logoMarkup = logoSource ? `<img src="${escapeHTML(logoSource)}" alt="Logo ${escapeHTML(displayValue(settings.businessName))}"/>` : "B"; const details = [ ["Type", displayValue(settings.businessType)], ["Currency", displayValue(settings.currency)], ["Food Cost", displayPercent(settings.foodCostTarget)], ["Profit", displayPercent(settings.profitTarget)], ["Auto Capitalize", displayValue(settings.autoCapitalize).toString().toUpperCase()], ["Default Status", displayValue(settings.defaultStatus)] ]; summaryGrid.innerHTML = `<div class="summary-identity"><div class="summary-logo">${logoMarkup}</div><div class="summary-business"><div class="summary-label">Business</div><div class="summary-business-name">${escapeHTML(displayValue(settings.businessName))}</div><div class="summary-logo-name">Logo: ${escapeHTML(logoName)}</div></div></div><div class="summary-details">${details.map(([label,value]) => `<div class="summary-item"><div class="summary-label">${escapeHTML(label)}</div><div class="summary-value">${escapeHTML(value)}</div></div>`).join("")}</div>`;
+}
+function fill(){ const s = loadSettings(); businessName.value = s.businessName; businessType.value = s.businessType; ownerName.value = s.ownerName; phone.value = s.phone; email.value = s.email; address.value = s.address; foodCostTarget.value = s.foodCostTarget; profitTarget.value = s.profitTarget; currency.value = s.currency; dateFormat.value = s.dateFormat; autoCapitalize.value = s.autoCapitalize; defaultStatus.value = s.defaultStatus; pendingLogoSource = getLogoSource(s); pendingLogoFileName = s.logoFileName || ""; logoFile.value = ""; updateLogoField(); renderSummary(s);
+}
+logoChooseBtn.onclick = () => logoFile.click();
+logoFile.onchange = () => { const file = logoFile.files && logoFile.files[0]; if(!file) return; if(!ALLOWED_LOGO_TYPES.has(file.type)){ logoFile.value = ""; alert("Format logo harus PNG, JPG, JPEG, WEBP, atau SVG."); return; } if(file.size > MAX_LOGO_SIZE){ logoFile.value = ""; alert("Ukuran logo maksimal 1 MB."); return; } const reader = new FileReader(); reader.onload = () => { pendingLogoSource = String(reader.result || ""); pendingLogoFileName = file.name; updateLogoField(); }; reader.onerror = () => { logoFile.value = ""; alert("Logo tidak dapat dibaca. Silakan pilih file lain."); }; reader.readAsDataURL(file);
+};
+saveBtn.onclick = () => { const isDataUrl = pendingLogoSource.startsWith("data:image/"); const s = { businessName: businessName.value.trim() || defaults.businessName, businessType: businessType.value.trim(), ownerName: ownerName.value.trim(), phone: phone.value.trim(), email: email.value.trim(), address: address.value.trim(), logoUrl: isDataUrl ? "" : pendingLogoSource, logoDataUrl: isDataUrl ? pendingLogoSource : "", logoFileName: pendingLogoFileName, foodCostTarget: Number(foodCostTarget.value) || defaults.foodCostTarget, profitTarget: Number(profitTarget.value) || defaults.profitTarget, currency: currency.value, dateFormat: dateFormat.value, autoCapitalize: autoCapitalize.value, defaultStatus: defaultStatus.value }; if(!saveSettings(s)) return; fill(); alert("Settings tersimpan");
 };
 resetBtn.onclick = () => { localStorage.removeItem(KEY); fill(); alert("Settings direset");
 };
