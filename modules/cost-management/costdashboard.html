@@ -1,889 +1,129 @@
-<!DOCTYPE html> <html lang="id">
+<!DOCTYPE html>
+<html lang="id">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>BIYA - Dashboard</title>
-<style> :root{ --bg:#07173a; --panel:#102766; --panel-2:#0d2158; --panel-3:#1b3d96; --primary:#2563eb; --text:#fff; --muted:rgba(255,255,255,.7); --muted-2:rgba(255,255,255,.55); --danger:#ef4444; --warning:#f59e0b; --success:#22c55e; --shadow:0 10px 30px rgba(37,99,235,.16); --radius:18px; } *{margin:0;padding:0;box-sizing:border-box} body{ background:var(--bg); font-family:Arial,Helvetica,sans-serif; color:var(--text); } .wrapper{display:flex;min-height:100vh} .sidebar{ position:fixed;left:0;top:0;width:260px;height:100vh;background:#102766; padding:30px;overflow:auto } .logo{ font-size:34px;font-weight:700;margin-bottom:45px;letter-spacing:.2px; line-height:1.1; } .logo small{ display:block; font-size:12px; font-weight:400; opacity:.65; margin-top:8px; letter-spacing:1.6px; } .item{ height:56px;padding:0 18px;display:flex;align-items:center;border-radius:16px; margin-bottom:12px;cursor:pointer;font-size:16px;transition:.22s;color:white; user-select:none; } .item:hover{transform:translateX(6px);background:rgba(255,255,255,.06)} .item.active{ background:var(--primary);transform:translateX(10px); box-shadow:0 10px 30px rgba(37,99,235,.35) } .btn{ margin-top:18px;height:54px;width:100%;border:none;border-radius:14px; background:var(--primary);color:white;cursor:pointer;font-weight:700 } .main{margin-left:260px;width:calc(100% - 260px);padding:40px} .page{ width:100%; max-width:1600px; margin:0 auto; } .title{font-size:44px;margin-bottom:10px;line-height:1.05} .sub{opacity:.72;margin-bottom:30px;font-size:16px} .section{ background:var(--panel); padding:28px; border-radius:22px; margin-bottom:24px; box-shadow:var(--shadow); } .summary-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:16px; } .summary-box{ background:var(--panel-2); padding:20px; border-radius:16px; min-height:110px; } .summary-title{ opacity:.6; margin-bottom:10px; font-size:13px; } .summary-value{ font-size:26px; font-weight:700; line-height:1.15; white-space:pre-line; } .top-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:20px; } .card{ background:var(--panel-2); padding:22px; border-radius:18px; height:100%; } .card-title{ font-size:22px; font-weight:700; margin-bottom:10px; } .card-sub{ opacity:.7; font-size:13px; margin-bottom:18px; } .product-hero{ display:flex; gap:16px; align-items:flex-start; } .thumb{ width:74px;height:74px;border-radius:16px;overflow:hidden; background:#07173a;border:1px solid rgba(255,255,255,.08);flex:0 0 auto } .thumb img{width:100%;height:100%;object-fit:cover;display:block} .thumb .empty{ width:100%;height:100%;display:flex;align-items:center;justify-content:center; font-size:12px;color:#9bb3ee;text-align:center;padding:8px } .product-name{font-size:20px;font-weight:700;margin-bottom:8px} .pill-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px} .pill{ display:inline-block;padding:6px 10px;border-radius:999px;background:var(--primary); font-size:12px; } .pill.gray{background:#334155} .pill.green{background:rgba(34,197,94,.18);color:#86efac} .pill.yellow{background:rgba(234,179,8,.18);color:#fde68a} .pill.red{background:rgba(239,68,68,.18);color:#fca5a5} .health-score{ display:flex; gap:16px; align-items:flex-start; } .score-circle{ width:86px; height:86px; border-radius:22px; display:flex; align-items:center; justify-content:center; background:#07173a; font-size:34px; font-weight:700; border:1px solid rgba(255,255,255,.08); flex:0 0 auto; } .score-desc{ font-size:14px; line-height:1.65; opacity:.92; margin-top:8px; } .chart-box{display:flex;flex-direction:column;gap:16px} .chart-meta{ display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap } .chart-select{ width:100%; height:52px; padding:0 18px; background:#07173a; border:none; border-radius:14px; color:#fff; outline:none; } .bars{display:flex;flex-direction:column;gap:14px;margin-top:8px} .bar-item{ display:grid; grid-template-columns:130px 1fr 72px; gap:12px; align-items:center; } .bar-label{font-size:14px;opacity:.92} .bar-track{ width:100%; height:16px; border-radius:999px; background:#07173a; overflow:hidden; border:1px solid rgba(255,255,255,.06) } .bar-fill{height:100%;border-radius:999px;min-width:4px} .bar-value{text-align:right;font-size:13px;opacity:.85} .search-wrap{ display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:18px } .search-box,.filter-box{width:280px;max-width:100%} .search-box input,.filter-box select{ width:100%; height:52px; padding:0 18px; background:#07173a; border:none; border-radius:14px; color:white; outline:none; } table{ width:100%; border-collapse:collapse; overflow:hidden; border-radius:14px; min-width:900px; } th{ background:var(--panel-3); padding:14px 16px; font-size:14px; text-align:left; white-space:nowrap; } td{ padding:14px 16px; background:var(--panel-2); border-bottom:1px solid rgba(255,255,255,.05); vertical-align:top; } .status{ display:inline-block; padding:6px 10px; border-radius:999px; font-size:12px; font-weight:700; } .ok{background:rgba(34,197,94,.18);color:#86efac} .warn{background:rgba(234,179,8,.18);color:#fde68a} .danger{background:rgba(239,68,68,.18);color:#fca5a5} .muted{opacity:.72;font-size:13px} .info-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; } .mini-box{ background:#07173a; border:1px solid rgba(255,255,255,.06); border-radius:16px; padding:18px; min-height:98px; } .mini-title{ font-size:13px; opacity:.65; margin-bottom:8px; } .mini-value{ font-size:22px; font-weight:700; line-height:1.15; white-space:pre-line; } .alert-list{display:flex;flex-direction:column;gap:12px;margin-top:14px} .alert-item{ padding:16px; border-radius:14px; background:#07173a; border:1px solid rgba(255,255,255,.06); display:flex; gap:12px; align-items:flex-start; } .alert-dot{ width:10px;height:10px;border-radius:999px;margin-top:6px;flex:0 0 auto } .dot-green{background:#22c55e} .dot-yellow{background:#eab308} .dot-red{background:#ef4444} .insight-list{display:flex;flex-direction:column;gap:12px;margin-top:14px} .insight-item{ background:#07173a; border:1px solid rgba(255,255,255,.06); border-radius:14px; padding:16px; line-height:1.6; } .flex-between{ display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap } @media (max-width: 1180px){ .top-grid{grid-template-columns:repeat(2,1fr)} } @media (max-width: 980px){ .sidebar{position:relative;width:100%;height:auto} .main{margin-left:0;width:100%} .top-grid{grid-template-columns:1fr} .search-box,.filter-box{width:100%} .bar-item{grid-template-columns:110px 1fr 60px} } </style> <style id="biya-theme">
-:root{ --biya-bg:#04122B; --biya-sidebar:#081A3A; --biya-surface:#102B63; --biya-surface-hover:#163A87; --biya-primary:#0066FF; --biya-success:#00D66B; --biya-cyan:#2ED8FF; --biya-warning:#FFB800; --biya-danger:#FF4D4F; --biya-text:#FFFFFF; --biya-muted:#D7E3FF; --biya-border:rgba(255,255,255,0.08); --biya-card-shadow:0 8px 24px rgba(0,0,0,0.20); --biya-modal-shadow:0 20px 40px rgba(0,0,0,0.30); --biya-active-shadow:0 0 20px rgba(0,102,255,0.35); --biya-radius-card:16px; --biya-radius-btn:12px; --biya-radius-input:12px; --biya-radius-modal:20px;
-} html{ scroll-behavior:smooth;
-} body{ background:var(--biya-bg)!important; color:var(--biya-text)!important; font-family:Inter, "Segoe UI", Arial, sans-serif!important;
-} .wrapper{ background:transparent!important;
-} .sidebar{ background:linear-gradient(180deg, rgba(8,26,58,.98), rgba(4,18,43,.98))!important; border-right:1px solid var(--biya-border)!important; box-shadow:var(--biya-card-shadow)!important;
-} .logo{ color:#fff!important; letter-spacing:.2px!important;
-} .logo small{ display:block!important; margin-top:8px!important; font-size:12px!important; font-weight:400!important; opacity:.65!important; letter-spacing:1.6px!important;
-} .item{ color:var(--biya-muted)!important; border:1px solid transparent!important; border-radius:16px!important;
-} .item:hover{ background:var(--biya-surface-hover)!important; color:#fff!important; transform:translateX(6px)!important;
-} .item.active{ background:linear-gradient(135deg, var(--biya-primary), var(--biya-success))!important; color:#fff!important; box-shadow:var(--biya-active-shadow)!important;
-} .btn,
-.btn-action,
-.save-btn,
-.add-row-btn,
-.action,
-.loginBtn,
-.primary-btn{ background:linear-gradient(135deg, var(--biya-primary), var(--biya-success))!important; color:#fff!important; border:none!important; border-radius:var(--biya-radius-btn)!important; box-shadow:var(--biya-card-shadow)!important;
-} .btn.secondary,
-.btn-action.red,
-.action.alt,
-.btn.alt{ background:var(--biya-surface-hover)!important; color:#fff!important;
-} .section,
-.card,
-.summary-box,
-.mini-box,
-.detail-card,
-.menu-item,
-.prep-item,
-.category-block,
-.box,
-.alert-item,
-.insight-item,
-.modalBox,
-.section-card,
-.panel{ background:linear-gradient(180deg, rgba(16,43,99,.96), rgba(12,34,83,.98))!important; border:1px solid var(--biya-border)!important; border-radius:var(--biya-radius-card)!important; box-shadow:var(--biya-card-shadow)!important;
-} .modal{ background:rgba(0,0,0,.56)!important;
-} .modalBox{ border-radius:var(--biya-radius-modal)!important; box-shadow:var(--biya-modal-shadow)!important;
-} input,
-select,
-textarea,
-.table-input,
-.table-select,
-.search-box input,
-.chart-select,
-input[type="file"]{ background:rgba(16,43,99,.95)!important; border:1px solid var(--biya-border)!important; border-radius:var(--biya-radius-input)!important; color:#fff!important; outline:none!important;
-} input::placeholder,
-textarea::placeholder{ color:rgba(215,227,255,.5)!important;
-} th,
-thead th{ background:#163A87!important; color:#fff!important;
-} td,
-tbody td{ background:#102B63!important; color:#fff!important;
-} tbody tr:hover td{ background:#163A87!important;
-} .summary-title,
-.mini-title,
-.card-sub,
-.sub,
-.small-note,
-.notice,
-.muted{ color:rgba(215,227,255,.72)!important;
-} .pill,
-.menu-badge,
-.prep-category,
-.status{ border-radius:999px!important;
-} .pill.green,
-.profit-green,
-.ok{ background:rgba(0,214,107,.18)!important; color:#96f5b7!important;
-} .pill.yellow,
-.profit-yellow,
-.warn{ background:rgba(255,184,0,.18)!important; color:#ffe08a!important;
-} .pill.red,
-.profit-red,
-.danger{ background:rgba(255,77,79,.18)!important; color:#ffb4b4!important;
-} .pill.gray{ background:#163A87!important; color:#fff!important;
-} ::-webkit-scrollbar{ width:10px; height:10px;
-}
-::-webkit-scrollbar-thumb{ background:#163A87; border-radius:999px;
-}
-::-webkit-scrollbar-track{ background:transparent;
-} @media (max-width: 980px){ .sidebar{ position:relative!important; width:100%!important; height:auto!important; } .main{ margin-left:0!important; width:100%!important; } .grid, .grid3, .summary, .summary-grid, .top-grid, .info, .detail-grid, .summary-callout{ grid-template-columns:1fr!important; } .search-box, .filter-box{ width:100%!important; max-width:100%!important; } .menu-cost, .preview-right, .prep-right{ min-width:0!important; text-align:left!important; } .menu-header, .headerCard, .prep-header, .product-hero, .preview-top{ flex-direction:column!important; }
-}
-</style> <style id="biya-mobile-nav">
-.mobile-header{ display:none;
-}
-.mobile-logo{ font-size:20px; font-weight:700; letter-spacing:.6px;
-}
-.menu-toggle{ width:48px; height:48px; border:none; border-radius:12px; background:linear-gradient(135deg, #0066FF, #00D66B); color:#fff; font-size:22px; font-weight:700; cursor:pointer; box-shadow:0 8px 24px rgba(0,0,0,.2);
-}
-.mobile-overlay{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.52); z-index:998;
-}
-@media (max-width: 980px){ body{ overflow-x:hidden !important; } .mobile-header{ display:flex; align-items:center; justify-content:space-between; gap:16px; position:sticky; top:0; z-index:1002; padding:14px 18px; background:linear-gradient(180deg, rgba(8,26,58,.98), rgba(4,18,43,.96)); border-bottom:1px solid rgba(255,255,255,.08); backdrop-filter:blur(14px); } .mobile-overlay.open{ display:block; } .sidebar, aside.sidebar, div.sidebar{ position:fixed !important; left:-280px !important; top:0 !important; width:260px !important; height:100vh !important; z-index:999 !important; transition:left .28s ease !important; overflow:auto !important; box-shadow:0 20px 40px rgba(0,0,0,.35) !important; } .sidebar.open{ left:0 !important; } .main{ margin-left:0 !important; width:100% !important; padding:20px !important; padding-top:18px !important; } .wrapper{ display:block !important; } .section, .card, .summary-box{ border-radius:18px !important; }
-}
-</style> <style id="biya-mobile-first-overrides">
-/* Mobile-first responsive layer. Keep this after page styles. */
-html{ -webkit-text-size-adjust:100%;
-} body{ overflow-x:hidden !important;
-} img,
-svg,
-canvas,
-video{ max-width:100%; height:auto;
-} .wrapper{ display:block !important; min-height:100vh;
-} .mobile-header{ display:flex !important; align-items:center; justify-content:space-between; gap:12px; position:sticky; top:0; z-index:1002; min-height:64px; padding:12px 16px; background:linear-gradient(180deg, rgba(8,26,58,.98), rgba(4,18,43,.96)); border-bottom:1px solid rgba(255,255,255,.08); backdrop-filter:blur(14px);
-} .mobile-logo{ min-width:0; font-size:18px !important; font-weight:700; letter-spacing:.4px; line-height:1.2;
-} .mobile-logo small{ display:block; margin-top:2px; font-size:10px; font-weight:400; letter-spacing:.9px; opacity:.68;
-} .menu-toggle{ flex:0 0 46px; width:46px !important; height:46px !important; border:none; border-radius:12px; background:linear-gradient(135deg, #0066FF, #00D66B); color:#fff; font-size:22px; font-weight:700; line-height:1; cursor:pointer; box-shadow:0 8px 24px rgba(0,0,0,.2);
-} .mobile-overlay{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.52); z-index:998;
-} .mobile-overlay.open{ display:block;
-} .sidebar,
-aside.sidebar,
-div.sidebar{ position:fixed !important; left:-280px !important; top:0 !important; width:260px !important; height:100vh !important; z-index:999 !important; overflow:auto !important; transition:left .28s ease !important; box-shadow:0 20px 40px rgba(0,0,0,.35) !important;
-} .sidebar.open{ left:0 !important;
-} .main{ margin-left:0 !important; width:100% !important; max-width:100%; padding:20px !important; padding-top:18px !important;
-} .title{ font-size:clamp(30px, 9vw, 40px) !important; line-height:1.08 !important; overflow-wrap:anywhere;
-} .sub{ line-height:1.6;
-} .section,
-.card,
-.menu-item,
-.prep-item,
-.panel{ padding:18px !important; margin-bottom:18px !important;
-} .grid,
-.grid3,
-.top-grid,
-.summary-grid,
-.info,
-.detail-grid,
-.summary-callout,
-.info-grid,
-.prep-groups{ display:grid !important; grid-template-columns:1fr !important; gap:14px !important;
-} .summary{ display:grid !important; grid-template-columns:1fr !important; gap:14px !important;
-} .headerCard,
-.preview-top,
-.menu-top,
-.prep-header,
-.product-hero,
-.flex-between,
-.list-header,
-.chart-head,
-.section-head,
-.detail-footer,
-.save-row,
-.list-tools{ flex-direction:column !important; align-items:stretch !important;
-} .menu-cost,
-.prep-right,
-.preview-right,
-.prep-cost{ min-width:0 !important; width:100%; text-align:left !important; white-space:normal !important;
-} .search-box,
-.filter-box,
-.chart-select,
-.btn,
-.btn-action,
-.save-btn,
-.add-row-btn,
-.action,
-.primary-btn{ width:100% !important; max-width:100% !important;
-} input,
-select,
-textarea,
-button{ max-width:100%;
-} .table-wrapper,
-.prep-table,
-.menu-table,
-[style*="overflow:auto"]{ max-width:100%; overflow-x:auto !important; -webkit-overflow-scrolling:touch;
-} table{ width:100%;
-} .table-wrapper table,
-.prep-table table,
-.menu-table,
-table[id],
-table:not(.mobile-card-table){ min-width:720px;
-} .modal{ padding:14px !important; align-items:flex-start !important; overflow:auto !important;
-} .modalBox,
-.modal-card{ width:100% !important; max-width:100% !important; max-height:calc(100vh - 28px) !important; padding:20px !important;
-} @media (min-width: 700px){ .main{ padding:28px !important; } .grid, .summary-grid, .info, .info-grid, .prep-groups{ grid-template-columns:repeat(2, minmax(0, 1fr)) !important; } .grid3, .top-grid{ grid-template-columns:repeat(2, minmax(0, 1fr)) !important; } .summary{ grid-template-columns:repeat(2, minmax(0, 1fr)) !important; } .search-box, .filter-box, .chart-select{ width:min(100%, 340px) !important; }
-} @media (min-width: 981px){ body{ overflow-x:auto !important; } .mobile-header, .mobile-overlay{ display:none !important; } .wrapper{ display:flex !important; } .sidebar, aside.sidebar, div.sidebar{ position:fixed !important; left:0 !important; top:0 !important; width:260px !important; height:100vh !important; z-index:auto !important; transition:none !important; } .main{ margin-left:260px !important; width:calc(100% - 260px) !important; padding:40px !important; } .grid{ grid-template-columns:repeat(2, minmax(0, 1fr)) !important; } .grid3{ grid-template-columns:repeat(3, minmax(0, 1fr)) !important; } .top-grid{ grid-template-columns:repeat(4, minmax(0, 1fr)) !important; } .info, .info-grid{ grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)) !important; } .detail-grid{ grid-template-columns:240px 1fr !important; } .summary{ display:flex !important; } .headerCard, .preview-top, .menu-top, .prep-header, .product-hero, .flex-between, .list-header, .chart-head, .section-head, .detail-footer, .save-row, .list-tools{ flex-direction:row !important; align-items:flex-start !important; } .flex-between, .list-header, .chart-head, .section-head, .detail-footer{ align-items:center !important; } .menu-cost, .prep-right, .preview-right, .prep-cost{ width:auto; text-align:right !important; } .search-box, .filter-box, .chart-select, .save-btn, .add-row-btn, .action, .primary-btn{ width:auto !important; } .sidebar .btn{ width:100% !important; } .modal{ align-items:center !important; } .modalBox{ max-width:900px !important; }
-}
-</style> <style id="biya-icon-system">
-.biya-icon{ width:1.15em; height:1.15em; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; fill:none; flex:0 0 auto;
-}
-.item .biya-icon{ margin-right:10px;
-}
-.icon .biya-icon{ width:30px; height:30px; margin:0;
-}
-.btn .biya-icon,
-button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
-}
-.delete-btn .biya-icon,
-.menu-toggle .biya-icon{ margin:0;
-}
-</style> <style id="biya-mobile-sidebar-brand-fix">
-@media (max-width: 980px){
-  .sidebar .logo{
-    display:none!important;
-  }
-  .sidebar,
-  aside.sidebar,
-  div.sidebar{
-    padding-top:18px!important;
-  }
-}
-</style> <style id="biya-dashboard-mobile-compact">
-.dashboard-more-note{display:none}
-@media (min-width:769px){
-  .dashboard-smart-mobile{display:none!important}
-}
-@media (max-width:768px){
-  html,
-  body{max-width:100%;overflow-x:hidden!important}
-  .main{padding:16px!important;padding-top:14px!important}
-  .page{max-width:100%;overflow-x:hidden}
-  .title{font-size:30px!important;line-height:1.05!important;margin-bottom:6px!important}
-  .sub{font-size:13px!important;line-height:1.42!important;margin-bottom:14px!important;color:rgba(215,227,255,.66)!important}
-  .summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;margin-bottom:14px!important}
-  .summary-box{min-width:0!important;min-height:0!important;padding:12px 13px!important;border-radius:14px!important}
-  .summary-title{font-size:11px!important;line-height:1.25!important;margin-bottom:6px!important;font-weight:400!important;color:rgba(215,227,255,.62)!important}
-  .summary-value{font-size:20px!important;line-height:1.15!important;font-weight:800!important;overflow-wrap:anywhere}
-  .summary-box:nth-child(4) .summary-value{font-size:17px!important}
-  .top-grid{display:grid!important;grid-template-columns:1fr!important;gap:12px!important;margin-top:0!important}
-  .section{padding:14px!important;margin-bottom:12px!important;border-radius:15px!important}
-  .card-title{font-size:17px!important;line-height:1.2!important;margin-bottom:4px!important}
-  .card-sub{font-size:12px!important;line-height:1.35!important;margin-bottom:10px!important;color:rgba(215,227,255,.62)!important}
-  .dashboard-smart-desktop{display:none!important}
-  .dashboard-smart-mobile{display:block!important}
-  .health-score{display:flex!important;flex-direction:row!important;align-items:center!important;gap:12px!important}
-  .score-circle{width:54px!important;height:54px!important;flex:0 0 54px!important;border-radius:14px!important;font-size:24px!important}
-  .score-desc{margin-top:4px!important;font-size:12px!important;line-height:1.45!important;color:rgba(215,227,255,.78)!important}
-  #healthScoreCard [style*="font-size:22px"]{font-size:17px!important;line-height:1.2!important}
-  .product-hero{display:flex!important;flex-direction:row!important;align-items:center!important;gap:11px!important}
-  .thumb{width:54px!important;height:54px!important;flex-basis:54px!important;border-radius:12px!important}
-  .thumb .empty{font-size:10px!important;padding:4px!important}
-  .product-name{font-size:15px!important;line-height:1.25!important;margin-bottom:3px!important}
-  .pill-row{gap:6px!important;margin-top:6px!important}
-  .pill{font-size:10px!important;line-height:1.1!important;padding:5px 7px!important}
-  .alert-list,
-  .insight-list{gap:8px!important;margin-top:8px!important}
-  .alert-item{padding:10px 11px!important;border-radius:12px!important;gap:9px!important;font-size:12px!important;line-height:1.42!important}
-  .alert-dot{width:8px!important;height:8px!important;margin-top:5px!important}
-  .alert-list .alert-item:nth-of-type(n+4){display:none!important}
-  .insight-list .insight-item:nth-of-type(n+4){display:none!important}
-  .dashboard-more-note{display:block!important;margin-top:8px!important;font-size:12px!important;color:rgba(215,227,255,.68)!important}
-  #rankingCard > div{padding:9px 0!important;gap:10px!important}
-  #rankingCard [style*="font-weight:700"]{font-size:13px!important;line-height:1.3!important}
-  .muted{font-size:11px!important;line-height:1.35!important}
-  .flex-between{gap:8px!important;margin-bottom:10px!important}
-  .info-grid{grid-template-columns:1fr!important;gap:9px!important}
-  .mini-box{min-height:0!important;padding:11px 12px!important;border-radius:13px!important}
-  .mini-title{font-size:11px!important;margin-bottom:5px!important}
-  .mini-value{font-size:16px!important;line-height:1.15!important}
-  .chart-box{gap:10px!important}
-  .chart-meta{gap:8px!important}
-  .chart-meta > div[style*="min-width"]{min-width:0!important;width:100%!important}
-  .chart-select,
-  .search-box input,
-  .filter-box select{height:42px!important;padding:0 12px!important;border-radius:12px!important;font-size:13px!important}
-  .bars{gap:9px!important;margin-top:4px!important}
-  .bar-item{grid-template-columns:minmax(78px,.85fr) 1.4fr 44px!important;gap:8px!important}
-  .bar-label,
-  .bar-value{font-size:11px!important}
-  .bar-track{height:9px!important}
-  .search-wrap{gap:8px!important;margin-bottom:10px!important}
-  .dashboard-health-table-wrap{overflow:visible!important;max-width:100%!important}
-  .dashboard-health-table-wrap table{display:block!important;min-width:0!important;width:100%!important;border-radius:0!important}
-  .dashboard-health-table-wrap thead{display:none!important}
-  .dashboard-health-table-wrap tbody{display:grid!important;gap:8px!important}
-  .dashboard-health-table-wrap tr{display:block!important;padding:10px 11px!important;border:1px solid rgba(255,255,255,.08)!important;border-radius:13px!important;background:linear-gradient(180deg, rgba(16,43,99,.96), rgba(12,34,83,.98))!important}
-  .dashboard-health-table-wrap td{display:grid!important;grid-template-columns:88px 1fr!important;gap:8px!important;padding:4px 0!important;border-bottom:none!important;background:transparent!important;font-size:12px!important;line-height:1.35!important}
-  .dashboard-health-table-wrap td::before{font-size:10px!important;text-transform:uppercase;color:rgba(215,227,255,.58)!important;letter-spacing:.2px}
-  .dashboard-health-table-wrap td:nth-child(1){display:block!important;font-size:14px!important;font-weight:800!important;padding-bottom:7px!important}
-  .dashboard-health-table-wrap td:nth-child(1)::before{content:""}
-  .dashboard-health-table-wrap td:nth-child(2)::before{content:"Category"}
-  .dashboard-health-table-wrap td:nth-child(3)::before{content:"Sub Category"}
-  .dashboard-health-table-wrap td:nth-child(4)::before{content:"HPP"}
-  .dashboard-health-table-wrap td:nth-child(5)::before{content:"Selling"}
-  .dashboard-health-table-wrap td:nth-child(6)::before{content:"Profit"}
-  .dashboard-health-table-wrap td:nth-child(7)::before{content:"Margin"}
-  .dashboard-health-table-wrap td:nth-child(8)::before{content:"Food Cost"}
-  .dashboard-health-table-wrap td:nth-child(9)::before{content:"Health"}
-  .status{font-size:10px!important;padding:5px 8px!important;width:max-content}
-  .insight-item{padding:10px 11px!important;border-radius:12px!important;line-height:1.45!important;font-size:12px!important}
-}
-</style> <style id="biya-dashboard-top-cards">
-.top-grid{
-  gap:12px!important;
-  margin-top:14px;
-  align-items:stretch;
-}
-.top-grid > .top-card{
-  min-width:0;
-  margin-bottom:0!important;
-  padding:18px!important;
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
-}
-.top-card .card-title{
-  margin-bottom:4px;
-  font-size:18px;
-  line-height:1.2;
-}
-.top-card .card-sub{
-  min-height:30px;
-  margin-bottom:12px;
-  font-size:11px;
-  line-height:1.35;
-}
-.top-card-body{
-  min-height:0;
-  flex:1;
-}
-.health-score-compact{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-.health-score-compact .score-circle{
-  width:52px;
-  height:52px;
-  flex:0 0 52px;
-  border-radius:14px;
-  font-size:23px;
-}
-.health-copy{
-  min-width:0;
-}
-.health-label{
-  font-size:15px;
-  font-weight:800;
-  line-height:1.25;
-}
-.health-metrics,
-.product-mini-stats{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:7px;
-}
-.health-metrics{
-  gap:6px;
-  margin-top:8px;
-}
-.health-metric{
-  padding:6px 8px;
-}
-.health-metric .metric-label{
-  margin-bottom:2px;
-}
-.health-metric,
-.product-mini-stat{
-  min-width:0;
-  padding:8px 9px;
-  border:1px solid rgba(255,255,255,.07);
-  border-radius:10px;
-  background:rgba(4,18,43,.48);
-}
-.metric-label{
-  display:block;
-  margin-bottom:3px;
-  color:rgba(215,227,255,.6);
-  font-size:9px;
-  line-height:1.15;
-  text-transform:uppercase;
-  letter-spacing:.35px;
-}
-.metric-value{
-  display:block;
-  min-width:0;
-  overflow:hidden;
-  font-size:12px;
-  font-weight:800;
-  line-height:1.2;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-}
-.product-compact{
-  height:100%;
-  display:flex;
-  flex-direction:column;
-}
-.product-compact-head{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  min-width:0;
-}
-.product-compact-thumb{
-  width:44px;
-  height:44px;
-  flex:0 0 44px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:11px;
-  background:#07173a;
-}
-.product-compact-thumb img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-.product-compact-thumb .empty{
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:4px;
-  color:#9bb3ee;
-  font-size:8px;
-  line-height:1.15;
-  text-align:center;
-}
-.product-compact-copy{
-  min-width:0;
-}
-.product-compact .product-name,
-.ranking-name{
-  display:-webkit-box;
-  overflow:hidden;
-  -webkit-box-orient:vertical;
-  -webkit-line-clamp:2;
-}
-.product-compact .product-name{
-  margin:0 0 5px;
-  font-size:14px;
-  line-height:1.25;
-}
-.product-category-row{
-  display:flex;
-  gap:5px;
-  min-width:0;
-  overflow:hidden;
-}
-.product-category-badge{
-  display:inline-block;
-  max-width:100%;
-  overflow:hidden;
-  padding:3px 6px;
-  border-radius:999px;
-  background:rgba(0,102,255,.18);
-  color:#b9d5ff;
-  font-size:9px;
-  line-height:1.15;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-}
-.product-category-badge.secondary{
-  background:rgba(255,255,255,.07);
-  color:rgba(215,227,255,.72);
-}
-.product-mini-stats{
-  margin-top:auto;
-  padding-top:12px;
-}
-.product-mini-stat.best{
-  background:rgba(0,214,107,.1);
-}
-.product-mini-stat.worst{
-  background:rgba(255,77,79,.1);
-}
-.ranking-list{
-  display:flex;
-  flex-direction:column;
-  height:100%;
-}
-.ranking-item{
-  display:grid;
-  grid-template-columns:22px minmax(0,1fr) auto;
-  gap:8px;
-  align-items:center;
-  min-height:45px;
-  padding:7px 0;
-  border-bottom:1px solid rgba(255,255,255,.06);
-}
-.ranking-item:last-child{
-  border-bottom:0;
-}
-.ranking-position{
-  width:22px;
-  height:22px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:7px;
-  background:rgba(0,102,255,.18);
-  color:#b9d5ff;
-  font-size:10px;
-  font-weight:800;
-}
-.ranking-copy{
-  min-width:0;
-}
-.ranking-name{
-  font-size:11px;
-  font-weight:800;
-  line-height:1.2;
-}
-.ranking-category{
-  max-width:100%;
-  margin-top:3px;
-  overflow:hidden;
-  color:rgba(215,227,255,.6);
-  font-size:9px;
-  line-height:1.15;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-}
-.ranking-stats{
-  max-width:82px;
-  text-align:right;
-}
-.ranking-profit{
-  overflow:hidden;
-  font-size:10px;
-  font-weight:800;
-  line-height:1.2;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-}
-.ranking-margin{
-  margin-top:3px;
-  color:#96f5b7;
-  font-size:9px;
-  line-height:1.15;
-}
-@media (min-width:981px){
-  .top-grid{
-    grid-template-columns:repeat(4,minmax(0,1fr))!important;
-  }
-  .top-grid > .top-card{
-    height:244px;
-  }
-}
-@media (min-width:981px) and (max-width:1180px){
-  .top-grid > .top-card{
-    padding:14px!important;
-  }
-  .top-card .card-title{
-    font-size:15px;
-  }
-  .top-card .card-sub{
-    min-height:27px;
-    margin-bottom:8px;
-    font-size:10px;
-  }
-  .health-score-compact{
-    gap:8px;
-  }
-  .health-score-compact .score-circle{
-    width:42px;
-    height:42px;
-    flex-basis:42px;
-    border-radius:12px;
-    font-size:20px;
-  }
-  .health-label{
-    font-size:12px;
-  }
-  .health-copy .muted{
-    display:none;
-  }
-  .health-metrics{
-    margin-top:6px;
-  }
-  .health-metric{
-    padding:5px 6px;
-  }
-  .metric-label{
-    font-size:8px;
-  }
-  .metric-value{
-    font-size:11px;
-  }
-  .product-compact-head{
-    gap:7px;
-  }
-  .product-compact-thumb{
-    width:38px;
-    height:38px;
-    flex-basis:38px;
-  }
-  .product-compact .product-name{
-    font-size:12px;
-  }
-  .product-category-badge{
-    padding:3px 5px;
-    font-size:8px;
-  }
-  .product-mini-stats{
-    gap:5px;
-  }
-  .product-mini-stat{
-    padding:7px 6px;
-  }
-  .ranking-item{
-    grid-template-columns:19px minmax(0,1fr) auto;
-    gap:5px;
-  }
-  .ranking-position{
-    width:19px;
-    height:19px;
-  }
-  .ranking-stats{
-    max-width:58px;
-  }
-}
-@media (min-width:769px) and (max-width:980px){
-  .top-grid{
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  }
-}
-@media (max-width:768px){
-  .top-grid{
-    grid-template-columns:1fr!important;
-    gap:10px!important;
-  }
-  .top-grid > .top-card{
-    height:auto;
-    min-height:0;
-    padding:14px!important;
-  }
-  .top-card .card-sub{
-    min-height:0;
-    margin-bottom:10px!important;
-  }
-  .product-mini-stats{
-    margin-top:10px;
-    padding-top:0;
-  }
-  .ranking-item{
-    min-height:43px;
-  }
-}
-</style></head>
-<body> <svg class="biya-icon-sprite" xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"> <symbol id="biya-icon-layout-dashboard" viewBox="0 0 24 24"> <rect width="7" height="9" x="3" y="3" rx="1"></rect> <rect width="7" height="5" x="14" y="3" rx="1"></rect> <rect width="7" height="9" x="14" y="12" rx="1"></rect> <rect width="7" height="5" x="3" y="16" rx="1"></rect> </symbol> <symbol id="biya-icon-package" viewBox="0 0 24 24"> <path d="m7.5 4.27 9 5.15"></path> <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path> <path d="m3.3 7 8.7 5 8.7-5"></path> <path d="M12 22V12"></path> </symbol> <symbol id="biya-icon-flask-conical" viewBox="0 0 24 24"> <path d="M10 2v7.31"></path> <path d="M14 9.3V2"></path> <path d="M8.5 2h7"></path> <path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path> <path d="M5.52 16h12.96"></path> </symbol> <symbol id="biya-icon-clipboard-list" viewBox="0 0 24 24"> <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path> <path d="M12 11h4"></path> <path d="M12 16h4"></path> <path d="M8 11h.01"></path> <path d="M8 16h.01"></path> </symbol> <symbol id="biya-icon-calculator" viewBox="0 0 24 24"> <rect width="16" height="20" x="4" y="2" rx="2"></rect> <path d="M8 6h8"></path> <path d="M16 14v4"></path> <path d="M16 10h.01"></path> <path d="M12 10h.01"></path> <path d="M8 10h.01"></path> <path d="M12 14h.01"></path> <path d="M8 14h.01"></path> <path d="M12 18h.01"></path> <path d="M8 18h.01"></path> </symbol> <symbol id="biya-icon-download" viewBox="0 0 24 24"> <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path> <path d="M7 10l5 5 5-5"></path> <path d="M12 15V3"></path> </symbol> <symbol id="biya-icon-settings" viewBox="0 0 24 24"> <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2Z"></path> <circle cx="12" cy="12" r="3"></circle> </symbol> <symbol id="biya-icon-arrow-left" viewBox="0 0 24 24"> <path d="M19 12H5"></path> <path d="m12 19-7-7 7-7"></path> </symbol> <symbol id="biya-icon-search" viewBox="0 0 24 24"> <circle cx="11" cy="11" r="8"></circle> <path d="m21 21-4.3-4.3"></path> </symbol> <symbol id="biya-icon-x" viewBox="0 0 24 24"> <path d="M18 6 6 18"></path> <path d="m6 6 12 12"></path> </symbol>
-</svg> <header class="mobile-header" aria-label="BIYA mobile navigation"> <div class="mobile-logo">BIYA<small>BUSINESS IN YOUR HAND</small></div> <button class="menu-toggle" id="menuToggle" type="button" aria-label="Buka menu">&#9776;</button>
-</header>
-<div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div>
-<div class="wrapper">
-<aside class="sidebar" id="biyaSidebar">
-<div class="logo">BIYA<small>BUSINESS IN YOUR HAND</small></div>
-<div class="item active"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-layout-dashboard"></use></svg><span>Dashboard</span></div>
-<div class="item" onclick="location.href='rawmaterial.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-package"></use></svg><span>Raw Material</span></div>
-<div class="item" onclick="location.href='preparation.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-flask-conical"></use></svg><span>Preparation</span></div>
-<div class="item" onclick="location.href='menu.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-clipboard-list"></use></svg><span>Menu</span></div>
-<div class="item" onclick="location.href='producthpp.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-calculator"></use></svg><span>Product HPP</span></div>
-<div class="item" onclick="location.href='exportcenter.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-download"></use></svg><span>Export Center</span></div>
-<div class="item" onclick="location.href='settings.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-settings"></use></svg><span>Settings</span></div>
-<button class="btn" onclick="location.href='/menu-modules/dashboard.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-arrow-left"></use></svg><span>Kembali</span></button>
-</aside>
-<main class="main">
-<div class="page">
-<div class="title">Dashboard</div>
-<div class="sub">Ringkasan cepat kondisi bisnis, profit, dan performa menu.</div>
-<div class="notice hidden" id="dashboardStatus"></div>
-<div class="summary-grid">
-<div class="summary-box">
-<div class="summary-title">Total Product</div>
-<div class="summary-value" id="dashTotalProduct">0</div>
-</div>
-<div class="summary-box">
-<div class="summary-title">Average Profit</div>
-<div class="summary-value" id="dashAverageProfit">0%</div>
-</div>
-<div class="summary-box">
-<div class="summary-title">Average Food Cost</div>
-<div class="summary-value" id="dashAverageFoodCost">0%</div>
-</div>
-<div class="summary-box">
-<div class="summary-title">Potential Revenue</div>
-<div class="summary-value" id="dashPotentialRevenue">Rp 0</div>
-</div>
-</div>
-<div class="top-grid">
-<div class="section top-card">
-<div class="card-title">Business Health</div>
-<div class="card-sub">Skor ringkas kondisi bisnis</div>
-<div class="top-card-body" id="healthScoreCard"></div>
-</div>
-<div class="section dashboard-smart-mobile">
-<div class="card-title">Smart Alert</div>
-<div class="card-sub">Peringatan otomatis yang perlu dicek</div>
-<div id="quickAlertCardMobile"></div>
-</div>
-<div class="section top-card">
-<div class="card-title">Best Product</div>
-<div class="card-sub">Produk dengan profit tertinggi</div>
-<div class="top-card-body" id="bestProductCard"></div>
-</div>
-<div class="section top-card">
-<div class="card-title">Worst Product</div>
-<div class="card-sub">Produk dengan margin terendah</div>
-<div class="top-card-body" id="worstProductCard"></div>
-</div>
-<div class="section top-card">
-<div class="card-title">Top Profit Ranking</div>
-<div class="card-sub">3 produk paling untung</div>
-<div class="top-card-body" id="rankingCard"></div>
-</div>
-</div>
-<div class="section dashboard-smart-section dashboard-smart-desktop">
-<div class="card-title">Smart Alert</div>
-<div class="card-sub">Peringatan otomatis yang perlu dicek</div>
-<div id="quickAlertCard"></div>
-</div>
-<div class="section">
-<div class="flex-between" style="margin-bottom:18px;">
-<div>
-<div class="card-title">Category Performance</div>
-<div class="card-sub">Performa rata-rata per kategori custom</div>
-</div>
-<div class="muted" id="categoryMeta"></div>
-</div>
-<div class="info-grid" id="categoryPerformance"></div>
-</div>
-<div class="section">
-<div class="card-title">Lowest Margin Product</div>
-<div class="card-sub">Produk yang perlu perhatian</div>
-<div id="lowestMarginCard"></div>
-</div>
-<div class="section">
-<div class="card-title">Missing Data Center</div>
-<div class="card-sub">Data produk yang belum lengkap</div>
-<div class="alert-list" id="missingDataList"></div>
-</div>
-<div class="section">
-<div class="card-title">Cost Composition</div>
-<div class="card-sub">Pilih produk untuk melihat komposisi biaya</div>
-<div class="chart-box">
-<div class="chart-meta">
-<div style="min-width:240px;flex:1;">
-<select class="chart-select" id="compositionSelect" onchange="renderComposition()"></select>
-</div>
-<div class="muted" id="compositionSummary"></div>
-</div>
-<div class="bars" id="compositionBars"></div>
-</div>
-</div>
-<div class="section">
-<div class="flex-between" style="margin-bottom:18px;">
-<div>
-<div class="card-title">Product Health Table</div>
-<div class="card-sub">Daftar ringkas performa produk</div>
-</div>
-<div class="search-wrap" style="margin-bottom:0;">
-<div class="search-box">
-<input id="searchHealth" oninput="renderHealthTable()" placeholder="Cari menu / kategori..." type="text"/>
-</div>
-<div class="filter-box">
-<select id="filterHealthCategory" onchange="renderHealthTable()">
-<option value="">All Category</option>
-</select>
-</div>
-</div>
-</div>
-<div class="dashboard-health-table-wrap" style="overflow:auto;">
-<table>
-<thead>
-<tr>
-<th>Menu</th>
-<th>Category</th>
-<th>Sub Category</th>
-<th>HPP</th>
-<th>Selling Price</th>
-<th>Profit</th>
-<th>Margin</th>
-<th>Food Cost</th>
-<th>Health</th>
-</tr>
-</thead>
-<tbody id="healthTableBody"></tbody>
-</table>
-</div>
-</div>
-<div class="section">
-<div class="card-title">Business Insight</div>
-<div class="card-sub">Rekomendasi otomatis berdasarkan data HPP</div>
-<div class="insight-list" id="insightList"></div>
-</div>
-</div>
-</main>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="cost-settings-service.js"></script>
-<script>
-const SUPABASE_URL = window.BIYA_SUPABASE_URL || "https://pkjmkjyylgzjvhcreucc.supabase.co";
-const SUPABASE_ANON_KEY = window.BIYA_SUPABASE_ANON_KEY || "sb_publishable_Tq4d0o3PIAd_zh11uJa2uQ_M_zPIYFX";
-const configuredSupabaseClient = window.biyaSupabase || window.supabaseClient || null;
-const supabaseClient = configuredSupabaseClient || ((SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase) ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null);
-const settingsService = window.BiyaCostSettings;
-let FOOD_COST_TARGET = settingsService?.DEFAULTS.food_cost_target || 35;
-let PROFIT_TARGET = settingsService?.DEFAULTS.profit_target || 50;
-let products = [];
-function escapeHtml(value){ return String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c])); }
-function safeText(value){ return String(value ?? "").trim(); }
-function parseNumber(value){ if(typeof value === "number") return Number.isFinite(value) ? value : 0; let text = String(value ?? "").trim(); if(!text) return 0; text = text.replace(/rp/gi, "").replace(/\s/g, ""); if(text.includes(",") && text.includes(".")) text = text.replace(/\./g, "").replace(",", "."); else if(text.includes(",")) text = text.replace(",", "."); else text = text.replace(/\.(?=\d{3}(\D|$))/g, ""); const n = Number(text.replace(/[^0-9.-]/g, "")); return Number.isFinite(n) ? n : 0; }
-function formatRupiah(value){ return "Rp " + Math.round(parseNumber(value)).toLocaleString("id-ID"); }
-function formatPercent(value){ const n = Number(value); return Number.isFinite(n) ? n.toFixed(2) + "%" : "-"; }
-function displayPercent(value, valid = true){ return valid && Number.isFinite(Number(value)) ? Number(value).toFixed(2) + "%" : "-"; }
-function calcAverage(arr, getter){ const values = arr.map(getter).map(Number).filter(Number.isFinite); return values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : 0; }
-function isActive(product){ return String(product.status || "ACTIVE").toUpperCase() !== "INACTIVE"; }
-function targetFoodCost(){ return FOOD_COST_TARGET; }
-function targetProfit(){ return PROFIT_TARGET; }
-function healthyFoodCostLimit(){ return settingsService ? settingsService.healthyFoodCostLimit(FOOD_COST_TARGET) : FOOD_COST_TARGET * 0.85; }
-function statusClass(product){ if(!product.hasSelling || !product.hasRecipe) return "danger"; if(product.foodCostPct <= healthyFoodCostLimit()) return "ok"; if(product.foodCostPct <= FOOD_COST_TARGET) return "warn"; return "danger"; }
-function statusText(product){ if(!product.hasSelling) return "Harga Jual Kosong"; if(!product.hasRecipe) return "HPP Belum Lengkap"; if(product.foodCostPct <= healthyFoodCostLimit()) return "Aman / Sehat"; if(product.foodCostPct <= FOOD_COST_TARGET) return "Perlu Dipantau"; return "Review Harga"; }
-function normalizeMenuItem(row){ const qty = parseNumber(row.qty); const pricePerUnit = parseNumber(row.price_per_unit ?? row.pricePerUnit); const wastePercent = parseNumber(row.waste_percent ?? row.waste); const computedTotal = qty * pricePerUnit * (1 + wastePercent / 100); return { id: row.id, menuId: row.menu_id, ingredientType: row.ingredient_type || "raw_material", ingredientName: row.ingredient_name || row.nama_bahan || row.ingredient || "", qty, unit: row.unit || "", pricePerUnit, wastePercent, total: parseNumber(row.total) || computedTotal }; }
-function normalizeProduct(row, items = []){ const normalizedItems = items.map(normalizeMenuItem); const recipeCost = normalizedItems.reduce((sum, item) => sum + item.total, 0); const sellingPrice = parseNumber(row.selling_price ?? row.sellingPrice ?? row.selling); const grossProfit = sellingPrice - recipeCost; const hasSelling = sellingPrice > 0; const hasRecipe = recipeCost > 0 && normalizedItems.length > 0; return { id: row.id, name: safeText(row.nama || row.name || row.menu || row.product || "Untitled"), category: safeText(row.category || row.cat || ""), subCategory: safeText(row.sub_category || row.subCategory || row.sub || ""), status: safeText(row.status || "ACTIVE"), sellingPrice, recipeCost, hpp: recipeCost, grossProfit, profitRp: grossProfit, grossMarginPct: hasSelling ? (grossProfit / sellingPrice) * 100 : 0, profitPct: hasSelling ? (grossProfit / sellingPrice) * 100 : 0, foodCostPct: hasSelling ? (recipeCost / sellingPrice) * 100 : 0, photoUrl: safeText(row.photo_url || row.photoUrl || row.photo || ""), description: safeText(row.description || ""), totalIngredients: normalizedItems.length, hasSelling, hasRecipe, items: normalizedItems }; }
-function dashboardData(){ return products.filter(isActive); }
-function showStatus(message = "", tone = "info"){ const box = document.getElementById("dashboardStatus"); if(!box) return; box.textContent = message; box.classList.toggle("hidden", !message); box.style.textAlign = "left"; box.style.marginBottom = message ? "16px" : "0"; box.style.border = message ? "1px solid rgba(255,255,255,.08)" : "none"; box.style.background = tone === "error" ? "rgba(255,77,79,.14)" : "rgba(16,43,99,.75)"; box.style.color = tone === "error" ? "#ffb4b4" : "rgba(215,227,255,.86)"; }
-function emptyNotice(message){ return '<div class="notice">' + escapeHtml(message) + '</div>'; }
-function buildAlerts(data = dashboardData()){ const alerts = []; const validFood = data.filter(p => p.hasSelling && p.hasRecipe && p.foodCostPct > FOOD_COST_TARGET); const lowMargin = data.filter(p => p.hasSelling && p.grossMarginPct < PROFIT_TARGET); const noPhoto = data.filter(p => !p.photoUrl); const noRecipe = data.filter(p => !p.hasRecipe); const noSelling = data.filter(p => !p.hasSelling); const noCategory = data.filter(p => !p.category); const noSub = data.filter(p => !p.subCategory); if(validFood.length){ const p = [...validFood].sort((a,b) => b.foodCostPct - a.foodCostPct)[0]; alerts.push({ color:"red", text:p.name + " food cost " + p.foodCostPct.toFixed(2) + "% di atas target " + FOOD_COST_TARGET + "%" }); } if(lowMargin.length){ const p = [...lowMargin].sort((a,b) => a.grossMarginPct - b.grossMarginPct)[0]; alerts.push({ color:"red", text:p.name + " margin hanya " + p.grossMarginPct.toFixed(2) + "%" }); } if(noRecipe.length) alerts.push({ color:"yellow", text:noRecipe.length + " produk belum memiliki HPP/recipe lengkap" }); if(noSelling.length) alerts.push({ color:"red", text:noSelling.length + " produk belum memiliki selling price" }); if(noPhoto.length) alerts.push({ color:"yellow", text:noPhoto.length + " produk belum memiliki foto" }); if(noCategory.length) alerts.push({ color:"yellow", text:noCategory.length + " produk belum memiliki category" }); if(noSub.length) alerts.push({ color:"yellow", text:noSub.length + " produk belum memiliki sub category" }); if(!alerts.length) alerts.push({ color:"green", text:"Semua produk terlihat sehat dan siap dipantau." }); return alerts; }
-function getHealthScore(avgMargin, avgFood, totalProduct, alertCount){ let score = 0; if(avgMargin >= PROFIT_TARGET) score += 2; else if(avgMargin >= PROFIT_TARGET * 0.8) score += 1; if(avgFood > 0 && avgFood <= FOOD_COST_TARGET) score += 2; else if(avgFood > 0 && avgFood <= FOOD_COST_TARGET * 1.15) score += 1; if(totalProduct >= 4) score += 1; if(alertCount <= 1) score += 1; else if(alertCount <= 3) score += 0.5; if(score >= 5) return { letter:"A", label:"Sangat Sehat" }; if(score >= 4) return { letter:"B", label:"Sehat" }; if(score >= 2.5) return { letter:"C", label:"Perlu Perhatian" }; return { letter:"D", label:"Bahaya" }; }
-function topByProfit(data){ return [...data].filter(p => p.hasSelling).sort((a,b) => (b.grossProfit - a.grossProfit) || (b.grossMarginPct - a.grossMarginPct))[0]; }
-function lowestByMargin(data){ return [...data].filter(p => p.hasSelling).sort((a,b) => (a.grossMarginPct - b.grossMarginPct) || (a.grossProfit - b.grossProfit))[0]; }
-function renderSummary(){ const data = dashboardData(); const valid = data.filter(p => p.hasSelling); const avgMargin = calcAverage(valid, p => p.grossMarginPct); const avgFood = calcAverage(valid, p => p.foodCostPct); const revenue = data.reduce((sum, p) => sum + p.sellingPrice, 0); document.getElementById("dashTotalProduct").innerText = data.length; document.getElementById("dashAverageProfit").innerText = valid.length ? formatPercent(avgMargin) : "-"; document.getElementById("dashAverageFoodCost").innerText = valid.length ? formatPercent(avgFood) : "-"; document.getElementById("dashPotentialRevenue").innerText = formatRupiah(revenue); const alertCount = buildAlerts(data).filter(a => a.color !== "green").length; const score = getHealthScore(avgMargin, avgFood, data.length, alertCount); document.getElementById("healthScoreCard").innerHTML = '<div class="health-score-compact"><div class="score-circle">' + escapeHtml(score.letter) + '</div><div class="health-copy"><div class="health-label">' + escapeHtml(score.label) + '</div><div class="muted">Ringkasan target dan alert aktif</div></div></div><div class="health-metrics"><div class="health-metric"><span class="metric-label">Food Cost</span><span class="metric-value">' + FOOD_COST_TARGET + '%</span></div><div class="health-metric"><span class="metric-label">Profit</span><span class="metric-value">' + PROFIT_TARGET + '%</span></div><div class="health-metric"><span class="metric-label">Produk</span><span class="metric-value">' + data.length + '</span></div><div class="health-metric"><span class="metric-label">Alert</span><span class="metric-value">' + alertCount + '</span></div></div>'; }
-function renderProductHero(product, tone = "green"){ if(!product) return emptyNotice("Belum ada data produk dari Supabase"); return '<div class="product-hero"><div class="thumb">' + (product.photoUrl ? '<img src="' + escapeHtml(product.photoUrl) + '" alt="' + escapeHtml(product.name) + '" />' : '<div class="empty">No Photo</div>') + '</div><div><div class="product-name">' + escapeHtml(product.name) + '</div><div class="pill-row"><span class="pill">' + escapeHtml(product.category || "-") + '</span><span class="pill gray">' + escapeHtml(product.subCategory || "-") + '</span></div><div class="pill-row"><span class="pill ' + tone + '">Profit ' + formatRupiah(product.grossProfit) + '</span><span class="pill ' + tone + '">Margin ' + displayPercent(product.grossMarginPct, product.hasSelling) + '</span></div></div></div>'; }
-function renderCompactProduct(product, tone = "best"){ if(!product) return emptyNotice("Belum ada data produk dari Supabase"); return '<div class="product-compact"><div class="product-compact-head"><div class="product-compact-thumb">' + (product.photoUrl ? '<img src="' + escapeHtml(product.photoUrl) + '" alt="' + escapeHtml(product.name) + '" />' : '<div class="empty">No Photo</div>') + '</div><div class="product-compact-copy"><div class="product-name">' + escapeHtml(product.name) + '</div><div class="product-category-row"><span class="product-category-badge">' + escapeHtml(product.category || "Tanpa kategori") + '</span>' + (product.subCategory ? '<span class="product-category-badge secondary">' + escapeHtml(product.subCategory) + '</span>' : '') + '</div></div></div><div class="product-mini-stats"><div class="product-mini-stat ' + tone + '"><span class="metric-label">Profit</span><span class="metric-value">' + formatRupiah(product.grossProfit) + '</span></div><div class="product-mini-stat ' + tone + '"><span class="metric-label">Margin</span><span class="metric-value">' + displayPercent(product.grossMarginPct, product.hasSelling) + '</span></div></div></div>'; }
-function renderBestWorst(){ const data = dashboardData(); const worst = lowestByMargin(data); document.getElementById("bestProductCard").innerHTML = renderCompactProduct(topByProfit(data), "best"); document.getElementById("worstProductCard").innerHTML = renderCompactProduct(worst, "worst"); document.getElementById("lowestMarginCard").innerHTML = renderProductHero(worst, "red"); }
-function renderRankings(){ const ranking = dashboardData().filter(p => p.hasSelling).sort((a,b) => (b.grossProfit - a.grossProfit) || (b.grossMarginPct - a.grossMarginPct)).slice(0,3); document.getElementById("rankingCard").innerHTML = ranking.length ? '<div class="ranking-list">' + ranking.map((p, i) => '<div class="ranking-item"><div class="ranking-position">' + (i+1) + '</div><div class="ranking-copy"><div class="ranking-name">' + escapeHtml(p.name) + '</div><div class="ranking-category">' + escapeHtml(p.category || "Tanpa kategori") + '</div></div><div class="ranking-stats"><div class="ranking-profit">' + formatRupiah(p.grossProfit) + '</div><div class="ranking-margin">' + displayPercent(p.grossMarginPct, p.hasSelling) + '</div></div></div>').join("") + '</div>' : emptyNotice("Belum ada produk valid untuk ranking"); }
-function renderSmartAlert(){ const alerts = buildAlerts(dashboardData()); const moreNote = alerts.length > 3 ? '<div class="dashboard-more-note">Lihat semua alert (' + alerts.length + ')</div>' : ""; const html = '<div class="alert-list">' + alerts.map(a => '<div class="alert-item"><span class="alert-dot dot-' + a.color + '"></span><div>' + escapeHtml(a.text) + '</div></div>').join("") + moreNote + '</div>'; ["quickAlertCard","quickAlertCardMobile"].forEach(id => { const target = document.getElementById(id); if(target) target.innerHTML = html; }); }
-function renderCategoryPerformance(){ const groups = {}; dashboardData().forEach(p => { const key = p.category || "Uncategorized"; (groups[key] ||= []).push(p); }); const entries = Object.entries(groups).sort((a,b) => b[1].length - a[1].length); document.getElementById("categoryMeta").innerText = entries.length + " kategori"; document.getElementById("categoryPerformance").innerHTML = entries.map(([cat, items]) => { const valid = items.filter(p => p.hasSelling); return '<div class="mini-box"><div class="mini-title">' + escapeHtml(cat) + '</div><div class="mini-value">' + items.length + ' Product</div><div class="muted" style="margin-top:8px;">Avg Profit ' + (valid.length ? formatPercent(calcAverage(valid, p => p.grossMarginPct)) : '-') + '</div><div class="muted">Avg Food Cost ' + (valid.length ? formatPercent(calcAverage(valid, p => p.foodCostPct)) : '-') + '</div></div>'; }).join("") || emptyNotice("Belum ada kategori dari Supabase"); }
-function renderMissingData(){ const data = dashboardData(); const missing = []; const count = predicate => data.filter(predicate).length; const noPhoto = count(p => !p.photoUrl), noSelling = count(p => !p.hasSelling), noRecipe = count(p => !p.hasRecipe), noCategory = count(p => !p.category), noSub = count(p => !p.subCategory), invalid = count(p => !Number.isFinite(p.sellingPrice) || !Number.isFinite(p.recipeCost)); if(noPhoto) missing.push({ color:"yellow", text:noPhoto + " produk belum memiliki foto" }); if(noSelling) missing.push({ color:"red", text:noSelling + " produk belum memiliki selling price" }); if(noRecipe) missing.push({ color:"red", text:noRecipe + " produk belum memiliki HPP/recipe lengkap" }); if(noCategory) missing.push({ color:"yellow", text:noCategory + " produk belum memiliki category" }); if(noSub) missing.push({ color:"yellow", text:noSub + " produk belum memiliki sub category" }); if(invalid) missing.push({ color:"red", text:invalid + " produk memiliki angka tidak valid" }); if(!missing.length) missing.push({ color:"green", text:"Semua data produk terlihat lengkap." }); document.getElementById("missingDataList").innerHTML = missing.map(a => '<div class="alert-item"><span class="alert-dot dot-' + a.color + '"></span><div>' + escapeHtml(a.text) + '</div></div>').join(""); }
-function renderCompositionOptions(){ const select = document.getElementById("compositionSelect"); const data = dashboardData(); select.innerHTML = data.length ? data.map(p => '<option value="' + escapeHtml(p.id) + '">' + escapeHtml(p.name) + '</option>').join("") : '<option value="">Belum ada produk</option>'; }
-function renderComposition(){ const id = document.getElementById("compositionSelect").value; const product = dashboardData().find(p => String(p.id) === String(id)) || dashboardData()[0]; const summary = document.getElementById("compositionSummary"), bars = document.getElementById("compositionBars"); if(!product){ summary.innerText = ""; bars.innerHTML = emptyNotice("Belum ada data produk dari Supabase"); return; } if(!product.hasSelling || !product.hasRecipe){ summary.innerText = product.name; bars.innerHTML = emptyNotice("Komposisi biaya belum lengkap untuk produk ini."); return; } const items = [{ label:"Recipe / HPP", value:product.recipeCost, color:"#3b82f6" }, { label:"Gross Profit", value:Math.max(product.grossProfit, 0), color:"#22c55e" }]; const total = product.sellingPrice || items.reduce((sum, item) => sum + item.value, 0) || 1; summary.innerText = product.name + " - HPP " + formatRupiah(product.recipeCost) + " - Selling " + formatRupiah(product.sellingPrice); bars.innerHTML = items.map(item => { const pct = total ? (item.value / total) * 100 : 0; return '<div class="bar-item"><div class="bar-label">' + escapeHtml(item.label) + '</div><div class="bar-track"><div class="bar-fill" style="width:' + Math.max(pct,2) + '%;background:' + item.color + ';"></div></div><div class="bar-value">' + formatPercent(pct).replace(".00%", "%") + '</div></div>'; }).join(""); }
-function populateCategoryFilter(){ const select = document.getElementById("filterHealthCategory"); const current = select.value; const categories = [...new Set(dashboardData().map(p => p.category).filter(Boolean))].sort((a,b) => a.localeCompare(b, "id")); select.innerHTML = '<option value="">All Category</option>' + categories.map(c => '<option value="' + escapeHtml(c) + '">' + escapeHtml(c) + '</option>').join(""); if(categories.includes(current)) select.value = current; }
-function getFilteredProducts(){ const query = document.getElementById("searchHealth").value.trim().toLowerCase(); const category = document.getElementById("filterHealthCategory").value; return dashboardData().filter(p => { const haystack = [p.name,p.category,p.subCategory,p.status].join(" ").toLowerCase(); return (!query || haystack.includes(query)) && (!category || p.category === category); }); }
-function renderHealthTable(){ const tbody = document.getElementById("healthTableBody"), filtered = getFilteredProducts(); if(!dashboardData().length){ tbody.innerHTML = '<tr><td colspan="9" class="notice">Belum ada data produk. Tambahkan menu terlebih dahulu.</td></tr>'; renderBusinessInsight([]); return; } if(!filtered.length){ tbody.innerHTML = '<tr><td colspan="9" class="notice">Tidak ada produk yang cocok dengan pencarian/filter.</td></tr>'; renderBusinessInsight(filtered); return; } tbody.innerHTML = filtered.map(p => '<tr><td>' + escapeHtml(p.name) + '</td><td>' + escapeHtml(p.category || "-") + '</td><td>' + escapeHtml(p.subCategory || "-") + '</td><td>' + formatRupiah(p.recipeCost) + '</td><td>' + (p.hasSelling ? formatRupiah(p.sellingPrice) : '-') + '</td><td>' + formatRupiah(p.grossProfit) + '</td><td>' + displayPercent(p.grossMarginPct, p.hasSelling) + '</td><td>' + displayPercent(p.foodCostPct, p.hasSelling) + '</td><td><span class="status ' + statusClass(p) + '">' + escapeHtml(statusText(p)) + '</span></td></tr>').join(""); renderBusinessInsight(filtered); }
-function renderBusinessInsight(list){ const data = (list && list.length) ? list : dashboardData(); const insights = []; const top = topByProfit(data), low = lowestByMargin(data), highFood = data.filter(p => p.hasSelling && p.hasRecipe && p.foodCostPct > FOOD_COST_TARGET), noPhoto = data.filter(p => !p.photoUrl); const groups = {}; data.forEach(p => { const key = p.category || "Uncategorized"; (groups[key] ||= []).push(p); }); const bestCategory = Object.entries(groups).map(([cat, items]) => ({ cat, avgMargin: calcAverage(items.filter(p => p.hasSelling), p => p.grossMarginPct) })).sort((a,b) => b.avgMargin - a.avgMargin)[0]; if(top) insights.push('Produk terbaik saat ini adalah <b>' + escapeHtml(top.name) + '</b> dengan profit ' + displayPercent(top.grossMarginPct, top.hasSelling) + ' (' + formatRupiah(top.grossProfit) + ').'); if(low) insights.push('Produk yang perlu dicek adalah <b>' + escapeHtml(low.name) + '</b> karena margin ' + displayPercent(low.grossMarginPct, low.hasSelling) + '.'); if(highFood.length) insights.push('Ada <b>' + highFood.length + '</b> produk dengan food cost di atas target ' + FOOD_COST_TARGET + '%. Evaluasi recipe atau harga jual.'); if(noPhoto.length) insights.push('Ada <b>' + noPhoto.length + '</b> produk belum memiliki foto menu.'); if(bestCategory) insights.push('Kategori terbaik saat ini adalah <b>' + escapeHtml(bestCategory.cat) + '</b> dengan average profit ' + formatPercent(bestCategory.avgMargin) + '.'); if(data.length) insights.push('Rata-rata profit seluruh produk adalah <b>' + formatPercent(calcAverage(data.filter(p => p.hasSelling), p => p.grossMarginPct)) + '</b>.'); const moreNote = insights.length > 3 ? '<div class="dashboard-more-note">Lihat lebih banyak insight (' + insights.length + ')</div>' : ""; document.getElementById("insightList").innerHTML = insights.length ? insights.map(t => '<div class="insight-item">' + t + '</div>').join("") + moreNote : emptyNotice("Belum ada insight dari data Supabase"); }
-function renderAll(){ renderSummary(); renderBestWorst(); renderRankings(); renderSmartAlert(); renderCategoryPerformance(); renderMissingData(); renderCompositionOptions(); renderComposition(); populateCategoryFilter(); renderHealthTable(); }
-async function loadCostTargets(){
-  if(!settingsService){
-    const message = "Service Cost Settings tidak tersedia. Dashboard memakai target default 35% / 50%.";
-    console.error("[Dashboard] Load cost_settings gagal", { message });
-    return message;
-  }
-  try{
-    const result = await settingsService.load(supabaseClient);
-    FOOD_COST_TARGET = result.settings.food_cost_target;
-    PROFIT_TARGET = result.settings.profit_target;
-    return "";
-  }catch(error){
-    settingsService.logError("Dashboard gagal memuat cost_settings", error);
-    return "Gagal memuat target Settings dari Supabase. Dashboard memakai target default 35% / 50%; cek console untuk detail.";
-  }
-}
-async function loadDashboardFromSupabase(){
-  if(!supabaseClient){
-    showStatus("Konfigurasi Supabase belum tersedia. Pastikan library Supabase dan anon key sudah termuat.", "error");
-    products = [];
-    renderAll();
-    return;
-  }
-  showStatus("Memuat target Settings dan data dashboard dari Supabase...");
-  const targetWarning = await loadCostTargets();
-  try{
-    let menuResult = await supabaseClient.from("menus").select("*").order("created_at", { ascending:false });
-    if(menuResult.error && menuResult.error.code === "42703") menuResult = await supabaseClient.from("menus").select("*");
-    if(menuResult.error) throw menuResult.error;
-    const menuRows = menuResult.data || [];
-    const ids = menuRows.map(row => row.id).filter(Boolean);
-    let itemRows = [];
-    if(ids.length){
-      const itemResult = await supabaseClient.from("menu_items").select("*").in("menu_id", ids);
-      if(itemResult.error) throw itemResult.error;
-      itemRows = itemResult.data || [];
-    }
-    const itemMap = new Map();
-    itemRows.forEach(item => {
-      const key = String(item.menu_id);
-      if(!itemMap.has(key)) itemMap.set(key, []);
-      itemMap.get(key).push(item);
-    });
-    products = menuRows.map(row => normalizeProduct(row, itemMap.get(String(row.id)) || []));
-    const emptyMessage = products.length ? "" : "Belum ada data produk. Tambahkan menu terlebih dahulu.";
-    showStatus([targetWarning, emptyMessage].filter(Boolean).join(" "), targetWarning ? "error" : "info");
-    renderAll();
-  }catch(error){
-    console.error("[Dashboard] Load Supabase gagal", { error, message:error?.message, details:error?.details, hint:error?.hint, code:error?.code });
-    products = [];
-    showStatus("Gagal memuat data dashboard dari Supabase. Cek console untuk detail error.", "error");
-    renderAll();
-  }
-}
-document.addEventListener("DOMContentLoaded", loadDashboardFromSupabase);
-</script> <script>
-(function(){ const toggle = document.getElementById('menuToggle'); const sidebar = document.getElementById('biyaSidebar'); const overlay = document.getElementById('mobileOverlay'); if(!toggle || !sidebar || !overlay) return; const mobileQuery = window.matchMedia('(max-width: 980px)'); let closeButton = sidebar.querySelector('.sidebar-close'); if(!closeButton){ closeButton = document.createElement('button'); closeButton.className = 'sidebar-close'; closeButton.type = 'button'; closeButton.setAttribute('aria-label', 'Tutup menu'); closeButton.innerHTML = '&times;'; sidebar.prepend(closeButton); } const style = document.createElement('style'); style.textContent = '.biya-no-scroll{overflow:hidden !important;}.sidebar-close{display:none;}@media (max-width:980px){.sidebar-close{display:flex;align-items:center;justify-content:center;width:42px;height:42px;margin:0 0 18px auto;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:rgba(255,255,255,.08);color:#fff;font-size:28px;line-height:1;cursor:pointer;}}'; document.head.appendChild(style); toggle.setAttribute('aria-controls','biyaSidebar'); toggle.setAttribute('aria-expanded','false'); const closeSidebar = () => { sidebar.classList.remove('open'); overlay.classList.remove('open'); document.body.classList.remove('biya-no-scroll'); toggle.setAttribute('aria-expanded','false'); sidebar.setAttribute('aria-hidden', mobileQuery.matches ? 'true' : 'false'); overlay.setAttribute('aria-hidden','true'); }; const openSidebar = () => { sidebar.classList.add('open'); overlay.classList.add('open'); document.body.classList.add('biya-no-scroll'); toggle.setAttribute('aria-expanded','true'); sidebar.setAttribute('aria-hidden','false'); overlay.setAttribute('aria-hidden','false'); }; toggle.addEventListener('click', () => { if(sidebar.classList.contains('open')) closeSidebar(); else openSidebar(); }); closeButton.addEventListener('click', closeSidebar); overlay.addEventListener('click', closeSidebar); sidebar.addEventListener('click', (event) => { if(!mobileQuery.matches) return; if(event.target.closest('a, .item, .btn')) closeSidebar(); }); document.addEventListener('keydown', (event) => { if(event.key === 'Escape') closeSidebar(); }); const syncLayout = () => { if(mobileQuery.matches){ sidebar.setAttribute('aria-hidden', sidebar.classList.contains('open') ? 'false' : 'true'); } else { closeSidebar(); sidebar.setAttribute('aria-hidden','false'); } }; mobileQuery.addEventListener ? mobileQuery.addEventListener('change', syncLayout) : mobileQuery.addListener(syncLayout); syncLayout();
-})();
-</script> </body>
-</html> 
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#041128"/>
+  <title>BIYA - Cost Control Dashboard</title>
+  <link rel="stylesheet" href="costdashboard-base.css"/>
+  <link rel="stylesheet" href="costdashboard-redesign.css"/>
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="cost-settings-service.js"></script>
+  <script defer src="costdashboard.js"></script>
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="biya-icon-layout-dashboard" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect><rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect></symbol>
+    <symbol id="biya-icon-package" viewBox="0 0 24 24"><path d="m7.5 4.27 9 5.15"></path><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path></symbol>
+    <symbol id="biya-icon-flask-conical" viewBox="0 0 24 24"><path d="M10 2v7.31"></path><path d="M14 9.3V2"></path><path d="M8.5 2h7"></path><path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path><path d="M5.52 16h12.96"></path></symbol>
+    <symbol id="biya-icon-clipboard-list" viewBox="0 0 24 24"><rect width="8" height="4" x="8" y="2" rx="1"></rect><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><path d="M12 11h4"></path><path d="M12 16h4"></path><path d="M8 11h.01"></path><path d="M8 16h.01"></path></symbol>
+    <symbol id="biya-icon-calculator" viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"></rect><path d="M8 6h8"></path><path d="M16 14v4"></path><path d="M16 10h.01"></path><path d="M12 10h.01"></path><path d="M8 10h.01"></path><path d="M12 14h.01"></path><path d="M8 14h.01"></path><path d="M12 18h.01"></path><path d="M8 18h.01"></path></symbol>
+    <symbol id="biya-icon-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></symbol>
+    <symbol id="biya-icon-settings" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2Z"></path><circle cx="12" cy="12" r="3"></circle></symbol>
+    <symbol id="biya-icon-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></symbol>
+  </svg>
+
+  <header class="mobile-header" aria-label="BIYA mobile navigation">
+    <div class="mobile-logo">BIYA<small>BUSINESS IN YOUR HAND</small></div>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-label="Buka menu" aria-controls="biyaSidebar" aria-expanded="false">&#9776;</button>
+  </header>
+  <div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div>
+
+  <div class="wrapper">
+    <aside class="sidebar" id="biyaSidebar">
+      <button class="sidebar-close" type="button" aria-label="Tutup menu">&times;</button>
+      <div class="logo">BIYA<small>BUSINESS IN YOUR HAND</small></div>
+      <div class="item active"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-layout-dashboard"></use></svg><span>Dashboard</span></div>
+      <div class="item" onclick="location.href='rawmaterial.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-package"></use></svg><span>Raw Material</span></div>
+      <div class="item" onclick="location.href='preparation.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-flask-conical"></use></svg><span>Preparation</span></div>
+      <div class="item" onclick="location.href='menu.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-clipboard-list"></use></svg><span>Menu</span></div>
+      <div class="item" onclick="location.href='producthpp.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-calculator"></use></svg><span>Product HPP</span></div>
+      <div class="item" onclick="location.href='exportcenter.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-download"></use></svg><span>Export Center</span></div>
+      <div class="item" onclick="location.href='settings.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-settings"></use></svg><span>Settings</span></div>
+      <button class="btn" onclick="location.href='/menu-modules/dashboard.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-arrow-left"></use></svg><span>Kembali</span></button>
+    </aside>
+
+    <main class="main">
+      <div class="page">
+        <div class="dashboard-heading">
+          <div>
+            <div class="eyebrow">Cost Control Overview</div>
+            <h1 class="title">Dashboard</h1>
+            <p class="sub">Pantau kesehatan bisnis, profit, food cost, dan tindakan penting dalam satu tampilan.</p>
+          </div>
+        </div>
+
+        <div class="notice hidden" id="dashboardStatus" role="status" aria-live="polite"></div>
+
+        <section class="hero-overview" aria-label="Business overview">
+          <div class="hero-health">
+            <div class="hero-kicker">Business Health</div>
+            <div id="healthScoreCard"></div>
+          </div>
+          <div class="summary-grid">
+            <div class="summary-box kpi-profit"><div class="summary-icon">%</div><div class="summary-title">Average Profit</div><div class="summary-value" id="dashAverageProfit">0%</div></div>
+            <div class="summary-box kpi-food"><div class="summary-icon">FC</div><div class="summary-title">Average Food Cost</div><div class="summary-value" id="dashAverageFoodCost">0%</div></div>
+            <div class="summary-box kpi-revenue"><div class="summary-icon">Rp</div><div class="summary-title">Potential Revenue</div><div class="summary-value" id="dashPotentialRevenue">Rp 0</div></div>
+            <div class="summary-box kpi-product"><div class="summary-icon">#</div><div class="summary-title">Total Product</div><div class="summary-value" id="dashTotalProduct">0</div></div>
+          </div>
+        </section>
+
+        <div class="dashboard-grid">
+          <div class="dashboard-main-column">
+            <div class="top-grid">
+              <section class="section top-card"><div class="card-title">Best Product</div><div class="card-sub">Produk dengan profit tertinggi</div><div class="top-card-body" id="bestProductCard"></div></section>
+              <section class="section top-card"><div class="card-title">Needs Attention</div><div class="card-sub">Produk dengan margin terendah</div><div class="top-card-body" id="worstProductCard"></div></section>
+              <section class="section top-card"><div class="card-title">Top Profit Ranking</div><div class="card-sub">3 produk paling untung</div><div class="top-card-body" id="rankingCard"></div></section>
+            </div>
+
+            <section class="section dashboard-smart-section section-accent-orange">
+              <div class="card-title">Smart Alert</div>
+              <div class="card-sub">Prioritas tindakan untuk menjaga profit dan kelengkapan data</div>
+              <div id="quickAlertCard"></div>
+            </section>
+
+            <section class="section section-accent-cyan">
+              <div class="flex-between" style="margin-bottom:18px"><div><div class="card-title">Category Performance</div><div class="card-sub">Performa rata-rata per kategori custom</div></div><div class="muted" id="categoryMeta"></div></div>
+              <div class="info-grid" id="categoryPerformance"></div>
+            </section>
+
+            <section class="section section-accent-purple">
+              <div class="card-title">Cost Composition</div>
+              <div class="card-sub">Pilih produk untuk melihat komposisi biaya</div>
+              <div class="chart-box">
+                <div class="chart-meta"><div style="min-width:240px;flex:1"><select class="chart-select" id="compositionSelect" onchange="renderComposition()"></select></div><div class="muted" id="compositionSummary"></div></div>
+                <div class="bars" id="compositionBars"></div>
+              </div>
+            </section>
+          </div>
+
+          <div class="dashboard-side-column">
+            <section class="section"><div class="card-title">Missing Data Center</div><div class="card-sub">Data produk yang perlu dilengkapi</div><div class="alert-list" id="missingDataList"></div></section>
+            <section class="section section-accent-purple"><div class="card-title">Business Insight</div><div class="card-sub">Tiga rekomendasi utama berdasarkan data HPP</div><div class="insight-list" id="insightList"></div></section>
+          </div>
+        </div>
+
+        <section class="section">
+          <div class="flex-between" style="margin-bottom:18px">
+            <div><div class="card-title">Product Health</div><div class="card-sub">Tabel lengkap di desktop, kartu ringkas dan actionable di mobile</div></div>
+            <div class="search-wrap"><div class="search-box"><input id="searchHealth" oninput="renderHealthTable()" placeholder="Cari menu / kategori..." type="search"/></div><div class="filter-box"><select id="filterHealthCategory" onchange="renderHealthTable()"><option value="">All Category</option></select></div></div>
+          </div>
+          <div class="dashboard-health-table-wrap">
+            <table>
+              <thead><tr><th>Menu</th><th>Category</th><th>Sub Category</th><th>HPP</th><th>Selling Price</th><th>Profit</th><th>Margin</th><th>Food Cost</th><th>Health</th></tr></thead>
+              <tbody id="healthTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <nav class="mobile-bottom-nav" aria-label="Navigasi utama mobile">
+    <a class="bottom-nav-item active" href="costdashboard.html" aria-current="page"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-layout-dashboard"></use></svg><span>Dashboard</span></a>
+    <a class="bottom-nav-item" href="rawmaterial.html"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-package"></use></svg><span>Raw Material</span></a>
+    <a class="bottom-nav-item" href="menu.html"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-clipboard-list"></use></svg><span>Menu</span></a>
+    <a class="bottom-nav-item" href="producthpp.html"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-calculator"></use></svg><span>HPP</span></a>
+  </nav>
+</body>
+</html>
