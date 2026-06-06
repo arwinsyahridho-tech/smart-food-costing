@@ -220,6 +220,36 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
   .raw-card .actions{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:10px; }
   .raw-card .mini-btn{ height:36px; font-size:12px; border-radius:10px; }
 }
+</style>
+<style id="biya-raw-material-paired-fields">
+.paired-fields{display:contents}
+@media(max-width:768px){
+  .paired-fields{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:10px;
+    align-items:end;
+    min-width:0;
+  }
+  .paired-fields .field,
+  .paired-fields input,
+  .paired-fields select{
+    min-width:0;
+    width:100%;
+  }
+  .paired-fields label{
+    font-size:12px;
+    line-height:1.3;
+  }
+  .paired-fields input,
+  .paired-fields select{
+    height:52px;
+    padding-inline:14px;
+  }
+}
+@media(max-width:340px){
+  .paired-fields{grid-template-columns:1fr}
+}
 </style> <style id="biya-mobile-sidebar-brand-fix">
 @media (max-width: 980px){
   .sidebar .logo{
@@ -282,6 +312,7 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
 <section class="section">
 <div class="sectionTitle">PEMBELIAN</div>
 <div class="grid3">
+<div class="paired-fields">
 <div class="field">
 <label>Qty Beli</label>
 <input id="qtyInput" type="number" value="1"/>
@@ -295,6 +326,7 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
 <option>Pcs</option>
 </select>
 </div>
+</div>
 <div class="field">
 <label>Harga Beli</label>
 <input id="hargaInput" inputmode="numeric" placeholder="Rp 0"/>
@@ -304,6 +336,7 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
 <section class="section">
 <div class="sectionTitle">KONVERSI</div>
 <div class="grid3">
+<div class="paired-fields">
 <div class="field">
 <label>Conversion Qty</label>
 <input id="conversionInput" placeholder="1000" type="number"/>
@@ -315,6 +348,7 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
 <option>ml</option>
 <option>pcs</option>
 </select>
+</div>
 </div>
 <div class="field">
 <label>Default Waste %</label>
