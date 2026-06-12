@@ -39,10 +39,6 @@ button { touch-action: manipulation; }
 .btn .biya-icon, button .biya-icon { margin-right: 8px; vertical-align: -.18em; }
 .main { width: calc(100% - 260px); margin-left: 260px; padding: 34px; }
 .page-shell { width: 100%; max-width: 1500px; margin: auto; }
-.page-intro { margin-bottom: 18px; }
-.eyebrow { margin-bottom: 8px; color: #61a4ff; font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
-.title { font-size: clamp(34px,4vw,48px); line-height: 1; }
-.sub { margin-top: 10px; color: var(--muted); font-size: 16px; }
 .material-form { display: grid; grid-template-columns: repeat(12,minmax(0,1fr)); gap: 18px; }
 .section { min-width: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 26px; background: linear-gradient(150deg,rgba(10,42,101,.98),rgba(5,25,66,.99)); box-shadow: var(--shadow), var(--glow); }
 .section-icon, .summary-icon, .list-icon { display: grid; flex: 0 0 auto; place-items: center; border: 1px solid rgba(89,162,255,.28); color: #dcecff; }
@@ -50,6 +46,7 @@ button { touch-action: manipulation; }
 .form-section { grid-column: span 6; padding: 25px; }
 .form-section.identity-section, .form-section.summary-section, .action-section { grid-column: 1 / -1; }
 .section-heading { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid rgba(123,173,255,.18); }
+.identity-subheading { margin-bottom: 16px; color: #dce9ff; font-size: 15px; font-weight: 800; letter-spacing: .02em; }
 .section-icon, .list-icon { width: 48px; height: 48px; border-radius: 15px; background: linear-gradient(145deg,rgba(6,193,133,.45),rgba(5,75,115,.75)); color: #d9fff4; }
 .sectionTitle { font-size: 22px; line-height: 1.2; }
 .section-sub { margin-top: 5px; color: var(--muted); font-size: 13px; line-height: 1.4; }
@@ -62,8 +59,8 @@ label { color: #bfd1f2; font-size: 14px; font-weight: 600; }
 input, select { width: 100%; min-width: 0; min-height: 54px; padding: 0 17px; border: 1px solid var(--line); border-radius: 14px; outline: 0; background: rgba(10,40,94,.84); color: var(--text); transition: border-color .2s, box-shadow .2s, background .2s; }
 input::placeholder { color: #7694c9; }
 input:focus, select:focus, button:focus-visible { border-color: #4a9cff; box-shadow: 0 0 0 3px rgba(30,128,255,.18); }
-.category-label-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-.category-manage-btn { min-height: 34px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px; background: rgba(23,61,132,.86); color: #fff; cursor: pointer; font-size: 12px; font-weight: 750; white-space: nowrap; }
+.category-manage-btn { align-self: flex-start; min-height: 42px; margin-top: 1px; padding: 0 14px; border: 1px solid var(--line); border-radius: 11px; background: rgba(23,61,132,.72); color: #dce9ff; cursor: pointer; font-size: 13px; font-weight: 750; white-space: nowrap; }
+.category-manage-btn:hover { border-color: rgba(46,216,255,.48); background: rgba(31,76,157,.86); color: #fff; }
 .summary-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 14px; }
 .summary-box { display: flex; align-items: center; gap: 13px; min-width: 0; padding: 17px; border: 1px solid var(--line); border-radius: 16px; background: linear-gradient(145deg,rgba(13,48,109,.9),rgba(7,30,74,.95)); box-shadow: var(--glow); }
 .summary-icon { width: 43px; height: 43px; border-radius: 13px; background: rgba(17,105,223,.22); color: #79c9ff; font-weight: 850; }
@@ -143,21 +140,19 @@ input:focus, select:focus, button:focus-visible { border-color: #4a9cff; box-sha
 }
 @media (max-width: 700px) {
   .main { padding: 22px 14px; }
-  .page-intro { margin-bottom: 14px; }
-  .title { font-size: 33px; }
-  .sub { font-size: 14px; line-height: 1.5; }
-  .material-form { display: flex; flex-direction: column; gap: 14px; }
-  .form-section, .list-section { padding: 18px 14px; border-radius: 21px; }
-  .section-heading { align-items: flex-start; gap: 10px; margin-bottom: 18px; padding-bottom: 15px; }
+  .material-form { display: flex; flex-direction: column; gap: 12px; }
+  .form-section, .list-section { padding: 16px 14px; border-radius: 21px; }
+  .section-heading { align-items: flex-start; gap: 10px; margin-bottom: 15px; padding-bottom: 13px; }
+  .identity-subheading { margin-bottom: 14px; }
   .section-icon, .list-icon { width: 42px; height: 42px; border-radius: 13px; }
   .section-icon .biya-icon, .list-icon .biya-icon { width: 23px; height: 23px; }
   .sectionTitle { font-size: 19px; }
-  .grid, .purchase-grid, .cost-grid { grid-template-columns: 1fr; gap: 15px; }
+  .grid, .purchase-grid, .cost-grid { grid-template-columns: 1fr; gap: 13px; }
   .paired-fields { grid-template-columns: minmax(0,1.08fr) minmax(0,.92fr); gap: 10px; }
   .paired-fields label { font-size: 12px; }
   input, select { min-height: 52px; padding: 0 14px; font-size: 15px; }
-  .category-label-row { align-items: flex-start; flex-direction: column; }
-  .category-manage-btn { width: 100%; min-height: 42px; }
+  .field { gap: 8px; }
+  .category-manage-btn { width: auto; min-height: 42px; }
   .summary-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
   .summary-box { align-items: flex-start; flex-direction: column; gap: 9px; padding: 14px; }
   .summary-value { width: 100%; font-size: 16px; }
@@ -165,7 +160,7 @@ input:focus, select:focus, button:focus-visible { border-color: #4a9cff; box-sha
   .action-section { padding-top: 2px; }
   .action-buttons { display: grid; grid-template-columns: 1fr 1.3fr; width: 100%; }
   .btn-action.primary { min-width: 0; }
-  .list-section { margin-top: 18px; }
+  .list-section { margin-top: 16px; }
   .list-head { margin-bottom: 18px; }
   .list-heading h2 { font-size: 21px; }
   .search { width: 100%; }
@@ -216,18 +211,14 @@ input:focus, select:focus, button:focus-visible { border-color: #4a9cff; box-sha
 </div>
 <main class="main">
 <div class="page-shell">
-<header class="page-intro">
-<div class="eyebrow">Cost Management</div>
-<h1 class="title">Raw Material</h1>
-<p class="sub">Kelola bahan baku, pembelian, konversi, dan biaya dasar dalam satu alur yang rapi.</p>
-</header>
 <div class="material-form">
-<section class="section form-section identity-section">
-<div class="section-heading"><div class="section-icon"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-package"></use></svg></div><div><h2 class="sectionTitle">Identitas Bahan</h2><p class="section-sub">Informasi utama untuk mengenali dan mengelompokkan bahan.</p></div></div>
+<section class="section form-section identity-section" aria-labelledby="rawMaterialFormTitle">
+<div class="section-heading"><div class="section-icon"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-package"></use></svg></div><div><h1 class="sectionTitle" id="rawMaterialFormTitle">Raw Material</h1><p class="section-sub">Kelola bahan baku, pembelian, konversi, dan biaya dasar.</p></div></div>
+<h2 class="identity-subheading">Identitas Bahan</h2>
 <div class="grid">
 <div class="field"><label for="namaInput">Nama Bahan</label><input id="namaInput" placeholder="Tepung Terigu Pro Sedang"/></div>
 <div class="field"><label for="merkInput">Merk</label><input id="merkInput" placeholder="Segitiga Biru"/></div>
-<div class="field"><div class="category-label-row"><label for="kategoriInput">Category</label><button class="category-manage-btn" id="manageCategoryBtn" type="button">Kelola Kategori</button></div><select id="kategoriInput"></select></div>
+<div class="field"><label for="kategoriInput">Kategori</label><select id="kategoriInput"></select><button class="category-manage-btn" id="manageCategoryBtn" type="button">Kelola Kategori</button></div>
 <div class="field" id="newCategoryField" style="display:none;"><label for="newCategoryInput">Nama kategori baru</label><input id="newCategoryInput" placeholder="Contoh: Seafood"/></div>
 <div class="field"><label for="supplierInput">Supplier</label><input id="supplierInput" placeholder="Toko A"/></div>
 </div>
@@ -235,13 +226,13 @@ input:focus, select:focus, button:focus-visible { border-color: #4a9cff; box-sha
 <section class="section form-section purchase-section">
 <div class="section-heading"><div class="section-icon"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-calculator"></use></svg></div><div><h2 class="sectionTitle">Pembelian</h2><p class="section-sub">Catat kuantitas, satuan beli, dan harga dari supplier.</p></div></div>
 <div class="purchase-grid">
-<div class="paired-fields field-full"><div class="field"><label for="qtyInput">Qty Beli</label><input id="qtyInput" type="number" value="1"/></div><div class="field"><label for="buyUnitInput">Buy Unit</label><select id="buyUnitInput"><option>Kg</option><option>Pack</option><option>Liter</option><option>Pcs</option></select></div></div>
+<div class="paired-fields field-full"><div class="field"><label for="qtyInput">Qty Beli</label><input id="qtyInput" type="number" value="1"/></div><div class="field"><label for="buyUnitInput">Satuan Beli</label><select id="buyUnitInput"><option>Kg</option><option>Pack</option><option>Liter</option><option>Pcs</option></select></div></div>
 <div class="field field-full"><label for="hargaInput">Harga Beli</label><input id="hargaInput" inputmode="numeric" placeholder="Rp 0"/></div>
 </div>
 </section>
 <section class="section form-section conversion-section">
 <div class="section-heading"><div class="section-icon"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-flask-conical"></use></svg></div><div><h2 class="sectionTitle">Konversi</h2><p class="section-sub">Tentukan hasil konversi ke unit dasar yang dipakai resep.</p></div></div>
-<div class="paired-fields"><div class="field"><label for="conversionInput">Conversion Qty</label><input id="conversionInput" placeholder="1000" type="number"/></div><div class="field"><label for="unitDasarInput">Unit Dasar</label><select id="unitDasarInput"><option>gr</option><option>ml</option><option>pcs</option></select></div></div>
+<div class="paired-fields"><div class="field"><label for="conversionInput">Jumlah Konversi</label><input id="conversionInput" placeholder="1000" type="number"/></div><div class="field"><label for="unitDasarInput">Unit Dasar</label><select id="unitDasarInput"><option>gr</option><option>ml</option><option>pcs</option></select></div></div>
 </section>
 <section class="section form-section summary-section">
 <div class="section-heading"><div class="section-icon"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-settings"></use></svg></div><div><h2 class="sectionTitle">Biaya &amp; Status</h2><p class="section-sub">Atur waste dan status, lalu tinjau hasil perhitungan otomatis.</p></div></div>
@@ -295,7 +286,7 @@ input:focus, select:focus, button:focus-visible { border-color: #4a9cff; box-sha
 <input id="eQty" type="number"/>
 </div>
 <div class="field">
-<label>Buy Unit</label>
+<label>Satuan Beli</label>
 <select id="eBuyUnit">
 <option>Kg</option>
 <option>Pack</option>
