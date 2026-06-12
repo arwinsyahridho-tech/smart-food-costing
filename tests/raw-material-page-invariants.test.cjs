@@ -6,6 +6,24 @@ const source = fs.readFileSync(
   "utf8",
 );
 
+assert.match(source, /class="material-form"/);
+assert.match(source, /class="section form-section identity-section"/);
+assert.match(source, /class="section form-section purchase-section"/);
+assert.match(source, /class="section form-section conversion-section"/);
+assert.match(source, /class="section form-section summary-section"/);
+assert.match(source, /id="summaryUnitCost"/);
+assert.match(source, /id="summaryConversion"/);
+assert.match(source, /id="summaryWaste"/);
+assert.match(source, /id="summaryStatus"/);
+assert.match(source, /id="resetBtn"/);
+assert.match(source, /id="rawMaterialListTitle"/);
+assert.match(source, /@media \(max-width: 390px\)/);
+assert.match(source, /overflow-x: hidden/);
+assert.match(source, /function updateFormSummary/);
+assert.match(source, /status: el\.status\.value \|\| "ACTIVE"/);
+assert.match(source, /el\.resetBtn\.addEventListener\("click", clearForm\)/);
+assert.doesNotMatch(source, /supabase\/migrations\//);
+
 assert.match(source, /const RAW_MATERIAL_PAGE_SIZE = 10;/);
 assert.match(source, /const sorted = \[\.\.\.filtered\]\.sort/);
 assert.ok(
