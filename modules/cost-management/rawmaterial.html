@@ -39,18 +39,14 @@ button { touch-action: manipulation; }
 .btn .biya-icon, button .biya-icon { margin-right: 8px; vertical-align: -.18em; }
 .main { width: calc(100% - 260px); margin-left: 260px; padding: 34px; }
 .page-shell { width: 100%; max-width: 1500px; margin: auto; }
-.page-intro { margin-bottom: 24px; }
+.page-intro { margin-bottom: 18px; }
 .eyebrow { margin-bottom: 8px; color: #61a4ff; font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
 .title { font-size: clamp(34px,4vw,48px); line-height: 1; }
 .sub { margin-top: 10px; color: var(--muted); font-size: 16px; }
-.material-form { display: grid; grid-template-columns: repeat(12,minmax(0,1fr)); gap: 22px; }
+.material-form { display: grid; grid-template-columns: repeat(12,minmax(0,1fr)); gap: 18px; }
 .section { min-width: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 26px; background: linear-gradient(150deg,rgba(10,42,101,.98),rgba(5,25,66,.99)); box-shadow: var(--shadow), var(--glow); }
-.form-hero { grid-column: 1 / -1; display: flex; align-items: center; gap: 18px; padding: 28px; }
-.hero-icon, .section-icon, .summary-icon, .list-icon { display: grid; flex: 0 0 auto; place-items: center; border: 1px solid rgba(89,162,255,.28); color: #dcecff; }
-.hero-icon { width: 62px; height: 62px; border-radius: 19px; background: linear-gradient(145deg,#087cf7,#155bd8); box-shadow: 0 12px 28px rgba(0,102,255,.25); }
-.hero-icon .biya-icon, .section-icon .biya-icon, .list-icon .biya-icon { width: 27px; height: 27px; margin: 0; }
-.form-hero h2 { font-size: 28px; }
-.form-hero p { margin-top: 7px; color: var(--muted); }
+.section-icon, .summary-icon, .list-icon { display: grid; flex: 0 0 auto; place-items: center; border: 1px solid rgba(89,162,255,.28); color: #dcecff; }
+.section-icon .biya-icon, .list-icon .biya-icon { width: 27px; height: 27px; margin: 0; }
 .form-section { grid-column: span 6; padding: 25px; }
 .form-section.identity-section, .form-section.summary-section, .action-section { grid-column: 1 / -1; }
 .section-heading { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid rgba(123,173,255,.18); }
@@ -74,7 +70,7 @@ input:focus, select:focus, button:focus-visible { border-color: #4a9cff; box-sha
 .summary-copy { min-width: 0; }
 .summary-label { margin-bottom: 5px; color: var(--muted); font-size: 12px; }
 .summary-value { overflow: hidden; color: #fff; font-size: 18px; font-weight: 850; text-overflow: ellipsis; white-space: nowrap; }
-.action-section { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 22px 25px; }
+.action-section { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 2px 0 0; }
 .action-copy strong { display: block; font-size: 17px; }
 .action-copy span { display: block; margin-top: 5px; color: var(--muted); font-size: 13px; }
 .action-buttons { display: flex; gap: 12px; }
@@ -147,15 +143,11 @@ input:focus, select:focus, button:focus-visible { border-color: #4a9cff; box-sha
 }
 @media (max-width: 700px) {
   .main { padding: 22px 14px; }
-  .page-intro { margin-bottom: 20px; }
+  .page-intro { margin-bottom: 14px; }
   .title { font-size: 33px; }
   .sub { font-size: 14px; line-height: 1.5; }
-  .material-form { display: flex; flex-direction: column; gap: 16px; }
-  .form-hero, .form-section, .action-section, .list-section { padding: 18px 14px; border-radius: 21px; }
-  .form-hero { align-items: flex-start; gap: 13px; }
-  .hero-icon { width: 49px; height: 49px; border-radius: 15px; }
-  .form-hero h2 { font-size: 22px; }
-  .form-hero p { font-size: 13px; line-height: 1.45; }
+  .material-form { display: flex; flex-direction: column; gap: 14px; }
+  .form-section, .list-section { padding: 18px 14px; border-radius: 21px; }
   .section-heading { align-items: flex-start; gap: 10px; margin-bottom: 18px; padding-bottom: 15px; }
   .section-icon, .list-icon { width: 42px; height: 42px; border-radius: 13px; }
   .section-icon .biya-icon, .list-icon .biya-icon { width: 23px; height: 23px; }
@@ -170,6 +162,7 @@ input:focus, select:focus, button:focus-visible { border-color: #4a9cff; box-sha
   .summary-box { align-items: flex-start; flex-direction: column; gap: 9px; padding: 14px; }
   .summary-value { width: 100%; font-size: 16px; }
   .action-section, .list-head, .raw-list-toolbar__header { align-items: stretch; flex-direction: column; }
+  .action-section { padding-top: 2px; }
   .action-buttons { display: grid; grid-template-columns: 1fr 1.3fr; width: 100%; }
   .btn-action.primary { min-width: 0; }
   .list-section { margin-top: 18px; }
@@ -229,10 +222,6 @@ input:focus, select:focus, button:focus-visible { border-color: #4a9cff; box-sha
 <p class="sub">Kelola bahan baku, pembelian, konversi, dan biaya dasar dalam satu alur yang rapi.</p>
 </header>
 <div class="material-form">
-<section class="section form-hero" aria-labelledby="rawMaterialFormTitle">
-<div class="hero-icon"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-package"></use></svg></div>
-<div><h2 id="rawMaterialFormTitle">Raw Material Master</h2><p>Lengkapi informasi bahan untuk menjaga perhitungan costing tetap akurat.</p></div>
-</section>
 <section class="section form-section identity-section">
 <div class="section-heading"><div class="section-icon"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-package"></use></svg></div><div><h2 class="sectionTitle">Identitas Bahan</h2><p class="section-sub">Informasi utama untuk mengenali dan mengelompokkan bahan.</p></div></div>
 <div class="grid">
@@ -267,10 +256,10 @@ input:focus, select:focus, button:focus-visible { border-color: #4a9cff; box-sha
 <div class="summary-box"><div class="summary-icon">●</div><div class="summary-copy"><div class="summary-label">Status Bahan</div><div class="summary-value" id="summaryStatus">ACTIVE</div></div></div>
 </div>
 </section>
-<section class="section action-section">
+<div class="action-section" aria-label="Aksi form Raw Material">
 <div class="action-copy"><strong>Simpan Raw Material</strong><span>Pastikan identitas, pembelian, dan konversi sudah sesuai.</span></div>
 <div class="action-buttons"><button class="btn-action secondary" id="resetBtn" type="button">Reset</button><button class="btn-action primary" id="tambahBtn" type="button">+ Tambah Bahan</button></div>
-</section>
+</div>
 </div>
 <section class="section list-section" aria-labelledby="rawMaterialListTitle">
 <div class="list-head"><div class="list-heading"><div class="list-icon"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-package"></use></svg></div><div><h2 id="rawMaterialListTitle">Raw Material List</h2><p class="section-sub">Cari, filter, edit, atau hapus bahan yang sudah tersimpan.</p></div></div><div class="search"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-search"></use></svg><input id="searchInput" placeholder="Cari nama, merk, supplier..." aria-label="Cari bahan baku"/></div></div>
