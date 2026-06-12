@@ -1,38 +1,20 @@
 const assert = require("node:assert/strict");
 const {
+  RAW_MATERIAL_USAGE_RPC,
+  REFERENCE_WARNING,
   checkReferences,
   formatReferenceWarning,
   isDatabaseReferenceError,
 } = require("../modules/cost-management/raw-material-delete-service.js");
 
-function createQuery(result) {
-  const query = {
-    select() {
-      return query;
-    },
-    eq() {
-      return query;
-    },
-    in() {
-      return query;
-    },
-    then(resolve, reject) {
-      return Promise.resolve(result).then(resolve, reject);
-    },
-  };
-  return query;
-}
-
-function createClient(fixtures, failingTable = null) {
+function createClient(result, calls) {
   return {
-    from(table) {
-      if (table === failingTable) {
-        return createQuery({
-          data: null,
-          error: { code: "NETWORK", message: "offline" },
-        });
-      }
-      return createQuery({ data: fixtures[table] || [], error: null });
+    async rpc(name, parameters) {
+      calls.push({ name, parameters });
+      return result;
+    },
+    from() {
+      throw new Error("Pengecekan referensi tidak boleh membaca tabel langsung.");
     },
   };
 }
@@ -40,80 +22,106 @@ function createClient(fixtures, failingTable = null) {
 const scenarios = [
   {
     name: "bahan tidak digunakan",
-    fixtures: {},
-    expected: { isReferenced: false, preparationNames: [], menuNames: [] },
+    rpcRow: {
+      used_in_preparation: false,
+      used_in_menu: false,
+      preparation_count: 0,
+      menu_count: 0,
+      preparation_names: [],
+      menu_names: [],
+    },
+    expectedReferenced: false,
   },
   {
     name: "digunakan hanya di Preparation",
-    fixtures: {
-      preparation_items: [{ preparation_id: "prep-1" }],
-      preparations: [{ id: "prep-1", nama: "Sambal Dasar" }],
+    rpcRow: {
+      used_in_preparation: true,
+      used_in_menu: false,
+      preparation_count: 1,
+      menu_count: 0,
+      preparation_names: ["Sambal Dasar"],
+      menu_names: [],
     },
-    expected: {
-      isReferenced: true,
-      preparationNames: ["Sambal Dasar"],
-      menuNames: [],
-    },
+    expectedReferenced: true,
   },
   {
     name: "digunakan hanya di Menu",
-    fixtures: {
-      menu_items: [{ menu_id: "menu-1" }],
-      menus: [{ id: "menu-1", nama: "Nasi Goreng" }],
+    rpcRow: {
+      used_in_preparation: false,
+      used_in_menu: true,
+      preparation_count: 0,
+      menu_count: 1,
+      preparation_names: [],
+      menu_names: ["Nasi Goreng"],
     },
-    expected: {
-      isReferenced: true,
-      preparationNames: [],
-      menuNames: ["Nasi Goreng"],
-    },
+    expectedReferenced: true,
   },
   {
     name: "digunakan di Preparation dan Menu",
-    fixtures: {
-      preparation_items: [{ preparation_id: "prep-1" }],
-      preparations: [{ id: "prep-1", nama: "Sambal Dasar" }],
-      menu_items: [{ menu_id: "menu-1" }],
-      menus: [{ id: "menu-1", nama: "Nasi Goreng" }],
+    rpcRow: {
+      used_in_preparation: true,
+      used_in_menu: true,
+      preparation_count: 1,
+      menu_count: 1,
+      preparation_names: ["Sambal Dasar"],
+      menu_names: ["Nasi Goreng"],
     },
-    expected: {
-      isReferenced: true,
-      preparationNames: ["Sambal Dasar"],
-      menuNames: ["Nasi Goreng"],
-    },
+    expectedReferenced: true,
   },
 ];
 
 (async () => {
   for (const scenario of scenarios) {
+    const calls = [];
     const actual = await checkReferences({
-      client: createClient(scenario.fixtures),
-      rawMaterialId: "raw-1",
+      client: createClient({ data: [scenario.rpcRow], error: null }, calls),
+      rawMaterialId: 42,
     });
-    assert.deepEqual(actual, scenario.expected, scenario.name);
+
+    assert.equal(actual.isReferenced, scenario.expectedReferenced, scenario.name);
+    assert.equal(actual.preparationCount, scenario.rpcRow.preparation_count);
+    assert.equal(actual.menuCount, scenario.rpcRow.menu_count);
+    assert.deepEqual(actual.preparationNames, scenario.rpcRow.preparation_names);
+    assert.deepEqual(actual.menuNames, scenario.rpcRow.menu_names);
+    assert.deepEqual(calls, [
+      {
+        name: RAW_MATERIAL_USAGE_RPC,
+        parameters: { p_raw_material_id: 42 },
+      },
+    ]);
   }
 
   await assert.rejects(
     checkReferences({
-      client: createClient({}, "menu_items"),
-      rawMaterialId: "raw-1",
+      client: createClient(
+        { data: null, error: { code: "NETWORK", message: "offline" } },
+        [],
+      ),
+      rawMaterialId: 42,
     }),
     (error) =>
-      error.code === "NETWORK" && error.referenceCheckContext === "menu_items",
-    "error Supabase harus membatalkan pengecekan",
+      error.code === "NETWORK" &&
+      error.referenceCheckContext === RAW_MATERIAL_USAGE_RPC,
+    "RPC gagal harus membatalkan pengecekan",
   );
   await assert.rejects(
-    checkReferences({ client: createClient({}), rawMaterialId: null }),
+    checkReferences({
+      client: createClient({ data: [], error: null }, []),
+      rawMaterialId: 42,
+    }),
+    (error) => error.code === "RPC_EMPTY_RESULT",
+    "hasil RPC kosong harus membatalkan pengecekan",
+  );
+  await assert.rejects(
+    checkReferences({ client: createClient({}, []), rawMaterialId: null }),
     /ID Raw Material tidak tersedia/,
     "ID yang tidak tersedia harus membatalkan penghapusan",
   );
 
-  const warning = formatReferenceWarning(scenarios[3].expected);
-  assert.match(warning, /^Bahan baku tidak dapat dihapus/);
-  assert.match(warning, /Preparation: Sambal Dasar/);
-  assert.match(warning, /Menu: Nasi Goreng/);
+  assert.equal(formatReferenceWarning(), REFERENCE_WARNING);
   assert.equal(isDatabaseReferenceError({ code: "23503" }), true);
   assert.equal(isDatabaseReferenceError({ code: "OTHER" }), false);
-  console.log("Semua skenario deletion guard lulus.");
+  console.log("Semua skenario deletion guard berbasis RPC lulus.");
 })().catch((error) => {
   console.error(error);
   process.exitCode = 1;

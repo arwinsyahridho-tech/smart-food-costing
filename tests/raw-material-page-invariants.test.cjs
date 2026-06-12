@@ -28,12 +28,20 @@ const deleteFunction = source.slice(deleteStart, deleteEnd);
 assert.ok(deleteStart >= 0 && deleteEnd > deleteStart);
 assert.ok(
   deleteFunction.indexOf("checkReferences") <
-    deleteFunction.indexOf("confirm("),
+    deleteFunction.indexOf('confirm("Hapus data bahan ini?")'),
   "pengecekan referensi harus terjadi sebelum konfirmasi delete",
 );
 assert.match(deleteFunction, /persistRawMaterials\("delete", item\)/);
-assert.doesNotMatch(deleteFunction, /preparation_items.*delete/);
-assert.doesNotMatch(deleteFunction, /menu_items.*delete/);
+assert.doesNotMatch(deleteFunction, /\.from\("preparation_items"\)/);
+assert.doesNotMatch(deleteFunction, /\.from\("menu_items"\)/);
+assert.match(
+  deleteFunction,
+  /Bahan baku tidak dapat dihapus karena masih digunakan pada resep Preparation atau Menu\./,
+);
+assert.match(
+  deleteFunction,
+  /Pengecekan penggunaan bahan baku gagal atau Supabase tidak dapat diakses\. Penghapusan dibatalkan\./,
+);
 assert.match(deleteFunction, /rawMaterials\.splice\(index, 1\); render\(\);/);
 
 console.log("Invariant filter, sorting, pagination, dan alur delete lulus.");
