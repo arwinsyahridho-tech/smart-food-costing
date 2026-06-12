@@ -250,6 +250,99 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
 @media(max-width:340px){
   .paired-fields{grid-template-columns:1fr}
 }
+</style>
+<style id="biya-raw-material-filter-pagination">
+.raw-list-toolbar{
+  width:100%;
+  min-width:0;
+  margin:0 0 20px;
+  padding:20px;
+  border:1px solid var(--biya-border);
+  border-radius:var(--biya-radius-card);
+  background:rgba(16,43,99,.72);
+  box-shadow:var(--biya-card-shadow);
+  overflow:hidden;
+}
+.raw-list-toolbar__header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:14px;
+}
+.raw-list-toolbar__title{font-size:15px;font-weight:700;color:var(--biya-text)}
+.raw-list-summary{font-size:13px;color:var(--biya-muted);text-align:right}
+.category-filters{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  width:100%;
+  min-width:0;
+}
+.category-filter-btn,
+.pagination-btn{
+  min-height:42px;
+  padding:0 16px;
+  border:1px solid rgba(215,227,255,.18);
+  border-radius:12px;
+  background:#0d2158;
+  color:var(--biya-muted);
+  font:inherit;
+  font-size:14px;
+  font-weight:700;
+  cursor:pointer;
+  transition:background .2s ease,border-color .2s ease,box-shadow .2s ease,transform .2s ease,color .2s ease;
+}
+.category-filter-btn:hover,
+.pagination-btn:not(:disabled):hover{
+  border-color:rgba(46,216,255,.6);
+  background:var(--biya-surface-hover);
+  color:#fff;
+  transform:translateY(-1px);
+}
+.category-filter-btn.active,
+.pagination-btn.active{
+  border-color:transparent;
+  background:linear-gradient(135deg,var(--biya-primary),var(--biya-success));
+  color:#fff;
+  box-shadow:var(--biya-active-shadow);
+}
+.category-filter-btn:focus-visible,
+.pagination-btn:focus-visible{outline:3px solid rgba(46,216,255,.45);outline-offset:2px}
+.raw-list-empty{
+  padding:34px 22px;
+  border:1px dashed rgba(215,227,255,.24);
+  border-radius:var(--biya-radius-card);
+  background:rgba(16,43,99,.55);
+  color:var(--biya-muted);
+  text-align:center;
+}
+.pagination{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  margin:24px 0 8px;
+}
+.pagination[hidden]{display:none}
+.pagination-btn{min-width:42px;padding:0 13px}
+.pagination-btn:disabled{opacity:.42;cursor:not-allowed;transform:none}
+@media(max-width:600px){
+  .raw-list-toolbar{padding:16px;margin-bottom:16px}
+  .raw-list-toolbar__header{align-items:flex-start;flex-direction:column;gap:6px}
+  .raw-list-summary{text-align:left}
+  .category-filters{
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    overscroll-behavior-inline:contain;
+    scrollbar-width:thin;
+    padding:2px 2px 8px;
+  }
+  .category-filter-btn{flex:0 0 auto;white-space:nowrap}
+  .pagination{gap:6px}
+  .pagination-btn{min-width:38px;min-height:40px;padding:0 10px;font-size:13px}
+}
 </style> <style id="biya-mobile-sidebar-brand-fix">
 @media (max-width: 980px){
   .sidebar .logo{
@@ -362,7 +455,15 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
 <div class="search">
 <input id="searchInput" placeholder="Cari bahan..."/>
 </div>
+<section class="raw-list-toolbar" aria-labelledby="categoryFilterTitle">
+<div class="raw-list-toolbar__header">
+<div class="raw-list-toolbar__title" id="categoryFilterTitle">Filter Kategori</div>
+<div class="raw-list-summary" id="rawMaterialResultSummary" aria-live="polite"></div>
+</div>
+<div class="category-filters" id="categoryFilters" role="group" aria-label="Filter kategori bahan baku"></div>
+</section>
 <div id="listContainer"></div>
+<nav class="pagination" id="rawMaterialPagination" aria-label="Pagination bahan baku" hidden></nav>
 </main>
 </div>
 <div class="modal" id="editModal">
@@ -454,10 +555,13 @@ const rawMaterials = [];
 const rawMaterialCategories = [];
 let currentUserId = null;
 let editIndex = null;
+let activeCategory = "All";
+let currentPage = 1;
 const RAW_MATERIAL_COLUMNS = "*";
+const RAW_MATERIAL_PAGE_SIZE = 10;
 const ADD_CATEGORY_VALUE = "__add_new_category__";
 const DEFAULT_RAW_MATERIAL_CATEGORIES = ["Bahan Kering", "Bahan Basah", "Protein Hewani", "Protein Nabati", "Sayur", "Buah", "Bumbu", "Rempah", "Dairy", "Minyak & Lemak", "Tepung & Pati", "Gula & Pemanis", "Kemasan", "Minuman", "Frozen", "Lainnya"];
-const el = { nama: document.getElementById("namaInput"), merk: document.getElementById("merkInput"), kategori: document.getElementById("kategoriInput"), newCategoryField: document.getElementById("newCategoryField"), newCategory: document.getElementById("newCategoryInput"), manageCategoryBtn: document.getElementById("manageCategoryBtn"), categoryModal: document.getElementById("categoryModal"), categoryList: document.getElementById("categoryList"), closeCategoryBtn: document.getElementById("closeCategoryBtn"), supplier: document.getElementById("supplierInput"), qty: document.getElementById("qtyInput"), buyUnit: document.getElementById("buyUnitInput"), harga: document.getElementById("hargaInput"), conversion: document.getElementById("conversionInput"), unit: document.getElementById("unitDasarInput"), waste: document.getElementById("wasteInput"), search: document.getElementById("searchInput"), list: document.getElementById("listContainer"), modal: document.getElementById("editModal"), eNama: document.getElementById("eNama"), eMerk: document.getElementById("eMerk"), eKategori: document.getElementById("eKategori"), eSupplier: document.getElementById("eSupplier"), eQty: document.getElementById("eQty"), eBuyUnit: document.getElementById("eBuyUnit"), eHarga: document.getElementById("eHarga"), eConversion: document.getElementById("eConversion"), eUnit: document.getElementById("eUnit"), eWaste: document.getElementById("eWaste"), eStatus: document.getElementById("eStatus"), tambahBtn: document.getElementById("tambahBtn")
+const el = { nama: document.getElementById("namaInput"), merk: document.getElementById("merkInput"), kategori: document.getElementById("kategoriInput"), newCategoryField: document.getElementById("newCategoryField"), newCategory: document.getElementById("newCategoryInput"), manageCategoryBtn: document.getElementById("manageCategoryBtn"), categoryModal: document.getElementById("categoryModal"), categoryList: document.getElementById("categoryList"), closeCategoryBtn: document.getElementById("closeCategoryBtn"), supplier: document.getElementById("supplierInput"), qty: document.getElementById("qtyInput"), buyUnit: document.getElementById("buyUnitInput"), harga: document.getElementById("hargaInput"), conversion: document.getElementById("conversionInput"), unit: document.getElementById("unitDasarInput"), waste: document.getElementById("wasteInput"), search: document.getElementById("searchInput"), categoryFilters: document.getElementById("categoryFilters"), resultSummary: document.getElementById("rawMaterialResultSummary"), list: document.getElementById("listContainer"), pagination: document.getElementById("rawMaterialPagination"), modal: document.getElementById("editModal"), eNama: document.getElementById("eNama"), eMerk: document.getElementById("eMerk"), eKategori: document.getElementById("eKategori"), eSupplier: document.getElementById("eSupplier"), eQty: document.getElementById("eQty"), eBuyUnit: document.getElementById("eBuyUnit"), eHarga: document.getElementById("eHarga"), eConversion: document.getElementById("eConversion"), eUnit: document.getElementById("eUnit"), eWaste: document.getElementById("eWaste"), eStatus: document.getElementById("eStatus"), tambahBtn: document.getElementById("tambahBtn")
 }; function titleCase(text){ return String(text || "") .trim() .toLowerCase() .replace(/\b\w/g, c => c.toUpperCase());
 } function rupiah(value){ const n = Math.round(Number(value) || 0); return "Rp " + n.toLocaleString("id-ID");
 } function numberOnly(v){ return String(v || "").replace(/[^\d]/g, "");
@@ -473,8 +577,8 @@ const el = { nama: document.getElementById("namaInput"), merk: document.getEleme
 } function renderCategoryOptions(selectedValue = el.kategori.value){ const categories = getDisplayCategories(); const selected = normalizeCategoryName(selectedValue) || categories[0]?.nama || ""; el.kategori.innerHTML = categories.map(category => `<option value="${escapeHtml(category.nama)}">${escapeHtml(category.nama)}</option>`).join("") + `<option value="${ADD_CATEGORY_VALUE}">+ Tambah Kategori Baru</option>`; el.eKategori.innerHTML = categories.map(category => `<option value="${escapeHtml(category.nama)}">${escapeHtml(category.nama)}</option>`).join(""); if(categories.some(category => category.nama === selected)){ el.kategori.value = selected; el.eKategori.value = selected; } toggleNewCategoryField();
 } function toggleNewCategoryField(){ const isAdding = el.kategori.value === ADD_CATEGORY_VALUE; el.newCategoryField.style.display = isAdding ? "flex" : "none"; if(isAdding) el.newCategory.focus();
 } function renderCategoryManager(){ const customCategories = rawMaterialCategories.filter(category => category.is_default === false); if(!customCategories.length){ el.categoryList.innerHTML = `<div class="category-empty">Belum ada kategori custom.</div>`; return; } el.categoryList.innerHTML = customCategories.map(category => `<div class="category-row"><div><div class="category-row-name">${escapeHtml(category.nama)}</div><div class="small">Custom</div></div><button class="mini-btn delete" type="button" onclick="deleteCategory('${escapeHtml(category.id)}')">Hapus</button></div>`).join("");
-} async function loadRawMaterialCategories(){ if(!assertSupabaseReady(false)){ renderCategoryOptions(); return; } try { const { data, error } = await supabaseClient.from("raw_material_categories").select("id,nama,is_default,created_at").order("is_default", { ascending: false }).order("nama", { ascending: true }); if(error){ logSupabaseError("Load raw_material_categories gagal", error); throw error; } rawMaterialCategories.splice(0, rawMaterialCategories.length, ...((data || []).map(category => ({ id: category.id, nama: normalizeCategoryName(category.nama), is_default: Boolean(category.is_default), created_at: category.created_at })))); renderCategoryOptions(); renderCategoryManager(); } catch(error){ logSupabaseError("Gagal memuat kategori Raw Material dari Supabase", error); renderCategoryOptions(); }
-} async function ensureRawMaterialCategory(){ if(el.kategori.value !== ADD_CATEGORY_VALUE) return normalizeCategoryName(el.kategori.value); const nama = normalizeCategoryName(el.newCategory.value); if(!nama){ alert("Isi Nama kategori baru"); el.newCategory.focus(); throw new Error("Nama kategori baru kosong."); } const existing = rawMaterialCategories.find(category => normalizeCategoryName(category.nama).toLowerCase() === nama.toLowerCase()); if(existing) return existing.nama; try { const { data: matches, error: selectError } = await supabaseClient.from("raw_material_categories").select("id,nama,is_default,created_at").ilike("nama", nama).limit(1); if(selectError){ logSupabaseError("Cek kategori baru gagal", selectError, { nama }); throw selectError; } if(matches && matches.length){ const found = { id: matches[0].id, nama: normalizeCategoryName(matches[0].nama), is_default: Boolean(matches[0].is_default), created_at: matches[0].created_at }; rawMaterialCategories.push(found); renderCategoryOptions(found.nama); return found.nama; } const payload = { nama, is_default: false }; const { data, error } = await supabaseClient.from("raw_material_categories").insert(payload).select("id,nama,is_default,created_at").single(); if(error){ logSupabaseError("Tambah raw_material_categories gagal", error, { payload }); throw error; } const saved = { id: data.id, nama: normalizeCategoryName(data.nama), is_default: Boolean(data.is_default), created_at: data.created_at }; rawMaterialCategories.push(saved); renderCategoryOptions(saved.nama); renderCategoryManager(); return saved.nama; } catch(error){ logSupabaseError("Gagal tambah kategori Raw Material", error, { nama }); alert("Gagal menambah kategori baru. Cek console untuk detail error."); throw error; }
+} async function loadRawMaterialCategories(){ if(!assertSupabaseReady(false)){ renderCategoryOptions(); return; } try { const { data, error } = await supabaseClient.from("raw_material_categories").select("id,nama,is_default,created_at").order("is_default", { ascending: false }).order("nama", { ascending: true }); if(error){ logSupabaseError("Load raw_material_categories gagal", error); throw error; } rawMaterialCategories.splice(0, rawMaterialCategories.length, ...((data || []).map(category => ({ id: category.id, nama: normalizeCategoryName(category.nama), is_default: Boolean(category.is_default), created_at: category.created_at })))); renderCategoryOptions(); renderCategoryManager(); render(); } catch(error){ logSupabaseError("Gagal memuat kategori Raw Material dari Supabase", error); renderCategoryOptions(); render(); }
+} async function ensureRawMaterialCategory(){ if(el.kategori.value !== ADD_CATEGORY_VALUE) return normalizeCategoryName(el.kategori.value); const nama = normalizeCategoryName(el.newCategory.value); if(!nama){ alert("Isi Nama kategori baru"); el.newCategory.focus(); throw new Error("Nama kategori baru kosong."); } const existing = rawMaterialCategories.find(category => normalizeCategoryName(category.nama).toLowerCase() === nama.toLowerCase()); if(existing) return existing.nama; try { const { data: matches, error: selectError } = await supabaseClient.from("raw_material_categories").select("id,nama,is_default,created_at").ilike("nama", nama).limit(1); if(selectError){ logSupabaseError("Cek kategori baru gagal", selectError, { nama }); throw selectError; } if(matches && matches.length){ const found = { id: matches[0].id, nama: normalizeCategoryName(matches[0].nama), is_default: Boolean(matches[0].is_default), created_at: matches[0].created_at }; rawMaterialCategories.push(found); renderCategoryOptions(found.nama); renderCategoryManager(); render(); return found.nama; } const payload = { nama, is_default: false }; const { data, error } = await supabaseClient.from("raw_material_categories").insert(payload).select("id,nama,is_default,created_at").single(); if(error){ logSupabaseError("Tambah raw_material_categories gagal", error, { payload }); throw error; } const saved = { id: data.id, nama: normalizeCategoryName(data.nama), is_default: Boolean(data.is_default), created_at: data.created_at }; rawMaterialCategories.push(saved); renderCategoryOptions(saved.nama); renderCategoryManager(); render(); return saved.nama; } catch(error){ logSupabaseError("Gagal tambah kategori Raw Material", error, { nama }); alert("Gagal menambah kategori baru. Cek console untuk detail error."); throw error; }
 } async function deleteCategory(categoryId){ const category = rawMaterialCategories.find(item => String(item.id) === String(categoryId)); if(!category || category.is_default !== false) return; if(!confirm(`Hapus kategori "${category.nama}"? Data Raw Material lama tidak akan dihapus.`)) return; try { const { error } = await supabaseClient.from("raw_material_categories").delete().eq("id", category.id); if(error){ logSupabaseError("Delete raw_material_categories gagal", error, { id: category.id, nama: category.nama }); throw error; } await loadRawMaterialCategories(); } catch(error){ logSupabaseError("Gagal hapus kategori Raw Material", error, { id: category.id, nama: category.nama }); alert("Gagal menghapus kategori. Cek console untuk detail error."); }
 } function openCategoryManager(){ renderCategoryManager(); el.categoryModal.style.display = "flex";
 } function closeCategoryManager(){ el.categoryModal.style.display = "none";
@@ -486,7 +590,11 @@ const el = { nama: document.getElementById("namaInput"), merk: document.getEleme
 } async function persistRawMaterials(action, item){ if(!assertSupabaseReady()) throw new Error("Supabase belum dikonfigurasi."); if(action === "insert"){ const payload = rawMaterialToRow(item); const { data, error } = await supabaseClient.from("raw_material").insert(payload).select(RAW_MATERIAL_COLUMNS).single(); if(error){ logSupabaseError("Insert raw_material gagal", error, { payload }); throw error; } return rowToRawMaterial(data); } if(action === "update"){ const payload = rawMaterialToRow(item); const id = item.id; const rawId = item.rawId; let query = supabaseClient.from("raw_material").update(payload).select(RAW_MATERIAL_COLUMNS); query = id ? query.eq("id", id) : query.eq("raw_id", rawId); const { data, error } = await query.single(); if(error){ logSupabaseError("Update raw_material gagal", error, { id, rawId, payload }); throw error; } return rowToRawMaterial(data); } if(action === "delete"){ let query = supabaseClient.from("raw_material").delete(); query = item.id ? query.eq("id", item.id) : query.eq("raw_id", item.rawId); const { error } = await query; if(error){ logSupabaseError("Delete raw_material gagal", error, { id: item.id, rawId: item.rawId }); throw error; } return null; } throw new Error(`Aksi Supabase tidak dikenal: ${action}`);
 } function readForm(){ return { nama: titleCase(el.nama.value), merk: titleCase(el.merk.value), kategori: el.kategori.value, supplier: titleCase(el.supplier.value), qty: Number(el.qty.value) || 0, buyUnit: el.buyUnit.value, harga: Number(numberOnly(el.harga.value)) || 0, conversion: Number(el.conversion.value) || 0, unit: el.unit.value, waste: Number(el.waste.value) || 0 };
 } function clearForm(){ el.nama.value = ""; el.merk.value = ""; el.supplier.value = ""; el.qty.value = 1; el.buyUnit.value = "Kg"; el.harga.value = ""; el.conversion.value = ""; el.unit.value = "gr"; el.waste.value = 5; el.newCategory.value = ""; renderCategoryOptions();
-} function renderRawMaterialCard(item, originalIndex){ const unitCost = item.hargaUnit || calcUnitCost(item); const conversionValue = item.conversionHasil || calcConversionHasil(item); const status = item.status || "ACTIVE"; const purchaseText = `${escapeHtml(item.qty)}${escapeHtml(item.buyUnit)}`; const conversionText = `${purchaseText} → ${escapeHtml(conversionValue)}${escapeHtml(item.unit)}`; return ` <div class="card raw-card"> <div class="preview-top"> <div class="raw-card-main"> <div class="name">${escapeHtml(item.nama)}</div> <div class="subCard raw-desktop-sub">${escapeHtml(item.kategori)} - ${escapeHtml(item.merk)}</div> <div class="raw-mobile-support"> <div>Supplier: ${escapeHtml(item.supplier || "-")}</div> <div>Kategori: ${escapeHtml(item.kategori || "-")}</div> <div>Waste: ${escapeHtml(item.waste)}%</div> </div> </div> <div class="raw-card-right"> <div class="raw-unit-price raw-desktop-price">${rupiah(unitCost)} / ${escapeHtml(item.unit)}</div> <div class="raw-unit-price raw-mobile-price">${rupiah(unitCost)}/${escapeHtml(item.unit)}</div> <div class="raw-conversion">${conversionText}</div> <div class="raw-status">${escapeHtml(status)}</div> </div> </div> <div class="info"> <div class="box"> <div class="small">Supplier</div> <div class="big">${escapeHtml(item.supplier)}</div> </div> <div class="box"> <div class="small">Pembelian</div> <div class="big">${escapeHtml(item.qty)} ${escapeHtml(item.buyUnit)}</div> </div> <div class="box"> <div class="small">Konversi</div> <div class="big">${escapeHtml(conversionValue)} ${escapeHtml(item.unit)}</div> </div> <div class="box"> <div class="small">Waste</div> <div class="big">${escapeHtml(item.waste)}%</div> </div> <div class="box"> <div class="small">Status</div> <div class="big">${escapeHtml(status)}</div> </div> </div> <div class="actions"> <button class="mini-btn edit" onclick="openEdit(${originalIndex})">Edit</button> <button class="mini-btn delete" onclick="deleteItem(${originalIndex})">Hapus</button> </div> </div> `; } function render(){ const keyword = el.search.value.trim().toLowerCase(); const filtered = rawMaterials.filter(item => { const haystack = [ item.nama, item.merk, item.kategori, item.supplier, item.buyUnit, item.unit ].join(" ").toLowerCase(); return haystack.includes(keyword); }); if(!filtered.length){ el.list.innerHTML = `<div class="section" style="text-align:center;opacity:.7;">Belum ada data bahan</div>`; return; } el.list.innerHTML = filtered.map((item, index) => { const originalIndex = rawMaterials.indexOf(item); return renderRawMaterialCard(item, originalIndex); }).join("");
+} function renderRawMaterialCard(item, originalIndex){ const unitCost = item.hargaUnit || calcUnitCost(item); const conversionValue = item.conversionHasil || calcConversionHasil(item); const status = item.status || "ACTIVE"; const purchaseText = `${escapeHtml(item.qty)}${escapeHtml(item.buyUnit)}`; const conversionText = `${purchaseText} → ${escapeHtml(conversionValue)}${escapeHtml(item.unit)}`; return ` <div class="card raw-card"> <div class="preview-top"> <div class="raw-card-main"> <div class="name">${escapeHtml(item.nama)}</div> <div class="subCard raw-desktop-sub">${escapeHtml(item.kategori)} - ${escapeHtml(item.merk)}</div> <div class="raw-mobile-support"> <div>Supplier: ${escapeHtml(item.supplier || "-")}</div> <div>Kategori: ${escapeHtml(item.kategori || "-")}</div> <div>Waste: ${escapeHtml(item.waste)}%</div> </div> </div> <div class="raw-card-right"> <div class="raw-unit-price raw-desktop-price">${rupiah(unitCost)} / ${escapeHtml(item.unit)}</div> <div class="raw-unit-price raw-mobile-price">${rupiah(unitCost)}/${escapeHtml(item.unit)}</div> <div class="raw-conversion">${conversionText}</div> <div class="raw-status">${escapeHtml(status)}</div> </div> </div> <div class="info"> <div class="box"> <div class="small">Supplier</div> <div class="big">${escapeHtml(item.supplier)}</div> </div> <div class="box"> <div class="small">Pembelian</div> <div class="big">${escapeHtml(item.qty)} ${escapeHtml(item.buyUnit)}</div> </div> <div class="box"> <div class="small">Konversi</div> <div class="big">${escapeHtml(conversionValue)} ${escapeHtml(item.unit)}</div> </div> <div class="box"> <div class="small">Waste</div> <div class="big">${escapeHtml(item.waste)}%</div> </div> <div class="box"> <div class="small">Status</div> <div class="big">${escapeHtml(status)}</div> </div> </div> <div class="actions"> <button class="mini-btn edit" onclick="openEdit(${originalIndex})">Edit</button> <button class="mini-btn delete" onclick="deleteItem(${originalIndex})">Hapus</button> </div> </div> `; } function getFilterCategories(){ return uniqueCategories([ ...rawMaterialCategories, ...rawMaterials.map(item => ({ nama: item.kategori })) ]).map(category => category.nama).sort((a, b) => a.localeCompare(b, "id"));
+} function isActiveCategoryAvailable(categories){ return activeCategory === "All" || categories.some(category => normalizeCategoryName(category).toLowerCase() === normalizeCategoryName(activeCategory).toLowerCase());
+} function renderCategoryFilters(){ const categories = getFilterCategories(); if(!isActiveCategoryAvailable(categories)){ activeCategory = "All"; currentPage = 1; } const buttons = ["All", ...categories]; el.categoryFilters.innerHTML = buttons.map(category => { const isActive = category === "All" ? activeCategory === "All" : normalizeCategoryName(category).toLowerCase() === normalizeCategoryName(activeCategory).toLowerCase(); return `<button class="category-filter-btn${isActive ? " active" : ""}" type="button" data-category="${escapeHtml(category)}" aria-pressed="${isActive}">${escapeHtml(category)}</button>`; }).join("");
+} function renderPagination(totalPages){ if(totalPages <= 1){ el.pagination.hidden = true; el.pagination.innerHTML = ""; return; } const pageButtons = Array.from({ length: totalPages }, (_, index) => { const page = index + 1; return `<button class="pagination-btn${page === currentPage ? " active" : ""}" type="button" data-page="${page}" aria-label="Halaman ${page}" aria-current="${page === currentPage ? "page" : "false"}">${page}</button>`; }).join(""); el.pagination.innerHTML = `<button class="pagination-btn" type="button" data-page="${currentPage - 1}" ${currentPage === 1 ? "disabled" : ""}>Previous</button>${pageButtons}<button class="pagination-btn" type="button" data-page="${currentPage + 1}" ${currentPage === totalPages ? "disabled" : ""}>Next</button>`; el.pagination.hidden = false;
+} function render(){ renderCategoryFilters(); const normalizedActiveCategory = normalizeCategoryName(activeCategory).toLowerCase(); const categoryFiltered = activeCategory === "All" ? [...rawMaterials] : rawMaterials.filter(item => normalizeCategoryName(item.kategori).toLowerCase() === normalizedActiveCategory); const keyword = el.search.value.trim().toLowerCase(); const filtered = categoryFiltered.filter(item => { const haystack = [ item.nama, item.merk, item.kategori, item.supplier, item.buyUnit, item.unit ].join(" ").toLowerCase(); return haystack.includes(keyword); }); const totalPages = Math.ceil(filtered.length / RAW_MATERIAL_PAGE_SIZE); if(totalPages && currentPage > totalPages) currentPage = totalPages; if(currentPage < 1) currentPage = 1; const startIndex = (currentPage - 1) * RAW_MATERIAL_PAGE_SIZE; const pageItems = filtered.slice(startIndex, startIndex + RAW_MATERIAL_PAGE_SIZE); const categoryLabel = activeCategory === "All" ? "semua kategori" : activeCategory; el.resultSummary.textContent = `${filtered.length} bahan baku · ${categoryLabel}`; if(!filtered.length){ const emptyMessage = activeCategory === "All" ? (keyword ? "Tidak ada bahan baku yang sesuai pencarian." : "Belum ada data bahan baku.") : "Belum ada bahan baku pada kategori ini."; el.list.innerHTML = `<div class="raw-list-empty">${emptyMessage}</div>`; renderPagination(0); return; } el.list.innerHTML = pageItems.map(item => { const originalIndex = rawMaterials.indexOf(item); return renderRawMaterialCard(item, originalIndex); }).join(""); renderPagination(totalPages);
 } async function addItem(){ const data = readForm(); if(!data.nama){ alert("Isi Nama Bahan"); el.nama.focus(); return; } setBusy(true); try { data.kategori = await ensureRawMaterialCategory(); const saved = await persistRawMaterials("insert", data); rawMaterials.unshift(saved); clearForm(); render(); } catch(error){ console.error("Gagal tambah raw material:", error); if(error?.message !== "Nama kategori baru kosong.") alert("Gagal menyimpan Raw Material ke Supabase."); } finally { setBusy(false); }
 } function openEdit(index){ editIndex = index; const item = rawMaterials[index]; if(!item) return; el.eNama.value = item.nama; el.eMerk.value = item.merk; if(item.kategori && ![...el.eKategori.options].some(option => option.value === item.kategori)){ el.eKategori.add(new Option(item.kategori, item.kategori)); } el.eKategori.value = item.kategori; el.eSupplier.value = item.supplier; el.eQty.value = item.qty; el.eBuyUnit.value = item.buyUnit; el.eHarga.value = item.harga; el.eConversion.value = item.conversion; el.eUnit.value = item.unit; el.eWaste.value = item.waste; el.eStatus.value = item.status || "ACTIVE"; el.modal.style.display = "flex";
 } function closeModal(){ el.modal.style.display = "none";
@@ -496,7 +604,7 @@ const el = { nama: document.getElementById("namaInput"), merk: document.getEleme
 }); el.eHarga.addEventListener("input", () => { const n = numberOnly(el.eHarga.value); el.eHarga.value = n ? rupiah(n) : "";
 }); el.tambahBtn.addEventListener("click", addItem);
 el.kategori.addEventListener("change", toggleNewCategoryField); el.manageCategoryBtn.addEventListener("click", openCategoryManager); el.closeCategoryBtn.addEventListener("click", closeCategoryManager);
-el.search.addEventListener("input", render); el.modal.addEventListener("click", (e) => { if(e.target === el.modal) closeModal();
+el.categoryFilters.addEventListener("click", event => { const button = event.target.closest("[data-category]"); if(!button) return; activeCategory = button.dataset.category; currentPage = 1; render(); }); el.pagination.addEventListener("click", event => { const button = event.target.closest("[data-page]"); if(!button || button.disabled) return; currentPage = Number(button.dataset.page) || 1; render(); el.categoryFilters.closest(".raw-list-toolbar")?.scrollIntoView({ behavior: "smooth", block: "start" }); }); el.search.addEventListener("input", () => { currentPage = 1; render(); }); el.modal.addEventListener("click", (e) => { if(e.target === el.modal) closeModal();
 }); el.categoryModal.addEventListener("click", (e) => { if(e.target === el.categoryModal) closeCategoryManager();
 }); renderCategoryOptions(); loadRawMaterialCategories(); loadRawMaterials();
 </script> <script>
