@@ -7,6 +7,27 @@ const source = fs.readFileSync(
 );
 
 assert.match(source, /class="material-form"/);
+assert.doesNotMatch(source, /Raw Material Master/);
+assert.doesNotMatch(source, /class="section form-hero"/);
+assert.doesNotMatch(source, /class="hero-icon"/);
+assert.match(source, /class="action-section" aria-label="Aksi form Raw Material"/);
+
+const pageIntroEnd = source.indexOf("</header>", source.indexOf('class="page-intro"'));
+const identitySection = source.indexOf('class="section form-section identity-section"');
+const purchaseSection = source.indexOf('class="section form-section purchase-section"');
+const conversionSection = source.indexOf('class="section form-section conversion-section"');
+const summarySection = source.indexOf('class="section form-section summary-section"');
+const actionSection = source.indexOf('class="action-section"');
+const listSection = source.indexOf('class="section list-section"');
+assert.ok(
+  pageIntroEnd < identitySection &&
+    identitySection < purchaseSection &&
+    purchaseSection < conversionSection &&
+    conversionSection < summarySection &&
+    summarySection < actionSection &&
+    actionSection < listSection,
+  "struktur halaman harus langsung dari header ke empat section form, aksi, lalu list",
+);
 assert.match(source, /class="section form-section identity-section"/);
 assert.match(source, /class="section form-section purchase-section"/);
 assert.match(source, /class="section form-section conversion-section"/);
