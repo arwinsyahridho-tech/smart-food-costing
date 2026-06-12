@@ -5,158 +5,301 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>BIYA - Preparation</title>
 <style>
-:root{ --bg:#07173a; --panel:#102766; --panel-2:#0d2158; --panel-3:#1b3d96; --primary:#2f6df6; --text:#ffffff; --muted:rgba(255,255,255,.68); --danger:#ef4444; --warning:#f59e0b; --shadow:0 10px 30px rgba(37,99,235,.16); }
-*{ margin:0; padding:0; box-sizing:border-box; }
-body{ background:var(--bg); font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif; color:var(--text); overflow-x:hidden; }
-.wrapper{ display:flex; min-height:100vh; }
-.sidebar{ position:fixed; left:0; top:0; width:260px; height:100vh; background:linear-gradient(180deg,#081A3A,#04122B); padding:30px; overflow-y:auto; border-right:1px solid rgba(255,255,255,.08); box-shadow:0 8px 24px rgba(0,0,0,.2); z-index:999; }
-.logo{ font-size:34px; font-weight:700; margin-bottom:45px; letter-spacing:.2px; }
-.logo small,.mobile-logo small{ display:block; margin-top:8px; font-size:12px; font-weight:400; opacity:.65; letter-spacing:1.6px; }
-.item{ min-height:56px; padding:0 18px; display:flex; align-items:center; border-radius:16px; margin-bottom:12px; cursor:pointer; font-size:16px; transition:.22s; color:#D7E3FF; user-select:none; gap:10px; }
-.item:hover{ transform:translateX(6px); background:#163A87; color:#fff; }
-.item.active{ background:linear-gradient(135deg,#0066FF,#00D66B); color:#fff; transform:translateX(10px); box-shadow:0 0 20px rgba(0,102,255,.35); }
-.btn{ margin-top:18px; min-height:54px; width:100%; border:none; border-radius:14px; background:linear-gradient(135deg,#0066FF,#00D66B); color:white; cursor:pointer; font-weight:700; box-shadow:var(--shadow); }
-.main{ margin-left:260px; width:calc(100% - 260px); padding:40px; }
-.page-shell{ width:100%; max-width:1440px; margin:0 auto; }
-.title{ font-size:44px; margin-bottom:10px; line-height:1.05; }
-.sub{ opacity:.74; margin-bottom:30px; font-size:16px; }
-.section{ background:linear-gradient(180deg,rgba(16,43,99,.96),rgba(12,34,83,.98)); padding:28px; border-radius:22px; margin-bottom:24px; border:1px solid rgba(255,255,255,.08); box-shadow:var(--shadow); }
-.section-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:18px; margin-bottom:22px; flex-wrap:wrap; }
-.section-title{ font-size:28px; font-weight:700; line-height:1.15; }
-.section-sub{ margin-top:6px; opacity:.65; line-height:1.3; }
-.grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
-.field{ display:flex; flex-direction:column; gap:10px; }
-label{ display:block; opacity:.72; font-size:15px; }
-input,select{ width:100%; min-height:56px; padding:0 18px; background:rgba(16,43,99,.95); border:1px solid rgba(255,255,255,.08); border-radius:14px; color:white; outline:none; font-size:15px; }
-input:focus,select:focus{ box-shadow:0 0 0 2px rgba(47,109,246,.28) inset; }
-input:disabled{ opacity:1; cursor:not-allowed; }
-.yield-wrap,.category-control{ display:flex; gap:12px; align-items:center; }
-.yield-wrap .yield-qty{ flex:2; }
-.yield-wrap .yield-unit{ flex:1; }
-.category-control select{ flex:1; }
-.manage-category-btn{ min-height:56px; padding:0 16px; border:none; border-radius:14px; background:#334155; color:#fff; cursor:pointer; font-weight:700; white-space:nowrap; box-shadow:var(--shadow); }
-.new-category-input{ display:none; }
-.category-manager{ display:none; padding:14px; border-radius:14px; background:rgba(7,23,58,.55); border:1px solid rgba(255,255,255,.08); }
-.category-manager.active{ display:block; }
-.category-manager-title{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:10px; font-weight:700; }
-.category-manager-list{ display:flex; flex-direction:column; gap:8px; }
-.category-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 12px; border-radius:10px; background:rgba(255,255,255,.06); }
-.category-row span{ word-break:break-word; }
-.category-delete-btn{ min-height:34px; padding:0 12px; border:none; border-radius:9px; background:var(--danger); color:#fff; cursor:pointer; font-weight:700; }
-.category-empty{ opacity:.65; font-size:14px; }
-.table-wrapper{ margin-top:24px; overflow:auto; border-radius:16px; -webkit-overflow-scrolling:touch; }
-table{ width:100%; border-collapse:collapse; margin-top:0; min-width:860px; }
-th{ background:#163A87; padding:16px; font-size:14px; text-align:left; white-space:nowrap; }
-td{ padding:14px; background:#102B63; border-bottom:1px solid rgba(255,255,255,.05); vertical-align:middle; }
-tbody tr:hover td{ background:#163A87; }
-.table-input,.table-select{ width:100%; min-height:46px; background:#07173a; border:1px solid rgba(255,255,255,.08); border-radius:10px; padding:0 12px; color:white; font-size:14px; }
-.add-row-btn,.save-btn,.action-btn,.clear-search-btn{ border:none; color:white; cursor:pointer; font-weight:700; transition:.2s; }
-.add-row-btn{ margin-top:18px; min-height:50px; padding:0 24px; border-radius:12px; background:linear-gradient(135deg,#0066FF,#00D66B); }
-.delete-btn{ width:40px; height:40px; border:none; border-radius:10px; background:var(--danger); color:white; cursor:pointer; font-size:18px; font-weight:700; display:inline-flex; align-items:center; justify-content:center; }
-.summary{ margin-top:22px; display:grid; grid-template-columns:repeat(2,minmax(220px,1fr)); gap:20px; }
-.summary-box,.mini-box,.category-block,.prep-item{ background:linear-gradient(180deg,rgba(16,43,99,.96),rgba(12,34,83,.98)); border:1px solid rgba(255,255,255,.08); box-shadow:var(--shadow); }
-.summary-box{ padding:20px; border-radius:16px; min-height:88px; }
-.summary-title,.mini-title{ opacity:.62; margin-bottom:10px; font-size:15px; }
-.summary-value{ font-size:26px; font-weight:700; line-height:1.1; }
-.save-row{ margin-top:22px; }
-.save-btn{ width:100%; min-height:56px; border-radius:14px; background:linear-gradient(135deg,#0066FF,#00D66B); font-size:16px; }
-.prep-groups{ display:flex; flex-direction:column; gap:24px; }
-.category-block{ border-radius:18px; padding:16px; }
-.category-title{ font-size:18px; font-weight:700; margin-bottom:14px; opacity:.95; }
-.category-title span{ color:rgba(255,255,255,.66); font-weight:400; margin-left:8px; font-size:13px; }
-.prep-list-empty{ opacity:.65; padding:20px; text-align:center; }
-.prep-item{ border-radius:18px; padding:22px; margin-bottom:16px; }
-.prep-header{ display:flex; justify-content:space-between; align-items:flex-start; gap:20px; cursor:pointer; width:100%; }
-.prep-left{ min-width:0; flex:1; }
-.prep-name{ font-size:20px; font-weight:700; line-height:1.2; word-break:break-word; }
-.badge-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
-.prep-category{ display:inline-flex; align-items:center; padding:6px 12px; background:var(--primary); border-radius:999px; font-size:12px; width:fit-content; white-space:nowrap; overflow-wrap:anywhere; }
-.prep-right{ min-width:190px; text-align:right; display:flex; flex-direction:column; gap:8px; align-items:flex-end; }
-.prep-cost{ font-size:22px; font-weight:700; line-height:1.1; }
-.prep-per{ font-size:14px; opacity:.72; }
-.prep-detail{ display:none; margin-top:20px; padding-top:20px; border-top:1px solid rgba(255,255,255,.08); }
-.prep-detail.active{ display:block; }
-.detail-grid{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; margin-bottom:18px; }
-.mini-box{ border-radius:16px; padding:16px; min-height:82px; }
-.mini-value{ font-size:18px; font-weight:700; line-height:1.2; word-break:break-word; }
-.detail-title{ font-size:18px; font-weight:700; margin:12px 0 14px; }
-.prep-table{ width:100%; border-collapse:collapse; min-width:760px; margin-top:0; overflow:hidden; border-radius:14px; }
-.prep-table th{ padding:12px; font-size:13px; }
-.prep-table td{ padding:12px; }
-.detail-footer{ display:flex; justify-content:space-between; align-items:center; gap:18px; flex-wrap:wrap; margin-top:20px; padding-top:20px; border-top:1px solid rgba(255,255,255,.08); }
-.footer-label{ font-size:12px; opacity:.62; margin-bottom:6px; letter-spacing:.5px; }
-.footer-value{ font-size:24px; font-weight:700; line-height:1.1; }
-.prep-actions{ display:flex; gap:10px; flex-wrap:wrap; }
-.action-btn{ min-height:42px; padding:0 18px; border-radius:10px; }
-.edit-btn{ background:var(--warning); }
-.delete-prep-btn{ background:var(--danger); }
-.list-tools{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; justify-content:flex-end; width:100%; }
-.search-box{ display:flex; align-items:center; gap:10px; min-width:320px; max-width:560px; flex:1; min-height:50px; padding:0 16px; border-radius:14px; background:var(--panel-2); border:1px solid rgba(255,255,255,.08); }
-.search-box input{ flex:1; min-height:50px; padding:0; background:transparent; border:none; outline:none; }
-.clear-search-btn{ min-height:50px; padding:0 16px; border-radius:14px; background:rgba(255,255,255,.08); }
-.mobile-header{ display:none; }
-.mobile-logo{ font-size:18px; font-weight:700; letter-spacing:.4px; }
-.menu-toggle{ width:46px; height:46px; border:none; border-radius:12px; background:linear-gradient(135deg,#0066FF,#00D66B); color:#fff; font-size:22px; font-weight:700; cursor:pointer; box-shadow:0 8px 24px rgba(0,0,0,.2); }
-.mobile-overlay{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.52); z-index:998; }
-.biya-no-scroll{ overflow:hidden !important; }
-.sidebar-close{ display:none; }
-.biya-icon{ width:1.15em; height:1.15em; flex:0 0 auto; }
-@media (max-width:1180px){ .detail-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
-@media (max-width:980px){ .mobile-header{ display:flex; align-items:center; justify-content:space-between; gap:12px; position:sticky; top:0; z-index:1002; min-height:64px; padding:12px 16px; background:linear-gradient(180deg,rgba(8,26,58,.98),rgba(4,18,43,.96)); border-bottom:1px solid rgba(255,255,255,.08); } .mobile-overlay.open{ display:block; } .sidebar{ left:-280px; width:260px; transition:left .28s ease; box-shadow:0 20px 40px rgba(0,0,0,.35); } .sidebar.open{ left:0; } .sidebar-close{ display:flex; align-items:center; justify-content:center; width:42px; height:42px; margin:0 0 18px auto; border:1px solid rgba(255,255,255,.14); border-radius:12px; background:rgba(255,255,255,.08); color:#fff; font-size:28px; line-height:1; cursor:pointer; } .wrapper{ display:block; } .main{ margin-left:0; width:100%; padding:20px; } .title{ font-size:clamp(30px,9vw,40px); } .section{ padding:18px; overflow:hidden; } .grid,.summary,.detail-grid{ grid-template-columns:1fr; } .section-head,.prep-header,.detail-footer,.list-tools,.category-control{ flex-direction:column; align-items:stretch; } .prep-right{ min-width:0; width:100%; align-items:flex-start; text-align:left; } .search-box,.clear-search-btn,.save-btn,.add-row-btn,.manage-category-btn{ width:100%; max-width:100%; min-width:0; } table{ min-width:720px; } #ingredientTable{ min-width:680px; } th,td,.prep-table th,.prep-table td{ padding:10px 12px; font-size:12px; } .table-input,.table-select{ min-height:42px; padding:0 10px; font-size:13px; } }
-@media (max-width:768px){ .ingredient-table-wrapper{ overflow-x:hidden; } #ingredientTable{ width:100%; min-width:0; table-layout:fixed; } #ingredientTable th,#ingredientTable td{ padding:8px 4px; font-size:11px; } #ingredientTable th:nth-child(4),#ingredientTable td:nth-child(4){ display:none; } #ingredientTable th:nth-child(1),#ingredientTable td:nth-child(1){ width:40%; } #ingredientTable th:nth-child(2),#ingredientTable td:nth-child(2){ width:16%; } #ingredientTable th:nth-child(3),#ingredientTable td:nth-child(3){ width:15%; } #ingredientTable th:nth-child(5),#ingredientTable td:nth-child(5){ width:18%; } #ingredientTable th:nth-child(6),#ingredientTable td:nth-child(6){ width:11%; text-align:center; } #ingredientTable .table-input,#ingredientTable .table-select{ min-height:40px; padding:0 6px; font-size:12px; } #ingredientTable .qty-input{ text-align:center; } #ingredientTable .delete-btn{ width:32px; height:32px; } }
-</style>
-<style id="biya-mobile-sidebar-brand-fix">
-@media (max-width: 980px){
-  .sidebar .logo{
-    display:none!important;
-  }
-  .sidebar,
-  aside.sidebar,
-  div.sidebar{
-    padding-top:18px!important;
-  }
+:root {
+  --bg: #020b22;
+  --bg-soft: #061638;
+  --panel: #09265d;
+  --panel-deep: #061d4c;
+  --panel-soft: #0d2f70;
+  --line: rgba(97, 163, 255, .27);
+  --line-strong: rgba(65, 145, 255, .48);
+  --primary: #087cf7;
+  --success: #03d477;
+  --text: #f7faff;
+  --muted: #9eb8e7;
+  --danger: #ff3d48;
+  --shadow: 0 18px 55px rgba(0, 53, 151, .2);
+  --glow: 0 0 30px rgba(19, 111, 255, .13);
 }
-</style></head>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { color-scheme: dark; }
+body { min-width: 320px; overflow-x: hidden; background: radial-gradient(circle at 52% 0, rgba(14, 75, 180, .18), transparent 36%), var(--bg); color: var(--text); font-family: Inter, "Segoe UI", Arial, sans-serif; }
+button, input, select { font: inherit; }
+button { touch-action: manipulation; }
+.wrapper { display: flex; min-height: 100vh; }
+.sidebar { position: fixed; z-index: 999; left: 0; top: 0; width: 260px; height: 100vh; overflow: auto; padding: 30px; background: #102766; }
+.logo, .mobile-logo { font-size: 34px; font-weight: bold; }
+.logo { margin-bottom: 45px; }
+.logo small, .mobile-logo small { display: block; margin-top: 7px; color: #86a9ec; font-size: 11px; font-weight: 500; letter-spacing: 2.5px; }
+.item { display: flex; align-items: center; height: 56px; margin-bottom: 12px; padding: 0 18px; border-radius: 16px; color: #fff; cursor: pointer; font-size: 16px; transition: .22s; user-select: none; }
+.item:hover { background: rgba(255,255,255,.06); transform: translateX(6px); }
+.item.active { background: #2563eb; box-shadow: 0 10px 30px rgba(37,99,235,.35); transform: translateX(10px); }
+.btn { width: 100%; height: 54px; margin-top: 18px; border: 0; border-radius: 14px; background: #2563eb; color: #fff; cursor: pointer; font-weight: bold; }
+.biya-icon { width: 1.15em; height: 1.15em; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.item .biya-icon { margin-right: 10px; }
+.btn .biya-icon { margin-right: 8px; }
+.main { width: calc(100% - 260px); margin-left: 260px; padding: 34px; }
+.page-shell { width: 100%; max-width: 1500px; margin: auto; }
+.page-intro { margin-bottom: 24px; }
+.eyebrow { margin-bottom: 8px; color: #61a4ff; font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
+.title { font-size: clamp(34px, 4vw, 48px); line-height: 1; }
+.sub { margin-top: 10px; color: var(--muted); font-size: 16px; }
+.section { margin-bottom: 26px; padding: 28px; overflow: hidden; border: 1px solid var(--line); border-radius: 26px; background: linear-gradient(150deg, rgba(10,42,101,.98), rgba(5,25,66,.99)); box-shadow: var(--shadow), var(--glow); }
+.form-hero { display: flex; align-items: center; gap: 18px; padding-bottom: 24px; border-bottom: 1px solid rgba(123,173,255,.2); }
+.hero-icon, .section-icon, .summary-icon, .material-icon { display: grid; flex: 0 0 auto; place-items: center; border: 1px solid rgba(89,162,255,.28); color: #dcecff; }
+.hero-icon { width: 62px; height: 62px; border-radius: 19px; background: linear-gradient(145deg,#087cf7,#155bd8); box-shadow: 0 12px 28px rgba(0,102,255,.25); }
+.hero-icon svg, .section-icon svg, .summary-icon svg, .material-icon svg { width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.8; }
+.form-hero h2 { font-size: 28px; }
+.form-hero p { margin-top: 7px; color: var(--muted); }
+.info-grid { display: grid; grid-template-columns: repeat(12,minmax(0,1fr)); gap: 20px; padding-top: 24px; }
+.field { display: flex; flex-direction: column; gap: 9px; min-width: 0; }
+.field-name, .field-category { grid-column: span 6; }
+.field-status { grid-column: span 3; }
+.field-yield { grid-column: span 4; }
+.field-waste { grid-column: span 2; }
+.field-total { grid-column: span 3; }
+label, .card-field-label { color: #bfd1f2; font-size: 14px; font-weight: 600; }
+input, select { width: 100%; min-width: 0; min-height: 54px; padding: 0 17px; border: 1px solid var(--line); border-radius: 14px; outline: 0; background: rgba(10,40,94,.84); color: var(--text); transition: border-color .2s, box-shadow .2s, background .2s; }
+input::placeholder { color: #7694c9; }
+input:focus, select:focus, button:focus-visible { border-color: #4a9cff; box-shadow: 0 0 0 3px rgba(30,128,255,.18); }
+input:disabled { cursor: not-allowed; opacity: 1; color: #e7f1ff; }
+.yield-wrap, .category-control { display: flex; align-items: center; gap: 10px; }
+.yield-wrap .yield-qty { flex: 1.5; }
+.yield-wrap .yield-unit { flex: 1; }
+.category-control select { flex: 1; }
+.manage-category-btn, .clear-search-btn { min-height: 54px; padding: 0 16px; border: 1px solid var(--line); border-radius: 14px; background: rgba(23,61,132,.86); color: #fff; cursor: pointer; font-weight: 750; white-space: nowrap; }
+.new-category-input { display: none; }
+.category-manager { display: none; padding: 14px; border: 1px solid var(--line); border-radius: 14px; background: rgba(2,14,43,.62); }
+.category-manager.active { display: block; }
+.category-manager-title, .category-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.category-manager-title { margin-bottom: 10px; font-weight: 800; }
+.category-manager-list { display: flex; flex-direction: column; gap: 8px; }
+.category-row { padding: 10px 12px; border-radius: 10px; background: rgba(255,255,255,.06); }
+.category-delete-btn { min-height: 36px; padding: 0 12px; border: 0; border-radius: 9px; background: var(--danger); color: #fff; cursor: pointer; font-weight: 800; }
+.category-empty { color: var(--muted); font-size: 14px; }
+.ingredients-panel { margin-top: 26px; padding: 22px; border: 1px solid rgba(61,137,244,.25); border-radius: 22px; background: rgba(3,20,55,.48); }
+.ingredients-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+.section-heading { display: flex; align-items: center; gap: 14px; }
+.section-icon { width: 50px; height: 50px; border-radius: 16px; background: linear-gradient(145deg,rgba(6,193,133,.48),rgba(5,75,115,.75)); color: #d9fff4; }
+.section-title { font-size: 24px; line-height: 1.2; }
+.section-sub { margin-top: 5px; color: var(--muted); font-size: 14px; }
+.ingredient-count { padding: 9px 15px; border: 1px solid rgba(28,210,151,.22); border-radius: 999px; background: rgba(9,55,100,.75); color: #20e6a0; font-size: 14px; font-weight: 750; white-space: nowrap; }
+.ingredient-table-wrapper { margin: 0; overflow: visible; border-radius: 0; }
+#ingredientTable { display: block; width: 100%; min-width: 0; }
+#ingredientTable thead { display: none; }
+#ingredientTable tbody { display: grid; gap: 14px; }
+#ingredientTable tr { position: relative; display: grid; grid-template-columns: minmax(110px,.7fr) minmax(120px,.85fr) minmax(180px,1.45fr) 54px; grid-template-areas: "material material material action" "qty unit total total"; gap: 13px; align-items: end; padding: 17px; border: 1px solid var(--line-strong); border-radius: 18px; background: linear-gradient(145deg,rgba(11,48,112,.92),rgba(5,29,72,.96)); box-shadow: 0 11px 25px rgba(0,24,79,.2); }
+#ingredientTable td { display: flex; flex-direction: column; min-width: 0; padding: 0; border: 0; background: transparent; }
+#ingredientTable td::before { margin: 0 0 8px 7px; color: #b7caf0; font-size: 12px; font-weight: 700; }
+#ingredientTable td:nth-child(1) { grid-area: material; padding-left: 58px; }
+#ingredientTable td:nth-child(1)::before { content: "Nama Bahan"; }
+#ingredientTable td:nth-child(1)::after { content: ""; position: absolute; left: 17px; bottom: 17px; width: 44px; height: 52px; border: 1px solid rgba(78,154,255,.3); border-radius: 13px; background: linear-gradient(145deg,rgba(13,103,224,.36),rgba(8,53,122,.45)); }
+#ingredientTable td:nth-child(2) { grid-area: qty; }
+#ingredientTable td:nth-child(2)::before { content: "Qty"; }
+#ingredientTable td:nth-child(3) { grid-area: unit; }
+#ingredientTable td:nth-child(3)::before { content: "Unit"; }
+#ingredientTable td:nth-child(4) { display: none; }
+#ingredientTable td:nth-child(5) { grid-area: total; }
+#ingredientTable td:nth-child(5)::before { content: "Total"; }
+#ingredientTable td:nth-child(6) { grid-area: action; align-self: end; }
+.table-input, .table-select { min-height: 52px; padding: 0 14px; border: 1px solid var(--line); border-radius: 13px; background: rgba(5,29,72,.9); color: #fff; }
+.delete-btn { display: grid; width: 52px; height: 52px; place-items: center; border: 0; border-radius: 14px; background: linear-gradient(145deg,#ff4b55,#df242e); box-shadow: 0 9px 20px rgba(255,44,56,.22); color: #fff; cursor: pointer; font-size: 22px; }
+.add-row-btn, .save-btn, .action-btn { border: 0; color: #fff; cursor: pointer; font-weight: 800; }
+.add-row-btn { width: 100%; min-height: 58px; margin-top: 16px; border-radius: 15px; background: linear-gradient(105deg,#087cf7,#00b9d7 52%,#02da75); box-shadow: 0 14px 27px rgba(0,119,219,.18); font-size: 16px; }
+.summary { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 15px; margin-top: 20px; }
+.summary-box, .mini-box { border: 1px solid var(--line); background: linear-gradient(145deg,rgba(13,48,109,.9),rgba(7,30,74,.95)); box-shadow: var(--glow); }
+.summary-box { display: grid; grid-template-columns: 48px 1fr; grid-template-areas: "icon title" "icon value"; column-gap: 13px; min-height: 112px; padding: 19px; border-radius: 18px; }
+.summary-icon { grid-area: icon; width: 46px; height: 46px; border-radius: 14px; background: rgba(4,106,225,.35); }
+.summary-box:nth-child(2) .summary-icon { background: rgba(0,184,146,.3); }
+.summary-box:nth-child(3) .summary-icon { background: rgba(78,45,210,.4); }
+.summary-title, .mini-title { grid-area: title; align-self: end; color: var(--muted); font-size: 14px; }
+.summary-value { grid-area: value; align-self: start; margin-top: 7px; font-size: clamp(22px,2.2vw,30px); font-weight: 850; line-height: 1.1; }
+.calculation-note { display: flex; align-items: center; gap: 10px; margin-top: 18px; color: var(--muted); font-size: 13px; }
+.info-dot { display: grid; width: 27px; height: 27px; flex: 0 0 auto; place-items: center; border: 2px solid #168aff; border-radius: 50%; color: #4aa9ff; font-weight: 850; }
+.save-row { margin-top: 22px; }
+.save-btn { width: 100%; min-height: 58px; border-radius: 15px; background: linear-gradient(105deg,#087cf7,#00b9d7 52%,#02da75); font-size: 16px; }
+.list-section .section-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 22px; }
+.list-tools { display: flex; align-items: end; gap: 10px; }
+.search-box { min-width: min(360px, 55vw); }
+.search-box span { display: block; margin-bottom: 8px; color: var(--muted); font-size: 13px; }
+.prep-groups { display: flex; flex-direction: column; gap: 20px; }
+.category-block { overflow: hidden; border: 1px solid var(--line); border-radius: 19px; background: rgba(3,22,59,.45); }
+.category-title { display: flex; justify-content: space-between; padding: 15px 18px; border-bottom: 1px solid var(--line); color: #dce9ff; font-weight: 800; }
+.category-title span, .prep-category { padding: 6px 10px; border: 1px solid rgba(91,158,255,.22); border-radius: 999px; background: rgba(17,65,142,.62); color: #bcd2f8; font-size: 12px; font-weight: 650; }
+.prep-item { margin: 14px; overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: linear-gradient(145deg,rgba(13,48,109,.88),rgba(7,30,74,.94)); }
+.prep-header { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px; cursor: pointer; }
+.prep-name { margin-bottom: 9px; font-size: 18px; font-weight: 800; }
+.badge-row { display: flex; flex-wrap: wrap; gap: 7px; }
+.prep-right { min-width: 190px; text-align: right; }
+.prep-cost { font-size: 17px; font-weight: 800; }
+.prep-per { margin-top: 5px; color: var(--muted); font-size: 13px; }
+.prep-detail { display: none; padding: 0 18px 18px; }
+.prep-detail.active { display: block; }
+.detail-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 12px; padding-top: 16px; border-top: 1px solid var(--line); }
+.mini-box { min-height: 82px; padding: 15px; border-radius: 14px; }
+.mini-value { margin-top: 8px; font-size: 17px; font-weight: 800; }
+.detail-title { margin: 20px 0 12px; font-weight: 800; }
+.table-wrapper { overflow-x: auto; border-radius: 14px; }
+.prep-table { width: 100%; min-width: 620px; border-collapse: collapse; }
+.prep-table th { padding: 12px; background: rgba(21,75,158,.75); color: #d9e8ff; font-size: 13px; text-align: left; }
+.prep-table td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,.06); background: rgba(5,28,70,.72); font-size: 13px; }
+.detail-footer { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-top: 18px; }
+.footer-label { color: var(--muted); font-size: 12px; }
+.footer-value { margin-top: 5px; font-size: 22px; font-weight: 850; }
+.prep-actions { display: flex; gap: 10px; }
+.action-btn { min-height: 44px; padding: 0 18px; border-radius: 12px; }
+.edit-btn { background: #1677ea; }
+.delete-prep-btn { background: var(--danger); }
+.prep-list-empty { padding: 34px; border: 1px dashed var(--line); border-radius: 17px; color: var(--muted); text-align: center; }
+.mobile-header { display: none; }
+.mobile-overlay { display: none; position: fixed; z-index: 998; inset: 0; background: rgba(0,0,0,.58); }
+.sidebar-close { display: none; }
+.biya-no-scroll { overflow: hidden !important; }
+@media (max-width: 1220px) {
+  .field-name, .field-category { grid-column: span 12; }
+  .field-status, .field-yield, .field-waste, .field-total { grid-column: span 3; }
+  #ingredientTable tr { grid-template-columns: minmax(95px,.7fr) minmax(110px,.85fr) minmax(160px,1.35fr) 52px; }
+}
+@media (max-width: 980px) {
+  .mobile-header { position: sticky; z-index: 1002; top: 0; display: flex; align-items: center; justify-content: space-between; min-height: 74px; padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,.08); background: linear-gradient(180deg,rgba(3,15,42,.98),rgba(3,18,48,.96)); backdrop-filter: blur(16px); }
+  .mobile-logo { font-size: 25px; }
+  .mobile-logo small { margin-top: 4px; font-size: 8px; }
+  .menu-toggle { display: grid; width: 52px; height: 52px; place-items: center; border: 0; border-radius: 15px; background: linear-gradient(145deg,#0784f5,#04d37f); box-shadow: 0 10px 24px rgba(0,128,207,.24); color: #fff; cursor: pointer; font-size: 29px; }
+  .mobile-overlay.open { display: block; }
+  .sidebar { left: -280px; width: 260px; padding-top: 18px; transition: left .28s ease; }
+  .sidebar.open { left: 0; }
+  .sidebar-close { display: grid; width: 42px; height: 42px; margin: 0 0 18px auto; place-items: center; border: 1px solid rgba(255,255,255,.14); border-radius: 12px; background: rgba(255,255,255,.08); color: #fff; cursor: pointer; font-size: 28px; }
+  .wrapper { display: block; }
+  .main { width: 100%; margin: 0; padding: 20px; }
+  .field-status, .field-yield, .field-waste, .field-total { grid-column: span 6; }
+  #ingredientTable tr { grid-template-columns: minmax(0,1fr) minmax(0,1fr) minmax(0,1.25fr) 52px; grid-template-areas: "material material material action" "qty unit total total"; }
+  #ingredientTable td:nth-child(1) { padding-left: 0; }
+  #ingredientTable td:nth-child(1)::after { display: none; }
+  .detail-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 640px) {
+  .main { padding: 14px 12px 26px; }
+  .page-intro { display: none; }
+  .section { padding: 18px 14px; border-radius: 21px; }
+  .form-hero { align-items: flex-start; gap: 13px; padding-bottom: 19px; }
+  .hero-icon { width: 50px; height: 50px; border-radius: 15px; }
+  .hero-icon svg { width: 24px; height: 24px; }
+  .form-hero h2 { font-size: 23px; }
+  .form-hero p { font-size: 13px; line-height: 1.45; }
+  .info-grid { gap: 15px 10px; padding-top: 19px; }
+  .field-status { grid-column: span 12; }
+  .field-yield { grid-column: span 12; }
+  .field-waste, .field-total { grid-column: span 6; }
+  .category-control { align-items: stretch; flex-direction: column; }
+  .manage-category-btn { width: 100%; }
+  input, select { min-height: 50px; padding: 0 13px; font-size: 14px; }
+  .ingredients-panel { margin: 20px -3px 0; padding: 16px 12px; border-radius: 18px; }
+  .ingredients-head { align-items: flex-start; }
+  .section-heading { align-items: flex-start; gap: 10px; }
+  .section-icon { width: 42px; height: 42px; border-radius: 13px; }
+  .section-icon svg { width: 23px; height: 23px; }
+  .section-title { font-size: 20px; }
+  .ingredient-count { padding: 7px 10px; font-size: 12px; }
+  #ingredientTable tr { grid-template-columns: minmax(0,.78fr) minmax(0,.9fr) minmax(0,1.2fr) 46px; gap: 10px 8px; padding: 12px; border-radius: 16px; }
+  #ingredientTable td:nth-child(6) { align-self: end; }
+  .table-input, .table-select { min-height: 48px; padding: 0 10px; font-size: 13px; }
+  .delete-btn { width: 46px; height: 48px; border-radius: 12px; }
+  .summary { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+  .summary-box { grid-template-columns: 38px 1fr; min-height: 96px; padding: 14px 12px; column-gap: 9px; }
+  .summary-box:nth-child(3) { grid-column: span 2; }
+  .summary-icon { width: 38px; height: 38px; border-radius: 12px; }
+  .summary-icon svg { width: 22px; height: 22px; }
+  .summary-title { font-size: 12px; }
+  .summary-value { font-size: 21px; }
+  .calculation-note { align-items: flex-start; line-height: 1.45; }
+  .list-section .section-head, .list-tools, .prep-header, .detail-footer { align-items: stretch; flex-direction: column; }
+  .list-tools { width: 100%; }
+  .search-box { min-width: 0; width: 100%; }
+  .clear-search-btn { width: 100%; }
+  .prep-right { min-width: 0; text-align: left; }
+  .detail-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .prep-actions { width: 100%; }
+  .action-btn { flex: 1; }
+}
+@media (max-width: 390px) {
+  .section { padding-inline: 12px; }
+  .field-waste, .field-total { grid-column: span 12; }
+  #ingredientTable tr { grid-template-columns: minmax(0,.72fr) minmax(0,.88fr) minmax(0,1.28fr) 42px; grid-template-areas: "material material material action" "qty unit total total"; gap: 9px 7px; }
+  .summary { grid-template-columns: 1fr; }
+  .summary-box:nth-child(3) { grid-column: auto; }
+}
+</style>
+</head>
 <body>
-<header class="mobile-header" aria-label="BIYA mobile navigation"><div class="mobile-logo">BIYA<small>BUSINESS IN YOUR HAND</small></div><button class="menu-toggle" id="menuToggle" type="button" aria-label="Buka menu">&#9776;</button></header>
+<svg class="biya-icon-sprite" xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="biya-icon-layout-dashboard" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect><rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect></symbol>
+  <symbol id="biya-icon-package" viewBox="0 0 24 24"><path d="m7.5 4.27 9 5.15"></path><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path></symbol>
+  <symbol id="biya-icon-flask-conical" viewBox="0 0 24 24"><path d="M10 2v7.31"></path><path d="M14 9.3V2"></path><path d="M8.5 2h7"></path><path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path><path d="M5.52 16h12.96"></path></symbol>
+  <symbol id="biya-icon-clipboard-list" viewBox="0 0 24 24"><rect width="8" height="4" x="8" y="2" rx="1"></rect><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><path d="M12 11h4M12 16h4M8 11h.01M8 16h.01"></path></symbol>
+  <symbol id="biya-icon-calculator" viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"></rect><path d="M8 6h8M16 14v4M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"></path></symbol>
+  <symbol id="biya-icon-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"></path></symbol>
+  <symbol id="biya-icon-settings" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2Z"></path><circle cx="12" cy="12" r="3"></circle></symbol>
+  <symbol id="biya-icon-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5m7 7-7-7 7-7"></path></symbol>
+</svg>
+<header class="mobile-header" aria-label="Navigasi mobile BIYA">
+  <div class="mobile-logo">BiYA<small>BUSINESS IN YOUR HAND</small></div>
+  <button class="menu-toggle" id="menuToggle" type="button" aria-label="Buka menu">☰</button>
+</header>
 <div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div>
 <div class="wrapper">
-<div class="sidebar" id="biyaSidebar">
-<div class="logo">BIYA<small>BUSINESS IN YOUR HAND</small></div>
-<div class="item" onclick="location.href='costdashboard.html'"><span>Dashboard</span></div>
-<div class="item" onclick="location.href='rawmaterial.html'"><span>Raw Material</span></div>
-<div class="item active"><span>Preparation</span></div>
-<div class="item" onclick="location.href='menu.html'"><span>Menu</span></div>
-<div class="item" onclick="location.href='producthpp.html'"><span>Product HPP</span></div>
-<div class="item" onclick="location.href='exportcenter.html'"><span>Export Center</span></div>
-<div class="item" onclick="location.href='settings.html'"><span>Settings</span></div>
-<button class="btn" onclick="location.href='/menu-modules/dashboard.html'"><span>Kembali</span></button>
-</div>
-<div class="main">
-<div class="page-shell">
-<div class="title">Preparation</div>
-<div class="sub">Produk setengah jadi sebelum masuk Recipe</div>
-<div class="section">
-<div class="section-head"><div><div class="section-title" id="formTitle">Buat Preparation</div><div class="section-sub">Input resep dasar lalu simpan ke daftar preparation</div></div></div>
-<div class="grid">
-<div class="field"><label>Nama Preparation</label><input id="prepName" placeholder="Saus Coklat"/></div>
-<div class="field"><label>Kategori</label><div class="category-control"><select id="prepCategory" onchange="handleCategoryChange()"></select><button class="manage-category-btn" onclick="toggleCategoryManager()" type="button">Kelola Kategori</button></div><input class="new-category-input" id="newCategoryName" placeholder="Nama kategori baru"/><div class="category-manager" id="categoryManager"><div class="category-manager-title"><span>Kategori Custom</span><button class="clear-search-btn" onclick="toggleCategoryManager(false)" type="button">Tutup</button></div><div class="category-manager-list" id="categoryManagerList"><div class="category-empty">Belum ada kategori custom</div></div></div></div>
-<div class="field"><label>Status</label><select id="prepStatus"><option>ACTIVE</option><option>INACTIVE</option></select></div>
-<div class="field"><label>Yield</label><div class="yield-wrap"><input class="yield-qty" id="yieldQty" placeholder="1000" type="number"/><select class="yield-unit" id="yieldUnit"><option>gr</option><option>ml</option><option>pcs</option></select></div></div>
-<div class="field"><label>Waste %</label><input id="waste" type="number" value="5"/></div>
-<div class="field"><label>Total Cost</label><input disabled="" id="grandTotal" placeholder="0"/></div>
-</div>
-<div class="table-wrapper ingredient-table-wrapper"><table id="ingredientTable"><thead><tr><th>Nama Bahan</th><th>Qty</th><th>Unit</th><th>Harga / Unit</th><th>Total</th><th>Action</th></tr></thead><tbody id="tableBody"></tbody></table></div>
-<button class="add-row-btn" onclick="addRow()">+ Tambah Bahan</button>
-<div class="summary"><div class="summary-box"><div class="summary-title">Total Bahan</div><div class="summary-value" id="totalItems">0</div></div><div class="summary-box"><div class="summary-title">Total Cost</div><div class="summary-value" id="summaryCost">Rp 0</div></div></div>
-<div class="save-row"><button class="save-btn" id="saveBtn" onclick="savePreparation()">+ Simpan Preparation</button></div>
-</div>
-<div class="section" id="prepListSection">
-<div class="section-head"><div><div class="section-title">Preparation List</div><div class="section-sub">Daftar resep preparation yang sudah dibuat</div></div><div class="list-tools"><div class="search-box"><span>Search</span><input autocomplete="off" id="prepSearch" placeholder="Cari nama atau kategori..." type="search"/></div><button class="clear-search-btn" onclick="clearPrepSearch()" type="button">Reset</button></div></div>
-<div class="prep-list-empty" id="prepList">Belum ada data preparation</div>
-</div>
-</div>
-</div>
+  <aside class="sidebar" id="biyaSidebar">
+    <div class="logo">BIYA<small>BUSINESS IN YOUR HAND</small></div>
+    <div class="item" onclick="location.href='costdashboard.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-layout-dashboard"></use></svg><span>Dashboard</span></div>
+    <div class="item" onclick="location.href='rawmaterial.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-package"></use></svg><span>Raw Material</span></div>
+    <div class="item active"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-flask-conical"></use></svg><span>Preparation</span></div>
+    <div class="item" onclick="location.href='menu.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-clipboard-list"></use></svg><span>Menu</span></div>
+    <div class="item" onclick="location.href='producthpp.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-calculator"></use></svg><span>Product HPP</span></div>
+    <div class="item" onclick="location.href='exportcenter.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-download"></use></svg><span>Export Center</span></div>
+    <div class="item" onclick="location.href='settings.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-settings"></use></svg><span>Settings</span></div>
+    <button class="btn" onclick="location.href='/menu-modules/dashboard.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-arrow-left"></use></svg><span>Kembali</span></button>
+  </aside>
+  <main class="main">
+    <div class="page-shell">
+      <header class="page-intro">
+        <div class="eyebrow">Cost Management</div>
+        <h1 class="title">Preparation</h1>
+        <p class="sub">Kelola produk setengah jadi dan biaya resep dasar dalam satu tempat.</p>
+      </header>
+      <section class="section" aria-labelledby="formTitle">
+        <div class="form-hero">
+          <div class="hero-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 5h6M9 3h6v4H9zM7 5H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M7 11h.01M10 11h7M7 15h.01M10 15h7"/></svg></div>
+          <div><h2 id="formTitle">Preparation</h2><p>Kelola bahan dan hitung biaya preparation.</p></div>
+        </div>
+        <div class="info-grid">
+          <div class="field field-name"><label for="prepName">Nama Preparation</label><input id="prepName" placeholder="Contoh: Puding Maizena Cokelat"/></div>
+          <div class="field field-category"><label for="prepCategory">Kategori</label><div class="category-control"><select id="prepCategory" onchange="handleCategoryChange()"></select><button class="manage-category-btn" onclick="toggleCategoryManager()" type="button">Kelola Kategori</button></div><input class="new-category-input" id="newCategoryName" placeholder="Nama kategori baru"/><div class="category-manager" id="categoryManager"><div class="category-manager-title"><span>Kategori Custom</span><button class="clear-search-btn" onclick="toggleCategoryManager(false)" type="button">Tutup</button></div><div class="category-manager-list" id="categoryManagerList"><div class="category-empty">Belum ada kategori custom</div></div></div></div>
+          <div class="field field-status"><label for="prepStatus">Status</label><select id="prepStatus"><option>ACTIVE</option><option>INACTIVE</option></select></div>
+          <div class="field field-yield"><label for="yieldQty">Yield dan Unit</label><div class="yield-wrap"><input class="yield-qty" id="yieldQty" placeholder="1000" type="number" oninput="updateSummary()"/><select class="yield-unit" id="yieldUnit" onchange="updateSummary()"><option>gr</option><option>ml</option><option>pcs</option></select></div></div>
+          <div class="field field-waste"><label for="waste">Waste %</label><input id="waste" type="number" value="5" oninput="updateSummary()"/></div>
+          <div class="field field-total"><label for="grandTotal">Total Cost</label><input disabled id="grandTotal" placeholder="Rp 0"/></div>
+        </div>
+        <div class="ingredients-panel">
+          <div class="ingredients-head">
+            <div class="section-heading"><div class="section-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 10h16c0 5-3.2 9-8 9s-8-4-8-9zM8 22h8M12 19v3M15 7l4-4M16 6l2 2"/></svg></div><div><h3 class="section-title">Bahan &amp; Komposisi</h3><p class="section-sub">Tambah bahan, jumlah, dan unit.</p></div></div>
+            <div class="ingredient-count" id="ingredientCount">0 bahan</div>
+          </div>
+          <div class="table-wrapper ingredient-table-wrapper"><table id="ingredientTable"><thead><tr><th>Nama Bahan</th><th>Qty</th><th>Unit</th><th>Harga / Unit</th><th>Total</th><th>Action</th></tr></thead><tbody id="tableBody"></tbody></table></div>
+          <button class="add-row-btn" onclick="addRow()" type="button">＋ Tambah Bahan</button>
+        </div>
+        <div class="summary">
+          <article class="summary-box"><div class="summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 7 8-4 8 4-8 4-8-4zM4 7v10l8 4 8-4V7M12 11v10"/></svg></div><div class="summary-title">Total Bahan</div><div class="summary-value" id="totalItems">0 item</div></article>
+          <article class="summary-box"><div class="summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2M8 19h2M14 19h2"/></svg></div><div class="summary-title">Total Cost</div><div class="summary-value" id="summaryCost">Rp 0</div></article>
+          <article class="summary-box"><div class="summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><ellipse cx="9" cy="6" rx="6" ry="3"/><path d="M3 6v4c0 1.7 2.7 3 6 3 .7 0 1.4-.1 2-.2M3 10v4c0 1.7 2.7 3 6 3h1M15 10c3.3 0 6 1.3 6 3s-2.7 3-6 3-6-1.3-6-3 2.7-3 6-3zM9 13v4c0 1.7 2.7 3 6 3s6-1.3 6-3v-4"/></svg></div><div class="summary-title" id="costPerUnitLabel">Cost / gr</div><div class="summary-value" id="summaryCostPerUnit">Rp 0</div></article>
+        </div>
+        <p class="calculation-note"><span class="info-dot" aria-hidden="true">i</span><span>Perhitungan otomatis berdasarkan Yield dan Waste %.</span></p>
+        <div class="save-row"><button class="save-btn" id="saveBtn" onclick="savePreparation()">＋ Simpan Preparation</button></div>
+      </section>
+      <section class="section list-section" id="prepListSection" aria-labelledby="prepListTitle">
+        <div class="section-head"><div><h2 class="section-title" id="prepListTitle">Preparation List</h2><p class="section-sub">Daftar resep preparation yang sudah dibuat</p></div><div class="list-tools"><label class="search-box" for="prepSearch"><span>Cari Preparation</span><input autocomplete="off" id="prepSearch" placeholder="Cari nama atau kategori..." type="search"/></label><button class="clear-search-btn" onclick="clearPrepSearch()" type="button">Reset</button></div></div>
+        <div class="prep-list-empty" id="prepList">Belum ada data preparation</div>
+      </section>
+    </div>
+  </main>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -217,14 +360,14 @@ function clearPrepSearch(){ if(prepSearch){ prepSearch.value = ""; prepSearch.fo
 function hidePreparationListSection(){ if(prepListSection) prepListSection.style.display = "none"; }
 function showPreparationListSection(){ if(prepListSection) prepListSection.style.display = ""; }
 function getMaterialOptions(selectedKey = ""){ if(!rawMaterials.length) return `<option value="">Belum ada bahan</option>`; return rawMaterials.map(item => { const selected = item.key === selectedKey || item.name === selectedKey || String(item.id) === String(selectedKey) ? "selected" : ""; return `<option value="${escapeHtml(item.key)}" ${selected}>${escapeHtml(item.name)}</option>`; }).join(""); }
-function addRow(selectedKey = rawMaterials[0]?.key || "", qty = 1){ const row = document.createElement("tr"); row.innerHTML = `<td><select class="table-select material-select" onchange="updateRow(this)">${getMaterialOptions(selectedKey)}</select></td><td><input type="number" class="table-input qty-input" value="${escapeHtml(qty)}" oninput="calculateRow(this)"></td><td><input class="table-input unit-input" disabled></td><td><input class="table-input price-input" disabled></td><td><input class="table-input total-input" value="Rp 0" data-raw-value="0" disabled></td><td><button class="delete-btn" onclick="deleteRow(this)" aria-label="Hapus">x</button></td>`; tableBody.appendChild(row); updateRow(row.querySelector(".material-select")); updateSummary(); }
+function addRow(selectedKey = rawMaterials[0]?.key || "", qty = 1){ const row = document.createElement("tr"); row.innerHTML = `<td><select class="table-select material-select" aria-label="Nama bahan" onchange="updateRow(this)">${getMaterialOptions(selectedKey)}</select></td><td><input type="number" class="table-input qty-input" aria-label="Jumlah bahan" min="0" step="any" value="${escapeHtml(qty)}" oninput="calculateRow(this)"></td><td><input class="table-input unit-input" aria-label="Unit bahan" disabled></td><td><input class="table-input price-input" aria-label="Harga per unit" disabled></td><td><input class="table-input total-input" aria-label="Total biaya bahan" value="Rp 0" data-raw-value="0" disabled></td><td><button class="delete-btn" type="button" onclick="deleteRow(this)" aria-label="Hapus bahan">×</button></td>`; tableBody.appendChild(row); updateRow(row.querySelector(".material-select")); updateSummary(); }
 function addIngredient(selectedKey, qty){ return addRow(selectedKey, qty); }
 function addMaterial(selectedKey, qty){ return addRow(selectedKey, qty); }
 function clearRows(){ tableBody.innerHTML = ""; updateSummary(); }
 function updateRow(select){ const row = select.closest("tr"); const material = rawMaterials.find(item => item.key === select.value) || rawMaterials[0]; row.querySelector(".unit-input").value = material ? material.unit : ""; row.querySelector(".price-input").value = material ? material.price : ""; calculateRow(row.querySelector(".qty-input")); }
 function calculateRow(input){ const row = input.closest("tr"); const qty = parseFloat(row.querySelector(".qty-input").value) || 0; const price = parseFloat(row.querySelector(".price-input").value) || 0; const total = qty * price; const totalInput = row.querySelector(".total-input"); totalInput.dataset.rawValue = total; totalInput.value = formatRupiah(total); updateSummary(); }
 function deleteRow(button){ button.closest("tr").remove(); updateSummary(); }
-function updateSummary(){ const rows = document.querySelectorAll("#tableBody tr"); let grandTotal = 0; rows.forEach(row => { grandTotal += getRowTotalValue(row); }); const grandTotalInput = document.getElementById("grandTotal"); grandTotalInput.dataset.rawValue = grandTotal; grandTotalInput.value = formatRupiah(grandTotal); document.getElementById("summaryCost").innerText = formatRupiah(grandTotal); document.getElementById("totalItems").innerText = rows.length; }
+function updateSummary(){ const rows = document.querySelectorAll("#tableBody tr"); let grandTotal = 0; rows.forEach(row => { grandTotal += getRowTotalValue(row); }); const yieldQty = toNumber(document.getElementById("yieldQty")?.value); const yieldUnit = document.getElementById("yieldUnit")?.value || "unit"; const costPerUnit = yieldQty > 0 ? grandTotal / yieldQty : 0; const grandTotalInput = document.getElementById("grandTotal"); grandTotalInput.dataset.rawValue = grandTotal; grandTotalInput.value = formatRupiah(grandTotal); document.getElementById("summaryCost").innerText = formatRupiah(grandTotal); document.getElementById("totalItems").innerText = `${rows.length} item`; const ingredientCount = document.getElementById("ingredientCount"); if(ingredientCount) ingredientCount.innerText = `${rows.length} bahan`; const costPerUnitLabel = document.getElementById("costPerUnitLabel"); if(costPerUnitLabel) costPerUnitLabel.innerText = `Cost / ${yieldUnit}`; const summaryCostPerUnit = document.getElementById("summaryCostPerUnit"); if(summaryCostPerUnit) summaryCostPerUnit.innerText = `Rp ${formatMoney2(costPerUnit)}`; }
 function getCurrentIngredients(){ return Array.from(document.querySelectorAll("#tableBody tr")).map(row => { const material = rawMaterials.find(item => item.key === row.querySelector(".material-select").value); return { rawMaterialId:material?.id || null, rawMaterialKey:material?.key || "", material:material?.name || row.querySelector(".material-select").value, qty:row.querySelector(".qty-input").value, unit:row.querySelector(".unit-input").value, price:row.querySelector(".price-input").value, total:String(getRowTotalValue(row)) }; }).filter(item => item.material); }
 function resetForm(){ editingId = null; formTitle.textContent = "Buat Preparation"; saveBtn.textContent = "+ Simpan Preparation"; showPreparationListSection(); document.getElementById("prepName").value = ""; renderCategoryOptions(); newCategoryName.value = ""; toggleCategoryManager(false); document.getElementById("prepStatus").value = "ACTIVE"; document.getElementById("yieldQty").value = ""; document.getElementById("yieldUnit").value = "gr"; document.getElementById("waste").value = 5; document.getElementById("grandTotal").dataset.rawValue = 0; document.getElementById("grandTotal").value = formatRupiah(0); clearRows(); }
 function formatPreparationName(value){ return String(value || "").trim().replace(/\s+/g, " ").toLowerCase().replace(/(^|\s)\S/g, letter => letter.toUpperCase()); }
