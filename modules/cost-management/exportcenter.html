@@ -7,7 +7,7 @@
   <script src="/assets/js/biya-data.js"></script>
   <script src="/assets/js/auth-guard.js"></script>
 <meta charset="utf-8"/>
-<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, viewport-fit=cover"/>
 <title>BIYA - Export Center</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -235,7 +235,26 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
   }
 }
 </style> <style id="biya-export-center-compact">
-.export-page{max-width:1180px;margin:0 auto}
+html,
+body{width:100%;max-width:100%;overflow-x:hidden}
+*,
+*::before,
+*::after{box-sizing:border-box}
+.wrapper,
+.main,
+.export-page,
+.section,
+.card,
+.grid,
+.export-grid,
+.export-card,
+.snapshot-mobile-list,
+.snapshot-card{max-width:100%;min-width:0}
+.export-page{width:100%;max-width:1180px;margin:0 auto;overflow-x:hidden}
+img,
+svg,
+canvas,
+video{max-width:100%;height:auto}
 .export-page .sub{max-width:620px}
 .export-section-title{font-size:22px;font-weight:800;margin-bottom:14px;line-height:1.2}
 .export-section-sub{margin-top:-6px;margin-bottom:16px;color:rgba(215,227,255,.68);font-size:13px;line-height:1.45}
@@ -256,9 +275,12 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
 .export-status.error{border-color:rgba(255,77,79,.35);background:rgba(255,77,79,.14);color:#ffcccc}
 .export-status.success{border-color:rgba(0,214,107,.3);background:rgba(0,214,107,.12);color:#b8ffd4}
 .export-card .action:disabled{opacity:.48;cursor:not-allowed;filter:saturate(.65);box-shadow:none!important}
-.snapshot-table-wrap{overflow:auto}
+.snapshot-table-wrap{width:100%;max-width:100%;overflow:hidden}
+.snapshot-table-wrap table{width:100%;min-width:0;table-layout:fixed}
+.snapshot-table-wrap th,
+.snapshot-table-wrap td{min-width:0;overflow-wrap:anywhere;word-break:break-word}
 .snapshot-mobile-list{display:none}
-.snapshot-card{width:100%;border:1px solid rgba(255,255,255,.08);border-radius:13px;background:rgba(13,33,88,.72);padding:11px 12px}
+.snapshot-card{width:100%;border:1px solid rgba(255,255,255,.08);border-radius:13px;background:rgba(13,33,88,.72);padding:11px 12px;overflow:hidden}
 .snapshot-card-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .snapshot-name{min-width:0;font-size:13px;font-weight:800;line-height:1.25;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .snapshot-count{flex:0 0 auto;border-radius:999px;background:rgba(0,102,255,.2);border:1px solid rgba(46,216,255,.2);color:#d9f7ff;font-size:11px;font-weight:800;line-height:1;padding:6px 8px}
@@ -271,11 +293,12 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
   .export-card.restore-card .action{width:100%}
 }
 @media (max-width:768px){
-  html,body{overflow-x:hidden!important}
+  html,body{width:100%;max-width:100%;overflow-x:hidden!important}
+  .wrapper,.main,.export-page,.section,.card,.grid,.export-grid,.export-card,.snapshot-mobile-list,.snapshot-card{width:100%;max-width:100%;min-width:0}
   .export-page .title{font-size:30px!important;line-height:1.05!important;margin-bottom:6px!important}
   .export-page .sub{font-size:13px!important;line-height:1.42!important;margin-bottom:14px!important;color:rgba(215,227,255,.66)!important}
   .export-page .section{padding:14px!important;margin-bottom:12px!important;border-radius:15px!important}
-  .export-page .grid{grid-template-columns:1fr!important;gap:12px!important}
+  .export-page .grid,.export-page .export-grid{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}
   .export-card{padding:14px!important;border-radius:14px!important;gap:8px!important}
   .export-card h3{font-size:15px!important}
   .export-card p{font-size:12px!important;line-height:1.35!important}
@@ -286,8 +309,11 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
   .restore-upload-wrap{gap:6px!important}
   .restore-file-name,.restore-message{font-size:11px!important}
   .snapshot-table-wrap{display:none!important}
-  .snapshot-mobile-list{display:grid!important;grid-template-columns:1fr!important;gap:8px!important;width:100%;overflow:visible!important}
+  .snapshot-mobile-list{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:8px!important;width:100%;overflow:hidden!important}
   .snapshot-card{border-radius:12px!important;padding:10px 11px!important}
+  .snapshot-card-top,.snapshot-date{min-width:0;max-width:100%}
+  .snapshot-name{white-space:normal;overflow-wrap:anywhere;word-break:break-word}
+  .snapshot-date span{min-width:0;text-align:right;overflow-wrap:anywhere;word-break:break-word}
   .snapshot-date{font-size:10.5px!important}
 }
 /* BIYA Export Center 2026 */
@@ -365,7 +391,7 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
   .section-heading-icon{width:38px;height:38px;border-radius:12px}
   .export-section-title{font-size:17px!important}
   .export-section-sub{margin-top:2px!important;font-size:11.5px!important}
-  .export-grid,.csv-grid{grid-template-columns:1fr!important;gap:10px!important}
+  .export-grid,.csv-grid{grid-template-columns:minmax(0,1fr)!important;gap:10px!important}
   .export-card{padding:14px!important;border-radius:16px!important}
   .export-card h3{font-size:15px!important}
   .export-card p{font-size:12px!important}
@@ -375,7 +401,7 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
   .csv-grid .export-card{padding:13px!important}
   .csv-grid .export-card p{min-height:0}
   .snapshot-table-wrap{display:none}
-  .snapshot-mobile-list{display:grid!important;grid-template-columns:1fr!important}
+  .snapshot-mobile-list{display:grid!important;grid-template-columns:minmax(0,1fr)!important}
 }
 @media (max-width:390px){
   .main{padding:10px!important}
