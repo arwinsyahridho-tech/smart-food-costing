@@ -229,15 +229,6 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
 .settings-field label{margin-bottom:7px;color:rgba(215,227,255,.78);font-size:12px;font-weight:600;line-height:1.3}
 .settings-field input,.settings-field select{height:46px;padding:0 14px;font-size:14px}
 .settings-field textarea{min-height:86px;padding:12px 14px;font-size:14px;line-height:1.5}
-.logo-upload{display:flex;align-items:center;gap:12px;min-width:0;min-height:46px}
-.logo-file-input{display:none!important}
-.logo-upload-button{flex:0 0 auto;height:42px;padding:0 14px;border:1px solid rgba(46,216,255,.24);border-radius:11px;background:rgba(0,102,255,.18);color:#fff;font-size:12px;font-weight:700;cursor:pointer;transition:.2s}
-.logo-upload-button:hover{background:rgba(0,102,255,.3);border-color:rgba(46,216,255,.42)}
-.logo-file-meta{min-width:0;display:flex;align-items:center;gap:10px}
-.logo-file-name{min-width:0;color:rgba(215,227,255,.62);font-size:11px;line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.logo-preview{display:none;flex:0 0 42px;width:42px;height:42px;border:1px solid var(--biya-border);border-radius:11px;background:rgba(255,255,255,.06);overflow:hidden}
-.logo-preview.visible{display:block}
-.logo-preview img{width:100%;height:100%;object-fit:contain}
 .settings-helper{display:block;width:fit-content;max-width:100%;margin-top:12px;padding:5px 9px;font-size:11px;line-height:1.4}
 .settings-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;padding:2px 0}
 .settings-actions .btn-action{width:auto!important;min-width:138px;height:44px;padding:0 18px;font-size:13px}
@@ -247,15 +238,8 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
 .settings-summary{position:sticky;top:24px;margin-bottom:0!important;padding:18px!important;border-color:rgba(46,216,255,.16)!important}
 .settings-summary .settings-section-head{margin-bottom:12px}
 .settings-summary .settings-section-description{display:none}
-.settings-summary-grid{display:block!important}
-.summary-identity{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--biya-border);border-radius:13px;background:rgba(13,33,88,.72)}
-.summary-logo{flex:0 0 44px;width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--biya-border);border-radius:11px;background:rgba(255,255,255,.06);color:rgba(215,227,255,.45);font-size:18px;font-weight:700;overflow:hidden}
-.summary-logo img{width:100%;height:100%;object-fit:contain}
-.summary-business{min-width:0}
+.settings-summary-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
 .summary-label{color:rgba(215,227,255,.58);font-size:10px;line-height:1.3}
-.summary-business-name{margin-top:3px;font-size:14px;font-weight:700;line-height:1.35;overflow-wrap:anywhere}
-.summary-logo-name{margin-top:3px;color:rgba(215,227,255,.62);font-size:10px;line-height:1.3;overflow-wrap:anywhere}
-.summary-details{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:8px}
 .summary-item{min-width:0;padding:9px 10px;border:1px solid var(--biya-border);border-radius:11px;background:rgba(13,33,88,.56)}
 .summary-value{margin-top:3px;font-size:12px!important;font-weight:700;line-height:1.3;overflow-wrap:anywhere}
 @media (max-width:980px){
@@ -273,10 +257,6 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
   .settings-field-wide{grid-column:auto}
   .settings-field input,.settings-field select{height:44px}
   .settings-field textarea{min-height:76px}
-  .logo-upload{align-items:flex-start;flex-direction:column;gap:8px}
-  .logo-upload-button{width:100%;height:44px}
-  .logo-file-meta{width:100%}
-  .logo-file-name{white-space:normal}
   .settings-actions{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.55fr);gap:10px}
   .settings-actions .btn-action{width:100%!important;min-width:0;height:44px}
   .settings-summary{position:static;padding:16px!important}
@@ -304,46 +284,21 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
 <div class="main settings-page">
 <div class="settings-header">
 <div class="title">Settings</div>
-<div class="sub">Atur identitas bisnis, target costing, dan preferensi sistem BIYA.</div>
+<div class="sub">Atur target costing, format perhitungan, dan preferensi default untuk modul Cost Management.</div>
 </div>
 <div class="settings-status hidden" id="settingsStatus" role="status" aria-live="polite"></div>
 <div class="settings-layout">
 <div class="settings-form">
-<section class="section settings-section" aria-labelledby="businessProfileTitle">
-<div class="settings-section-head">
-<div class="settings-section-title" id="businessProfileTitle">Business Profile</div>
-<div class="settings-section-description">Informasi utama yang ditampilkan pada laporan dan export.</div>
-</div>
-<div class="settings-grid">
-<div class="settings-field"><label for="businessName">Business Name</label><input id="businessName" placeholder="Coffee XYZ"/></div>
-<div class="settings-field"><label for="businessType">Business Type</label><input id="businessType" placeholder="Coffee Shop"/></div>
-<div class="settings-field"><label for="ownerName">Owner Name</label><input id="ownerName" placeholder="Nama Owner"/></div>
-<div class="settings-field"><label for="phone">Phone</label><input id="phone" placeholder="08xxxxxxxxxx"/></div>
-<div class="settings-field"><label for="email">Email</label><input id="email" placeholder="owner@email.com"/></div>
-<div class="settings-field">
-<label for="logoFile">Upload Logo</label>
-<div class="logo-upload">
-<input class="logo-file-input" id="logoFile" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml"/>
-<button class="logo-upload-button" id="logoChooseBtn" type="button">Pilih File Logo</button>
-<div class="logo-file-meta">
-<div class="logo-preview" id="logoPreview"><img id="logoPreviewImage" alt="Preview logo bisnis"/></div>
-<div class="logo-file-name" id="logoFileName">Belum ada file dipilih</div>
-</div>
-</div>
-</div>
-<div class="settings-field settings-field-wide"><label for="address">Address</label><textarea id="address" placeholder="Alamat bisnis"></textarea></div>
-</div>
-</section>
 <section class="section settings-section" aria-labelledby="costSettingsTitle">
 <div class="settings-section-head">
 <div class="settings-section-title" id="costSettingsTitle">Cost Settings</div>
 <div class="settings-section-description">Target utama untuk perhitungan biaya dan profit.</div>
 </div>
 <div class="settings-grid">
-<div class="settings-field"><label for="foodCostTarget">Food Cost Target %</label><input id="foodCostTarget" placeholder="35" type="number"/></div>
-<div class="settings-field"><label for="profitTarget">Profit Target %</label><input id="profitTarget" placeholder="50" type="number"/></div>
-<div class="settings-field"><label for="currency">Currency</label><select id="currency"><option value="IDR">IDR</option><option value="USD">USD</option><option value="MYR">MYR</option></select></div>
-<div class="settings-field"><label for="dateFormat">Date Format</label><select id="dateFormat"><option value="dd/mm/yyyy">DD/MM/YYYY</option><option value="yyyy-mm-dd">YYYY-MM-DD</option></select></div>
+<div class="settings-field"><label for="foodCostTarget">Target Food Cost</label><input id="foodCostTarget" placeholder="35" type="number" min="0.01" max="100" step="0.01"/></div>
+<div class="settings-field"><label for="profitTarget">Target Profit</label><input id="profitTarget" placeholder="50" type="number" min="0.01" max="100" step="0.01"/></div>
+<div class="settings-field"><label for="currency">Mata Uang</label><select id="currency"><option value="IDR">IDR</option><option value="USD">USD</option><option value="MYR">MYR</option></select></div>
+<div class="settings-field"><label for="dateFormat">Format Tanggal</label><select id="dateFormat"><option value="dd/mm/yyyy">DD/MM/YYYY</option><option value="yyyy-mm-dd">YYYY-MM-DD</option></select></div>
 </div>
 <div class="pill-note settings-helper">Dipakai di Dashboard, Product HPP, dan Export Center</div>
 </section>
@@ -353,8 +308,8 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
 <div class="settings-section-description">Preferensi default untuk input dan status data baru.</div>
 </div>
 <div class="settings-grid">
-<div class="settings-field"><label for="autoCapitalize">Auto Capitalize</label><select id="autoCapitalize"><option value="on">ON</option><option value="off">OFF</option></select></div>
-<div class="settings-field"><label for="defaultStatus">Default Status</label><select id="defaultStatus"><option>ACTIVE</option><option>INACTIVE</option></select></div>
+<div class="settings-field"><label for="autoCapitalize">Auto Kapitalisasi Nama Item</label><select id="autoCapitalize"><option value="on">ON</option><option value="off">OFF</option></select></div>
+<div class="settings-field"><label for="defaultStatus">Status Default Data Baru</label><select id="defaultStatus"><option>ACTIVE</option><option>INACTIVE</option></select></div>
 </div>
 </section>
 <div class="settings-actions" aria-label="Settings actions">
@@ -380,15 +335,7 @@ const SUPABASE_ANON_KEY = window.BIYA_SUPABASE_ANON_KEY || "sb_publishable_Tq4d0
 const configuredSupabaseClient = window.biyaSupabase || window.supabaseClient || null;
 const supabaseClient = configuredSupabaseClient || ((SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase) ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null);
 const settingsService = window.BiyaCostSettings;
-const MAX_LOGO_SIZE = 1024 * 1024;
-const ALLOWED_LOGO_TYPES = new Set(["image/png", "image/jpeg", "image/webp", "image/svg+xml"]);
 const fields = {
-  businessName: document.getElementById("businessName"),
-  businessType: document.getElementById("businessType"),
-  ownerName: document.getElementById("ownerName"),
-  phone: document.getElementById("phone"),
-  email: document.getElementById("email"),
-  address: document.getElementById("address"),
   foodCostTarget: document.getElementById("foodCostTarget"),
   profitTarget: document.getElementById("profitTarget"),
   currency: document.getElementById("currency"),
@@ -396,11 +343,6 @@ const fields = {
   autoCapitalize: document.getElementById("autoCapitalize"),
   defaultStatus: document.getElementById("defaultStatus")
 };
-const logoFile = document.getElementById("logoFile");
-const logoChooseBtn = document.getElementById("logoChooseBtn");
-const logoPreview = document.getElementById("logoPreview");
-const logoPreviewImage = document.getElementById("logoPreviewImage");
-const logoFileName = document.getElementById("logoFileName");
 const summaryGrid = document.getElementById("summaryGrid");
 const saveBtn = document.getElementById("saveBtn");
 const resetBtn = document.getElementById("resetBtn");
@@ -408,13 +350,10 @@ const settingsStatus = document.getElementById("settingsStatus");
 
 let currentScope = null;
 let currentSettings = settingsService ? settingsService.normalize() : {};
-let pendingLogoFile = null;
-let pendingLogoPreviewUrl = "";
 
 function displayValue(value){ return value === null || value === undefined || String(value).trim() === "" ? "-" : value; }
 function displayPercent(value){ return displayValue(value) === "-" ? "-" : `${value}%`; }
 function escapeHTML(value){ return String(value ?? "").replace(/[&<>"']/g, character => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", "\"":"&quot;", "'":"&#39;" }[character])); }
-function getSafeLogoSource(source){ const value = String(source || "").trim(); return /^(blob:|https?:\/\/)/i.test(value) ? value : ""; }
 function showStatus(message = "", tone = "info"){
   settingsStatus.textContent = message;
   settingsStatus.className = "settings-status" + (message ? "" : " hidden") + (tone === "error" ? " error" : tone === "success" ? " success" : "");
@@ -422,17 +361,10 @@ function showStatus(message = "", tone = "info"){
 function setBusy(isBusy){
   saveBtn.disabled = isBusy;
   resetBtn.disabled = isBusy;
-  logoChooseBtn.disabled = isBusy;
-  [saveBtn, resetBtn, logoChooseBtn].forEach(button => {
+  [saveBtn, resetBtn].forEach(button => {
     button.style.opacity = isBusy ? ".65" : "";
     button.style.cursor = isBusy ? "not-allowed" : "";
   });
-}
-function clearPendingLogo(){
-  if(pendingLogoPreviewUrl) URL.revokeObjectURL(pendingLogoPreviewUrl);
-  pendingLogoPreviewUrl = "";
-  pendingLogoFile = null;
-  logoFile.value = "";
 }
 function clearLegacySettings(){
   try{
@@ -441,52 +373,30 @@ function clearLegacySettings(){
     console.warn("[Settings] Key localStorage lama tidak dapat dihapus", error);
   }
 }
-function updateLogoField(){
-  const source = getSafeLogoSource(pendingLogoPreviewUrl || currentSettings.logo_url);
-  logoFileName.textContent = pendingLogoFile ? pendingLogoFile.name : (source ? "Logo tersimpan di Supabase" : "Belum ada file dipilih");
-  logoPreview.classList.toggle("visible", Boolean(source));
-  if(source) logoPreviewImage.src = source;
-  else logoPreviewImage.removeAttribute("src");
-}
 function renderSummary(settings){
-  const logoSource = getSafeLogoSource(settings.logo_url);
-  const logoMarkup = logoSource ? `<img src="${escapeHTML(logoSource)}" alt="Logo ${escapeHTML(displayValue(settings.business_name))}"/>` : "B";
   const details = [
-    ["Type", displayValue(settings.business_type)],
-    ["Currency", displayValue(settings.currency)],
-    ["Food Cost", displayPercent(settings.food_cost_target)],
-    ["Profit", displayPercent(settings.profit_target)],
-    ["Auto Capitalize", displayValue(settings.auto_capitalize).toString().toUpperCase()],
-    ["Default Status", displayValue(settings.default_status)]
+    ["Target Food Cost", displayPercent(settings.food_cost_target)],
+    ["Target Profit", displayPercent(settings.profit_target)],
+    ["Mata Uang", displayValue(settings.currency)],
+    ["Format Tanggal", displayValue(settings.date_format).toString().toUpperCase()],
+    ["Auto Kapitalisasi", displayValue(settings.auto_capitalize).toString().toUpperCase()],
+    ["Status Default", displayValue(settings.default_status)]
   ];
-  summaryGrid.innerHTML = `<div class="summary-identity"><div class="summary-logo">${logoMarkup}</div><div class="summary-business"><div class="summary-label">Business</div><div class="summary-business-name">${escapeHTML(displayValue(settings.business_name))}</div><div class="summary-logo-name">Logo: ${logoSource ? "Supabase Storage" : "-"}</div></div></div><div class="summary-details">${details.map(([label,value]) => `<div class="summary-item"><div class="summary-label">${escapeHTML(label)}</div><div class="summary-value">${escapeHTML(value)}</div></div>`).join("")}</div>`;
+  summaryGrid.innerHTML = details.map(([label,value]) => `<div class="summary-item"><div class="summary-label">${escapeHTML(label)}</div><div class="summary-value">${escapeHTML(value)}</div></div>`).join("");
 }
 function fill(settings){
   currentSettings = settingsService.normalize(settings);
-  fields.businessName.value = currentSettings.business_name;
-  fields.businessType.value = currentSettings.business_type;
-  fields.ownerName.value = currentSettings.owner_name;
-  fields.phone.value = currentSettings.phone;
-  fields.email.value = currentSettings.email;
-  fields.address.value = currentSettings.address;
   fields.foodCostTarget.value = currentSettings.food_cost_target;
   fields.profitTarget.value = currentSettings.profit_target;
   fields.currency.value = currentSettings.currency;
   fields.dateFormat.value = currentSettings.date_format;
   fields.autoCapitalize.value = currentSettings.auto_capitalize;
   fields.defaultStatus.value = currentSettings.default_status;
-  updateLogoField();
   renderSummary(currentSettings);
 }
 function collectForm(){
   return {
-    business_name: fields.businessName.value.trim() || settingsService.DEFAULTS.business_name,
-    business_type: fields.businessType.value.trim(),
-    owner_name: fields.ownerName.value.trim(),
-    phone: fields.phone.value.trim(),
-    email: fields.email.value.trim(),
-    address: fields.address.value.trim(),
-    logo_url: currentSettings.logo_url || "",
+    ...currentSettings,
     food_cost_target: Number(fields.foodCostTarget.value),
     profit_target: Number(fields.profitTarget.value),
     currency: fields.currency.value,
@@ -508,7 +418,6 @@ async function loadSettings(){
   try{
     const result = await settingsService.load(supabaseClient);
     currentScope = result.scope;
-    clearPendingLogo();
     fill(result.settings);
     clearLegacySettings();
     showStatus(result.exists ? "" : "Belum ada settings tersimpan. Nilai default ditampilkan dan siap disimpan.");
@@ -519,26 +428,6 @@ async function loadSettings(){
     setBusy(false);
   }
 }
-logoChooseBtn.addEventListener("click", () => logoFile.click());
-logoFile.addEventListener("change", () => {
-  const file = logoFile.files && logoFile.files[0];
-  if(!file) return;
-  if(!ALLOWED_LOGO_TYPES.has(file.type)){
-    logoFile.value = "";
-    alert("Format logo harus PNG, JPG, JPEG, WEBP, atau SVG.");
-    return;
-  }
-  if(file.size > MAX_LOGO_SIZE){
-    logoFile.value = "";
-    alert("Ukuran logo maksimal 1 MB.");
-    return;
-  }
-  if(pendingLogoPreviewUrl) URL.revokeObjectURL(pendingLogoPreviewUrl);
-  pendingLogoFile = file;
-  pendingLogoPreviewUrl = URL.createObjectURL(file);
-  updateLogoField();
-  showStatus("Logo siap diupload saat Settings disimpan.");
-});
 saveBtn.addEventListener("click", async () => {
   if(!supabaseClient || !settingsService || !currentScope){
     showStatus("Settings belum siap disimpan. Muat ulang halaman dan periksa konfigurasi Supabase.", "error");
@@ -552,9 +441,7 @@ saveBtn.addEventListener("click", async () => {
   setBusy(true);
   showStatus("Menyimpan Settings ke Supabase...");
   try{
-    if(pendingLogoFile) payload.logo_url = await settingsService.uploadLogo(supabaseClient, currentScope, pendingLogoFile);
     const saved = await settingsService.save(supabaseClient, currentScope, payload);
-    clearPendingLogo();
     fill(saved);
     clearLegacySettings();
     showStatus("Settings berhasil disimpan ke Supabase.", "success");
@@ -574,9 +461,15 @@ resetBtn.addEventListener("click", async () => {
   setBusy(true);
   showStatus("Mereset Settings di Supabase...");
   try{
-    await settingsService.removeLogo(supabaseClient, currentScope);
-    const resetSettings = await settingsService.save(supabaseClient, currentScope, settingsService.DEFAULTS);
-    clearPendingLogo();
+    const resetSettings = await settingsService.save(supabaseClient, currentScope, {
+      ...currentSettings,
+      food_cost_target: settingsService.DEFAULTS.food_cost_target,
+      profit_target: settingsService.DEFAULTS.profit_target,
+      currency: settingsService.DEFAULTS.currency,
+      date_format: settingsService.DEFAULTS.date_format,
+      auto_capitalize: settingsService.DEFAULTS.auto_capitalize,
+      default_status: settingsService.DEFAULTS.default_status
+    });
     fill(resetSettings);
     clearLegacySettings();
     showStatus("Settings berhasil direset ke nilai default.", "success");
