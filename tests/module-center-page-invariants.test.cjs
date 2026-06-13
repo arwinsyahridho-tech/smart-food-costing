@@ -8,7 +8,7 @@ const config = fs.readFileSync('menu-modules/config.js', 'utf8');
 
 const COST_ROUTE = '/modules/cost-management/costdashboard.html';
 const LEGACY_SETTINGS_ROUTE = '/modules/cost-management/settings.html';
-const ACCOUNT_CENTER_FALLBACK = 'https://account-center-biya.vercel.app';
+const ACCOUNT_CENTER_FALLBACK = 'https://biya-account-center.vercel.app';
 
 test('Module Center memisahkan URL Portal dari Cost Management Settings', () => {
   assert.match(source, /<script src="\/menu-modules\/config\.js"><\/script>/);
@@ -20,7 +20,11 @@ test('Module Center memisahkan URL Portal dari Cost Management Settings', () => 
   assert.match(source, /Open Cost Management/);
   assert.match(source, /Open Account Center/);
   assert.equal((source.match(/data-portal-link="cost-management"/g) || []).length, 3);
-  assert.equal((source.match(/data-portal-link="account-center"/g) || []).length, 4);
+  assert.equal((source.match(/<a\b[^>]*data-portal-link="account-center"[^>]*>/g) || []).length, 3);
+  assert.match(
+    source,
+    /document\.querySelectorAll\('\[data-portal-link="account-center"\]'\)\.forEach\(\(link\) => \{\s*link\.href = ACCOUNT_CENTER_URL;/
+  );
   assert.doesNotMatch(source, new RegExp(`href="${LEGACY_SETTINGS_ROUTE}"`));
   assert.match(source, /href="\/modules\/cost-management\/exportcenter\.html"/);
   assert.doesNotMatch(source, />Open Settings</);
