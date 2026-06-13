@@ -5,6 +5,7 @@ const vm = require('node:vm');
 
 const source = fs.readFileSync('menu-modules/dashboard.html', 'utf8');
 const config = fs.readFileSync('menu-modules/config.js', 'utf8');
+const profileBridge = fs.readFileSync('assets/js/biya-profile-bridge.js', 'utf8');
 
 const COST_ROUTE = '/modules/cost-management/costdashboard.html';
 const LEGACY_SETTINGS_ROUTE = '/modules/cost-management/settings.html';
@@ -56,10 +57,13 @@ test('Account summary memiliki fallback dan sumber data dinamis Supabase', () =>
   assert.match(source, /id="planName">Free Plan<\/strong>/);
   assert.match(source, /Cost Management Available/);
   assert.match(source, /supabaseClient\.auth\.getUser\(\)/);
-  assert.match(source, /from\("profiles"\)/);
-  assert.match(source, /from\("cost_settings"\)/);
+  assert.match(source, /assets\/js\/biya-profile-bridge\.js/);
+  assert.match(profileBridge, /from\("account_profiles"\)/);
+  assert.match(profileBridge, /from\("business_profiles"\)/);
+  assert.match(profileBridge, /\.eq\("user_id", userId\)/);
+  assert.match(source, /await window\.BIYA_AUTH_GUARD_READY/);
   assert.match(source, /maybeSingle\("subscriptions", user\.id\)/);
-  assert.match(source, /metadata\.full_name/);
+  assert.match(profileBridge, /metadata\.full_name/);
   assert.match(source, /Lengkapi Account Center/);
 });
 
@@ -88,4 +92,5 @@ test('Semua inline script dan config valid secara sintaks JavaScript', () => {
   assert.ok(scripts.length > 0);
   scripts.forEach((script) => assert.doesNotThrow(() => new Function(script)));
   assert.doesNotThrow(() => new Function(config));
+  assert.doesNotThrow(() => new Function(profileBridge));
 });

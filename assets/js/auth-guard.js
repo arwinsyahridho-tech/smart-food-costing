@@ -41,6 +41,7 @@
       window.BIYA_SESSION = session;
       window.BIYA_CURRENT_USER = session.user;
       revealPage();
+      return session;
     } catch (error) {
       console.error("[BIYA Deletion Guard] Pemeriksaan sesi atau status penghapusan gagal", error);
       deletionGuard.storeNotice(deletionGuard.VERIFICATION_NOTICE);
@@ -65,5 +66,5 @@
     protectPage();
   });
 
-  protectPage();
+  window.BIYA_AUTH_GUARD_READY = protectPage();
 })();

@@ -7,6 +7,7 @@
   <script src="/assets/js/biya-auth.js"></script>
   <script src="/assets/js/biya-deletion-guard.js"></script>
   <script src="/assets/js/biya-data.js"></script>
+  <script src="/assets/js/biya-profile-bridge.js"></script>
   <script src="/assets/js/auth-guard.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -192,6 +193,7 @@
       font-size: 14px;
       font-weight: 650;
       line-height: 1.45;
+      overflow-wrap: anywhere;
     }
 
     .account-summary {
@@ -587,8 +589,8 @@
       "use strict";
 
       const FALLBACK = Object.freeze({
-        userName: "User",
-        businessName: "Nama Usaha Belum Diatur",
+        userName: "User BIYA",
+        businessName: "Akun BIYA",
         planName: "Free Plan"
       });
       const portalConfig = window.BIYA_PORTAL_CONFIG || {};
@@ -600,6 +602,7 @@
       const supabaseClient = configuredClient || ((SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase)
         ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
         : null);
+      const profileBridge = window.BiyaProfileBridge;
 
       const elements = {
         userName: document.getElementById("userName"),
@@ -624,31 +627,6 @@
         return match ? match.trim() : "";
       }
 
-      function getUserName(user, profile) {
-        const metadata = (user && user.user_metadata) || {};
-        return firstText(
-          profile && profile.full_name,
-          profile && profile.display_name,
-          profile && profile.name,
-          metadata.full_name,
-          metadata.display_name,
-          metadata.name,
-          metadata.user_name,
-          user && user.email && user.email.split("@")[0]
-        ) || FALLBACK.userName;
-      }
-
-      function getBusinessName(user, profile, settings) {
-        const metadata = (user && user.user_metadata) || {};
-        return firstText(
-          profile && profile.business_name,
-          profile && profile.company_name,
-          metadata.business_name,
-          metadata.company_name,
-          settings && settings.business_name
-        ) || FALLBACK.businessName;
-      }
-
       function getPlanName(user, profile, subscription) {
         const metadata = (user && user.user_metadata) || {};
         const appMetadata = (user && user.app_metadata) || {};
@@ -671,23 +649,6 @@
         return error ? null : data;
       }
 
-      async function loadProfile(userId) {
-        if (!supabaseClient || !userId) return null;
-        const byId = await supabaseClient.from("profiles").select("*").eq("id", userId).maybeSingle();
-        if (!byId.error && byId.data) return byId.data;
-        return maybeSingle("profiles", userId);
-      }
-
-      async function loadBusinessSettings(userId) {
-        if (!supabaseClient || !userId) return null;
-        const { data, error } = await supabaseClient
-          .from("cost_settings")
-          .select("business_name")
-          .eq("user_id", userId)
-          .maybeSingle();
-        return error ? null : data;
-      }
-
       function renderAccount(account) {
         const userName = firstText(account.userName) || FALLBACK.userName;
         const businessName = firstText(account.businessName) || FALLBACK.businessName;
@@ -695,30 +656,39 @@
         elements.userName.textContent = userName;
         elements.businessName.textContent = businessName;
         elements.planName.textContent = planName;
-        elements.completeAccountLink.classList.toggle("is-visible", businessName === FALLBACK.businessName);
+        elements.completeAccountLink.classList.toggle("is-visible", !account.hasBusinessName);
       }
 
       async function hydrateAccount() {
         renderAccount(FALLBACK);
-        if (!supabaseClient || !supabaseClient.auth) return;
+        if (!supabaseClient || !supabaseClient.auth || !profileBridge) return;
+
+        const guardedSession = window.BIYA_AUTH_GUARD_READY
+          ? await window.BIYA_AUTH_GUARD_READY
+          : window.BIYA_SESSION;
+        if (!guardedSession) return;
 
         const { data, error } = await supabaseClient.auth.getUser();
-        const user = !error && data ? data.user : null;
+        const user = !error && data && data.user && data.user.id === guardedSession.user.id
+          ? data.user
+          : null;
         if (!user) return;
 
-        const [profileResult, settingsResult, subscriptionResult] = await Promise.allSettled([
-          loadProfile(user.id),
-          loadBusinessSettings(user.id),
+        const [accountResult, businessResult, subscriptionResult] = await Promise.allSettled([
+          profileBridge.getAccountProfile(supabaseClient, user.id),
+          profileBridge.getBusinessProfile(supabaseClient, user.id),
           maybeSingle("subscriptions", user.id)
         ]);
-        const profile = profileResult.status === "fulfilled" ? profileResult.value : null;
-        const settings = settingsResult.status === "fulfilled" ? settingsResult.value : null;
+        const accountProfile = accountResult.status === "fulfilled" ? accountResult.value : null;
+        const businessProfile = businessResult.status === "fulfilled" ? businessResult.value : null;
         const subscription = subscriptionResult.status === "fulfilled" ? subscriptionResult.value : null;
+        const displayInfo = profileBridge.getDisplayAccountInfo(user, accountProfile, businessProfile);
 
         renderAccount({
-          userName: getUserName(user, profile),
-          businessName: getBusinessName(user, profile, settings),
-          planName: getPlanName(user, profile, subscription)
+          userName: displayInfo.displayName,
+          businessName: displayInfo.subtitle,
+          hasBusinessName: displayInfo.hasBusinessName,
+          planName: getPlanName(user, accountProfile, subscription)
         });
       }
 
