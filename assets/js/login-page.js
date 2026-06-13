@@ -2,6 +2,7 @@
   "use strict";
 
   const auth = window.BiyaAuth;
+  const deletionGuard = window.BIYADeletionGuard;
   const loginView = document.getElementById("loginView");
   const registerView = document.getElementById("registerView");
   const loginForm = document.getElementById("loginForm");
@@ -37,16 +38,53 @@
     requestAnimationFrame(() => document.getElementById(isRegister ? "registerName" : "loginEmail").focus());
   }
 
+  function consumeAuthNotice() {
+    try {
+      const notice = window.sessionStorage.getItem(deletionGuard.NOTICE_STORAGE_KEY);
+      if (!notice) return false;
+      window.sessionStorage.removeItem(deletionGuard.NOTICE_STORAGE_KEY);
+      showStatus(loginStatus, notice);
+      return true;
+    } catch (error) {
+      console.error("[BIYA Auth] Gagal membaca pemberitahuan autentikasi", error);
+      return false;
+    }
+  }
+
+  async function verifySignedInUser(authData) {
+    const user = authData && (authData.user || (authData.session && authData.session.user));
+    if (!user || !user.id) throw new Error("User hasil autentikasi tidak tersedia.");
+
+    const activeRequest = await deletionGuard.blockAndSignOutIfNeeded(auth.client, user.id, {
+      storeNotice: false
+    });
+    if (!activeRequest) return true;
+
+    showStatus(loginStatus, `${deletionGuard.BLOCKED_NOTICE}\n${deletionGuard.BLOCKED_NOTE}`);
+    return false;
+  }
+
+  async function failClosedAfterVerificationError(error) {
+    console.error("[BIYA Deletion Guard] Status akun gagal diverifikasi", error);
+    try {
+      await auth.client.auth.signOut();
+    } catch (signOutError) {
+      console.error("[BIYA Deletion Guard] Gagal mengakhiri sesi setelah verifikasi gagal", signOutError);
+    }
+    showStatus(loginStatus, deletionGuard.VERIFICATION_NOTICE);
+  }
+
   async function redirectAuthenticatedUser() {
-    if (!auth || !auth.client) {
+    if (!auth || !auth.client || !deletionGuard) {
       showStatus(loginStatus, "Konfigurasi Supabase belum tersedia. Hubungi administrator.");
       return;
     }
     try {
       const session = await auth.getSession();
-      if (session) window.location.replace(redirectTarget);
+      if (!session) return;
+      if (await verifySignedInUser(session)) window.location.replace(redirectTarget);
     } catch (error) {
-      console.error("[BIYA Auth] Gagal membaca sesi", error);
+      await failClosedAfterVerificationError(error);
     }
   }
 
@@ -74,11 +112,19 @@
       return;
     }
     setButtonLoading(button, true, "Memproses…");
+    let data;
     try {
-      await auth.signIn(email, password);
-      window.location.replace(redirectTarget);
+      data = await auth.signIn(email, password);
     } catch (error) {
       showStatus(loginStatus, error.isValidationError ? error.message : auth.friendlyAuthError(error));
+      setButtonLoading(button, false);
+      return;
+    }
+    try {
+      if (await verifySignedInUser(data)) window.location.replace(redirectTarget);
+      else setButtonLoading(button, false);
+    } catch (error) {
+      await failClosedAfterVerificationError(error);
       setButtonLoading(button, false);
     }
   });
@@ -129,22 +175,32 @@
     showStatus(loginStatus);
     const { demoEmail, demoPassword } = auth.config;
     setButtonLoading(demoButton, true, "Menyiapkan demo…");
+    let data;
     try {
-      await auth.signIn(demoEmail, demoPassword);
-      window.location.replace(redirectTarget);
+      data = await auth.signIn(demoEmail, demoPassword);
     } catch (error) {
       console.error("[BIYA Auth] Demo login gagal", error);
       showStatus(loginStatus, demoLoginError);
       setButtonLoading(demoButton, false);
+      return;
+    }
+    try {
+      if (await verifySignedInUser(data)) window.location.replace(redirectTarget);
+      else setButtonLoading(demoButton, false);
+    } catch (error) {
+      await failClosedAfterVerificationError(error);
+      setButtonLoading(demoButton, false);
     }
   });
 
+  const displayedStoredNotice = consumeAuthNotice();
   const redirectReason = new URLSearchParams(window.location.search).get("reason");
-  if (redirectReason === "auth") showStatus(loginStatus, "Silakan masuk untuk membuka halaman tersebut.");
-  if (redirectReason === "logout") showStatus(loginStatus, "Anda telah keluar dari BIYA.", "success");
-  if (redirectReason === "session") showStatus(loginStatus, "Sesi tidak dapat diverifikasi. Silakan masuk kembali.");
-  if (redirectReason === "config") showStatus(loginStatus, "Konfigurasi Supabase belum tersedia. Hubungi administrator.");
+  if (!displayedStoredNotice && redirectReason === "auth") showStatus(loginStatus, "Silakan masuk untuk membuka halaman tersebut.");
+  if (!displayedStoredNotice && redirectReason === "logout") showStatus(loginStatus, "Anda telah keluar dari BIYA.", "success");
+  if (!displayedStoredNotice && redirectReason === "session") showStatus(loginStatus, "Sesi tidak dapat diverifikasi. Silakan masuk kembali.");
+  if (!displayedStoredNotice && redirectReason === "config") showStatus(loginStatus, "Konfigurasi Supabase belum tersedia. Hubungi administrator.");
+  if (!displayedStoredNotice && redirectReason === "verification") showStatus(loginStatus, deletionGuard.VERIFICATION_NOTICE);
 
   if (window.location.hash === "#register") setView("register");
-  redirectAuthenticatedUser();
+  if (!displayedStoredNotice) redirectAuthenticatedUser();
 })();

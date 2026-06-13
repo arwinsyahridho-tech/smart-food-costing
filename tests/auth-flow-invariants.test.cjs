@@ -28,6 +28,98 @@ test("auth helper memakai API Supabase resmi dan metadata pendaftaran", () => {
   assert.match(source, /target\.origin !== window\.location\.origin/);
 });
 
+test("pending deletion helper memfilter request aktif terbaru dan menyediakan blokir sesi", () => {
+  const source = read("assets/js/biya-deletion-guard.js");
+  assert.match(source, /\.from\("account_deletion_requests"\)/);
+  assert.match(source, /\.eq\("user_id", userId\)/);
+  assert.match(source, /\.in\("status", ACTIVE_STATUSES\)/);
+  assert.match(source, /\.order\("requested_at", \{ ascending: false \}\)/);
+  assert.match(source, /\.limit\(1\)/);
+  assert.match(source, /\.maybeSingle\(\)/);
+  assert.match(source, /"pending", "processing", "completed"/);
+  assert.doesNotMatch(source, /service[_-]?role/i);
+  assert.doesNotMatch(source, /\.delete\(\)/);
+});
+
+function createDeletionGuardContext({ request = null, queryError = null, signOutError = null } = {}) {
+  const calls = [];
+  const query = {
+    eq(column, value) {
+      calls.push(["eq", column, value]);
+      return this;
+    },
+    in(column, values) {
+      calls.push(["in", column, Array.from(values)]);
+      return this;
+    },
+    limit(value) {
+      calls.push(["limit", value]);
+      return this;
+    },
+    maybeSingle() {
+      calls.push(["maybeSingle"]);
+      return Promise.resolve({ data: request, error: queryError });
+    },
+    order(column, options) {
+      calls.push(["order", column, options]);
+      return this;
+    },
+    select(columns) {
+      calls.push(["select", columns]);
+      return this;
+    }
+  };
+  const storage = new Map();
+  const client = {
+    auth: {
+      async signOut() {
+        calls.push(["signOut"]);
+        return { error: signOutError };
+      }
+    },
+    from(table) {
+      calls.push(["from", table]);
+      return query;
+    }
+  };
+  const context = {
+    console: { error() {} },
+    window: {
+      sessionStorage: {
+        getItem: (key) => storage.get(key) || null,
+        removeItem: (key) => storage.delete(key),
+        setItem: (key, value) => storage.set(key, value)
+      }
+    }
+  };
+  vm.runInNewContext(read("assets/js/biya-deletion-guard.js"), context);
+  return { calls, client, guard: context.window.BIYADeletionGuard, storage };
+}
+
+test("pending deletion helper mengembalikan null untuk akun normal", async () => {
+  const { calls, client, guard } = createDeletionGuardContext();
+  const result = await guard.getActiveDeletionRequest(client, "user-normal");
+
+  assert.equal(result, null);
+  assert.deepEqual(calls.find((call) => call[0] === "in"), [
+    "in",
+    "status",
+    ["pending", "processing", "completed"]
+  ]);
+  assert.equal(calls.some((call) => call[0] === "signOut"), false);
+});
+
+test("pending deletion helper menyimpan notice dan sign out untuk request aktif", async () => {
+  const request = { id: "delete-1", user_id: "user-pending", status: "pending" };
+  const { calls, client, guard, storage } = createDeletionGuardContext({ request });
+  const result = await guard.blockAndSignOutIfNeeded(client, "user-pending");
+
+  assert.equal(result, request);
+  assert.equal(calls.some((call) => call[0] === "signOut"), true);
+  assert.match(storage.get("biya_auth_notice"), /sedang menunggu proses penghapusan/);
+  assert.match(storage.get("biya_auth_notice"), /hubungi admin BIYA/);
+});
+
 test("validasi credential menangani kosong dan format email", () => {
   const code = read("assets/js/biya-auth.js");
   const context = {
@@ -66,7 +158,7 @@ test("seluruh halaman internal memasang auth guard sebelum body", () => {
   }
 });
 
-function runAuthGuard(getSession) {
+function runAuthGuard(getSession, activeDeletionRequest = null) {
   const replacedUrls = [];
   const removedClasses = [];
   const authStateHandlers = [];
@@ -91,6 +183,13 @@ function runAuthGuard(getSession) {
     },
     URLSearchParams,
     window: {
+      BIYADeletionGuard: {
+        VERIFICATION_NOTICE: "Status akun belum bisa diverifikasi. Silakan coba login ulang.",
+        async blockAndSignOutIfNeeded() {
+          return activeDeletionRequest;
+        },
+        storeNotice() {}
+      },
       BiyaAuth: {
         client: {
           auth: {
@@ -151,10 +250,25 @@ test("auth guard tetap mengarahkan sesi kosong dan event logout ke halaman login
     "/index.html?redirect=%2Fmodules%2Fcost-management%2Fcostdashboard.html&reason=auth"
   );
 
-  result.authStateHandlers[0]("SIGNED_OUT");
+  const signedInResult = runAuthGuard(async () => ({ user: { id: "user-1" } }));
+  await new Promise(setImmediate);
+  signedInResult.authStateHandlers[0]("SIGNED_OUT");
   assert.equal(
-    result.replacedUrls[1],
+    signedInResult.replacedUrls[0],
     "/index.html?redirect=%2Fmodules%2Fcost-management%2Fcostdashboard.html&reason=logout"
+  );
+});
+
+test("auth guard memblokir direct URL untuk akun dengan request penghapusan aktif", async () => {
+  const session = { user: { id: "user-pending" } };
+  const result = runAuthGuard(async () => session, { id: "delete-1", status: "pending" });
+  await new Promise(setImmediate);
+
+  assert.equal(result.context.window.BIYA_SESSION, undefined);
+  assert.equal(result.removedClasses.length, 0);
+  assert.equal(
+    result.replacedUrls[0],
+    "/index.html?redirect=%2Fmodules%2Fcost-management%2Fcostdashboard.html&reason=deletion"
   );
 });
 
@@ -256,6 +370,15 @@ test("klik Demo Login menjaga loading state dan menampilkan error Supabase yang 
     requestAnimationFrame: (callback) => callback(),
     URLSearchParams,
     window: {
+      BIYADeletionGuard: {
+        BLOCKED_NOTE: "Jika ini tidak disengaja, hubungi admin BIYA untuk membatalkan permintaan hapus akun.",
+        BLOCKED_NOTICE: "Akun ini sedang menunggu proses penghapusan dan tidak dapat mengakses BIYA.",
+        NOTICE_STORAGE_KEY: "biya_auth_notice",
+        VERIFICATION_NOTICE: "Status akun belum bisa diverifikasi. Silakan coba login ulang.",
+        async blockAndSignOutIfNeeded() {
+          return null;
+        }
+      },
       BiyaAuth: auth,
       history: { replaceState() {} },
       location: {
@@ -264,6 +387,10 @@ test("klik Demo Login menjaga loading state dan menampilkan error Supabase yang 
         pathname: "/index.html",
         replace() {},
         search: ""
+      },
+      sessionStorage: {
+        getItem() { return null; },
+        removeItem() {}
       }
     }
   };
