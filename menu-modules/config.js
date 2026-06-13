@@ -12,6 +12,6 @@
     ACCOUNT_CENTER_URL:
       existingConfig.ACCOUNT_CENTER_URL ||
       window.BIYA_ACCOUNT_CENTER_URL ||
-      "https://biya-account-center.vercel.app/"
+      "https://account-center-biya.vercel.app"
   });
 })();
