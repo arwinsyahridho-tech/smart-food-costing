@@ -1,0 +1,40 @@
+html.biya-auth-pending body { visibility: hidden !important; }
+
+.biya-logout-button {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 9998;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 17px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  background: rgba(8, 26, 58, 0.92);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+  color: #fff;
+  font: 700 13px/1 Inter, "Segoe UI", Arial, sans-serif;
+  cursor: pointer;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.biya-logout-button:hover {
+  transform: translateY(-2px);
+  border-color: rgba(46, 216, 255, 0.55);
+  background: rgba(16, 43, 99, 0.96);
+}
+
+.biya-logout-button:focus-visible {
+  outline: 3px solid rgba(46, 216, 255, 0.38);
+  outline-offset: 3px;
+}
+
+.biya-logout-button:disabled { cursor: wait; opacity: 0.68; }
+
+@media (max-width: 600px) {
+  .biya-logout-button { right: 12px; bottom: 12px; min-height: 42px; padding-inline: 15px; }
+}

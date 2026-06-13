@@ -1,50 +1,109 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <title>BIYA</title> <style> :root{ --bg:#04122B; --surface:#102B63; --surface-2:#081A3A; --primary:#0066FF; --success:#00D66B; --cyan:#2ED8FF; --border:rgba(255,255,255,0.08); --shadow:0 8px 24px rgba(0,0,0,0.20); --shadow-active:0 0 20px rgba(0,102,255,0.35); --text:#fff; --muted:rgba(215,227,255,.72); } *{margin:0;padding:0;box-sizing:border-box} body{ min-height:100vh; display:flex; align-items:center; justify-content:center; background: radial-gradient(circle at top, rgba(46,216,255,.18), transparent 35%), linear-gradient(180deg, #04122B 0%, #07173a 100%); color:var(--text); font-family:Inter, Arial, sans-serif; padding:24px; } .shell{ width:100%; max-width:1120px; display:grid; grid-template-columns:1.1fr .9fr; gap:24px; align-items:center; } .hero{ padding:24px 8px; } .brand{ display:inline-flex; align-items:center; gap:14px; padding:12px 16px; border:1px solid var(--border); border-radius:999px; background:rgba(8,26,58,.68); margin-bottom:24px; box-shadow:var(--shadow); } .brand-mark{ width:44px;height:44px;border-radius:14px; background:linear-gradient(135deg,var(--primary),var(--success)); display:grid;place-items:center; font-weight:700; box-shadow:var(--shadow-active); } h1{ font-size:60px; line-height:0.98; margin-bottom:14px; letter-spacing:-1.5px; } .tag{ font-size:18px; color:var(--muted); line-height:1.7; max-width:620px; margin-bottom:28px; } .pill-row{display:flex;gap:10px;flex-wrap:wrap} .pill{ display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border:1px solid var(--border); border-radius:999px; background:rgba(16,43,99,.72); color:#fff; font-size:13px; box-shadow:var(--shadow); } .login-panel{ background:linear-gradient(180deg, rgba(16,43,99,.96), rgba(12,34,83,.98)); border:1px solid var(--border); border-radius:20px; padding:28px; box-shadow:var(--shadow); } .login-title{ font-size:28px; font-weight:700; margin-bottom:8px; } .login-sub{ color:var(--muted); margin-bottom:18px; line-height:1.6; } .field{margin-bottom:14px} label{display:block;margin-bottom:8px;color:var(--muted);font-size:14px} input{ width:100%; height:54px; border:1px solid var(--border); border-radius:12px; background:rgba(16,43,99,.95); color:#fff; padding:0 16px; outline:none; font-size:15px; } input::placeholder{color:rgba(215,227,255,.45)} .login-btn,.ghost-btn{ width:100%; height:54px; border:none; border-radius:12px; font-weight:700; cursor:pointer; font-size:15px; transition:.2s; } .login-btn{ background:linear-gradient(135deg,var(--primary),var(--success)); color:#fff; box-shadow:var(--shadow-active); margin-top:10px; } .ghost-btn{ background:rgba(255,255,255,.08); color:#fff; margin-top:10px; } .note{ margin-top:16px; color:rgba(215,227,255,.62); font-size:13px; line-height:1.6; text-align:center; } .modal{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.56); align-items:center; justify-content:center; padding:24px; z-index:9999; } .modal-card{ width:100%; max-width:380px; background:linear-gradient(180deg, rgba(16,43,99,.98), rgba(12,34,83,.98)); border:1px solid var(--border); border-radius:20px; padding:24px; box-shadow:0 20px 40px rgba(0,0,0,.30); } .modal-card h2{ font-size:24px; margin-bottom:16px; } @media (max-width: 900px){ .shell{grid-template-columns:1fr} h1{font-size:46px} .hero{padding:0} } </style> <style id="biya-mobile-first-overrides">
-/* Mobile-first responsive layer. Keep this after page styles. */
-html{ -webkit-text-size-adjust:100%;
-} body{ overflow-x:hidden;
-} button,
-input{ max-width:100%;
-} .shell,
-.wrap,
-.hero,
-.grid,
-.hero-cta,
-.pill-row{ min-width:0;
-} .shell{ grid-template-columns:1fr !important; gap:20px !important;
-} .wrap{ width:100%; padding:24px 16px !important;
-} .hero{ align-items:stretch !important;
-} h1,
-.title{ font-size:clamp(34px, 10vw, 44px) !important; line-height:1.05 !important; letter-spacing:0 !important; overflow-wrap:anywhere;
-} .tag,
-.sub,
-.card-desc{ line-height:1.6 !important;
-} .login-panel,
-.card{ padding:20px !important;
-} .grid{ grid-template-columns:1fr !important;
-} .hero-cta,
-.hero-cta .cta{ width:100%;
-} .hero-cta .cta{ justify-content:center;
-} @media (min-width: 700px){ .wrap{ padding:36px 24px !important; } .grid{ grid-template-columns:repeat(2, minmax(0, 1fr)) !important; }
-} @media (min-width: 901px){ .shell{ grid-template-columns:1.1fr .9fr !important; gap:24px !important; } .wrap{ padding:48px 32px !important; } .grid{ grid-template-columns:repeat(auto-fit, minmax(290px, 1fr)) !important; } .hero{ align-items:flex-end !important; } h1, .title{ font-size:48px !important; } h1{ font-size:60px !important; letter-spacing:-1.5px !important; } .login-panel, .card{ padding:28px !important; } .hero-cta, .hero-cta .cta{ width:auto; }
-}
-</style> <style id="biya-icon-system">
-.biya-icon{ width:1.15em; height:1.15em; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; fill:none; flex:0 0 auto;
-}
-.item .biya-icon{ margin-right:10px;
-}
-.icon .biya-icon{ width:30px; height:30px; margin:0;
-}
-.btn .biya-icon,
-button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
-}
-.delete-btn .biya-icon,
-.menu-toggle .biya-icon{ margin:0;
-}
-</style> </head>
-<body> <svg class="biya-icon-sprite" xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"> <symbol id="biya-icon-layout-dashboard" viewBox="0 0 24 24"> <rect width="7" height="9" x="3" y="3" rx="1"></rect> <rect width="7" height="5" x="14" y="3" rx="1"></rect> <rect width="7" height="9" x="14" y="12" rx="1"></rect> <rect width="7" height="5" x="3" y="16" rx="1"></rect> </symbol> <symbol id="biya-icon-package" viewBox="0 0 24 24"> <path d="m7.5 4.27 9 5.15"></path> <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path> <path d="m3.3 7 8.7 5 8.7-5"></path> <path d="M12 22V12"></path> </symbol> <symbol id="biya-icon-flask-conical" viewBox="0 0 24 24"> <path d="M10 2v7.31"></path> <path d="M14 9.3V2"></path> <path d="M8.5 2h7"></path> <path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path> <path d="M5.52 16h12.96"></path> </symbol> <symbol id="biya-icon-clipboard-list" viewBox="0 0 24 24"> <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path> <path d="M12 11h4"></path> <path d="M12 16h4"></path> <path d="M8 11h.01"></path> <path d="M8 16h.01"></path> </symbol> <symbol id="biya-icon-calculator" viewBox="0 0 24 24"> <rect width="16" height="20" x="4" y="2" rx="2"></rect> <path d="M8 6h8"></path> <path d="M16 14v4"></path> <path d="M16 10h.01"></path> <path d="M12 10h.01"></path> <path d="M8 10h.01"></path> <path d="M12 14h.01"></path> <path d="M8 14h.01"></path> <path d="M12 18h.01"></path> <path d="M8 18h.01"></path> </symbol> <symbol id="biya-icon-download" viewBox="0 0 24 24"> <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path> <path d="M7 10l5 5 5-5"></path> <path d="M12 15V3"></path> </symbol> <symbol id="biya-icon-settings" viewBox="0 0 24 24"> <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2Z"></path> <circle cx="12" cy="12" r="3"></circle> </symbol> <symbol id="biya-icon-arrow-left" viewBox="0 0 24 24"> <path d="M19 12H5"></path> <path d="m12 19-7-7 7-7"></path> </symbol> <symbol id="biya-icon-search" viewBox="0 0 24 24"> <circle cx="11" cy="11" r="8"></circle> <path d="m21 21-4.3-4.3"></path> </symbol> <symbol id="biya-icon-x" viewBox="0 0 24 24"> <path d="M18 6 6 18"></path> <path d="m6 6 12 12"></path> </symbol>
-</svg> <div class="shell"> <section class="hero"> <div class="brand"> <div class="brand-mark">B</div> <div> <div style="font-weight:700;letter-spacing:.8px;">BIYA</div> <div style="font-size:12px;opacity:.72;letter-spacing:1.6px;">BUSINESS IN YOUR HAND</div> </div> </div> <h1>Costing System<br>for F&B Teams</h1> <div class="tag">Sistem operasional BIYA untuk membantu UMKM F&B mengelola raw material, preparation, menu, product HPP, export, dan settings dalam satu alur kerja yang siap dipakai dari HP, tablet, dan desktop.</div> <div class="pill-row"> <div class="pill">Mobile First</div> <div class="pill">Tablet Optimized</div> <div class="pill">Desktop Compatible</div> </div> </section> <section class="login-panel"> <div class="login-title">Login</div> <div class="login-sub">Masuk ke dashboard BIYA untuk melanjutkan pengelolaan costing dan recipe.</div> <div class="field"> <label>Email</label> <input placeholder="nama@email.com" /> </div> <div class="field"> <label>Password</label> <input type="password" placeholder="********" /> </div> <button id="loginBtn" class="login-btn">Masuk</button> <button id="openModalBtn" class="ghost-btn">Demo Login</button> <div class="note">Phase 1 Development - BIYA Operating System</div> </section> </div> <div id="modal" class="modal"> <div class="modal-card"> <h2>Demo Login</h2> <div class="login-sub">Gunakan tombol ini untuk masuk cepat ke dashboard.</div> <div class="field"> <label>Email</label> <input placeholder="Email" /> </div> <div class="field"> <label>Password</label> <input type="password" placeholder="********" /> </div> <button id="loginBtn2" class="login-btn">Masuk</button> <button id="closeBtn" class="ghost-btn">Tutup</button> </div> </div> <script> const modal = document.getElementById("modal"); document.getElementById("openModalBtn").onclick = () => modal.style.display = "flex"; document.getElementById("closeBtn").onclick = () => modal.style.display = "none"; document.getElementById("loginBtn").onclick = () => window.location.href = "menu-modules/dashboard.html"; document.getElementById("loginBtn2").onclick = () => window.location.href = "dashboard.html";
-</script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BIYA Costing System for F&B Teams">
+  <title>Masuk · BIYA</title>
+  <link rel="stylesheet" href="/assets/css/auth-page.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/assets/js/biya-config.js"></script>
+  <script src="/assets/js/biya-auth.js"></script>
+</head>
+<body>
+  <main class="auth-shell">
+    <section class="hero" aria-labelledby="heroTitle">
+      <div class="brand" aria-label="BIYA, Business in Your Hand">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span>
+          <span class="brand-name">BIYA</span>
+          <span class="brand-tagline">BUSINESS IN YOUR HAND</span>
+        </span>
+      </div>
+      <p class="eyebrow">BIYA Operating System</p>
+      <h1 id="heroTitle">Costing System<br><span>for F&amp;B Teams</span></h1>
+      <p class="hero-description">Sistem operasional BIYA untuk membantu UMKM F&amp;B mengelola raw material, preparation, menu, product HPP, export, dan settings dalam satu alur kerja yang siap dipakai dari HP, tablet, dan desktop.</p>
+      <div class="pills" aria-label="Dukungan perangkat">
+        <span class="pill">Mobile First</span>
+        <span class="pill">Tablet Optimized</span>
+        <span class="pill">Desktop Compatible</span>
+      </div>
+    </section>
+
+    <section class="auth-card" aria-live="polite">
+      <div id="loginView">
+        <p class="card-kicker">Secure workspace</p>
+        <h2 class="card-title">Selamat datang kembali</h2>
+        <p class="card-subtitle">Masuk ke dashboard BIYA untuk melanjutkan pengelolaan costing dan recipe bisnis Anda.</p>
+        <div id="loginStatus" class="status" role="status"></div>
+        <form id="loginForm" class="auth-form" novalidate>
+          <div class="field">
+            <label for="loginEmail">Email</label>
+            <div class="input-wrap">
+              <svg class="input-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+              <input id="loginEmail" name="email" type="email" autocomplete="email" inputmode="email" placeholder="nama@email.com" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="loginPassword">Password</label>
+            <div class="input-wrap">
+              <svg class="input-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+              <input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="Masukkan password" required>
+              <button class="password-toggle" type="button" data-password-toggle="loginPassword" aria-label="Tampilkan password">
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <button id="loginButton" class="button button-primary" type="submit"><span class="spinner" aria-hidden="true"></span><span data-button-label>Masuk</span></button>
+        </form>
+        <div class="divider">atau coba BIYA</div>
+        <button id="demoButton" class="button button-secondary" type="button"><span class="spinner" aria-hidden="true"></span><span data-button-label>Demo Login</span></button>
+        <button id="showRegisterButton" class="button button-register" type="button">Daftar Akun</button>
+      </div>
+
+      <div id="registerView" hidden>
+        <p class="card-kicker">Create workspace</p>
+        <h2 class="card-title">Buat akun BIYA</h2>
+        <p class="card-subtitle">Mulai workspace costing yang terhubung dengan akun bisnis Anda.</p>
+        <div id="registerStatus" class="status" role="status"></div>
+        <form id="registerForm" class="auth-form" novalidate>
+          <div class="field">
+            <label for="registerName">Nama bisnis / nama user</label>
+            <div class="input-wrap">
+              <svg class="input-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+              <input id="registerName" name="name" type="text" autocomplete="organization" placeholder="Contoh: Dapur BIYA" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="registerEmail">Email</label>
+            <div class="input-wrap">
+              <svg class="input-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+              <input id="registerEmail" name="email" type="email" autocomplete="email" inputmode="email" placeholder="nama@email.com" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="registerPassword">Password</label>
+            <div class="input-wrap">
+              <svg class="input-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+              <input id="registerPassword" name="password" type="password" autocomplete="new-password" placeholder="Minimal 6 karakter" minlength="6" required>
+              <button class="password-toggle" type="button" data-password-toggle="registerPassword" aria-label="Tampilkan password"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="registerConfirmPassword">Konfirmasi password</label>
+            <div class="input-wrap">
+              <svg class="input-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V5l8-3 8 3v8Z"/><path d="m9 12 2 2 4-4"/></svg>
+              <input id="registerConfirmPassword" name="confirmPassword" type="password" autocomplete="new-password" placeholder="Ulangi password" minlength="6" required>
+              <button class="password-toggle" type="button" data-password-toggle="registerConfirmPassword" aria-label="Tampilkan password"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+            </div>
+          </div>
+          <button id="registerButton" class="button button-primary" type="submit"><span class="spinner" aria-hidden="true"></span><span data-button-label>Daftar Akun</span></button>
+          <button id="showLoginButton" class="button button-link" type="button">Sudah punya akun? Masuk</button>
+        </form>
+      </div>
+      <p class="footer-note">Phase 1 Development - BIYA Operating System</p>
+    </section>
+  </main>
+  <script src="/assets/js/login-page.js"></script>
 </body>
-</html> 
+</html>
