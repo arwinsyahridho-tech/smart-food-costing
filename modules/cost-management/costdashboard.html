@@ -630,6 +630,25 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
     min-height:43px;
   }
 }
+</style><style id="biya-dashboard-redesign">
+:root{--dashboard-border:rgba(70,139,255,.22);--dashboard-surface:linear-gradient(145deg,rgba(16,39,102,.98),rgba(9,29,76,.98));--dashboard-soft:linear-gradient(145deg,rgba(13,33,88,.96),rgba(7,24,62,.98));--dashboard-muted:#9eb2d8}
+body{background:radial-gradient(circle at 78% 4%,rgba(0,102,255,.11),transparent 28%),var(--bg)}
+.main{padding:32px 36px 48px}.page{max-width:1380px}.dashboard-stack{display:flex;flex-direction:column;gap:18px}
+.dashboard-hero,.dashboard-section{position:relative;overflow:hidden;margin:0;padding:22px;border:1px solid var(--dashboard-border);border-radius:20px;background:var(--dashboard-surface);box-shadow:0 14px 36px rgba(0,15,48,.24)}
+.dashboard-hero::before{content:"";position:absolute;inset:0 auto auto 0;width:100%;height:2px;background:linear-gradient(90deg,#18bfff,#00d66b 34%,transparent 72%)}
+.dashboard-hero-head{display:flex;align-items:center;gap:14px}.dashboard-hero-icon{display:grid;place-items:center;width:52px;height:52px;flex:0 0 52px;border:1px solid rgba(65,183,255,.32);border-radius:16px;color:#fff;background:linear-gradient(145deg,rgba(0,102,255,.34),rgba(0,214,107,.18))}.dashboard-hero-icon .biya-icon{width:27px;height:27px}
+.dashboard-title{margin:0;font-size:28px;font-weight:800;line-height:1.2;letter-spacing:-.35px}.dashboard-description{margin-top:5px;color:var(--dashboard-muted);font-size:14px;line-height:1.5}.dashboard-divider{height:1px;margin:18px 0;background:linear-gradient(90deg,rgba(68,151,255,.34),rgba(70,139,255,.08))}
+.dashboard-kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.dashboard-kpi{display:grid;grid-template-columns:40px minmax(0,1fr);align-items:center;gap:11px;min-width:0;min-height:88px;padding:14px;border:1px solid rgba(70,139,255,.18);border-radius:15px;background:var(--dashboard-soft)}
+.dashboard-kpi-icon{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;color:#70dcff;background:linear-gradient(145deg,rgba(0,102,255,.23),rgba(0,214,107,.12))}.dashboard-kpi-icon .biya-icon{width:21px;height:21px}.dashboard-kpi-copy{min-width:0}.dashboard-kpi .summary-title{margin:0 0 5px;color:var(--dashboard-muted);font-size:12px;font-weight:700;line-height:1.25;opacity:1}.dashboard-kpi .summary-value{font-size:27px;font-weight:800;line-height:1.1;letter-spacing:-.35px;overflow-wrap:anywhere}.dashboard-kpi:last-child .summary-value{font-size:24px}
+.dashboard-section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:15px}.dashboard-section-title{font-size:24px;font-weight:800;line-height:1.2;letter-spacing:-.25px}.dashboard-section-description{margin-top:4px;color:var(--dashboard-muted);font-size:14px;line-height:1.45}
+.dashboard-health #healthScoreCard{display:grid;grid-template-columns:minmax(260px,1.15fr) minmax(0,1fr);gap:14px}.dashboard-health .health-score-compact{display:flex;align-items:center;gap:16px;min-width:0;padding:16px;border:1px solid rgba(70,139,255,.18);border-radius:16px;background:var(--dashboard-soft)}.dashboard-health .score-circle{width:72px;height:72px;flex:0 0 72px;border-radius:18px;border-color:rgba(54,183,255,.28);font-size:32px;background:linear-gradient(145deg,rgba(0,102,255,.25),rgba(0,214,107,.12))}.dashboard-health .health-label{font-size:20px}.dashboard-health .health-copy .muted{margin-top:5px;color:var(--dashboard-muted);font-size:13px;opacity:1}.dashboard-health .health-metrics{height:100%;margin:0;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.dashboard-health .health-metric{display:flex;flex-direction:column;justify-content:center;min-height:64px;padding:11px 12px;border-color:rgba(70,139,255,.16);border-radius:13px}.dashboard-health .metric-label{margin-bottom:5px;color:var(--dashboard-muted);font-size:11px}.dashboard-health .metric-value{font-size:18px}
+.dashboard-alerts .alert-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:0}.dashboard-alerts .alert-item{min-height:48px;margin:0;padding:11px 12px;border:1px solid rgba(70,139,255,.14);border-radius:13px;background:rgba(5,22,58,.7);font-size:13px;line-height:1.4}.dashboard-alerts .alert-dot{width:9px;height:9px;margin-top:5px;flex:0 0 9px}.dashboard-alerts .dashboard-more-note{grid-column:1/-1;margin:0;color:var(--dashboard-muted);font-size:12px}
+.dashboard-product-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.dashboard-product-card{min-width:0;padding:16px;border:1px solid rgba(70,139,255,.17);border-radius:16px;background:var(--dashboard-soft)}.dashboard-product-label{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px;font-size:15px;font-weight:800}.dashboard-product-label span{padding:5px 8px;border-radius:999px;font-size:11px;color:#9ff5c2;background:rgba(0,214,107,.11)}.dashboard-product-card.worst .dashboard-product-label span{color:#ffbdba;background:rgba(239,68,68,.12)}.dashboard-product-card .product-compact-head{gap:12px}.dashboard-product-card .product-compact-thumb{width:58px;height:58px;flex-basis:58px;border-radius:14px}.dashboard-product-card .product-compact .product-name{font-size:16px}.dashboard-product-card .product-category-badge{font-size:10px;padding:4px 7px}.dashboard-product-card .product-mini-stats{margin-top:12px;padding-top:0;gap:8px}.dashboard-product-card .product-mini-stat{padding:10px 11px;border-radius:12px}.dashboard-product-card .metric-label{font-size:10px}.dashboard-product-card .metric-value{font-size:14px}
+.dashboard-ranking .ranking-list{gap:8px}.dashboard-ranking .ranking-item{grid-template-columns:34px minmax(0,1fr) minmax(100px,auto);min-height:58px;padding:9px 11px;border:1px solid rgba(70,139,255,.14);border-radius:13px;background:rgba(5,22,58,.62)}.dashboard-ranking .ranking-position{width:28px;height:28px;border-radius:9px;font-size:12px;background:linear-gradient(145deg,rgba(0,102,255,.3),rgba(0,214,107,.15))}.dashboard-ranking .ranking-name{font-size:14px;-webkit-line-clamp:1}.dashboard-ranking .ranking-category{font-size:11px}.dashboard-ranking .ranking-stats{max-width:none}.dashboard-ranking .ranking-profit{font-size:13px}.dashboard-ranking .ranking-margin{font-size:11px}
+.dashboard-category .info-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.dashboard-category .mini-box{min-height:0;padding:14px;border-color:rgba(70,139,255,.16);border-radius:14px;background:rgba(5,22,58,.65)}.dashboard-category .mini-title{margin-bottom:7px;color:var(--dashboard-muted);font-size:12px;opacity:1}.dashboard-category .mini-value{font-size:20px}.dashboard-category .muted{font-size:12px;line-height:1.45}.dashboard-category-meta{flex:0 0 auto;padding:6px 9px;border:1px solid rgba(70,139,255,.16);border-radius:999px;color:#b9d5ff;font-size:12px;background:rgba(0,102,255,.12)}.dashboard-section .notice{border:1px dashed rgba(70,139,255,.22);border-radius:13px;background:rgba(5,22,58,.58);color:var(--dashboard-muted);font-size:13px}.dashboard-legacy-render-targets{display:none!important}
+@media(max-width:980px){.main{padding:20px!important;padding-top:18px!important}.dashboard-stack{gap:15px}.dashboard-health #healthScoreCard{grid-template-columns:1fr}.dashboard-alerts .alert-list{grid-template-columns:1fr}.dashboard-category .info-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:699px){.main{padding:14px!important;padding-top:14px!important}.dashboard-stack{gap:12px}.dashboard-hero,.dashboard-section{padding:15px!important;border-radius:17px!important}.dashboard-hero-head{gap:11px}.dashboard-hero-icon{width:45px;height:45px;flex-basis:45px;border-radius:14px}.dashboard-hero-icon .biya-icon{width:24px;height:24px}.dashboard-title{font-size:23px}.dashboard-description{font-size:13px;line-height:1.45}.dashboard-divider{margin:14px 0}.dashboard-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}.dashboard-kpi{display:block;min-height:92px;padding:11px!important;border-radius:13px!important}.dashboard-kpi-icon{width:31px;height:31px;margin-bottom:8px;border-radius:10px}.dashboard-kpi-icon .biya-icon{width:17px;height:17px}.dashboard-kpi .summary-title{margin-bottom:4px;font-size:12px!important}.dashboard-kpi .summary-value,.dashboard-kpi:last-child .summary-value{font-size:22px!important}.dashboard-kpi:last-child .summary-value{font-size:20px!important}.dashboard-section-head{margin-bottom:12px}.dashboard-section-title{font-size:20px}.dashboard-section-description{font-size:13px}.dashboard-health .health-score-compact{align-items:center!important;gap:12px!important;padding:12px}.dashboard-health .score-circle{width:58px!important;height:58px!important;flex-basis:58px!important;border-radius:15px!important;font-size:27px!important}.dashboard-health .health-label{font-size:17px}.dashboard-health .health-copy .muted{display:block;font-size:12px!important}.dashboard-health .health-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.dashboard-health .health-metric{min-height:57px;padding:9px 10px!important}.dashboard-health .metric-label{font-size:10px!important}.dashboard-health .metric-value{font-size:16px!important}.dashboard-alerts .alert-list .alert-item:nth-of-type(n+4){display:flex!important}.dashboard-alerts .alert-item{padding:10px 11px!important;font-size:12px!important}.dashboard-product-grid{grid-template-columns:1fr;gap:9px}.dashboard-product-card{padding:12px}.dashboard-product-label{margin-bottom:10px;font-size:14px}.dashboard-product-card .product-compact-head{flex-direction:row!important;align-items:center!important}.dashboard-product-card .product-compact-thumb{width:52px;height:52px;flex-basis:52px}.dashboard-product-card .product-compact .product-name{font-size:15px!important}.dashboard-product-card .product-mini-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}.dashboard-ranking .ranking-item{grid-template-columns:28px minmax(0,1fr) minmax(82px,auto)!important;gap:7px!important;min-height:54px;padding:8px!important}.dashboard-ranking .ranking-position{width:25px;height:25px}.dashboard-ranking .ranking-name{font-size:13px!important;-webkit-line-clamp:2}.dashboard-ranking .ranking-category{font-size:10px}.dashboard-ranking .ranking-profit{font-size:12px}.dashboard-ranking .ranking-margin{font-size:10px}.dashboard-category .info-grid{grid-template-columns:1fr!important;gap:8px!important}.dashboard-category .mini-box{padding:12px!important}.dashboard-category .mini-value{font-size:18px!important}.dashboard-category-meta{font-size:11px}}
+@media(max-width:374px){.dashboard-kpi{min-height:88px;padding:10px!important}.dashboard-kpi .summary-title{font-size:11px!important}.dashboard-kpi .summary-value,.dashboard-kpi:last-child .summary-value{font-size:20px!important}.dashboard-ranking .ranking-item{grid-template-columns:25px minmax(0,1fr) 76px!important}}
 </style></head>
 <body> <svg class="biya-icon-sprite" xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"> <symbol id="biya-icon-layout-dashboard" viewBox="0 0 24 24"> <rect width="7" height="9" x="3" y="3" rx="1"></rect> <rect width="7" height="5" x="14" y="3" rx="1"></rect> <rect width="7" height="9" x="14" y="12" rx="1"></rect> <rect width="7" height="5" x="3" y="16" rx="1"></rect> </symbol> <symbol id="biya-icon-package" viewBox="0 0 24 24"> <path d="m7.5 4.27 9 5.15"></path> <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path> <path d="m3.3 7 8.7 5 8.7-5"></path> <path d="M12 22V12"></path> </symbol> <symbol id="biya-icon-flask-conical" viewBox="0 0 24 24"> <path d="M10 2v7.31"></path> <path d="M14 9.3V2"></path> <path d="M8.5 2h7"></path> <path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path> <path d="M5.52 16h12.96"></path> </symbol> <symbol id="biya-icon-clipboard-list" viewBox="0 0 24 24"> <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path> <path d="M12 11h4"></path> <path d="M12 16h4"></path> <path d="M8 11h.01"></path> <path d="M8 16h.01"></path> </symbol> <symbol id="biya-icon-calculator" viewBox="0 0 24 24"> <rect width="16" height="20" x="4" y="2" rx="2"></rect> <path d="M8 6h8"></path> <path d="M16 14v4"></path> <path d="M16 10h.01"></path> <path d="M12 10h.01"></path> <path d="M8 10h.01"></path> <path d="M12 14h.01"></path> <path d="M8 14h.01"></path> <path d="M12 18h.01"></path> <path d="M8 18h.01"></path> </symbol> <symbol id="biya-icon-download" viewBox="0 0 24 24"> <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path> <path d="M7 10l5 5 5-5"></path> <path d="M12 15V3"></path> </symbol> <symbol id="biya-icon-settings" viewBox="0 0 24 24"> <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2Z"></path> <circle cx="12" cy="12" r="3"></circle> </symbol> <symbol id="biya-icon-arrow-left" viewBox="0 0 24 24"> <path d="M19 12H5"></path> <path d="m12 19-7-7 7-7"></path> </symbol> <symbol id="biya-icon-search" viewBox="0 0 24 24"> <circle cx="11" cy="11" r="8"></circle> <path d="m21 21-4.3-4.3"></path> </symbol> <symbol id="biya-icon-x" viewBox="0 0 24 24"> <path d="M18 6 6 18"></path> <path d="m6 6 12 12"></path> </symbol>
 </svg> <header class="mobile-header" aria-label="BIYA mobile navigation"> <div class="mobile-logo">BIYA<small>BUSINESS IN YOUR HAND</small></div> <button class="menu-toggle" id="menuToggle" type="button" aria-label="Buka menu">&#9776;</button>
@@ -648,134 +667,23 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
 <button class="btn" onclick="location.href='/menu-modules/dashboard.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-arrow-left"></use></svg><span>Kembali</span></button>
 </aside>
 <main class="main">
-<div class="page">
-<div class="title">Dashboard</div>
-<div class="sub">Ringkasan cepat kondisi bisnis, profit, dan performa menu.</div>
-<div class="notice hidden" id="dashboardStatus"></div>
-<div class="summary-grid">
-<div class="summary-box">
-<div class="summary-title">Total Product</div>
-<div class="summary-value" id="dashTotalProduct">0</div>
-</div>
-<div class="summary-box">
-<div class="summary-title">Average Profit</div>
-<div class="summary-value" id="dashAverageProfit">0%</div>
-</div>
-<div class="summary-box">
-<div class="summary-title">Average Food Cost</div>
-<div class="summary-value" id="dashAverageFoodCost">0%</div>
-</div>
-<div class="summary-box">
-<div class="summary-title">Potential Revenue</div>
-<div class="summary-value" id="dashPotentialRevenue">Rp 0</div>
-</div>
-</div>
-<div class="top-grid">
-<div class="section top-card">
-<div class="card-title">Business Health</div>
-<div class="card-sub">Skor ringkas kondisi bisnis</div>
-<div class="top-card-body" id="healthScoreCard"></div>
-</div>
-<div class="section dashboard-smart-mobile">
-<div class="card-title">Smart Alert</div>
-<div class="card-sub">Peringatan otomatis yang perlu dicek</div>
-<div id="quickAlertCardMobile"></div>
-</div>
-<div class="section top-card">
-<div class="card-title">Best Product</div>
-<div class="card-sub">Produk dengan profit tertinggi</div>
-<div class="top-card-body" id="bestProductCard"></div>
-</div>
-<div class="section top-card">
-<div class="card-title">Worst Product</div>
-<div class="card-sub">Produk dengan margin terendah</div>
-<div class="top-card-body" id="worstProductCard"></div>
-</div>
-<div class="section top-card">
-<div class="card-title">Top Profit Ranking</div>
-<div class="card-sub">3 produk paling untung</div>
-<div class="top-card-body" id="rankingCard"></div>
-</div>
-</div>
-<div class="section dashboard-smart-section dashboard-smart-desktop">
-<div class="card-title">Smart Alert</div>
-<div class="card-sub">Peringatan otomatis yang perlu dicek</div>
-<div id="quickAlertCard"></div>
-</div>
-<div class="section">
-<div class="flex-between" style="margin-bottom:18px;">
-<div>
-<div class="card-title">Category Performance</div>
-<div class="card-sub">Performa rata-rata per kategori custom</div>
-</div>
-<div class="muted" id="categoryMeta"></div>
-</div>
-<div class="info-grid" id="categoryPerformance"></div>
-</div>
-<div class="section">
-<div class="card-title">Lowest Margin Product</div>
-<div class="card-sub">Produk yang perlu perhatian</div>
-<div id="lowestMarginCard"></div>
-</div>
-<div class="section">
-<div class="card-title">Missing Data Center</div>
-<div class="card-sub">Data produk yang belum lengkap</div>
-<div class="alert-list" id="missingDataList"></div>
-</div>
-<div class="section">
-<div class="card-title">Cost Composition</div>
-<div class="card-sub">Pilih produk untuk melihat komposisi biaya</div>
-<div class="chart-box">
-<div class="chart-meta">
-<div style="min-width:240px;flex:1;">
-<select class="chart-select" id="compositionSelect" onchange="renderComposition()"></select>
-</div>
-<div class="muted" id="compositionSummary"></div>
-</div>
-<div class="bars" id="compositionBars"></div>
-</div>
-</div>
-<div class="section">
-<div class="flex-between" style="margin-bottom:18px;">
-<div>
-<div class="card-title">Product Health Table</div>
-<div class="card-sub">Daftar ringkas performa produk</div>
-</div>
-<div class="search-wrap" style="margin-bottom:0;">
-<div class="search-box">
-<input id="searchHealth" oninput="renderHealthTable()" placeholder="Cari menu / kategori..." type="text"/>
-</div>
-<div class="filter-box">
-<select id="filterHealthCategory" onchange="renderHealthTable()">
-<option value="">All Category</option>
-</select>
-</div>
-</div>
-</div>
-<div class="dashboard-health-table-wrap" style="overflow:auto;">
-<table>
-<thead>
-<tr>
-<th>Menu</th>
-<th>Category</th>
-<th>Sub Category</th>
-<th>HPP</th>
-<th>Selling Price</th>
-<th>Profit</th>
-<th>Margin</th>
-<th>Food Cost</th>
-<th>Health</th>
-</tr>
-</thead>
-<tbody id="healthTableBody"></tbody>
-</table>
-</div>
-</div>
-<div class="section">
-<div class="card-title">Business Insight</div>
-<div class="card-sub">Rekomendasi otomatis berdasarkan data HPP</div>
-<div class="insight-list" id="insightList"></div>
-</div>
+<div class="page dashboard-stack">
+<section class="dashboard-hero" aria-labelledby="dashboardTitle">
+  <div class="dashboard-hero-head"><div class="dashboard-hero-icon" aria-hidden="true"><svg class="biya-icon"><use href="#biya-icon-layout-dashboard"></use></svg></div><div><h1 class="dashboard-title" id="dashboardTitle">Dashboard</h1><p class="dashboard-description">Ringkasan cepat kondisi bisnis, profit, dan performa menu.</p></div></div>
+  <div class="dashboard-divider"></div><div class="notice hidden" id="dashboardStatus"></div>
+  <div class="dashboard-kpi-grid" aria-label="KPI Summary">
+    <article class="dashboard-kpi"><div class="dashboard-kpi-icon"><svg class="biya-icon"><use href="#biya-icon-package"></use></svg></div><div class="dashboard-kpi-copy"><div class="summary-title">Total Product</div><div class="summary-value" id="dashTotalProduct">0</div></div></article>
+    <article class="dashboard-kpi"><div class="dashboard-kpi-icon"><svg class="biya-icon"><use href="#biya-icon-layout-dashboard"></use></svg></div><div class="dashboard-kpi-copy"><div class="summary-title">Average Profit</div><div class="summary-value" id="dashAverageProfit">0%</div></div></article>
+    <article class="dashboard-kpi"><div class="dashboard-kpi-icon"><svg class="biya-icon"><use href="#biya-icon-calculator"></use></svg></div><div class="dashboard-kpi-copy"><div class="summary-title">Average Food Cost</div><div class="summary-value" id="dashAverageFoodCost">0%</div></div></article>
+    <article class="dashboard-kpi"><div class="dashboard-kpi-icon"><svg class="biya-icon"><use href="#biya-icon-download"></use></svg></div><div class="dashboard-kpi-copy"><div class="summary-title">Potential Revenue</div><div class="summary-value" id="dashPotentialRevenue">Rp 0</div></div></article>
+  </div>
+</section>
+<section class="dashboard-section dashboard-health" aria-labelledby="businessHealthTitle"><div class="dashboard-section-head"><div><h2 class="dashboard-section-title" id="businessHealthTitle">Business Health</h2><p class="dashboard-section-description">Evaluasi ringkas kesehatan bisnis berdasarkan target aktif.</p></div></div><div id="healthScoreCard"></div></section>
+<section class="dashboard-section dashboard-alerts" aria-labelledby="smartAlertTitle"><div class="dashboard-section-head"><div><h2 class="dashboard-section-title" id="smartAlertTitle">Smart Alert</h2><p class="dashboard-section-description">Peringatan otomatis yang perlu segera diperiksa.</p></div></div><div id="quickAlertCard"></div></section>
+<section class="dashboard-section" aria-labelledby="productPerformanceTitle"><div class="dashboard-section-head"><div><h2 class="dashboard-section-title" id="productPerformanceTitle">Product Performance</h2><p class="dashboard-section-description">Perbandingan cepat produk terbaik dan produk yang perlu perhatian.</p></div></div><div class="dashboard-product-grid"><article class="dashboard-product-card"><div class="dashboard-product-label">Best Product <span>Profit tertinggi</span></div><div id="bestProductCard"></div></article><article class="dashboard-product-card worst"><div class="dashboard-product-label">Worst Product <span>Margin terendah</span></div><div id="worstProductCard"></div></article></div></section>
+<section class="dashboard-section dashboard-ranking" aria-labelledby="topProfitTitle"><div class="dashboard-section-head"><div><h2 class="dashboard-section-title" id="topProfitTitle">Top Profit Ranking</h2><p class="dashboard-section-description">3 produk paling untung.</p></div></div><div id="rankingCard"></div></section>
+<section class="dashboard-section dashboard-category" aria-labelledby="categoryPerformanceTitle"><div class="dashboard-section-head"><div><h2 class="dashboard-section-title" id="categoryPerformanceTitle">Category Performance</h2><p class="dashboard-section-description">Performa rata-rata per kategori custom.</p></div><div class="dashboard-category-meta" id="categoryMeta">0 kategori</div></div><div class="info-grid" id="categoryPerformance"></div></section>
+<div class="dashboard-legacy-render-targets" aria-hidden="true"><div id="quickAlertCardMobile"></div><div id="lowestMarginCard"></div><div id="missingDataList"></div><select id="compositionSelect"></select><div id="compositionSummary"></div><div id="compositionBars"></div><input id="searchHealth" value=""/><select id="filterHealthCategory"><option value="">All Category</option></select><table><tbody id="healthTableBody"></tbody></table><div id="insightList"></div></div>
 </div>
 </main>
 </div>
