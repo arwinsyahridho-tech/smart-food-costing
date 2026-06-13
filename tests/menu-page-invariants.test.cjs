@@ -8,10 +8,22 @@ const source = fs.readFileSync(
 
 assert.match(source, /class="section menu-page-card" id="menuFormSection"/);
 assert.match(source, /Kelola menu, resep, harga jual, dan food cost\./);
+assert.doesNotMatch(source, />Informasi Menu</);
+assert.doesNotMatch(source, /class="menu-subsection"/);
+assert.match(source, /<div class="menu-info-grid">/);
 assert.match(source, />Kategori<\/label>/);
 assert.match(source, />Sub Kategori<\/label>/);
 assert.match(source, />Harga Jual<\/label>/);
 assert.match(source, />Deskripsi<\/label>/);
+assert.match(
+  source,
+  /<div class="category-control"><select id="menuCategory"[\s\S]*?<button class="category-manage-btn"[^>]*>Kelola Kategori<\/button><\/div>/,
+);
+assert.match(
+  source,
+  /<div class="category-control"><select id="menuSubCategory"[\s\S]*?<button class="category-manage-btn"[^>]*>Kelola Sub Kategori<\/button><\/div>/,
+);
+assert.match(source, /class="menu-recipe-panel"/);
 assert.match(source, /class="recipe-cards" id="recipeBody"/);
 assert.doesNotMatch(source, /<table id="recipeTable">/);
 assert.match(source, /row\.className="recipe-row"/);
@@ -25,16 +37,20 @@ assert.match(source, /recipe-field-total/);
 assert.match(source, /aria-label="Hapus bahan"/);
 assert.match(source, /@media\(max-width:700px\)/);
 assert.match(source, /\.recipe-row\{grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
+assert.match(source, /\.category-control\{flex-direction:column}/);
+assert.match(source, /\.category-manage-btn\{width:100%;min-height:50px}/);
 assert.match(source, /\.add-row-btn\{width:100%!important/);
 assert.match(source, /\.menu-summary\{display:grid!important/);
 assert.match(source, /class="section menu-list-card" id="menuListSection"/);
 assert.match(source, /class="recipe-detail-cards"/);
-assert.match(source, /\.action-btn\{min-height:44px!important;padding:0 18px!important;border-radius:12px!important/);
+assert.match(source, /\.action-btn\{min-height:44px!important;padding:0 18px!important;/);
+assert.match(source, /border-radius:12px!important;color:#fff;font-size:14px!important/);
 assert.match(source, /\.edit-btn\{background:#1677ea!important/);
-assert.match(source, /function openEditMenu\(id\)[\s\S]*el\.menuName\.value=menu\.nama/);
-assert.match(source, /function openEditMenu\(id\)[\s\S]*el\.saveMenuBtn\.innerText="Update Menu"/);
-assert.match(source, /function openEditMenu\(id\)[\s\S]*hideMenuListSection\(\)/);
-assert.match(source, /function cancelEditMode\(\)\{resetMenuForm\(\);showMenuListSection\(\)\}/);
+assert.match(source, /\.delete-btn-2\{background:var\(--menu-danger\)!important/);
+assert.match(source, /async function openEditMenu\(id\)[\s\S]*el\.menuName\.value=menu\.nama/);
+assert.match(source, /async function openEditMenu\(id\)[\s\S]*el\.saveMenuBtn\.innerText="Update Menu"/);
+assert.match(source, /async function openEditMenu\(id\)[\s\S]*hideMenuListSection\(\)/);
+assert.match(source, /function cancelEditMode\(\)\{resetMenuForm\(\);showMenuListSection\(\)}/);
 assert.doesNotMatch(source, /id="editMenuModal"/);
 assert.match(source, /function addRecipeRow/);
 assert.match(source, /function updateRecipeRow/);
@@ -42,6 +58,27 @@ assert.match(source, /function updateRecipeName/);
 assert.match(source, /function calculateRecipeRow/);
 assert.match(source, /function deleteRecipeRow/);
 assert.match(source, /function updateSummary/);
-assert.match(source, /function saveMenu/);
+assert.match(source, /async function saveMenu/);
+assert.match(source, /async function deleteMenu/);
+assert.match(source, /function handleMenuPhotoChange/);
+assert.match(source, /async function uploadMenuPhotoIfNeeded/);
+assert.match(source, /function setPhotoPreview/);
+assert.match(source, /function renderCategoryOptions/);
+assert.match(source, /function renderSubcategoryOptions/);
+assert.match(source, /function toggleMenuDetail/);
+assert.match(source, /function renderMenuList/);
+assert.match(source, /supabaseClient\.from\("menus"\)/);
+assert.match(source, /supabaseClient\.from\("menu_items"\)/);
+assert.match(source, /supabaseClient\.storage\.from\(MENU_PHOTO_BUCKET\)/);
+assert.match(source, /body\{ overflow-x:hidden !important;/);
+assert.match(source, /@media\(max-width:390px\)/);
+
+const inlineScripts = [...source.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/g)]
+  .map((match) => match[1])
+  .filter((script) => script.trim());
+assert.ok(inlineScripts.length > 0, "Script inline Menu harus tersedia");
+inlineScripts.forEach((script) => {
+  assert.doesNotThrow(() => new Function(script));
+});
 
 console.log("Invariant redesign dan fungsi Menu lulus.");
