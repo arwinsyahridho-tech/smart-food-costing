@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#041127" />
   <title>BIYA - Module Center</title>
+  <script src="/menu-modules/config.js"></script>
   <style>
     :root {
       --bg: #041127;
@@ -557,7 +558,7 @@
           <span class="brand-tagline">Business in Your Hand</span>
         </span>
       </a>
-      <a class="account-shortcut" href="/modules/cost-management/settings.html" aria-label="Open Account Center" title="Account Center">
+      <a class="account-shortcut" href="#account-center" data-portal-link="account-center" aria-label="Open Account Center" title="Account Center">
         <svg class="biya-icon" aria-hidden="true"><use href="#icon-user"></use></svg>
       </a>
     </header>
@@ -567,7 +568,7 @@
         <p class="eyebrow">Account overview</p>
         <h1 class="greeting" id="welcomeTitle">Halo, <span id="userName">User</span> 👋</h1>
         <p class="business-name" id="businessName">Nama Usaha Belum Diatur</p>
-        <a class="complete-account is-visible" id="completeAccountLink" href="/modules/cost-management/settings.html">Lengkapi Account Center →</a>
+        <a class="complete-account is-visible" id="completeAccountLink" href="#account-center" data-portal-link="account-center">Lengkapi Account Center →</a>
       </div>
       <div class="account-summary" aria-label="Ringkasan akun">
         <div class="summary-chip">
@@ -589,11 +590,11 @@
       </div>
       <div class="hero-actions">
         <div class="quick-actions" aria-label="Quick actions">
-          <a class="button button-primary" href="/modules/cost-management/costdashboard.html">
+          <a class="button button-primary" href="#cost-management" data-portal-link="cost-management">
             <svg class="biya-icon" aria-hidden="true"><use href="#icon-grid"></use></svg>
             Open Cost Management
           </a>
-          <a class="button button-secondary" href="/modules/cost-management/settings.html">
+          <a class="button button-secondary" href="#account-center" data-portal-link="account-center">
             <svg class="biya-icon" aria-hidden="true"><use href="#icon-user"></use></svg>
             Open Account Center
           </a>
@@ -615,7 +616,7 @@
       </div>
 
       <div class="module-grid">
-        <a class="module-card available" href="/modules/cost-management/costdashboard.html">
+        <a class="module-card available" href="#cost-management" data-portal-link="cost-management">
           <div class="card-top">
             <span class="module-icon"><svg class="biya-icon" aria-hidden="true"><use href="#icon-grid"></use></svg></span>
             <span class="badge available">Available</span>
@@ -676,6 +677,9 @@
         businessName: "Nama Usaha Belum Diatur",
         planName: "Free Plan"
       });
+      const portalConfig = window.BIYA_PORTAL_CONFIG || {};
+      const COST_MANAGEMENT_URL = portalConfig.COST_MANAGEMENT_URL;
+      const ACCOUNT_CENTER_URL = portalConfig.ACCOUNT_CENTER_URL;
       const SUPABASE_URL = window.BIYA_SUPABASE_URL || "https://pkjmkjyylgzjvhcreucc.supabase.co";
       const SUPABASE_ANON_KEY = window.BIYA_SUPABASE_ANON_KEY || "sb_publishable_Tq4d0o3PIAd_zh11uJa2uQ_M_zPIYFX";
       const configuredClient = window.biyaSupabase || window.supabaseClient || null;
@@ -689,6 +693,17 @@
         planName: document.getElementById("planName"),
         completeAccountLink: document.getElementById("completeAccountLink")
       };
+
+      if (COST_MANAGEMENT_URL) {
+        document.querySelectorAll('[data-portal-link="cost-management"]').forEach((link) => {
+          link.href = COST_MANAGEMENT_URL;
+        });
+      }
+      if (ACCOUNT_CENTER_URL) {
+        document.querySelectorAll('[data-portal-link="account-center"]').forEach((link) => {
+          link.href = ACCOUNT_CENTER_URL;
+        });
+      }
 
       function firstText(...values) {
         const match = values.find((value) => typeof value === "string" && value.trim());

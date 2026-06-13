@@ -1,20 +1,47 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const test = require('node:test');
+const vm = require('node:vm');
 
 const source = fs.readFileSync('menu-modules/dashboard.html', 'utf8');
+const config = fs.readFileSync('menu-modules/config.js', 'utf8');
 
 const COST_ROUTE = '/modules/cost-management/costdashboard.html';
-const ACCOUNT_ROUTE = '/modules/cost-management/settings.html';
+const LEGACY_SETTINGS_ROUTE = '/modules/cost-management/settings.html';
+const ACCOUNT_CENTER_FALLBACK = 'https://account-center-biya.vercel.app';
 
-test('Module Center mempertahankan route modul dan Account Center lama', () => {
-  assert.ok(source.split(`href="${COST_ROUTE}"`).length >= 3, 'Route Cost Management harus dipertahankan');
-  assert.ok(source.split(`href="${ACCOUNT_ROUTE}"`).length >= 4, 'Route settings lama harus tetap menjadi target Account Center');
+test('Module Center memisahkan URL Portal dari Cost Management Settings', () => {
+  assert.match(source, /<script src="\/menu-modules\/config\.js"><\/script>/);
+  assert.match(config, /COST_MANAGEMENT_URL/);
+  assert.match(config, new RegExp(COST_ROUTE.replaceAll('/', '\\/')));
+  assert.match(config, /ACCOUNT_CENTER_URL/);
+  assert.match(config, new RegExp(ACCOUNT_CENTER_FALLBACK.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  assert.match(config, /window\.BIYA_ACCOUNT_CENTER_URL/);
   assert.match(source, /Open Cost Management/);
   assert.match(source, /Open Account Center/);
+  assert.equal((source.match(/data-portal-link="cost-management"/g) || []).length, 3);
+  assert.equal((source.match(/data-portal-link="account-center"/g) || []).length, 4);
+  assert.doesNotMatch(source, new RegExp(`href="${LEGACY_SETTINGS_ROUTE}"`));
   assert.match(source, /href="\/modules\/cost-management\/exportcenter\.html"/);
   assert.doesNotMatch(source, />Open Settings</);
   assert.doesNotMatch(source, /<h3 class="module-name">Settings<\/h3>/);
+});
+
+test('Config Portal menyediakan fallback dan mendukung override deployment', () => {
+  const fallbackContext = { window: {} };
+  vm.runInNewContext(config, fallbackContext);
+  assert.equal(fallbackContext.window.BIYA_PORTAL_CONFIG.COST_MANAGEMENT_URL, COST_ROUTE);
+  assert.equal(fallbackContext.window.BIYA_PORTAL_CONFIG.ACCOUNT_CENTER_URL, ACCOUNT_CENTER_FALLBACK);
+
+  const overrideContext = {
+    window: {
+      BIYA_COST_MANAGEMENT_URL: 'https://cost.example.test',
+      BIYA_ACCOUNT_CENTER_URL: 'https://account.example.test'
+    }
+  };
+  vm.runInNewContext(config, overrideContext);
+  assert.equal(overrideContext.window.BIYA_PORTAL_CONFIG.COST_MANAGEMENT_URL, 'https://cost.example.test');
+  assert.equal(overrideContext.window.BIYA_PORTAL_CONFIG.ACCOUNT_CENTER_URL, 'https://account.example.test');
 });
 
 test('Account summary memiliki fallback dan sumber data dinamis Supabase', () => {
@@ -48,10 +75,11 @@ test('CSS mobile-first mencegah overflow dan menyediakan breakpoint grid', () =>
   assert.match(source, /width: min\(100%, 1200px\)/);
 });
 
-test('Semua inline script valid secara sintaks JavaScript', () => {
+test('Semua inline script dan config valid secara sintaks JavaScript', () => {
   const scripts = [...source.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/g)]
     .map((match) => match[1])
     .filter((script) => script.trim());
   assert.ok(scripts.length > 0);
   scripts.forEach((script) => assert.doesNotThrow(() => new Function(script)));
+  assert.doesNotThrow(() => new Function(config));
 });
