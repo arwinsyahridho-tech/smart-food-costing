@@ -4,6 +4,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/assets/js/biya-config.js"></script>
   <script src="/assets/js/biya-auth.js"></script>
+  <script src="/assets/js/biya-data.js"></script>
   <script src="/assets/js/auth-guard.js"></script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -766,14 +767,15 @@ async function loadDashboardFromSupabase(){
   showStatus("Memuat target Settings dan data dashboard dari Supabase...");
   const targetWarning = await loadCostTargets();
   try{
-    let menuResult = await supabaseClient.from("menus").select("*").order("created_at", { ascending:false });
-    if(menuResult.error && menuResult.error.code === "42703") menuResult = await supabaseClient.from("menus").select("*");
+    const currentUserId = await window.BiyaData.getCurrentUserId(supabaseClient);
+    let menuResult = await supabaseClient.from("menus").select("*").eq("user_id", currentUserId).order("created_at", { ascending:false });
+    if(menuResult.error && menuResult.error.code === "42703") menuResult = await supabaseClient.from("menus").select("*").eq("user_id", currentUserId);
     if(menuResult.error) throw menuResult.error;
     const menuRows = menuResult.data || [];
     const ids = menuRows.map(row => row.id).filter(Boolean);
     let itemRows = [];
     if(ids.length){
-      const itemResult = await supabaseClient.from("menu_items").select("*").in("menu_id", ids);
+      const itemResult = await supabaseClient.from("menu_items").select("*").eq("user_id", currentUserId).in("menu_id", ids);
       if(itemResult.error) throw itemResult.error;
       itemRows = itemResult.data || [];
     }

@@ -35,3 +35,13 @@ Sign-up menyimpan nama ke Supabase Auth `user_metadata` sebagai `name`, `full_na
 ### Checklist keamanan database
 
 Tidak ada SQL baru yang wajib dijalankan untuk flow autentikasi. Namun, autentikasi di browser bukan pengganti otorisasi database: verifikasi bahwa tabel operasional (`raw_material`, `preparations`, `menus`, item resep, settings, dan tabel export terkait) telah mengaktifkan RLS dan policy ownership berbasis `auth.uid()` atau business membership yang valid sebelum aplikasi dipakai multi-user.
+
+## Isolasi data per user
+
+Migration `supabase/migrations/20260613000000_add_user_data_isolation.sql` menambahkan `user_id` ke seluruh tabel operasional Cost Management, mengaktifkan RLS, membuat policy CRUD berbasis `auth.uid()`, memvalidasi relasi resep, dan membatasi object Storage ke folder UUID user.
+
+Jalankan migration tersebut melalui Supabase SQL Editor atau migration pipeline **setelah backup database**. Migration tidak menghapus data lama dan tidak otomatis mengklaim row lama. Row dengan `user_id IS NULL` akan tetap tersimpan tetapi tidak terlihat oleh user biasa. Backfill harus dilakukan manual hanya setelah owner setiap row diketahui, dimulai dari tabel parent (`raw_material`, `preparations`, `menus`, kategori, dan `cost_settings`) lalu tabel detail (`preparation_items`, `menu_items`).
+
+Frontend sekarang selalu mengambil user terautentikasi, menambahkan `user_id` pada insert/restore, dan memasang filter `user_id` pada select/update/delete. `business_id` pada settings dipertahankan untuk kompatibilitas, tetapi nilainya disamakan dengan UUID user pada mode satu bisnis per akun. Upload logo dan foto menu memakai path `{user_id}/...`; jangan gunakan service-role key di browser. Policy Storage pada migration membatasi operasi authenticated ke folder tersebut. Untuk proteksi baca penuh, bucket terkait harus private; bila bucket saat ini public, rencanakan migrasi URL publik lama sebelum mengubahnya agar gambar lama tidak langsung rusak.
+
+Akun demo tetap merupakan akun Supabase Auth biasa. Setelah migration, backfill atau seed data contoh menggunakan UUID `auth.users.id` milik `demo@biya.id`. Jangan memakai UUID demo hardcoded atau memasukkan data demo dengan `user_id` milik akun lain.

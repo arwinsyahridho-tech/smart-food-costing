@@ -3,7 +3,6 @@
 
   const TABLE = "cost_settings";
   const LOGO_BUCKET = "business-logos";
-  const DEFAULT_BUSINESS_ID = "default";
   const DEFAULTS = Object.freeze({
     business_name: "BIYA Cost Management",
     business_type: "F&B",
@@ -47,20 +46,12 @@
   }
 
   async function resolveScope(client) {
-    const { data, error } = await client.auth.getUser();
-    if (error && error.name !== "AuthSessionMissingError") {
-      logError("Auth getUser gagal", error);
-    }
-    const user = data && data.user ? data.user : null;
-    const configuredBusinessId = String(global.BIYA_BUSINESS_ID || "").trim();
-    const businessId = configuredBusinessId || (user ? user.id : DEFAULT_BUSINESS_ID);
-    if (!user && !configuredBusinessId) {
-      console.info("[Cost Settings] Sesi Supabase Auth tidak tersedia; memakai business scope default.");
-    }
+    const user = await global.BiyaData.getCurrentUser(client);
     return {
       user,
-      businessId,
-      storageKey: businessId.replace(/[^a-zA-Z0-9_-]/g, "_")
+      userId: user.id,
+      businessId: user.id,
+      storageKey: user.id
     };
   }
 
@@ -69,7 +60,7 @@
     const { data, error } = await client
       .from(TABLE)
       .select("*")
-      .eq("business_id", scope.businessId)
+      .eq("user_id", scope.userId)
       .maybeSingle();
     if (error) {
       logError("Load cost_settings gagal", error, { businessId: scope.businessId });
@@ -80,7 +71,7 @@
 
   async function save(client, scope, settings) {
     const payload = {
-      user_id: scope.user ? scope.user.id : null,
+      user_id: scope.userId,
       business_id: scope.businessId,
       business_name: settings.business_name,
       business_type: settings.business_type,
@@ -99,7 +90,7 @@
     };
     const { data, error } = await client
       .from(TABLE)
-      .upsert(payload, { onConflict: "business_id" })
+      .upsert(payload, { onConflict: "user_id" })
       .select("*")
       .single();
     if (error) {
@@ -110,7 +101,7 @@
   }
 
   async function uploadLogo(client, scope, file) {
-    const path = scope.storageKey + "/business-logo";
+    const path = global.BiyaData.storagePath(scope.userId, "logos", "business-logo");
     const { error } = await client.storage
       .from(LOGO_BUCKET)
       .upload(path, file, { contentType: file.type, upsert: true });
@@ -133,7 +124,7 @@
   }
 
   async function removeLogo(client, scope) {
-    const path = scope.storageKey + "/business-logo";
+    const path = global.BiyaData.storagePath(scope.userId, "logos", "business-logo");
     const { error } = await client.storage.from(LOGO_BUCKET).remove([path]);
     if (error && error.statusCode !== "404") {
       logError("Hapus logo gagal", error, { bucket: LOGO_BUCKET, path });
@@ -147,7 +138,6 @@
 
   global.BiyaCostSettings = Object.freeze({
     DEFAULTS,
-    DEFAULT_BUSINESS_ID,
     LOGO_BUCKET,
     healthyFoodCostLimit,
     load,
