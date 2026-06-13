@@ -290,6 +290,90 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
   .snapshot-card{border-radius:12px!important;padding:10px 11px!important}
   .snapshot-date{font-size:10.5px!important}
 }
+/* BIYA Export Center 2026 */
+.export-page{--export-line:rgba(99,169,255,.19);--export-muted:#a9bfdf;--export-panel:linear-gradient(145deg,rgba(11,43,101,.94),rgba(5,25,65,.98));width:100%;max-width:1240px}
+.export-hero{position:relative;display:flex;align-items:center;gap:18px;margin-bottom:18px;padding:22px 24px;overflow:hidden;border:1px solid var(--export-line);border-radius:24px;background:linear-gradient(145deg,rgba(11,49,116,.96),rgba(5,25,65,.99));box-shadow:0 18px 46px rgba(0,20,66,.3),inset 0 1px rgba(255,255,255,.035)}
+.export-hero::after{position:absolute;right:-70px;top:-110px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(0,214,107,.16),rgba(0,102,255,.08) 48%,transparent 70%);content:"";pointer-events:none}
+.export-hero-icon,.section-heading-icon,.export-card-icon{display:grid;place-items:center;flex:0 0 auto;border:1px solid rgba(100,175,255,.27);color:#eaf4ff}
+.export-hero-icon{width:58px;height:58px;border-radius:18px;background:linear-gradient(145deg,#087cf7,#0b65df 58%,#00b982);box-shadow:0 12px 28px rgba(0,102,255,.28)}
+.export-hero-icon svg{width:28px;height:28px}
+.export-hero-copy{position:relative;z-index:1;min-width:0}
+.export-page .title{margin:0;font-size:30px;font-weight:850;letter-spacing:-.025em;line-height:1.14}
+.export-page .sub{max-width:760px;margin:7px 0 0;color:var(--export-muted)!important;font-size:14px;line-height:1.55}
+.export-status{display:flex;align-items:center;gap:11px;margin:0 0 18px;padding:13px 15px;border-color:rgba(63,158,255,.3);border-radius:15px;background:linear-gradient(90deg,rgba(0,102,255,.16),rgba(12,54,119,.45));box-shadow:inset 0 1px rgba(255,255,255,.025)}
+.export-status::before{width:9px;height:9px;flex:0 0 auto;border-radius:50%;background:#4aa3ff;box-shadow:0 0 0 5px rgba(74,163,255,.12);content:""}
+.export-status.loading::before{animation:statusPulse 1.2s ease-in-out infinite}
+.export-status.success::before{background:#00d66b;box-shadow:0 0 0 5px rgba(0,214,107,.12)}
+.export-status.error::before{background:#ff696b;box-shadow:0 0 0 5px rgba(255,77,79,.12)}
+@keyframes statusPulse{50%{opacity:.45;transform:scale(.75)}}
+.export-page .section{margin-bottom:18px!important;padding:22px!important;border-color:var(--export-line)!important;border-radius:24px!important;background:linear-gradient(150deg,rgba(9,39,94,.97),rgba(5,24,62,.99))!important;box-shadow:0 16px 38px rgba(0,19,62,.24)!important}
+.export-section-head{display:flex;align-items:center;gap:12px;margin-bottom:17px}
+.section-heading-icon{width:42px;height:42px;border-radius:13px;background:rgba(0,102,255,.2)}
+.section-heading-icon svg{width:21px;height:21px}
+.export-section-copy{min-width:0}
+.export-section-title{margin:0;font-size:20px;font-weight:820;line-height:1.25}
+.export-section-sub{margin:3px 0 0;color:var(--export-muted);font-size:13px;line-height:1.4}
+.export-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.csv-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.export-card{min-width:0;margin:0!important;padding:17px!important;border-color:var(--export-line)!important;border-radius:18px!important;background:var(--export-panel)!important;box-shadow:0 10px 26px rgba(0,18,58,.2)!important}
+.export-card-head{display:flex;align-items:flex-start;gap:12px}
+.export-card-icon{width:40px;height:40px;border-radius:12px;background:rgba(0,102,255,.19)}
+.export-card-icon.green{border-color:rgba(0,214,107,.24);background:rgba(0,190,112,.14);color:#baffdb}
+.export-card-icon.purple{border-color:rgba(164,128,255,.25);background:rgba(108,73,210,.2);color:#e4d9ff}
+.export-card-icon.cyan{border-color:rgba(46,216,255,.25);background:rgba(0,162,209,.16);color:#cdf7ff}
+.export-card-icon svg{width:20px;height:20px}
+.export-card-copy{min-width:0;flex:1}
+.export-card h3{font-size:16px;font-weight:800}
+.export-card p{display:block;margin-top:5px;color:var(--export-muted);font-size:12.5px;line-height:1.48;-webkit-line-clamp:unset}
+.export-card .action,.restore-upload-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%!important;min-width:0!important;min-height:44px;height:auto;margin-top:14px;padding:10px 14px;border-radius:13px!important;font-size:13px}
+.export-card .action svg,.restore-upload-btn svg{width:17px;height:17px}
+.export-card .action.alt{border:1px solid rgba(100,175,255,.2)!important;background:rgba(18,59,129,.86)!important;box-shadow:none!important}
+.restore-upload-wrap{margin-top:14px;padding:12px;border:1px dashed rgba(98,173,255,.32);border-radius:14px;background:rgba(2,18,50,.28)}
+.restore-upload-btn{margin:0;border:1px solid rgba(100,175,255,.24);background:rgba(18,59,129,.74)}
+.restore-file-name{padding:2px 4px;color:#c9d9f1;font-size:11.5px;text-align:center}
+.restore-message{min-height:0;white-space:normal}
+.csv-grid .export-card{gap:8px;padding:15px!important}
+.csv-grid .export-card-head{align-items:center}
+.csv-grid .export-card p{min-height:36px}
+.csv-grid .action{margin-top:8px}
+.snapshot-table-wrap{overflow:hidden;border:1px solid var(--export-line);border-radius:16px}
+.snapshot-table-wrap th{padding:12px 15px;background:rgba(19,64,143,.82)!important;font-size:12px}
+.snapshot-table-wrap td{padding:13px 15px;background:rgba(8,33,79,.72)!important;color:#dce8fa!important;font-size:13px}
+.snapshot-table-wrap tbody tr:last-child td{border-bottom:0}
+.snapshot-mobile-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.snapshot-card{padding:13px;border-color:var(--export-line);border-radius:15px;background:var(--export-panel)}
+.snapshot-name{font-size:13.5px}
+.snapshot-count{background:rgba(0,102,255,.18);color:#d7efff}
+.snapshot-date{color:var(--export-muted)}
+@media (max-width:1100px){.csv-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:699px){
+  .export-hero{align-items:flex-start;gap:13px;margin-bottom:13px;padding:16px;border-radius:20px}
+  .export-hero-icon{width:48px;height:48px;border-radius:15px}
+  .export-hero-icon svg{width:23px;height:23px}
+  .export-page .title{font-size:23px!important}
+  .export-page .sub{margin-top:5px!important;font-size:12.5px!important;line-height:1.45!important}
+  .export-status{margin-bottom:13px;padding:12px 13px;font-size:12px}
+  .export-page .section{margin-bottom:13px!important;padding:15px!important;border-radius:20px!important}
+  .export-section-head{align-items:flex-start;margin-bottom:13px}
+  .section-heading-icon{width:38px;height:38px;border-radius:12px}
+  .export-section-title{font-size:17px!important}
+  .export-section-sub{margin-top:2px!important;font-size:11.5px!important}
+  .export-grid,.csv-grid{grid-template-columns:1fr!important;gap:10px!important}
+  .export-card{padding:14px!important;border-radius:16px!important}
+  .export-card h3{font-size:15px!important}
+  .export-card p{font-size:12px!important}
+  .export-card .action,.restore-upload-btn{min-height:42px!important}
+  .csv-grid .export-card{padding:13px!important}
+  .csv-grid .export-card p{min-height:0}
+  .snapshot-table-wrap{display:none}
+  .snapshot-mobile-list{display:grid!important;grid-template-columns:1fr!important}
+}
+@media (max-width:390px){
+  .main{padding:10px!important}
+  .export-hero{padding:14px}
+  .export-hero-icon{width:44px;height:44px}
+  .export-page .section{padding:13px!important}
+}
 </style></head>
 <body> <svg class="biya-icon-sprite" xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"> <symbol id="biya-icon-layout-dashboard" viewBox="0 0 24 24"> <rect width="7" height="9" x="3" y="3" rx="1"></rect> <rect width="7" height="5" x="14" y="3" rx="1"></rect> <rect width="7" height="9" x="14" y="12" rx="1"></rect> <rect width="7" height="5" x="3" y="16" rx="1"></rect> </symbol> <symbol id="biya-icon-package" viewBox="0 0 24 24"> <path d="m7.5 4.27 9 5.15"></path> <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path> <path d="m3.3 7 8.7 5 8.7-5"></path> <path d="M12 22V12"></path> </symbol> <symbol id="biya-icon-flask-conical" viewBox="0 0 24 24"> <path d="M10 2v7.31"></path> <path d="M14 9.3V2"></path> <path d="M8.5 2h7"></path> <path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path> <path d="M5.52 16h12.96"></path> </symbol> <symbol id="biya-icon-clipboard-list" viewBox="0 0 24 24"> <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path> <path d="M12 11h4"></path> <path d="M12 16h4"></path> <path d="M8 11h.01"></path> <path d="M8 16h.01"></path> </symbol> <symbol id="biya-icon-calculator" viewBox="0 0 24 24"> <rect width="16" height="20" x="4" y="2" rx="2"></rect> <path d="M8 6h8"></path> <path d="M16 14v4"></path> <path d="M16 10h.01"></path> <path d="M12 10h.01"></path> <path d="M8 10h.01"></path> <path d="M12 14h.01"></path> <path d="M8 14h.01"></path> <path d="M12 18h.01"></path> <path d="M8 18h.01"></path> </symbol> <symbol id="biya-icon-download" viewBox="0 0 24 24"> <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path> <path d="M7 10l5 5 5-5"></path> <path d="M12 15V3"></path> </symbol> <symbol id="biya-icon-settings" viewBox="0 0 24 24"> <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2Z"></path> <circle cx="12" cy="12" r="3"></circle> </symbol> <symbol id="biya-icon-arrow-left" viewBox="0 0 24 24"> <path d="M19 12H5"></path> <path d="m12 19-7-7 7-7"></path> </symbol> <symbol id="biya-icon-search" viewBox="0 0 24 24"> <circle cx="11" cy="11" r="8"></circle> <path d="m21 21-4.3-4.3"></path> </symbol> <symbol id="biya-icon-x" viewBox="0 0 24 24"> <path d="M18 6 6 18"></path> <path d="m6 6 12 12"></path> </symbol>
 </svg> <header class="mobile-header" aria-label="BIYA mobile navigation"> <div class="mobile-logo">BIYA<small>BUSINESS IN YOUR HAND</small></div> <button class="menu-toggle" id="menuToggle" type="button" aria-label="Buka menu">&#9776;</button>
@@ -309,60 +393,77 @@ button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
 </div>
 <div class="main">
 <div class="export-page">
-<div class="title">Export Center</div>
-<div class="sub">Backup data, export report, dan cetak recipe tanpa cost.</div>
-<div class="export-status" id="exportStatus" role="status" aria-live="polite">Memuat data Cost Management dari Supabase...</div>
+<header class="export-hero">
+<div class="export-hero-icon" aria-hidden="true"><svg class="biya-icon"><use href="#biya-icon-download"></use></svg></div>
+<div class="export-hero-copy">
+<h1 class="title">Export Center</h1>
+<p class="sub">Pusat backup, restore, export CSV, dan print report untuk seluruh data Cost Management.</p>
+</div>
+</header>
+<div class="export-status loading" id="exportStatus" role="status" aria-live="polite">Memuat data Cost Management dari Supabase...</div>
 <div class="section">
-<div class="grid">
+<div class="export-section-head">
+<div class="section-heading-icon" aria-hidden="true"><svg class="biya-icon" viewBox="0 0 24 24"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2"/></svg></div>
+<div class="export-section-copy"><h2 class="export-section-title">Backup &amp; Restore</h2><p class="export-section-sub">Amankan data Cost Management atau pulihkan dari file backup JSON.</p></div>
+</div>
+<div class="export-grid">
 <div class="card export-card">
-<h3>Full Backup JSON</h3>
-<p>Simpan semua data sistem ke file JSON.</p>
-<button class="action export-action" onclick="downloadBackup()">Download Backup</button>
+<div class="export-card-head"><div class="export-card-icon green" aria-hidden="true"><svg class="biya-icon"><use href="#biya-icon-download"></use></svg></div><div class="export-card-copy"><h3>Download Backup</h3><p>Simpan salinan lengkap data Cost Management dalam satu file JSON.</p></div></div>
+<button class="action export-action" onclick="downloadBackup()"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-download"></use></svg>Download Backup</button>
 </div>
 <div class="card export-card restore-card">
-<h3>Restore Backup</h3>
-<p>Upload file JSON untuk mengembalikan data.</p>
+<div class="export-card-head"><div class="export-card-icon purple" aria-hidden="true"><svg class="biya-icon" viewBox="0 0 24 24"><path d="M12 21V9m0 0 4 4m-4-4-4 4M5 3h14a2 2 0 0 1 2 2v3M3 8V5a2 2 0 0 1 2-2"/></svg></div><div class="export-card-copy"><h3>Restore Backup</h3><p>Pilih file backup JSON untuk mengembalikan data ke Supabase.</p></div></div>
 <div class="restore-upload-wrap">
 <input accept=".json" class="restore-file-input" id="restoreFile" type="file"/>
-<label class="restore-upload-btn" for="restoreFile">Pilih File JSON</label>
+<label class="restore-upload-btn" for="restoreFile"><svg class="biya-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v12m0-12 4 4m-4-4L8 7M5 21h14a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2"/></svg>Pilih File JSON</label>
 <div class="restore-file-name" id="restoreFileName">Belum ada file dipilih</div>
 </div>
-<button class="action alt export-action" id="restoreButton" onclick="restoreBackup()" disabled>Restore</button>
+<button class="action alt export-action" id="restoreButton" onclick="restoreBackup()" disabled>Restore Backup</button>
 <div class="restore-message" id="restoreMessage" aria-live="polite"></div>
 </div>
+</div>
+</div>
+<div class="section">
+<div class="export-section-head">
+<div class="section-heading-icon" aria-hidden="true"><svg class="biya-icon" viewBox="0 0 24 24"><path d="M6 9V2h9l5 5v15H6v-5M14 2v6h6M3 13h10M3 13l3-3m-3 3 3 3"/></svg></div>
+<div class="export-section-copy"><h2 class="export-section-title">Print Report</h2><p class="export-section-sub">Buka tampilan cetak untuk laporan costing atau recipe kitchen.</p></div>
+</div>
+<div class="export-grid">
 <div class="card export-card">
-<h3>PDF Cost Report</h3>
-<p>Cetak laporan cost dalam format PDF.</p>
+<div class="export-card-head"><div class="export-card-icon cyan" aria-hidden="true"><svg class="biya-icon" viewBox="0 0 24 24"><path d="M6 9V2h9l5 5v15H6v-5M14 2v6h6M3 13h10M3 13l3-3m-3 3 3 3"/></svg></div><div class="export-card-copy"><h3>Cost Report</h3><p>Laporan costing lengkap berisi HPP, harga jual, profit, dan food cost.</p></div></div>
 <button class="action export-action" onclick="exportPrintable('cost')">Open Print View</button>
 </div>
 <div class="card export-card">
-<h3>PDF Recipe Book</h3>
-<p>Recipe tanpa cost agar aman dibagikan ke kitchen.</p>
+<div class="export-card-head"><div class="export-card-icon green" aria-hidden="true"><svg class="biya-icon" viewBox="0 0 24 24"><path d="M6 9V2h9l5 5v15H6v-5M14 2v6h6M3 13h10M3 13l3-3m-3 3 3 3"/></svg></div><div class="export-card-copy"><h3>Recipe Book</h3><p>Recipe tanpa informasi cost agar aman digunakan oleh tim kitchen.</p></div></div>
 <button class="action export-action" onclick="exportPrintable('recipe')">Open Print View</button>
 </div>
 </div>
 </div>
 <div class="section">
-<div class="export-section-title">Excel / CSV Export</div>
-<div class="export-section-sub">Unduh data operasional dalam format CSV.</div>
-<div class="grid">
+<div class="export-section-head">
+<div class="section-heading-icon" aria-hidden="true"><svg class="biya-icon" viewBox="0 0 24 24"><path d="M4 4h16v16H4zM4 10h16M10 4v16"/></svg></div>
+<div class="export-section-copy"><h2 class="export-section-title">CSV Export</h2><p class="export-section-sub">Unduh data operasional dalam format CSV yang siap dibuka di Excel.</p></div>
+</div>
+<div class="export-grid csv-grid">
 <div class="card export-card">
-<h3>Raw Material</h3><p>CSV yang bisa dibuka di Excel.</p><button class="action export-action" onclick="downloadCSV('rawmaterials')">Export CSV</button>
+<div class="export-card-head"><div class="export-card-icon" aria-hidden="true"><svg class="biya-icon"><use href="#biya-icon-package"></use></svg></div><div class="export-card-copy"><h3>Raw Material</h3></div></div><p>Daftar bahan, supplier, harga, dan unit.</p><button class="action export-action" onclick="downloadCSV('rawmaterials')">Export CSV</button>
 </div>
 <div class="card export-card">
-<h3>Preparation</h3><p>CSV yang bisa dibuka di Excel.</p><button class="action export-action" onclick="downloadCSV('preparations')">Export CSV</button>
+<div class="export-card-head"><div class="export-card-icon green" aria-hidden="true"><svg class="biya-icon"><use href="#biya-icon-flask-conical"></use></svg></div><div class="export-card-copy"><h3>Preparation</h3></div></div><p>Data preparation, yield, bahan, dan cost.</p><button class="action export-action" onclick="downloadCSV('preparations')">Export CSV</button>
 </div>
 <div class="card export-card">
-<h3>Menu</h3><p>CSV yang bisa dibuka di Excel.</p><button class="action export-action" onclick="downloadCSV('menus')">Export CSV</button>
+<div class="export-card-head"><div class="export-card-icon purple" aria-hidden="true"><svg class="biya-icon"><use href="#biya-icon-clipboard-list"></use></svg></div><div class="export-card-copy"><h3>Menu</h3></div></div><p>Daftar menu, recipe, dan harga jual.</p><button class="action export-action" onclick="downloadCSV('menus')">Export CSV</button>
 </div>
 <div class="card export-card">
-<h3>Product HPP</h3><p>CSV ringkasan product HPP.</p><button class="action export-action" onclick="downloadCSV('producthpp')">Export CSV</button>
+<div class="export-card-head"><div class="export-card-icon cyan" aria-hidden="true"><svg class="biya-icon"><use href="#biya-icon-calculator"></use></svg></div><div class="export-card-copy"><h3>Product HPP</h3></div></div><p>Ringkasan HPP, profit, dan food cost produk.</p><button class="action export-action" onclick="downloadCSV('producthpp')">Export CSV</button>
 </div>
 </div>
 </div>
 <div class="section">
-<div class="export-section-title">Data Snapshot</div>
-<div class="export-section-sub">Ringkasan jumlah data yang tersimpan saat ini.</div>
+<div class="export-section-head">
+<div class="section-heading-icon" aria-hidden="true"><svg class="biya-icon" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v7c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12v7c0 1.7 3.6 3 8 3s8-1.3 8-3v-7"/></svg></div>
+<div class="export-section-copy"><h2 class="export-section-title">Data Snapshot</h2><p class="export-section-sub">Ringkasan jumlah data dan waktu pembaruan terakhir dari Supabase.</p></div>
+</div>
 <div class="snapshot-table-wrap">
 <table>
 <thead>
@@ -403,7 +504,7 @@ function escapeHTML(value){
 }
 function showStatus(message = "", tone = "info"){
   exportStatus.textContent = message;
-  exportStatus.className = "export-status" + (message ? "" : " hidden") + (tone === "error" ? " error" : tone === "success" ? " success" : "");
+  exportStatus.className = "export-status" + (message ? "" : " hidden") + (tone === "error" ? " error" : tone === "success" ? " success" : tone === "loading" ? " loading" : "");
 }
 function setRestoreMessage(message = "", tone = ""){
   restoreMessage.textContent = message;
@@ -414,7 +515,7 @@ function setBusy(state, message){
   document.querySelectorAll(".export-action").forEach(button => {
     button.disabled = state || (button === restoreButton && !restoreFile.files?.[0]);
   });
-  if(message) showStatus(message);
+  if(message) showStatus(message, state ? "loading" : "info");
 }
 function download(filename, text, type = "application/json"){
   const blob = new Blob(["\ufeff", text], { type });
