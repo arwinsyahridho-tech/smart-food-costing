@@ -1,94 +1,801 @@
 <!DOCTYPE html>
 <html lang="id">
-<head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <title>BIYA - Dashboard</title> <style> :root{ --bg:#04122B; --surface:#102B63; --surface-2:#081A3A; --surface-3:#163A87; --primary:#0066FF; --success:#00D66B; --cyan:#2ED8FF; --warning:#FFB800; --danger:#FF4D4F; --text:#fff; --muted:rgba(215,227,255,.72); --border:rgba(255,255,255,.08); --shadow:0 8px 24px rgba(0,0,0,.20); --shadow-active:0 0 20px rgba(0,102,255,.35); } *{margin:0;padding:0;box-sizing:border-box} body{ background: radial-gradient(circle at top right, rgba(46,216,255,.12), transparent 25%), radial-gradient(circle at left center, rgba(0,214,107,.10), transparent 22%), var(--bg); color:var(--text); font-family:Inter, Arial, sans-serif; } .wrap{max-width:1500px;margin:0 auto;padding:48px 32px} .hero{ display:flex; align-items:flex-end; justify-content:space-between; gap:24px; margin-bottom:28px; flex-wrap:wrap; } .brand{ display:inline-flex; gap:14px; align-items:center; padding:14px 18px; border:1px solid var(--border); border-radius:18px; background:rgba(8,26,58,.7); box-shadow:var(--shadow); margin-bottom:18px; } .brand-mark{ width:46px;height:46px;border-radius:14px; display:grid;place-items:center; background:linear-gradient(135deg,var(--primary),var(--success)); box-shadow:var(--shadow-active); font-weight:700; } .title{ font-size:48px; line-height:1; letter-spacing:-1.2px; margin-bottom:12px; } .sub{ color:var(--muted); max-width:780px; line-height:1.7; font-size:16px; } .hero-cta{ display:flex;gap:12px;flex-wrap:wrap } .cta{ height:48px; padding:0 18px; border:none; border-radius:12px; background:linear-gradient(135deg,var(--primary),var(--success)); color:#fff; font-weight:700; cursor:pointer; box-shadow:var(--shadow-active); } .cta.alt{ background:rgba(255,255,255,.08); box-shadow:none; } .section-title{ font-size:14px; opacity:.62; margin:24px 0 14px; letter-spacing:2px; } .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:18px; } .card{ background:linear-gradient(180deg, rgba(16,43,99,.96), rgba(12,34,83,.98)); border:1px solid var(--border); border-radius:22px; padding:28px; min-height:210px; box-shadow:var(--shadow); transition:.22s; cursor:pointer; position:relative; overflow:hidden; } .card:before{ content:""; position:absolute; inset:auto -20px -35px auto; width:120px; height:120px; border-radius:50%; background:radial-gradient(circle, rgba(46,216,255,.18), transparent 65%); pointer-events:none; } .card:hover{ transform:translateY(-6px); border-color:rgba(255,255,255,.14); } .card.active{ background:linear-gradient(135deg, rgba(0,102,255,.95), rgba(0,214,107,.92)); box-shadow:var(--shadow-active); } .icon{ width:56px;height:56px;border-radius:16px; display:grid;place-items:center; background:rgba(255,255,255,.10); margin-bottom:18px; font-size:28px; } .card.active .icon{background:rgba(255,255,255,.16)} .card-title{font-size:26px;font-weight:700;margin-bottom:10px} .card-desc{color:rgba(215,227,255,.78);line-height:1.65;font-size:15px} .badge{ display:inline-flex; margin-top:18px; padding:8px 12px; border-radius:999px; background:rgba(255,255,255,.10); font-size:12px; letter-spacing:.6px; } .footer{ margin-top:34px; color:rgba(215,227,255,.45); font-size:13px; } @media (max-width: 900px){ .wrap{padding:28px 18px} .title{font-size:38px} .card{min-height:180px} } </style> <style id="biya-mobile-first-overrides">
-/* Mobile-first responsive layer. Keep this after page styles. */
-html{ -webkit-text-size-adjust:100%;
-} body{ overflow-x:hidden;
-} button,
-input{ max-width:100%;
-} .shell,
-.wrap,
-.hero,
-.grid,
-.hero-cta,
-.pill-row{ min-width:0;
-} .shell{ grid-template-columns:1fr !important; gap:20px !important;
-} .wrap{ width:100%; padding:24px 16px !important;
-} .hero{ align-items:stretch !important;
-} h1,
-.title{ font-size:clamp(34px, 10vw, 44px) !important; line-height:1.05 !important; letter-spacing:0 !important; overflow-wrap:anywhere;
-} .tag,
-.sub,
-.card-desc{ line-height:1.6 !important;
-} .login-panel,
-.card{ padding:20px !important;
-} .grid{ grid-template-columns:1fr !important;
-} .hero-cta,
-.hero-cta .cta{ width:100%;
-} .hero-cta .cta{ justify-content:center;
-} @media (min-width: 700px){ .wrap{ padding:36px 24px !important; } .grid{ grid-template-columns:repeat(2, minmax(0, 1fr)) !important; }
-} @media (min-width: 901px){ .shell{ grid-template-columns:1.1fr .9fr !important; gap:24px !important; } .wrap{ padding:48px 32px !important; } .grid{ grid-template-columns:repeat(auto-fit, minmax(290px, 1fr)) !important; } .hero{ align-items:flex-end !important; } h1, .title{ font-size:48px !important; } h1{ font-size:60px !important; letter-spacing:-1.5px !important; } .login-panel, .card{ padding:28px !important; } .hero-cta, .hero-cta .cta{ width:auto; }
-}
-</style> <style id="biya-icon-system">
-.biya-icon{ width:1.15em; height:1.15em; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; fill:none; flex:0 0 auto;
-}
-.item .biya-icon{ margin-right:10px;
-}
-.icon .biya-icon{ width:30px; height:30px; margin:0;
-}
-.btn .biya-icon,
-button .biya-icon{ margin-right:8px; vertical-align:-0.18em;
-}
-.delete-btn .biya-icon,
-.menu-toggle .biya-icon{ margin:0;
-}
-</style> </head>
-<body> <svg class="biya-icon-sprite" xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"> <symbol id="biya-icon-layout-dashboard" viewBox="0 0 24 24"> <rect width="7" height="9" x="3" y="3" rx="1"></rect> <rect width="7" height="5" x="14" y="3" rx="1"></rect> <rect width="7" height="9" x="14" y="12" rx="1"></rect> <rect width="7" height="5" x="3" y="16" rx="1"></rect> </symbol> <symbol id="biya-icon-package" viewBox="0 0 24 24"> <path d="m7.5 4.27 9 5.15"></path> <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path> <path d="m3.3 7 8.7 5 8.7-5"></path> <path d="M12 22V12"></path> </symbol> <symbol id="biya-icon-flask-conical" viewBox="0 0 24 24"> <path d="M10 2v7.31"></path> <path d="M14 9.3V2"></path> <path d="M8.5 2h7"></path> <path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path> <path d="M5.52 16h12.96"></path> </symbol> <symbol id="biya-icon-clipboard-list" viewBox="0 0 24 24"> <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path> <path d="M12 11h4"></path> <path d="M12 16h4"></path> <path d="M8 11h.01"></path> <path d="M8 16h.01"></path> </symbol> <symbol id="biya-icon-calculator" viewBox="0 0 24 24"> <rect width="16" height="20" x="4" y="2" rx="2"></rect> <path d="M8 6h8"></path> <path d="M16 14v4"></path> <path d="M16 10h.01"></path> <path d="M12 10h.01"></path> <path d="M8 10h.01"></path> <path d="M12 14h.01"></path> <path d="M8 14h.01"></path> <path d="M12 18h.01"></path> <path d="M8 18h.01"></path> </symbol> <symbol id="biya-icon-download" viewBox="0 0 24 24"> <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path> <path d="M7 10l5 5 5-5"></path> <path d="M12 15V3"></path> </symbol> <symbol id="biya-icon-settings" viewBox="0 0 24 24"> <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2Z"></path> <circle cx="12" cy="12" r="3"></circle> </symbol> <symbol id="biya-icon-arrow-left" viewBox="0 0 24 24"> <path d="M19 12H5"></path> <path d="m12 19-7-7 7-7"></path> </symbol> <symbol id="biya-icon-search" viewBox="0 0 24 24"> <circle cx="11" cy="11" r="8"></circle> <path d="m21 21-4.3-4.3"></path> </symbol> <symbol id="biya-icon-x" viewBox="0 0 24 24"> <path d="M18 6 6 18"></path> <path d="m6 6 12 12"></path> </symbol>
-</svg> <div class="wrap"> <div class="hero"> <div> <div class="brand"> <div class="brand-mark">B</div> <div> <div style="font-weight:700;letter-spacing:.8px;">BIYA</div> <div style="font-size:12px;opacity:.72;letter-spacing:1.6px;">BUSINESS IN YOUR HAND</div> </div> </div> <div class="title">Module Center</div> <div class="sub">Pusat masuk ke modul operasional BIYA. Semua halaman mengikuti BIYA Design System agar konsisten di desktop, tablet, dan mobile.</div> </div> <div class="hero-cta"> <button class="cta" onclick="location.href='/modules/cost-management/costdashboard.html'">Open Cost Management</button> <button class="cta alt" onclick="location.href='/modules/cost-management/settings.html'">Open Settings</button> </div> </div> <div class="section-title">CORE MODULES</div>
-    <div class="grid">
-      <div class="card active" onclick="location.href='/modules/cost-management/costdashboard.html'">
-        <div class="icon"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-layout-dashboard"></use></svg></div>
-        <div class="card-title">Cost Management</div>
-        <div class="card-desc">Dashboard, Raw Material, Preparation, Menu, Product HPP, dan report costing untuk operasional F&B.</div>
-        <div class="badge">AVAILABLE</div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#041127" />
+  <title>BIYA - Module Center</title>
+  <style>
+    :root {
+      --bg: #041127;
+      --surface: rgba(12, 34, 73, 0.78);
+      --surface-strong: rgba(13, 39, 84, 0.94);
+      --surface-soft: rgba(255, 255, 255, 0.055);
+      --primary: #1687ff;
+      --success: #19d889;
+      --cyan: #58d8ff;
+      --text: #f7faff;
+      --muted: #a9b9d3;
+      --muted-strong: #cbd7e9;
+      --border: rgba(255, 255, 255, 0.1);
+      --border-active: rgba(88, 216, 255, 0.28);
+      --gradient: linear-gradient(135deg, #1687ff 0%, #12b8bd 52%, #19d889 100%);
+      --shadow: 0 18px 48px rgba(0, 5, 20, 0.28);
+      --shadow-soft: 0 10px 30px rgba(0, 5, 20, 0.2);
+      --radius-xl: 24px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      color-scheme: dark;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 85% -5%, rgba(22, 135, 255, 0.2), transparent 32rem),
+        radial-gradient(circle at -10% 42%, rgba(25, 216, 137, 0.11), transparent 27rem),
+        linear-gradient(180deg, #06152f 0%, var(--bg) 42%, #030d20 100%);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    button, a { -webkit-tap-highlight-color: transparent; }
+    a { color: inherit; }
+
+    .page-shell {
+      width: min(100%, 1200px);
+      margin: 0 auto;
+      padding: 20px 20px 40px;
+    }
+
+    .glass-card {
+      border: 1px solid var(--border);
+      background: linear-gradient(145deg, rgba(16, 45, 94, 0.82), rgba(7, 24, 54, 0.78));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .brand-card {
+      display: inline-flex;
+      min-width: 0;
+      align-items: center;
+      gap: 11px;
+      padding: 9px 12px 9px 9px;
+      border-radius: 16px;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 40px;
+      height: 40px;
+      flex: 0 0 auto;
+      place-items: center;
+      border-radius: 13px;
+      background: var(--gradient);
+      box-shadow: 0 8px 22px rgba(22, 135, 255, 0.3);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 850;
+      letter-spacing: -0.04em;
+    }
+
+    .brand-name {
+      font-size: 15px;
+      font-weight: 850;
+      letter-spacing: 0.12em;
+      line-height: 1.1;
+    }
+
+    .brand-tagline {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 650;
+      letter-spacing: 0.11em;
+      line-height: 1.2;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .account-shortcut {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      flex: 0 0 auto;
+      place-items: center;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface-soft);
+      color: var(--muted-strong);
+      text-decoration: none;
+      transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+    }
+
+    .account-shortcut:hover {
+      border-color: var(--border-active);
+      background: rgba(255, 255, 255, 0.09);
+      transform: translateY(-1px);
+    }
+
+    .account-shortcut svg { width: 20px; height: 20px; }
+
+    .welcome-card {
+      position: relative;
+      display: grid;
+      gap: 18px;
+      overflow: hidden;
+      padding: 21px;
+      border-radius: var(--radius-xl);
+    }
+
+    .welcome-card::after {
+      position: absolute;
+      right: -54px;
+      bottom: -78px;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(25, 216, 137, 0.2), transparent 66%);
+      content: "";
+      pointer-events: none;
+    }
+
+    .welcome-copy, .account-summary { position: relative; z-index: 1; min-width: 0; }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--cyan);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .greeting {
+      margin: 0;
+      overflow-wrap: anywhere;
+      font-size: clamp(23px, 7.2vw, 34px);
+      font-weight: 820;
+      letter-spacing: -0.035em;
+      line-height: 1.12;
+    }
+
+    .business-name {
+      margin: 7px 0 0;
+      color: var(--muted-strong);
+      font-size: 14px;
+      font-weight: 650;
+      line-height: 1.45;
+    }
+
+    .account-summary {
+      display: grid;
+      gap: 9px;
+    }
+
+    .summary-chip {
+      display: flex;
+      min-width: 0;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.075);
+      border-radius: 13px;
+      background: rgba(2, 13, 34, 0.3);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .summary-chip strong {
+      color: var(--text);
+      font-weight: 750;
+      overflow-wrap: anywhere;
+    }
+
+    .summary-icon {
+      display: grid;
+      width: 25px;
+      height: 25px;
+      flex: 0 0 auto;
+      place-items: center;
+      border-radius: 8px;
+      background: rgba(22, 135, 255, 0.14);
+      color: var(--cyan);
+    }
+
+    .summary-icon svg { width: 14px; height: 14px; }
+
+    .complete-account {
+      display: none;
+      width: fit-content;
+      margin-top: 2px;
+      color: #7ce9c1;
+      font-size: 12px;
+      font-weight: 750;
+      text-decoration: none;
+    }
+
+    .complete-account.is-visible { display: inline-flex; }
+    .complete-account:hover { text-decoration: underline; }
+
+    .hero-section { padding: 30px 1px 20px; }
+
+    .hero-title {
+      margin: 0;
+      font-size: clamp(32px, 10vw, 52px);
+      font-weight: 850;
+      letter-spacing: -0.045em;
+      line-height: 1;
+    }
+
+    .hero-subtitle {
+      max-width: 680px;
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .quick-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 50px;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 0 18px;
+      border: 1px solid transparent;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1;
+      text-align: center;
+      text-decoration: none;
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+
+    .button svg { width: 17px; height: 17px; }
+
+    .button-primary {
+      background: var(--gradient);
+      box-shadow: 0 12px 28px rgba(18, 184, 189, 0.2);
+      color: #fff;
+    }
+
+    .button-secondary {
+      border-color: var(--border);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+    }
+
+    .button:hover { transform: translateY(-2px); }
+    .button-primary:hover { box-shadow: 0 15px 34px rgba(18, 184, 189, 0.28); }
+    .button-secondary:hover { border-color: var(--border-active); background: rgba(255, 255, 255, 0.09); }
+
+    .button:focus-visible,
+    .module-card:focus-visible,
+    .account-shortcut:focus-visible,
+    .utility-link:focus-visible,
+    .complete-account:focus-visible {
+      outline: 3px solid rgba(88, 216, 255, 0.55);
+      outline-offset: 3px;
+    }
+
+    .utility-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 16px;
+      margin-top: 13px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .utility-label { color: rgba(169, 185, 211, 0.68); }
+
+    .utility-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted-strong);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .utility-link:hover { color: #fff; }
+    .utility-link svg { width: 14px; height: 14px; }
+
+    .modules-section { padding-top: 14px; }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 19px;
+      font-weight: 820;
+      letter-spacing: -0.025em;
+    }
+
+    .section-note {
+      display: none;
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .module-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+    }
+
+    .module-card {
+      position: relative;
+      display: flex;
+      min-width: 0;
+      min-height: 184px;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 19px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(155deg, rgba(14, 41, 85, 0.88), rgba(7, 23, 51, 0.9));
+      box-shadow: var(--shadow-soft);
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .module-card.available {
+      border-color: rgba(88, 216, 255, 0.2);
+      background:
+        linear-gradient(155deg, rgba(18, 70, 132, 0.88), rgba(7, 31, 62, 0.94)),
+        var(--surface-strong);
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .module-card.available::after {
+      position: absolute;
+      right: -45px;
+      bottom: -55px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(25, 216, 137, 0.18), transparent 67%);
+      content: "";
+    }
+
+    .module-card.available:hover {
+      border-color: rgba(88, 216, 255, 0.42);
+      box-shadow: 0 18px 42px rgba(0, 8, 30, 0.32);
+      transform: translateY(-3px);
+    }
+
+    .module-card.coming-soon {
+      cursor: default;
+      opacity: 0.66;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .module-icon {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      flex: 0 0 auto;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 13px;
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--cyan);
+    }
+
+    .module-icon svg { width: 21px; height: 21px; }
+
+    .badge {
+      display: inline-flex;
+      min-height: 27px;
+      align-items: center;
+      padding: 0 10px;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--muted-strong);
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .badge.available {
+      border-color: rgba(25, 216, 137, 0.22);
+      background: rgba(25, 216, 137, 0.11);
+      color: #83efc8;
+    }
+
+    .module-name {
+      margin: 17px 0 7px;
+      font-size: 18px;
+      font-weight: 820;
+      letter-spacing: -0.025em;
+    }
+
+    .module-description {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .card-cta {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: auto;
+      padding-top: 15px;
+      color: #7ce9c1;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .card-cta svg { width: 14px; height: 14px; }
+
+    .footer {
+      margin-top: 28px;
+      color: rgba(169, 185, 211, 0.5);
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .biya-icon {
+      width: 1em;
+      height: 1em;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.9;
+    }
+
+    @media (min-width: 560px) {
+      .page-shell { padding: 24px 24px 48px; }
+      .welcome-card { grid-template-columns: minmax(0, 1fr) minmax(240px, 0.72fr); align-items: center; padding: 24px; }
+      .quick-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .module-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (min-width: 900px) {
+      .page-shell { padding: 32px 32px 56px; }
+      .topbar { margin-bottom: 22px; }
+      .welcome-card { padding: 28px 30px; }
+      .account-summary { grid-template-columns: 1fr; }
+      .hero-section { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 32px; padding: 42px 2px 28px; }
+      .hero-actions { min-width: 410px; }
+      .quick-actions { margin-top: 0; }
+      .section-note { display: block; }
+      .module-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+      .module-card { min-height: 210px; padding: 22px; }
+      .module-card.available { grid-column: span 1; }
+      .module-name { font-size: 20px; }
+      .module-description { font-size: 13px; }
+    }
+
+    @media (min-width: 1180px) {
+      .welcome-card { grid-template-columns: minmax(0, 1fr) 540px; }
+      .account-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .module-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .module-card.available { grid-row: span 2; min-height: 436px; }
+      .module-card.available .module-name { margin-top: 28px; font-size: 25px; }
+      .module-card.available .module-description { font-size: 14px; line-height: 1.65; }
+      .module-card.available .module-icon { width: 50px; height: 50px; }
+      .module-card.available .module-icon svg { width: 25px; height: 25px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="icon-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
+    <symbol id="icon-user" viewBox="0 0 24 24"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="7" r="4"/></symbol>
+    <symbol id="icon-wallet" viewBox="0 0 24 24"><path d="M20 7V5a2 2 0 0 0-2-2H5a3 3 0 0 0 0 6h15v10a2 2 0 0 1-2 2H5a3 3 0 0 1-3-3V6"/><path d="M16 13h2"/></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="icon-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></symbol>
+    <symbol id="icon-box" viewBox="0 0 24 24"><path d="m21 8-9-5-9 5 9 5 9-5Z"/><path d="m3 8 9 5 9-5"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></symbol>
+    <symbol id="icon-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-7"/></symbol>
+    <symbol id="icon-pos" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h4"/></symbol>
+    <symbol id="icon-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01"/></symbol>
+    <symbol id="icon-download" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></symbol>
+  </svg>
+
+  <main class="page-shell">
+    <header class="topbar">
+      <a class="brand-card glass-card" href="/menu-modules/dashboard.html" aria-label="BIYA Module Center">
+        <span class="brand-mark">B</span>
+        <span>
+          <span class="brand-name">BIYA</span>
+          <span class="brand-tagline">Business in Your Hand</span>
+        </span>
+      </a>
+      <a class="account-shortcut" href="/modules/cost-management/settings.html" aria-label="Open Account Center" title="Account Center">
+        <svg class="biya-icon" aria-hidden="true"><use href="#icon-user"></use></svg>
+      </a>
+    </header>
+
+    <section class="welcome-card glass-card" aria-labelledby="welcomeTitle">
+      <div class="welcome-copy">
+        <p class="eyebrow">Account overview</p>
+        <h1 class="greeting" id="welcomeTitle">Halo, <span id="userName">User</span> 👋</h1>
+        <p class="business-name" id="businessName">Nama Usaha Belum Diatur</p>
+        <a class="complete-account is-visible" id="completeAccountLink" href="/modules/cost-management/settings.html">Lengkapi Account Center →</a>
+      </div>
+      <div class="account-summary" aria-label="Ringkasan akun">
+        <div class="summary-chip">
+          <span class="summary-icon"><svg class="biya-icon" aria-hidden="true"><use href="#icon-wallet"></use></svg></span>
+          <span>Plan Aktif: <strong id="planName">Free Plan</strong></span>
+        </div>
+        <div class="summary-chip">
+          <span class="summary-icon"><svg class="biya-icon" aria-hidden="true"><use href="#icon-check"></use></svg></span>
+          <span>Akses Modul: <strong>Cost Management Available</strong></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero-section" aria-labelledby="moduleCenterTitle">
+      <div>
+        <p class="eyebrow">BIYA operating system</p>
+        <h2 class="hero-title" id="moduleCenterTitle">Module Center</h2>
+        <p class="hero-subtitle">Pilih modul operasional BIYA untuk mengelola bisnis secara lebih rapi, cepat, dan terukur.</p>
+      </div>
+      <div class="hero-actions">
+        <div class="quick-actions" aria-label="Quick actions">
+          <a class="button button-primary" href="/modules/cost-management/costdashboard.html">
+            <svg class="biya-icon" aria-hidden="true"><use href="#icon-grid"></use></svg>
+            Open Cost Management
+          </a>
+          <a class="button button-secondary" href="/modules/cost-management/settings.html">
+            <svg class="biya-icon" aria-hidden="true"><use href="#icon-user"></use></svg>
+            Open Account Center
+          </a>
+        </div>
+        <div class="utility-row">
+          <span class="utility-label">Quick link</span>
+          <a class="utility-link" href="/modules/cost-management/exportcenter.html">
+            <svg class="biya-icon" aria-hidden="true"><use href="#icon-download"></use></svg>
+            Export Center
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="modules-section" aria-labelledby="coreModulesTitle">
+      <div class="section-heading">
+        <h2 class="section-title" id="coreModulesTitle">Core Modules</h2>
+        <p class="section-note">Modul aktif dan roadmap operasional BIYA</p>
       </div>
 
-      <div class="card" onclick="location.href='/modules/cost-management/exportcenter.html'">
-        <div class="icon"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-download"></use></svg></div>
-        <div class="card-title">Export Center</div>
-        <div class="card-desc">Export PDF, Excel, backup JSON, dan recipe book tanpa cost untuk kitchen atau audit.</div>
-        <div class="badge">AVAILABLE</div>
-      </div>
+      <div class="module-grid">
+        <a class="module-card available" href="/modules/cost-management/costdashboard.html">
+          <div class="card-top">
+            <span class="module-icon"><svg class="biya-icon" aria-hidden="true"><use href="#icon-grid"></use></svg></span>
+            <span class="badge available">Available</span>
+          </div>
+          <h3 class="module-name">Cost Management</h3>
+          <p class="module-description">Kelola bahan baku, recipe, HPP produk, margin, dan report costing dalam satu modul.</p>
+          <span class="card-cta">Open Module <svg class="biya-icon" aria-hidden="true"><use href="#icon-arrow"></use></svg></span>
+        </a>
 
-      <div class="card" onclick="location.href='/modules/cost-management/settings.html'">
-        <div class="icon"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-settings"></use></svg></div>
-        <div class="card-title">Settings</div>
-        <div class="card-desc">Business profile, logo, target food cost, profit target, dan currency untuk satu brand bisnis.</div>
-        <div class="badge">AVAILABLE</div>
-      </div>
+        <article class="module-card coming-soon" aria-disabled="true">
+          <div class="card-top">
+            <span class="module-icon"><svg class="biya-icon" aria-hidden="true"><use href="#icon-box"></use></svg></span>
+            <span class="badge">Coming Soon</span>
+          </div>
+          <h3 class="module-name">Inventory</h3>
+          <p class="module-description">Kontrol stok, pembelian, penggunaan bahan, dan pergerakan inventory.</p>
+        </article>
 
-      <div class="card" style="cursor:default;opacity:.55">
-        <div class="icon"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-package"></use></svg></div>
-        <div class="card-title">Inventory</div>
-        <div class="card-desc">Stock, purchase, supplier, warehouse, dan pengelolaan inventori lanjutan.</div>
-        <div class="badge">COMING SOON</div>
-      </div>
+        <article class="module-card coming-soon" aria-disabled="true">
+          <div class="card-top">
+            <span class="module-icon"><svg class="biya-icon" aria-hidden="true"><use href="#icon-chart"></use></svg></span>
+            <span class="badge">Coming Soon</span>
+          </div>
+          <h3 class="module-name">Finance</h3>
+          <p class="module-description">Pantau pemasukan, pengeluaran, cashflow, dan laporan keuangan bisnis.</p>
+        </article>
 
-      <div class="card" style="cursor:default;opacity:.55">
-        <div class="icon"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-calculator"></use></svg></div>
-        <div class="card-title">Finance</div>
-        <div class="card-desc">Cashflow, expense, profit summary, dan data keuangan bisnis.</div>
-        <div class="badge">COMING SOON</div>
-      </div>
+        <article class="module-card coming-soon" aria-disabled="true">
+          <div class="card-top">
+            <span class="module-icon"><svg class="biya-icon" aria-hidden="true"><use href="#icon-pos"></use></svg></span>
+            <span class="badge">Coming Soon</span>
+          </div>
+          <h3 class="module-name">POS</h3>
+          <p class="module-description">Kelola transaksi penjualan dan integrasi operasional outlet.</p>
+        </article>
 
-      <div class="card" style="cursor:default;opacity:.55">
-        <div class="icon"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-calculator"></use></svg></div>
-        <div class="card-title">Intelligent Cost</div>
-        <div class="card-desc">AI analysis untuk optimasi biaya dan rekomendasi bisnis yang lebih cerdas.</div>
-        <div class="badge">COMING SOON</div>
+        <article class="module-card coming-soon" aria-disabled="true">
+          <div class="card-top">
+            <span class="module-icon"><svg class="biya-icon" aria-hidden="true"><use href="#icon-calendar"></use></svg></span>
+            <span class="badge">Coming Soon</span>
+          </div>
+          <h3 class="module-name">Reservation</h3>
+          <p class="module-description">Atur reservasi pelanggan, booking meja, dan jadwal layanan.</p>
+        </article>
       </div>
-    </div>
+    </section>
 
-    <div class="footer">BIYA (c) Phase 1 Development</div> </div>
+    <footer class="footer">BIYA · Business in Your Hand</footer>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    (() => {
+      "use strict";
+
+      const FALLBACK = Object.freeze({
+        userName: "User",
+        businessName: "Nama Usaha Belum Diatur",
+        planName: "Free Plan"
+      });
+      const SUPABASE_URL = window.BIYA_SUPABASE_URL || "https://pkjmkjyylgzjvhcreucc.supabase.co";
+      const SUPABASE_ANON_KEY = window.BIYA_SUPABASE_ANON_KEY || "sb_publishable_Tq4d0o3PIAd_zh11uJa2uQ_M_zPIYFX";
+      const configuredClient = window.biyaSupabase || window.supabaseClient || null;
+      const supabaseClient = configuredClient || ((SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase)
+        ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+        : null);
+
+      const elements = {
+        userName: document.getElementById("userName"),
+        businessName: document.getElementById("businessName"),
+        planName: document.getElementById("planName"),
+        completeAccountLink: document.getElementById("completeAccountLink")
+      };
+
+      function firstText(...values) {
+        const match = values.find((value) => typeof value === "string" && value.trim());
+        return match ? match.trim() : "";
+      }
+
+      function getUserName(user, profile) {
+        const metadata = (user && user.user_metadata) || {};
+        return firstText(
+          profile && profile.full_name,
+          profile && profile.display_name,
+          profile && profile.name,
+          metadata.full_name,
+          metadata.display_name,
+          metadata.name,
+          metadata.user_name,
+          user && user.email && user.email.split("@")[0]
+        ) || FALLBACK.userName;
+      }
+
+      function getBusinessName(user, profile, settings) {
+        const metadata = (user && user.user_metadata) || {};
+        return firstText(
+          profile && profile.business_name,
+          profile && profile.company_name,
+          metadata.business_name,
+          metadata.company_name,
+          settings && settings.business_name
+        ) || FALLBACK.businessName;
+      }
+
+      function getPlanName(user, profile, subscription) {
+        const metadata = (user && user.user_metadata) || {};
+        const appMetadata = (user && user.app_metadata) || {};
+        return firstText(
+          subscription && subscription.plan_name,
+          subscription && subscription.plan,
+          subscription && subscription.tier,
+          profile && profile.plan_name,
+          profile && profile.plan,
+          metadata.plan_name,
+          metadata.plan,
+          appMetadata.plan_name,
+          appMetadata.plan
+        ) || FALLBACK.planName;
+      }
+
+      async function maybeSingle(table, userId, columns = "*") {
+        if (!supabaseClient || !userId) return null;
+        const { data, error } = await supabaseClient.from(table).select(columns).eq("user_id", userId).maybeSingle();
+        return error ? null : data;
+      }
+
+      async function loadProfile(userId) {
+        if (!supabaseClient || !userId) return null;
+        const byId = await supabaseClient.from("profiles").select("*").eq("id", userId).maybeSingle();
+        if (!byId.error && byId.data) return byId.data;
+        return maybeSingle("profiles", userId);
+      }
+
+      async function loadBusinessSettings(userId) {
+        if (!supabaseClient || !userId) return null;
+        const businessId = String(window.BIYA_BUSINESS_ID || userId);
+        const { data, error } = await supabaseClient
+          .from("cost_settings")
+          .select("business_name")
+          .eq("business_id", businessId)
+          .maybeSingle();
+        return error ? null : data;
+      }
+
+      function renderAccount(account) {
+        const userName = firstText(account.userName) || FALLBACK.userName;
+        const businessName = firstText(account.businessName) || FALLBACK.businessName;
+        const planName = firstText(account.planName) || FALLBACK.planName;
+        elements.userName.textContent = userName;
+        elements.businessName.textContent = businessName;
+        elements.planName.textContent = planName;
+        elements.completeAccountLink.classList.toggle("is-visible", businessName === FALLBACK.businessName);
+      }
+
+      async function hydrateAccount() {
+        renderAccount(FALLBACK);
+        if (!supabaseClient || !supabaseClient.auth) return;
+
+        const { data, error } = await supabaseClient.auth.getUser();
+        const user = !error && data ? data.user : null;
+        if (!user) return;
+
+        const [profileResult, settingsResult, subscriptionResult] = await Promise.allSettled([
+          loadProfile(user.id),
+          loadBusinessSettings(user.id),
+          maybeSingle("subscriptions", user.id)
+        ]);
+        const profile = profileResult.status === "fulfilled" ? profileResult.value : null;
+        const settings = settingsResult.status === "fulfilled" ? settingsResult.value : null;
+        const subscription = subscriptionResult.status === "fulfilled" ? subscriptionResult.value : null;
+
+        renderAccount({
+          userName: getUserName(user, profile),
+          businessName: getBusinessName(user, profile, settings),
+          planName: getPlanName(user, profile, subscription)
+        });
+      }
+
+      hydrateAccount().catch(() => renderAccount(FALLBACK));
+    })();
+  </script>
 </body>
-</html> 
+</html>
