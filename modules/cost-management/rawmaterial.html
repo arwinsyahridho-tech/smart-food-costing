@@ -75,12 +75,13 @@ input::placeholder { color: #7694c9; }
 input:focus, select:focus, button:focus-visible { border-color: #4a9cff; box-shadow: 0 0 0 3px rgba(30,128,255,.18); }
 .category-manage-btn { align-self: flex-start; min-height: 42px; margin-top: 1px; padding: 0 14px; border: 1px solid var(--line); border-radius: 11px; background: rgba(23,61,132,.72); color: #dce9ff; cursor: pointer; font-size: var(--font-button-secondary); font-weight: 750; white-space: nowrap; }
 .category-manage-btn:hover { border-color: rgba(46,216,255,.48); background: rgba(31,76,157,.86); color: #fff; }
-.summary-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 14px; }
-.summary-box { display: flex; align-items: center; gap: 13px; min-width: 0; padding: 17px; border: 1px solid var(--line); border-radius: 16px; background: linear-gradient(145deg,rgba(13,48,109,.9),rgba(7,30,74,.95)); box-shadow: var(--glow); }
-.summary-icon { width: 43px; height: 43px; border-radius: 13px; background: rgba(17,105,223,.22); color: #79c9ff; font-weight: 850; }
-.summary-copy { min-width: 0; }
-.summary-label { margin-bottom: 5px; color: var(--muted); font-size: 12px; }
-.summary-value { overflow: hidden; color: #fff; font-size: clamp(22px,2.2vw,30px); font-weight: 850; line-height: 1.1; text-overflow: ellipsis; white-space: nowrap; }
+.summary-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 11px; margin-top: 16px; }
+.summary-box { display: flex; align-items: center; gap: 11px; min-width: 0; min-height: 76px; padding: 12px 13px; border: 1px solid rgba(97,163,255,.24); border-radius: 15px; background: linear-gradient(145deg,rgba(13,48,109,.92),rgba(7,30,74,.96)); box-shadow: 0 10px 26px rgba(0,25,84,.2), inset 0 1px 0 rgba(255,255,255,.025), var(--glow); }
+.summary-icon { width: 36px; height: 36px; border-radius: 11px; background: linear-gradient(145deg,rgba(17,105,223,.3),rgba(16,75,164,.18)); color: #79c9ff; font-size: 11px; font-weight: 850; letter-spacing: -.02em; }
+.summary-copy { min-width: 0; flex: 1; }
+.summary-label { margin-bottom: 4px; overflow: hidden; color: var(--muted); font-size: 11px; font-weight: 650; line-height: 1.2; text-overflow: ellipsis; white-space: nowrap; }
+.summary-value { overflow: hidden; color: #fff; font-size: clamp(18px,1.65vw,24px); font-weight: 850; line-height: 1.08; letter-spacing: -.02em; text-overflow: ellipsis; white-space: nowrap; }
+.summary-status-value { display: inline-flex; align-items: center; width: auto; max-width: 100%; padding: 5px 9px; border: 1px solid rgba(3,212,119,.24); border-radius: 999px; background: rgba(3,212,119,.13); color: #98f8c5; font-size: 13px; letter-spacing: .045em; }
 .action-section { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 2px 0 0; }
 .action-copy strong { display: block; font-size: 17px; }
 .action-copy span { display: block; margin-top: 5px; color: var(--muted); font-size: 13px; }
@@ -169,9 +170,12 @@ input:focus, select:focus, button:focus-visible { border-color: #4a9cff; box-sha
   input, select { min-height: 52px; padding: 0 14px; font-size: var(--font-input-mobile); }
   .field { gap: 8px; }
   .category-manage-btn { width: auto; min-height: 42px; }
-  .summary-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .summary-box { align-items: flex-start; flex-direction: column; gap: 9px; padding: 14px; }
-  .summary-value { width: 100%; font-size: 21px; }
+  .summary-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; margin-top: 13px; }
+  .summary-box { gap: 9px; min-height: 70px; padding: 10px; border-radius: 13px; }
+  .summary-icon { width: 32px; height: 32px; border-radius: 10px; font-size: 10px; }
+  .summary-label { margin-bottom: 3px; font-size: 10px; }
+  .summary-value { font-size: clamp(16px,4.7vw,19px); }
+  .summary-status-value { padding: 4px 7px; font-size: 11px; }
   .action-section, .list-head, .raw-list-toolbar__header { align-items: stretch; flex-direction: column; }
   .action-section { padding-top: 2px; }
   .action-buttons { display: grid; grid-template-columns: 1fr 1.3fr; width: 100%; }
@@ -204,8 +208,10 @@ input:focus, select:focus, button:focus-visible { border-color: #4a9cff; box-sha
 }
 @media (max-width: 390px) {
   .paired-fields { grid-template-columns: minmax(0,1fr) minmax(0,.88fr); gap: 8px; }
-  .summary-grid { grid-template-columns: 1fr; }
   .action-buttons { grid-template-columns: 1fr; }
+}
+@media (max-width: 340px) {
+  .summary-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -256,11 +262,11 @@ input:focus, select:focus, button:focus-visible { border-color: #4a9cff; box-sha
 <div class="field"><label for="wasteInput">Default Waste %</label><input id="wasteInput" type="number" value="5"/></div>
 <div class="field"><label for="statusInput">Status</label><select id="statusInput"><option>ACTIVE</option><option>INACTIVE</option></select></div>
 </div>
-<div class="summary-grid" style="margin-top:18px;">
+<div class="summary-grid" aria-label="Ringkasan biaya dan status bahan">
 <div class="summary-box"><div class="summary-icon">Rp</div><div class="summary-copy"><div class="summary-label">Harga per Unit</div><div class="summary-value" id="summaryUnitCost">Rp 0</div></div></div>
 <div class="summary-box"><div class="summary-icon">#</div><div class="summary-copy"><div class="summary-label">Total Konversi</div><div class="summary-value" id="summaryConversion">0 gr</div></div></div>
 <div class="summary-box"><div class="summary-icon">%</div><div class="summary-copy"><div class="summary-label">Default Waste</div><div class="summary-value" id="summaryWaste">5%</div></div></div>
-<div class="summary-box"><div class="summary-icon">●</div><div class="summary-copy"><div class="summary-label">Status Bahan</div><div class="summary-value" id="summaryStatus">ACTIVE</div></div></div>
+<div class="summary-box"><div class="summary-icon">●</div><div class="summary-copy"><div class="summary-label">Status Bahan</div><div class="summary-value summary-status-value" id="summaryStatus">ACTIVE</div></div></div>
 </div>
 </section>
 <div class="action-section" aria-label="Aksi form Raw Material">
