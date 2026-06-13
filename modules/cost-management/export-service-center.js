@@ -84,9 +84,8 @@
     let from = 0;
     while (true) {
       let query = client.from(table).select("*");
-      if (table === "cost_settings" && options && options.businessId) {
-        query = query.eq("business_id", options.businessId);
-      }
+      if (!options || !options.userId) throw new Error("User belum login.");
+      query = query.eq("user_id", options.userId);
       query = query.range(from, from + PAGE_SIZE - 1);
       const { data, error } = await query;
       if (error) {
@@ -109,9 +108,10 @@
     if (!client) throw new Error("Supabase client belum tersedia.");
     const scope = settingsService
       ? await settingsService.resolveScope(client)
-      : { user: null, businessId: String(global.BIYA_BUSINESS_ID || "default"), storageKey: "default" };
+      : await (async function () { const user = await global.BiyaData.getCurrentUser(client); return { user, userId: user.id, businessId: user.id, storageKey: user.id }; })();
     const results = await Promise.all(TABLES.map(table => fetchTable(client, table, {
-      businessId: scope.businessId
+      businessId: scope.businessId,
+      userId: scope.userId
     })));
     const tables = {};
     const warnings = [];
@@ -126,7 +126,7 @@
       version: 2,
       exported_at: new Date().toISOString(),
       source: "supabase",
-      scope: { business_id: scope.businessId },
+      scope: { business_id: scope.businessId, user_id: scope.userId },
       settings,
       tables,
       warnings
@@ -397,8 +397,8 @@
     return backup;
   }
 
-  async function deleteTableRows(client, table) {
-    const { error } = await client.from(table).delete().not("id", "is", null);
+  async function deleteTableRows(client, table, userId) {
+    const { error } = await client.from(table).delete().eq("user_id", userId).not("id", "is", null);
     if (error) {
       if (OPTIONAL_TABLES.has(table) && isMissingTable(error)) return;
       logError("Delete " + table + " saat restore gagal", error, { table });
@@ -406,10 +406,10 @@
     }
   }
 
-  async function insertTableRows(client, table, rows) {
+  async function insertTableRows(client, table, rows, userId) {
     if (!rows || !rows.length) return;
     for (let index = 0; index < rows.length; index += INSERT_BATCH_SIZE) {
-      const batch = rows.slice(index, index + INSERT_BATCH_SIZE);
+      const batch = global.BiyaData.ownedRows(rows.slice(index, index + INSERT_BATCH_SIZE), userId);
       const { error } = await client.from(table).insert(batch);
       if (error) {
         if (OPTIONAL_TABLES.has(table) && isMissingTable(error)) return;
@@ -428,21 +428,16 @@
     validateBackup(backup);
     const scope = settingsService
       ? await settingsService.resolveScope(client)
-      : { user: null, businessId: String(global.BIYA_BUSINESS_ID || "default"), storageKey: "default" };
+      : await (async function () { const user = await global.BiyaData.getCurrentUser(client); return { user, userId: user.id, businessId: user.id, storageKey: user.id }; })();
     const progress = typeof onProgress === "function" ? onProgress : function () {};
     for (const table of DELETE_ORDER) {
       progress("Menghapus data lama: " + table);
-      await deleteTableRows(client, table);
+      await deleteTableRows(client, table, scope.userId);
     }
     for (const table of INSERT_ORDER) {
       progress("Memulihkan data: " + table);
-      const rows = (backup.tables[table] || []).map(row => {
-        if (table === "raw_material" && Object.prototype.hasOwnProperty.call(row, "user_id")) {
-          return { ...row, user_id: scope.user ? scope.user.id : null };
-        }
-        return row;
-      });
-      await insertTableRows(client, table, rows);
+      const rows = (backup.tables[table] || []).map(row => ({ ...row, user_id: scope.userId }));
+      await insertTableRows(client, table, rows, scope.userId);
     }
     const settingRow = (backup.tables.cost_settings || [])[0] || backup.settings;
     if (settingRow && settingsService) {

@@ -5,6 +5,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/assets/js/biya-config.js"></script>
   <script src="/assets/js/biya-auth.js"></script>
+  <script src="/assets/js/biya-data.js"></script>
   <script src="/assets/js/auth-guard.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -771,11 +772,10 @@
 
       async function loadBusinessSettings(userId) {
         if (!supabaseClient || !userId) return null;
-        const businessId = String(window.BIYA_BUSINESS_ID || userId);
         const { data, error } = await supabaseClient
           .from("cost_settings")
           .select("business_name")
-          .eq("business_id", businessId)
+          .eq("user_id", userId)
           .maybeSingle();
         return error ? null : data;
       }
