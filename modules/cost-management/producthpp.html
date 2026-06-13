@@ -5,129 +5,12 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>BIYA - Product HPP</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#07173a;font-family:Arial,sans-serif;color:#fff}
-.wrapper{display:flex}
-.sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;background:#102766;padding:30px;overflow:auto}
-.logo{font-size:34px;font-weight:bold;margin-bottom:45px}
-.logo small{display:block;margin-top:8px;font-size:12px;font-weight:400;opacity:.65;letter-spacing:1.6px}
-.item{height:56px;padding:0 18px;display:flex;align-items:center;border-radius:16px;margin-bottom:12px;cursor:pointer;font-size:16px;transition:.22s;color:white}
-.item:hover{transform:translateX(6px);background:rgba(255,255,255,.06)}
-.item.active{background:#2563eb;transform:translateX(10px);box-shadow:0 10px 30px rgba(37,99,235,.35)}
-.btn{margin-top:18px;height:54px;width:100%;border:none;border-radius:14px;background:#2563eb;color:white;cursor:pointer;font-weight:bold}
-.main{margin-left:260px;width:calc(100% - 260px);padding:40px}
-.title{font-size:44px;margin-bottom:10px}
-.sub{opacity:.7;margin-bottom:35px;line-height:1.6}
-.section{background:#102766;padding:28px;border-radius:22px;margin-bottom:24px}
-.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:24px}
-.summary-box{background:#0d2158;padding:20px;border-radius:16px;min-height:108px}
-.summary-title{opacity:.6;margin-bottom:10px}
-.summary-value{font-size:24px;font-weight:bold;white-space:pre-line;line-height:1.25}
-.list-header{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;margin-bottom:22px}
-.filter-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;width:100%;align-items:end}
-.filter-field{min-width:0}
-.filter-label{display:block;margin-bottom:8px;color:rgba(215,227,255,.72);font-size:13px;font-weight:700}
-.filter-field input,.filter-field select{height:52px}
-input,select{width:100%;height:56px;padding:0 18px;background:#0d2158;border:none;border-radius:14px;color:white;outline:none}
-.notice{opacity:.75;text-align:center;padding:22px;line-height:1.55}
-.error{background:rgba(255,77,79,.14);border:1px solid rgba(255,77,79,.32);color:#ffcccc;border-radius:16px;padding:18px;margin-bottom:18px;line-height:1.55}
-.hidden{display:none!important}
-.product-hero{display:grid;grid-template-columns:260px 1fr;gap:22px;align-items:start}
-.product-photo{width:100%;aspect-ratio:1/1;border-radius:18px;overflow:hidden;background:#07173a;border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;color:#9bb3ee;text-align:center;padding:16px}
-.product-photo img{width:100%;height:100%;object-fit:cover;display:block}
-.product-main{min-width:0}
-.product-title-row{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap}
-.product-name{font-size:30px;font-weight:bold;line-height:1.15;overflow-wrap:anywhere}
-.menu-badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-.menu-badge,.status-pill{display:inline-block;padding:7px 12px;border-radius:999px;background:#2563eb;font-size:12px;font-weight:bold;width:fit-content}
-.menu-badge.gray{background:#334155}
-.status-green{background:rgba(0,214,107,.18)!important;color:#96f5b7!important}
-.status-yellow{background:rgba(255,184,0,.18)!important;color:#ffe08a!important}
-.status-red{background:rgba(255,77,79,.18)!important;color:#ffb4b4!important}
-.status-gray{background:#334155!important;color:#d7e3ff!important}
-.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-top:22px}
-.metric{background:#07173a;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px;min-height:92px}
-.metric-label{opacity:.62;font-size:13px;margin-bottom:8px}
-.metric-value{font-size:20px;font-weight:bold;line-height:1.25}
-.metric-note{opacity:.7;font-size:12px;margin-top:6px;line-height:1.45}
-.detail-desc{opacity:.86;line-height:1.65;margin-top:18px;white-space:pre-wrap}
-.detail-actions{display:flex;justify-content:flex-start;margin-bottom:18px}
-.back-btn{min-height:48px;padding:0 18px;border:none;border-radius:12px;background:linear-gradient(135deg,#0066FF,#00D66B);color:#fff;font-weight:800;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.2)}
-.menu-item{background:#0d2158;border-radius:18px;padding:20px;margin-bottom:16px;border:1px solid rgba(255,255,255,.06);cursor:pointer}
-.menu-top{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;flex-wrap:wrap}
-.menu-left{display:flex;gap:14px;min-width:0;flex:1}
-.thumb{width:58px;height:58px;border-radius:14px;overflow:hidden;background:#07173a;border:1px solid rgba(255,255,255,.08);flex:0 0 auto;display:flex;align-items:center;justify-content:center;color:#9bb3ee;font-size:11px;text-align:center}
-.thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.menu-name{font-size:20px;font-weight:bold;line-height:1.25;overflow-wrap:anywhere}
-.menu-cost{text-align:right;min-width:210px}
-.cost-main{font-size:22px;font-weight:bold}
-.cost-label{display:block;font-size:13px;opacity:.7;margin-top:6px}
-.recipe-head{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:14px;flex-wrap:wrap}
-.recipe-table-wrap{max-width:100%;overflow:auto}
-.recipe-table{width:100%;border-collapse:collapse}
-.recipe-table th{background:#1b3d96;padding:12px;font-size:13px;text-align:left;white-space:nowrap}
-.recipe-table td{padding:12px;background:#07173a;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:top}
-.recipe-mobile-list{display:none}
-.recipe-mobile-item{padding:13px 0;border-bottom:1px solid rgba(255,255,255,.08)}
-.recipe-mobile-item:last-child{border-bottom:none}
-.recipe-mobile-title{display:grid;grid-template-columns:auto 1fr;gap:8px;font-weight:bold;line-height:1.4;overflow-wrap:anywhere}
-.recipe-mobile-meta,.recipe-mobile-sub{margin-top:6px;padding-left:24px;color:rgba(215,227,255,.78);font-size:13px;line-height:1.45;overflow-wrap:anywhere}
-.biya-icon{width:1.15em;height:1.15em;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;fill:none;flex:0 0 auto}
-.item .biya-icon{margin-right:10px}
-.btn .biya-icon,.menu-toggle .biya-icon{margin-right:8px;vertical-align:-0.18em}
-:root{--biya-bg:#04122B;--biya-sidebar:#081A3A;--biya-surface:#102B63;--biya-surface-hover:#163A87;--biya-primary:#0066FF;--biya-success:#00D66B;--biya-text:#FFFFFF;--biya-muted:#D7E3FF;--biya-border:rgba(255,255,255,0.08);--biya-card-shadow:0 8px 24px rgba(0,0,0,0.20);--biya-active-shadow:0 0 20px rgba(0,102,255,0.35);--biya-radius-card:16px;--biya-radius-btn:12px;--biya-radius-input:12px}
-body{background:var(--biya-bg)!important;color:var(--biya-text)!important;font-family:Inter,"Segoe UI",Arial,sans-serif!important}
-.sidebar{background:linear-gradient(180deg,rgba(8,26,58,.98),rgba(4,18,43,.98))!important;border-right:1px solid var(--biya-border)!important;box-shadow:var(--biya-card-shadow)!important}
-.item{color:var(--biya-muted)!important;border:1px solid transparent!important}
-.item:hover{background:var(--biya-surface-hover)!important;color:#fff!important}
-.item.active,.btn{background:linear-gradient(135deg,var(--biya-primary),var(--biya-success))!important;color:#fff!important;box-shadow:var(--biya-active-shadow)!important}
-.section,.summary-box,.menu-item,.metric{background:linear-gradient(180deg,rgba(16,43,99,.96),rgba(12,34,83,.98))!important;border:1px solid var(--biya-border)!important;border-radius:var(--biya-radius-card)!important;box-shadow:var(--biya-card-shadow)!important}
-input,select{background:rgba(16,43,99,.95)!important;border:1px solid var(--biya-border)!important;border-radius:var(--biya-radius-input)!important;color:#fff!important}
-th{background:#163A87!important;color:#fff!important}
-td{background:#102B63!important;color:#fff!important}
-.summary-title,.sub,.notice,.metric-label,.metric-note{color:rgba(215,227,255,.72)!important}
-.mobile-header{display:none}
-.mobile-logo{font-size:20px;font-weight:700;letter-spacing:.6px}
-.mobile-logo small{display:block;margin-top:2px;font-size:10px;font-weight:400;letter-spacing:.9px;opacity:.68}
-.menu-toggle{width:46px;height:46px;border:none;border-radius:12px;background:linear-gradient(135deg,#0066FF,#00D66B);color:#fff;font-size:22px;font-weight:700;line-height:1;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.2)}
-.mobile-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.52);z-index:998}
-@media(max-width:980px){
-  body{overflow-x:hidden!important}
-  .mobile-header{display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:1002;min-height:64px;padding:12px 16px;background:linear-gradient(180deg,rgba(8,26,58,.98),rgba(4,18,43,.96));border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(14px)}
-  .mobile-overlay.open{display:block}
-  .sidebar{position:fixed!important;left:-280px!important;top:0!important;width:260px!important;height:100vh!important;z-index:999!important;overflow:auto!important;transition:left .28s ease!important;box-shadow:0 20px 40px rgba(0,0,0,.35)!important}
-  .sidebar.open{left:0!important}
-  .wrapper{display:block!important}
-  .main{margin-left:0!important;width:100%!important;max-width:100%;padding:20px!important;padding-top:18px!important}
-  .title{font-size:clamp(30px,9vw,40px)!important;line-height:1.08!important;overflow-wrap:anywhere}
-  .summary-grid,.metric-grid,.product-hero{grid-template-columns:1fr!important}
-  .section,.menu-item,.summary-box{padding:18px!important;margin-bottom:18px!important}
-  .list-header,.product-title-row,.menu-top{flex-direction:column!important;align-items:stretch!important}
-  .filter-grid{grid-template-columns:1fr!important;gap:10px!important}
-  .filter-field,.btn{width:100%!important;max-width:100%!important}
-  .back-btn{width:100%;min-height:52px}
-  .menu-cost{width:100%;min-width:0;text-align:left!important}
-  .menu-left{width:100%}
-}
-@media(min-width:981px) and (max-width:1220px){
-  .filter-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-@media(max-width:700px){
-  .recipe-table-wrap{display:none}
-  .recipe-mobile-list{display:block}
-  .recipe-head{align-items:flex-start;flex-direction:column}
-  .product-name{font-size:25px}
-  #productPageDescription{margin-bottom:14px!important;line-height:1.45!important;font-size:14px!important}
-  #summarySection{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;margin-bottom:16px!important}
-  #summarySection .summary-box{min-height:0!important;padding:12px 14px!important;margin-bottom:0!important;border-radius:14px!important;min-width:0!important}
-  #summarySection .summary-title{font-size:11px!important;line-height:1.25!important;font-weight:400!important;margin-bottom:6px!important;color:rgba(215,227,255,.66)!important}
-  #summarySection .summary-value{font-size:20px!important;line-height:1.18!important;font-weight:800!important;overflow-wrap:anywhere}
-  #summarySection .summary-box:nth-child(1){grid-column:1 / -1;display:flex;align-items:center;justify-content:space-between;gap:12px}
-  #summarySection .summary-box:nth-child(1) .summary-title{margin-bottom:0!important;font-size:12px!important}
-  #summarySection .summary-box:nth-child(1) .summary-value{text-align:right;font-size:22px!important}
-  #summarySection .summary-box:nth-child(4){grid-column:1 / -1;padding:14px!important}
-  #summarySection .summary-box:nth-child(4) .summary-value{font-size:18px!important;line-height:1.25!important}
-}
+:root{--bg:#020b22;--bg-soft:#061638;--panel:#09265d;--panel-deep:#061d4c;--panel-soft:#0d2f70;--line:rgba(97,163,255,.27);--line-strong:rgba(65,145,255,.48);--primary:#087cf7;--success:#03d477;--text:#f7faff;--muted:#9eb8e7;--danger:#ff3d48;--shadow:0 18px 55px rgba(0,53,151,.2);--glow:0 0 30px rgba(19,111,255,.13)}
+*{box-sizing:border-box;margin:0;padding:0}html{color-scheme:dark;scroll-behavior:smooth}body{min-width:320px;overflow-x:hidden;background:radial-gradient(circle at 52% 0,rgba(14,75,180,.18),transparent 36%),var(--bg);color:var(--text);font-family:Inter,"Segoe UI",Arial,sans-serif}.wrapper{display:flex;min-height:100vh}.sidebar{position:fixed;z-index:999;left:0;top:0;width:260px;height:100vh;overflow:auto;padding:30px;border-right:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(8,26,58,.98),rgba(4,18,43,.98));box-shadow:0 8px 24px rgba(0,0,0,.2)}.logo{margin-bottom:45px;color:#fff;font-size:34px;font-weight:700;letter-spacing:.2px}.logo small{display:block;margin-top:8px;font-size:12px;font-weight:400;letter-spacing:1.6px;opacity:.65}.item{display:flex;align-items:center;height:56px;margin-bottom:12px;padding:0 18px;border:1px solid transparent;border-radius:16px;color:#d7e3ff;cursor:pointer;font-size:16px;transition:.22s;user-select:none}.item:hover{background:#163a87;color:#fff;transform:translateX(6px)}.item.active{background:linear-gradient(135deg,#0066ff,#00d66b);box-shadow:0 0 20px rgba(0,102,255,.35);color:#fff;transform:translateX(10px)}.btn{width:100%;height:54px;margin-top:18px;border:0;border-radius:12px;background:linear-gradient(135deg,#0066ff,#00d66b);box-shadow:var(--shadow);color:#fff;cursor:pointer;font-weight:700}.biya-icon{width:1.15em;height:1.15em;flex:0 0 auto;fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;stroke-width:2}.item .biya-icon{margin-right:10px}.btn .biya-icon{margin-right:8px;vertical-align:-.18em}.main{width:calc(100% - 260px);margin-left:260px;padding:34px}.page-shell{width:100%;max-width:1500px;margin:auto}.section{margin-bottom:26px;padding:28px;overflow:hidden;border:1px solid var(--line);border-radius:26px;background:linear-gradient(150deg,rgba(10,42,101,.98),rgba(5,25,66,.99));box-shadow:var(--shadow),var(--glow)}.hero{display:flex;align-items:center;gap:18px;padding-bottom:24px;border-bottom:1px solid rgba(123,173,255,.2)}.hero-icon,.section-icon,.summary-icon{display:grid;flex:0 0 auto;place-items:center;border:1px solid rgba(89,162,255,.28);color:#dcecff}.hero-icon{width:62px;height:62px;border-radius:19px;background:linear-gradient(145deg,#087cf7,#155bd8);box-shadow:0 12px 28px rgba(0,102,255,.25)}.hero-icon svg,.section-icon svg,.summary-icon svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8}.title{font-size:28px;line-height:1.2}.sub,.section-sub{margin-top:7px;color:var(--muted);font-size:14px;line-height:1.55}.overview{padding-top:24px}.section-heading{display:flex;align-items:center;gap:13px}.section-icon{width:43px;height:43px;border-radius:13px;background:rgba(4,106,225,.28)}.section-title{font-size:24px;line-height:1.2}.summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:18px 0 24px}.summary-box{display:grid;grid-template-columns:44px minmax(0,1fr);grid-template-areas:"icon title" "icon value";column-gap:12px;min-width:0;min-height:104px;padding:17px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(13,48,109,.9),rgba(7,30,74,.95));box-shadow:var(--glow)}.summary-icon{grid-area:icon;width:42px;height:42px;border-radius:13px;background:rgba(4,106,225,.35)}.summary-box:nth-child(2) .summary-icon{background:rgba(0,184,146,.3)}.summary-box:nth-child(3) .summary-icon{background:rgba(78,45,210,.4)}.summary-box:nth-child(4) .summary-icon{background:rgba(0,150,210,.28)}.summary-icon svg{width:23px;height:23px}.summary-title{grid-area:title;align-self:end;color:var(--muted);font-size:13px;line-height:1.3}.summary-value{grid-area:value;align-self:start;min-width:0;margin-top:6px;font-size:clamp(22px,2vw,28px);font-weight:850;line-height:1.15;overflow-wrap:anywhere;white-space:pre-line}.summary-box:last-child .summary-value{font-size:19px}.filter-panel{padding-top:23px;border-top:1px solid rgba(123,173,255,.18)}.filter-head{margin-bottom:17px}.filter-title{font-size:20px;line-height:1.25}.filter-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.filter-field{display:flex;min-width:0;flex-direction:column;gap:9px}.filter-label{color:#bfd1f2;font-size:14px;font-weight:600}input,select{width:100%;min-width:0;min-height:54px;padding:0 17px;border:1px solid var(--line);border-radius:14px;outline:0;background:rgba(10,40,94,.84);color:var(--text);font:inherit;font-size:16px;transition:border-color .2s,box-shadow .2s,background .2s}input::placeholder{color:#7694c9}input:focus,select:focus,button:focus-visible{border-color:#4a9cff;box-shadow:0 0 0 3px rgba(30,128,255,.18)}.hidden{display:none!important}.error,.notice{border-radius:17px;line-height:1.55}.error{margin-bottom:18px;padding:18px;border:1px solid rgba(255,77,79,.32);background:rgba(255,77,79,.14);color:#ffcccc}.notice{padding:30px;border:1px dashed var(--line);color:var(--muted);text-align:center}.list-section .section-head,.recipe-head{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:20px}.product-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.menu-item{min-width:0;padding:17px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(13,48,109,.86),rgba(6,28,70,.96));cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s}.menu-item:hover,.menu-item:focus-visible{border-color:var(--line-strong);box-shadow:0 14px 30px rgba(0,72,180,.2);transform:translateY(-2px);outline:0}.menu-top{display:flex;align-items:flex-start;gap:14px}.menu-left{display:flex;min-width:0;flex:1;gap:13px}.thumb{display:flex;width:64px;height:64px;overflow:hidden;flex:0 0 auto;align-items:center;justify-content:center;padding:5px;border:1px solid var(--line);border-radius:15px;background:var(--panel-deep);color:var(--muted);font-size:10px;text-align:center}.thumb img{width:100%;height:100%;border-radius:10px;object-fit:cover}.menu-copy{min-width:0;flex:1}.menu-name{font-size:18px;font-weight:800;line-height:1.25;overflow-wrap:anywhere}.menu-badges{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}.menu-badge,.status-pill{display:inline-flex;width:fit-content;align-items:center;padding:6px 10px;border-radius:999px;background:rgba(0,102,255,.24);color:#cfe4ff;font-size:11px;font-weight:750;line-height:1.2}.menu-badge.gray{background:rgba(99,118,157,.22)}.status-green{background:rgba(0,214,107,.18)!important;color:#96f5b7!important}.status-yellow{background:rgba(255,184,0,.18)!important;color:#ffe08a!important}.status-red{background:rgba(255,77,79,.18)!important;color:#ffb4b4!important}.status-gray{background:#334155!important;color:#d7e3ff!important}.list-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:15px;padding-top:14px;border-top:1px solid rgba(123,173,255,.16)}.list-metric{min-width:0}.list-metric-label{color:var(--muted);font-size:11px;line-height:1.3}.list-metric-value{margin-top:5px;font-size:14px;font-weight:800;line-height:1.3;overflow-wrap:anywhere}.selected-section{scroll-margin-top:22px}.detail-actions{display:flex;justify-content:flex-start;margin-bottom:18px}.back-btn{display:inline-flex;min-height:48px;align-items:center;justify-content:center;padding:0 18px;border:1px solid rgba(81,170,255,.4);border-radius:12px;background:linear-gradient(135deg,#0066ff,#00d66b);box-shadow:0 8px 24px rgba(0,0,0,.2);color:#fff;cursor:pointer;font-size:14px;font-weight:800}.product-hero{display:grid;grid-template-columns:220px minmax(0,1fr);gap:22px;align-items:start}.product-photo{display:flex;width:100%;aspect-ratio:1/1;overflow:hidden;align-items:center;justify-content:center;padding:12px;border:1px solid var(--line);border-radius:20px;background:var(--panel-deep);color:var(--muted);text-align:center}.product-photo img{width:100%;height:100%;border-radius:14px;object-fit:cover}.product-main{min-width:0}.product-title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}.product-name{font-size:24px;font-weight:850;line-height:1.2;overflow-wrap:anywhere}.selling-price{min-width:170px;padding:13px 15px;border:1px solid var(--line);border-radius:15px;background:rgba(5,25,66,.65);text-align:right}.selling-price .cost-main{font-size:20px;font-weight:850}.cost-label{display:block;margin-top:5px;color:var(--muted);font-size:12px}.metric-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin-top:18px}.metric{min-width:0;min-height:90px;padding:14px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,rgba(13,48,109,.76),rgba(7,30,74,.9))}.metric-label{color:var(--muted);font-size:12px;line-height:1.35}.metric-value{margin-top:7px;font-size:19px;font-weight:850;line-height:1.25;overflow-wrap:anywhere}.metric-note{margin-top:5px;color:var(--muted);font-size:11px;line-height:1.4}.detail-desc{margin-top:17px;padding:15px;border-left:3px solid var(--primary);border-radius:0 12px 12px 0;background:rgba(3,18,50,.42);color:#cfddf7;font-size:14px;line-height:1.65;white-space:pre-wrap}.recipe-panel{margin-top:24px;padding-top:23px;border-top:1px solid rgba(123,173,255,.2)}.recipe-head{align-items:flex-start}.recipe-title-wrap{display:flex;align-items:center;gap:13px}.recipe-table-wrap{max-width:100%;overflow:hidden;border:1px solid var(--line);border-radius:16px}.recipe-table{width:100%;border-collapse:collapse}.recipe-table th{padding:12px;background:#163a87;color:#fff;font-size:12px;text-align:left;white-space:nowrap}.recipe-table td{padding:12px;border-bottom:1px solid rgba(255,255,255,.06);background:rgba(7,30,74,.74);font-size:13px;vertical-align:top}.recipe-table tr:last-child td{border-bottom:0}.recipe-mobile-list{display:none}.recipe-mobile-item{padding:14px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,rgba(13,48,109,.82),rgba(6,28,70,.95))}.recipe-mobile-head{display:flex;align-items:flex-start;gap:10px;padding-bottom:11px;border-bottom:1px solid rgba(123,173,255,.16)}.recipe-number{display:grid;width:28px;height:28px;flex:0 0 auto;place-items:center;border-radius:9px;background:linear-gradient(135deg,#087cf7,#00b978);font-size:12px;font-weight:850}.recipe-mobile-title{font-size:15px;font-weight:800;line-height:1.35;overflow-wrap:anywhere}.recipe-mobile-type{margin-top:3px;color:var(--muted);font-size:12px}.recipe-mobile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}.recipe-mobile-field{min-width:0}.recipe-mobile-label{color:var(--muted);font-size:11px}.recipe-mobile-value{margin-top:4px;font-size:13px;font-weight:750;line-height:1.35;overflow-wrap:anywhere}.recipe-mobile-field.total{grid-column:1/-1;padding-top:10px;border-top:1px solid rgba(123,173,255,.14)}.recipe-mobile-field.total .recipe-mobile-value{color:#8ff5be;font-size:16px}.mobile-header{display:none}.mobile-logo{font-size:20px;font-weight:700;letter-spacing:.6px}.mobile-logo small{display:block;margin-top:2px;font-size:10px;font-weight:400;letter-spacing:.9px;opacity:.68}.menu-toggle{width:46px;height:46px;border:0;border-radius:12px;background:linear-gradient(135deg,#0066ff,#00d66b);box-shadow:0 8px 24px rgba(0,0,0,.2);color:#fff;cursor:pointer;font-size:22px;font-weight:700}.mobile-overlay{display:none;position:fixed;z-index:998;inset:0;background:rgba(0,0,0,.52)}
+@media(max-width:1220px){.summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.product-list{grid-template-columns:1fr}.filter-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:980px){.mobile-header{position:sticky;z-index:1002;top:0;display:flex;min-height:64px;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(8,26,58,.98),rgba(4,18,43,.96));backdrop-filter:blur(14px)}.mobile-overlay.open{display:block}.sidebar{position:fixed!important;left:-280px!important;top:0!important;width:260px!important;height:100vh!important;z-index:999!important;overflow:auto!important;transition:left .28s ease!important;box-shadow:0 20px 40px rgba(0,0,0,.35)!important}.sidebar.open{left:0!important}.sidebar .logo{display:none!important}.sidebar{padding-top:18px!important}.wrapper{display:block}.main{width:100%;margin-left:0;padding:20px}.product-hero{grid-template-columns:180px minmax(0,1fr)}.metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.main{padding:14px}.section{margin-bottom:18px;padding:18px;border-radius:21px}.hero{align-items:flex-start;gap:13px;padding-bottom:18px}.hero-icon{width:50px;height:50px;border-radius:15px}.hero-icon svg{width:24px;height:24px}.title{font-size:23px}.sub,.section-sub{font-size:13px}.overview{padding-top:18px}.section-icon{width:38px;height:38px}.section-icon svg{width:22px;height:22px}.section-title{font-size:20px}.summary-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:15px 0 20px}.summary-box{grid-template-columns:36px minmax(0,1fr);min-height:92px;padding:13px 11px;column-gap:8px;border-radius:15px}.summary-icon{width:36px;height:36px;border-radius:11px}.summary-icon svg{width:20px;height:20px}.summary-title{font-size:11px}.summary-value{font-size:21px}.summary-box:last-child{grid-column:1/-1}.summary-box:last-child .summary-value{font-size:18px}.filter-panel{padding-top:19px}.filter-grid{grid-template-columns:1fr;gap:12px}.filter-title{font-size:18px}input,select{min-height:52px;font-size:14px}.list-section .section-head,.recipe-head{align-items:flex-start;flex-direction:column}.product-list{gap:11px}.menu-item{padding:14px}.menu-top{display:block}.thumb{width:56px;height:56px}.menu-name{font-size:17px}.list-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px 8px}.list-metric-value{font-size:13px}.back-btn{width:100%;min-height:50px}.product-hero{grid-template-columns:1fr;gap:17px}.product-photo{max-width:220px;margin:auto}.product-title-row{align-items:stretch;flex-direction:column}.product-name{font-size:22px}.selling-price{min-width:0;text-align:left}.metric-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.metric{min-height:84px;padding:12px}.metric-value{font-size:17px}.recipe-table-wrap{display:none}.recipe-mobile-list{display:grid;gap:10px}.recipe-head .status-pill{margin-left:51px}.detail-desc{font-size:13px}}
+@media(max-width:390px){.main{padding:10px}.section{padding:15px}.hero-icon{width:46px;height:46px}.summary-grid{grid-template-columns:1fr}.summary-box:last-child{grid-column:auto}.metric-grid{grid-template-columns:1fr}.recipe-mobile-grid{grid-template-columns:1fr}.recipe-mobile-field.total{grid-column:auto}.recipe-head .status-pill{margin-left:0}}
 </style>
 <style id="biya-mobile-sidebar-brand-fix">
 @media (max-width: 980px){
@@ -170,76 +53,46 @@ td{background:#102B63!important;color:#fff!important}
     <button class="btn" onclick="location.href='/menu-modules/dashboard.html'"><svg class="biya-icon" aria-hidden="true"><use href="#biya-icon-arrow-left"></use></svg><span>Kembali</span></button>
   </div>
   <main class="main">
-    <div class="title" id="productPageTitle">Product HPP</div>
-    <div class="sub" id="productPageDescription">Analisis HPP, food cost, margin, dan rekomendasi harga.</div>
+    <div class="page-shell">
+      <div id="errorBox" class="error hidden"></div>
 
-    <div id="errorBox" class="error hidden"></div>
-
-    <section class="summary-grid" id="summarySection" aria-label="Ringkasan Product HPP">
-      <div class="summary-box">
-        <div class="summary-title">Total Product</div>
-        <div class="summary-value" id="sumTotalProduct">0</div>
-      </div>
-      <div class="summary-box">
-        <div class="summary-title">Average Food Cost</div>
-        <div class="summary-value" id="sumAverageFoodCost">0.00%</div>
-      </div>
-      <div class="summary-box">
-        <div class="summary-title">Average Gross Margin</div>
-        <div class="summary-value" id="sumAverageMargin">0.00%</div>
-      </div>
-      <div class="summary-box">
-        <div class="summary-title">Best Product</div>
-        <div class="summary-value" id="sumBestProduct">-</div>
-      </div>
-    </section>
-
-    <section class="section" id="productFilterSection">
-      <div class="list-header">
-        <div>
-          <div style="font-size:28px;font-weight:bold;margin-bottom:6px;">Pilih Produk / Menu</div>
-          <div style="opacity:.6;line-height:1.5;">Pilih produk untuk melihat HPP, food cost, margin, dan rekomendasi harga jual.</div>
+      <section class="section" id="productFilterSection" aria-labelledby="productPageTitle">
+        <div class="hero">
+          <div class="hero-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"></rect><path d="M8 6h8M16 14v4M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"></path></svg></div>
+          <div><h1 class="title" id="productPageTitle">Product HPP</h1><p class="sub" id="productPageDescription">Analisis HPP, food cost, margin, dan rekomendasi harga jual.</p></div>
         </div>
-        <div class="filter-grid">
-          <div class="filter-field">
-            <label class="filter-label" for="menuSelect">Pilih Produk/Menu</label>
-            <select id="menuSelect" aria-label="Pilih menu">
-              <option value="">Memuat menu...</option>
-            </select>
+        <div class="overview">
+          <div class="section-heading">
+            <div class="section-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"></path><path d="m7 15 4-4 3 3 5-6"></path></svg></div>
+            <div><h2 class="section-title">Summary HPP</h2><p class="section-sub">Ringkasan performa biaya dan margin produk.</p></div>
           </div>
-          <div class="filter-field">
-            <label class="filter-label" for="searchProduct">Search Produk</label>
-            <input id="searchProduct" placeholder="Cari produk..." type="text"/>
+          <div class="summary-grid" id="summarySection" aria-label="Ringkasan Product HPP">
+            <article class="summary-box"><div class="summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 7 8-4 8 4-8 4-8-4zM4 7v10l8 4 8-4V7M12 11v10"></path></svg></div><div class="summary-title">Total Produk</div><div class="summary-value" id="sumTotalProduct">0</div></article>
+            <article class="summary-box"><div class="summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></div><div class="summary-title">Rata-rata Food Cost</div><div class="summary-value" id="sumAverageFoodCost">0.00%</div></article>
+            <article class="summary-box"><div class="summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3 17 6-6 4 4 8-9"></path><path d="M14 6h7v7"></path></svg></div><div class="summary-title">Rata-rata Gross Margin</div><div class="summary-value" id="sumAverageMargin">0.00%</div></article>
+            <article class="summary-box"><div class="summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 2 3 6 6.5 1-4.7 4.6 1.1 6.4-5.9-3.1L6.1 20l1.1-6.4L2.5 9 9 8l3-6z"></path></svg></div><div class="summary-title">Produk Terbaik</div><div class="summary-value" id="sumBestProduct">-</div></article>
           </div>
-          <div class="filter-field">
-            <label class="filter-label" for="filterCategory">Category</label>
-            <select id="filterCategory">
-              <option value="">All Category</option>
-            </select>
-          </div>
-          <div class="filter-field">
-            <label class="filter-label" for="filterSubCategory">Sub Category</label>
-            <select id="filterSubCategory">
-              <option value="">All Sub Category</option>
-            </select>
+          <div class="filter-panel">
+            <div class="filter-head"><h2 class="filter-title">Pilih Produk / Menu</h2><p class="section-sub">Pilih atau saring produk untuk melihat analisis HPP yang dibutuhkan.</p></div>
+            <div class="filter-grid">
+              <div class="filter-field"><label class="filter-label" for="menuSelect">Pilih Produk/Menu</label><select id="menuSelect" aria-label="Pilih menu"><option value="">Memuat menu...</option></select></div>
+              <div class="filter-field"><label class="filter-label" for="searchProduct">Cari Produk</label><input id="searchProduct" placeholder="Cari nama, kategori, atau status..." type="search" autocomplete="off"/></div>
+              <div class="filter-field"><label class="filter-label" for="filterCategory">Kategori</label><select id="filterCategory"><option value="">Semua Kategori</option></select></div>
+              <div class="filter-field"><label class="filter-label" for="filterSubCategory">Sub Kategori</label><select id="filterSubCategory"><option value="">Semua Sub Kategori</option></select></div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section hidden" id="selectedProduct"></section>
+      <section class="section selected-section hidden" id="selectedProduct" aria-live="polite"></section>
 
-    <section class="section" id="productListSection">
-      <div class="list-header">
-        <div>
-          <div style="font-size:28px;font-weight:bold;margin-bottom:6px;">Product HPP List</div>
-          <div style="opacity:.6;">Klik salah satu menu untuk melihat detail perhitungan.</div>
+      <section class="section list-section" id="productListSection" aria-labelledby="productListTitle">
+        <div class="section-head">
+          <div class="section-heading"><div class="section-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"></path><circle cx="2" cy="6" r=".5"></circle><circle cx="2" cy="12" r=".5"></circle><circle cx="2" cy="18" r=".5"></circle></svg></div><div><h2 class="section-title" id="productListTitle">Product HPP List</h2><p class="section-sub">Klik salah satu menu untuk melihat detail perhitungan.</p></div></div>
         </div>
-      </div>
-      <div id="productList">
-        <div class="notice">Memuat data menu...</div>
-      </div>
-    </section>
+        <div class="product-list" id="productList"><div class="notice">Memuat data menu...</div></div>
+      </section>
+    </div>
   </main>
 </div>
 
@@ -372,10 +225,6 @@ function setError(message = "") {
 
 function setDetailMode(open) {
   detailOpen = open;
-  el.productPageTitle.classList.toggle("hidden", open);
-  el.productPageDescription.classList.toggle("hidden", open);
-  el.summarySection.classList.toggle("hidden", open);
-  el.productFilterSection.classList.toggle("hidden", open);
   el.productListSection.classList.toggle("hidden", open);
   el.selectedProduct.classList.toggle("hidden", !open);
 }
@@ -405,8 +254,8 @@ function populateFilters() {
   const currentSubCategory = el.filterSubCategory.value;
   const categories = [...new Set(menus.map(menu => menu.category).filter(Boolean))].sort();
   const subCategories = [...new Set(menus.map(menu => menu.subCategory).filter(Boolean))].sort();
-  el.filterCategory.innerHTML = '<option value="">All Category</option>' + categories.map(value => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("");
-  el.filterSubCategory.innerHTML = '<option value="">All Sub Category</option>' + subCategories.map(value => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("");
+  el.filterCategory.innerHTML = '<option value="">Semua Kategori</option>' + categories.map(value => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("");
+  el.filterSubCategory.innerHTML = '<option value="">Semua Sub Kategori</option>' + subCategories.map(value => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("");
   if (categories.includes(currentCategory)) el.filterCategory.value = currentCategory;
   if (subCategories.includes(currentSubCategory)) el.filterSubCategory.value = currentSubCategory;
 }
@@ -457,12 +306,10 @@ function renderSelectedProduct() {
       <button class="back-btn" type="button" onclick="backToProductList()">← Kembali ke Daftar Produk</button>
     </div>
     <div class="product-hero">
-      <div class="product-photo">
-        ${menu.photoUrl ? `<img src="${escapeHtml(menu.photoUrl)}" alt="${escapeHtml(menu.name)}">` : '<div>Tidak ada foto menu</div>'}
-      </div>
+      <div class="product-photo">${menu.photoUrl ? `<img src="${escapeHtml(menu.photoUrl)}" alt="${escapeHtml(menu.name)}">` : '<div>Tidak ada foto menu</div>'}</div>
       <div class="product-main">
         <div class="product-title-row">
-          <div>
+          <div class="menu-copy">
             <div class="product-name">${escapeHtml(menu.name || "-")}</div>
             <div class="menu-badges">
               <span class="menu-badge">${escapeHtml(menu.category || "-")}</span>
@@ -471,14 +318,11 @@ function renderSelectedProduct() {
               <span class="status-pill ${status.cls}">${escapeHtml(status.label)}</span>
             </div>
           </div>
-          <div class="menu-cost">
-            <div class="cost-main">${formatRupiah(menu.sellingPrice)}</div>
-            <span class="cost-label">Selling Price</span>
-          </div>
+          <div class="selling-price"><div class="cost-main">${formatRupiah(menu.sellingPrice)}</div><span class="cost-label">Harga Jual</span></div>
         </div>
         <div class="metric-grid">
           <div class="metric"><div class="metric-label">Recipe Cost / HPP Bahan</div><div class="metric-value">${formatRupiah(menu.recipeCost)}</div></div>
-          <div class="metric"><div class="metric-label">Total Bahan</div><div class="metric-value">${menu.totalIngredients}</div></div>
+          <div class="metric"><div class="metric-label">Total Bahan</div><div class="metric-value">${menu.totalIngredients} item</div></div>
           <div class="metric"><div class="metric-label">Estimated Food Cost</div><div class="metric-value">${formatPercent(menu.foodCostPercent)}</div></div>
           <div class="metric"><div class="metric-label">Gross Profit</div><div class="metric-value">${formatRupiah(menu.grossProfit)}</div></div>
           <div class="metric"><div class="metric-label">Gross Margin</div><div class="metric-value">${formatPercent(menu.grossMarginPercent)}</div></div>
@@ -492,8 +336,9 @@ function renderSelectedProduct() {
 }
 
 function renderRecipeDetail(menu) {
-  const rows = menu.items.map(item => `
+  const rows = menu.items.map((item, index) => `
     <tr>
+      <td>${index + 1}</td>
       <td>${escapeHtml(ingredientTypeLabel(item.ingredientType))}</td>
       <td>${escapeHtml(item.ingredientName || "-")}</td>
       <td>${escapeHtml(item.qty)}</td>
@@ -504,41 +349,37 @@ function renderRecipeDetail(menu) {
     </tr>
   `).join("");
   const mobileRows = menu.items.map((item, index) => `
-    <div class="recipe-mobile-item">
-      <div class="recipe-mobile-title"><span>${index + 1}.</span><strong>${escapeHtml(item.ingredientName || "-")}</strong></div>
-      <div class="recipe-mobile-meta">${escapeHtml(ingredientTypeLabel(item.ingredientType))} | ${escapeHtml(item.qty)} ${escapeHtml(item.unit || "")} x ${formatRupiah(item.pricePerUnit)}</div>
-      <div class="recipe-mobile-sub">Waste ${formatPercent(item.wastePercent).replace(".00%", "%")} | Total ${formatRupiah(item.total)}</div>
-    </div>
+    <article class="recipe-mobile-item">
+      <div class="recipe-mobile-head">
+        <span class="recipe-number">${index + 1}</span>
+        <div><div class="recipe-mobile-title">${escapeHtml(item.ingredientName || "-")}</div><div class="recipe-mobile-type">${escapeHtml(ingredientTypeLabel(item.ingredientType))}</div></div>
+      </div>
+      <div class="recipe-mobile-grid">
+        <div class="recipe-mobile-field"><div class="recipe-mobile-label">Qty</div><div class="recipe-mobile-value">${escapeHtml(item.qty)}</div></div>
+        <div class="recipe-mobile-field"><div class="recipe-mobile-label">Unit</div><div class="recipe-mobile-value">${escapeHtml(item.unit || "-")}</div></div>
+        <div class="recipe-mobile-field"><div class="recipe-mobile-label">Harga / Unit</div><div class="recipe-mobile-value">${formatRupiah(item.pricePerUnit)}</div></div>
+        <div class="recipe-mobile-field"><div class="recipe-mobile-label">Waste %</div><div class="recipe-mobile-value">${formatPercent(item.wastePercent).replace(".00%", "%")}</div></div>
+        <div class="recipe-mobile-field total"><div class="recipe-mobile-label">Total</div><div class="recipe-mobile-value">${formatRupiah(item.total)}</div></div>
+      </div>
+    </article>
   `).join("");
   const recipeHtml = menu.items.length ? `
     <div class="recipe-table-wrap">
       <table class="recipe-table">
-        <thead>
-          <tr>
-            <th>Ingredient Type</th>
-            <th>Ingredient</th>
-            <th>Qty</th>
-            <th>Unit</th>
-            <th>Harga/Unit</th>
-            <th>Waste %</th>
-            <th>Total</th>
-          </tr>
-        </thead>
+        <thead><tr><th>No.</th><th>Ingredient Type</th><th>Ingredient</th><th>Qty</th><th>Unit</th><th>Harga / Unit</th><th>Waste %</th><th>Total</th></tr></thead>
         <tbody>${rows}</tbody>
       </table>
     </div>
     <div class="recipe-mobile-list">${mobileRows}</div>
   ` : '<div class="notice">Menu ini belum punya recipe.</div>';
   el.selectedProduct.innerHTML += `
-    <div style="height:22px"></div>
-    <div class="recipe-head">
-      <div>
-        <div style="font-size:22px;font-weight:bold;">Detail Recipe / Menu Items</div>
-        <div style="opacity:.65;margin-top:6px;">Total recipe cost dihitung dari total semua bahan.</div>
+    <div class="recipe-panel">
+      <div class="recipe-head">
+        <div class="recipe-title-wrap"><div class="section-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 10h16c0 5-3.2 9-8 9s-8-4-8-9zM8 22h8M12 19v3M15 7l4-4M16 6l2 2"></path></svg></div><div><h2 class="section-title">Detail Recipe / Menu Items</h2><p class="section-sub">Total recipe cost dihitung dari total semua bahan.</p></div></div>
+        <div class="status-pill ${getStatusInfo(menu).cls}">${escapeHtml(getStatusInfo(menu).label)}</div>
       </div>
-      <div class="status-pill ${getStatusInfo(menu).cls}">${escapeHtml(getStatusInfo(menu).label)}</div>
+      ${recipeHtml}
     </div>
-    ${recipeHtml}
   `;
 }
 
@@ -564,11 +405,11 @@ function renderProductList() {
   el.productList.innerHTML = list.map(menu => {
     const status = getStatusInfo(menu);
     return `
-      <div class="menu-item" data-menu-id="${escapeHtml(menu.id)}" tabindex="0" role="button" aria-label="Pilih ${escapeHtml(menu.name)}">
+      <article class="menu-item" data-menu-id="${escapeHtml(menu.id)}" tabindex="0" role="button" aria-label="Pilih ${escapeHtml(menu.name)}">
         <div class="menu-top">
           <div class="menu-left">
             <div class="thumb">${menu.photoUrl ? `<img src="${escapeHtml(menu.photoUrl)}" alt="${escapeHtml(menu.name)}">` : "No Photo"}</div>
-            <div style="min-width:0;flex:1;">
+            <div class="menu-copy">
               <div class="menu-name">${escapeHtml(menu.name || "-")}</div>
               <div class="menu-badges">
                 <span class="menu-badge">${escapeHtml(menu.category || "-")}</span>
@@ -577,14 +418,14 @@ function renderProductList() {
               </div>
             </div>
           </div>
-          <div class="menu-cost">
-            <div class="cost-main">${formatRupiah(menu.recipeCost)}</div>
-            <span class="cost-label">Recipe Cost</span>
-            <div style="margin-top:10px;font-size:16px;">${formatPercent(menu.foodCostPercent)}</div>
-            <span class="cost-label">Food Cost</span>
-          </div>
         </div>
-      </div>
+        <div class="list-metrics">
+          <div class="list-metric"><div class="list-metric-label">Recipe Cost</div><div class="list-metric-value">${formatRupiah(menu.recipeCost)}</div></div>
+          <div class="list-metric"><div class="list-metric-label">Food Cost</div><div class="list-metric-value">${formatPercent(menu.foodCostPercent)}</div></div>
+          <div class="list-metric"><div class="list-metric-label">Harga Jual</div><div class="list-metric-value">${formatRupiah(menu.sellingPrice)}</div></div>
+          <div class="list-metric"><div class="list-metric-label">Gross Profit</div><div class="list-metric-value">${formatRupiah(menu.grossProfit)}</div></div>
+        </div>
+      </article>
     `;
   }).join("");
   document.querySelectorAll("[data-menu-id]").forEach(card => {
@@ -598,13 +439,18 @@ function renderProductList() {
   });
 }
 
+function scrollToSection(section) {
+  if (!section) return;
+  requestAnimationFrame(() => section.scrollIntoView({ behavior: "smooth", block: "start" }));
+}
+
 function selectMenu(id) {
   if (!id) return;
   selectedMenuId = id;
   el.searchProduct.value = "";
   el.menuSelect.value = "";
   renderSelectedProduct();
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  scrollToSection(el.selectedProduct);
 }
 
 function backToProductList() {
@@ -613,7 +459,7 @@ function backToProductList() {
   el.selectedProduct.innerHTML = "";
   setDetailMode(false);
   renderProductList();
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  scrollToSection(el.productListSection);
 }
 
 async function loadMenusFromSupabase() {
